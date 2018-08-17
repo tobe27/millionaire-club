@@ -3,6 +3,8 @@ package com.millionaire.millionaireadminservice.dao;
 import com.millionaire.millionaireadminservice.module.BackstageUsers;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface BackstageUsersMapper {
     int deleteByPrimaryKey(Long id);
@@ -16,4 +18,6 @@ public interface BackstageUsersMapper {
     int updateByPrimaryKeySelective(BackstageUsers record);
 
     int updateByPrimaryKey(BackstageUsers record);
+
+    List<BackstageUsers> findAll();
 }
