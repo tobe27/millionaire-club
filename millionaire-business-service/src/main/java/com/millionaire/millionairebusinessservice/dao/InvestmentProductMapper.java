@@ -1,7 +1,9 @@
 package com.millionaire.millionairebusinessservice.dao;
 
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface InvestmentProductMapper {
     int deleteByPrimaryKey(Long id);
 

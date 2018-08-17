@@ -1,4 +1,4 @@
-package com.millionaire.millionaireserverweb;
+package com.millionaire.millionaireadminservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
