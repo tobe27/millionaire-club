@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.millionaire.millionairebusinessservice.dao.ClaimInfoMapper">
+    <resultMap id="BaseResultMap" type="com.millionaire.millionairebusinessservice.module.ClaimInfo">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="claim_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="claim_contract" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="creditor_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="creditor_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="creditor_id_number" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="lending_date" javaType="java.util.Date" jdbcType="DATE" />
+            <arg column="lending_period" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="expiration_date" javaType="java.util.Date" jdbcType="DATE" />
+            <arg column="lending_amount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="property" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="interest_rate" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="match_amount" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="matchRate" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="unMatchAmount" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="describe" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, claim_code, claim_contract, creditor_name, creditor_phone, creditor_id_number,
+        lending_date, lending_period, expiration_date, lending_amount, property, interest_rate,
+        match_amount, matchRate, unMatchAmount, describe, status, gmt_create, gmt_update
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from claim_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from claim_info
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.ClaimInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into claim_info (claim_code, claim_contract,
+        creditor_name, creditor_phone, creditor_id_number,
+        lending_date, lending_period, expiration_date,
+        lending_amount, property, interest_rate,
+        match_amount, matchRate, unMatchAmount,
+        describe, status, gmt_create,
+        gmt_update)
+        values (#{claimCode,jdbcType=VARCHAR}, #{claimContract,jdbcType=VARCHAR},
+        #{creditorName,jdbcType=VARCHAR}, #{creditorPhone,jdbcType=VARCHAR}, #{creditorIdNumber,jdbcType=VARCHAR},
+        #{lendingDate,jdbcType=DATE}, #{lendingPeriod,jdbcType=INTEGER}, #{expirationDate,jdbcType=DATE},
+        #{lendingAmount,jdbcType=INTEGER}, #{property,jdbcType=VARCHAR}, #{interestRate,jdbcType=DOUBLE},
+        #{matchAmount,jdbcType=DOUBLE}, #{matchrate,jdbcType=DOUBLE}, #{unmatchamount,jdbcType=DOUBLE},
+        #{describe,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{gmtCreate,jdbcType=BIGINT},
+        #{gmtUpdate,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.ClaimInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into claim_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="claimCode != null">
+                claim_code,
+            </if>
+            <if test="claimContract != null">
+                claim_contract,
+            </if>
+            <if test="creditorName != null">
+                creditor_name,
+            </if>
+            <if test="creditorPhone != null">
+                creditor_phone,
+            </if>
+            <if test="creditorIdNumber != null">
+                creditor_id_number,
+            </if>
+            <if test="lendingDate != null">
+                lending_date,
+            </if>
+            <if test="lendingPeriod != null">
+                lending_period,
+            </if>
+            <if test="expirationDate != null">
+                expiration_date,
+            </if>
+            <if test="lendingAmount != null">
+                lending_amount,
+            </if>
+            <if test="property != null">
+                property,
+            </if>
+            <if test="interestRate != null">
+                interest_rate,
+            </if>
+            <if test="matchAmount != null">
+                match_amount,
+            </if>
+            <if test="matchrate != null">
+                matchRate,
+            </if>
+            <if test="unmatchamount != null">
+                unMatchAmount,
+            </if>
+            <if test="describe != null">
+                describe,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="claimCode != null">
+                #{claimCode,jdbcType=VARCHAR},
+            </if>
+            <if test="claimContract != null">
+                #{claimContract,jdbcType=VARCHAR},
+            </if>
+            <if test="creditorName != null">
+                #{creditorName,jdbcType=VARCHAR},
+            </if>
+            <if test="creditorPhone != null">
+                #{creditorPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="creditorIdNumber != null">
+                #{creditorIdNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="lendingDate != null">
+                #{lendingDate,jdbcType=DATE},
+            </if>
+            <if test="lendingPeriod != null">
+                #{lendingPeriod,jdbcType=INTEGER},
+            </if>
+            <if test="expirationDate != null">
+                #{expirationDate,jdbcType=DATE},
+            </if>
+            <if test="lendingAmount != null">
+                #{lendingAmount,jdbcType=INTEGER},
+            </if>
+            <if test="property != null">
+                #{property,jdbcType=VARCHAR},
+            </if>
+            <if test="interestRate != null">
+                #{interestRate,jdbcType=DOUBLE},
+            </if>
+            <if test="matchAmount != null">
+                #{matchAmount,jdbcType=DOUBLE},
+            </if>
+            <if test="matchrate != null">
+                #{matchrate,jdbcType=DOUBLE},
+            </if>
+            <if test="unmatchamount != null">
+                #{unmatchamount,jdbcType=DOUBLE},
+            </if>
+            <if test="describe != null">
+                #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionairebusinessservice.module.ClaimInfo">
+        update claim_info
+        <set>
+            <if test="claimCode != null">
+                claim_code = #{claimCode,jdbcType=VARCHAR},
+            </if>
+            <if test="claimContract != null">
+                claim_contract = #{claimContract,jdbcType=VARCHAR},
+            </if>
+            <if test="creditorName != null">
+                creditor_name = #{creditorName,jdbcType=VARCHAR},
+            </if>
+            <if test="creditorPhone != null">
+                creditor_phone = #{creditorPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="creditorIdNumber != null">
+                creditor_id_number = #{creditorIdNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="lendingDate != null">
+                lending_date = #{lendingDate,jdbcType=DATE},
+            </if>
+            <if test="lendingPeriod != null">
+                lending_period = #{lendingPeriod,jdbcType=INTEGER},
+            </if>
+            <if test="expirationDate != null">
+                expiration_date = #{expirationDate,jdbcType=DATE},
+            </if>
+            <if test="lendingAmount != null">
+                lending_amount = #{lendingAmount,jdbcType=INTEGER},
+            </if>
+            <if test="property != null">
+                property = #{property,jdbcType=VARCHAR},
+            </if>
+            <if test="interestRate != null">
+                interest_rate = #{interestRate,jdbcType=DOUBLE},
+            </if>
+            <if test="matchAmount != null">
+                match_amount = #{matchAmount,jdbcType=DOUBLE},
+            </if>
+            <if test="matchrate != null">
+                matchRate = #{matchrate,jdbcType=DOUBLE},
+            </if>
+            <if test="unmatchamount != null">
+                unMatchAmount = #{unmatchamount,jdbcType=DOUBLE},
+            </if>
+            <if test="describe != null">
+                describe = #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.millionaire.millionairebusinessservice.module.ClaimInfo">
+        update claim_info
+        set claim_code = #{claimCode,jdbcType=VARCHAR},
+        claim_contract = #{claimContract,jdbcType=VARCHAR},
+        creditor_name = #{creditorName,jdbcType=VARCHAR},
+        creditor_phone = #{creditorPhone,jdbcType=VARCHAR},
+        creditor_id_number = #{creditorIdNumber,jdbcType=VARCHAR},
+        lending_date = #{lendingDate,jdbcType=DATE},
+        lending_period = #{lendingPeriod,jdbcType=INTEGER},
+        expiration_date = #{expirationDate,jdbcType=DATE},
+        lending_amount = #{lendingAmount,jdbcType=INTEGER},
+        property = #{property,jdbcType=VARCHAR},
+        interest_rate = #{interestRate,jdbcType=DOUBLE},
+        match_amount = #{matchAmount,jdbcType=DOUBLE},
+        matchRate = #{matchrate,jdbcType=DOUBLE},
+        unMatchAmount = #{unmatchamount,jdbcType=DOUBLE},
+        describe = #{describe,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
+        gmt_create = #{gmtCreate,jdbcType=BIGINT},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

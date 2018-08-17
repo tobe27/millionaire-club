@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.millionaire.millionairebusinessservice.dao.InvestmentProductMapper">
+    <resultMap id="BaseResultMap" type="com.millionaire.millionairebusinessservice.module.InvestmentProduct">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="product_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="annualized_ income" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="repayment_mode" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="starting_amount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="value_date" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="deadline" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="more_details" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="is_recommend" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="is_purchase_limit" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="is_shelf" javaType="java.lang.Byte" jdbcType="TINYINT" />
+            <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_code, name, "annualized_ income", repayment_mode, starting_amount, value_date,
+        deadline, remark, more_details, type, is_recommend, is_purchase_limit, is_shelf,
+        gmt_create, gmt_update
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from investment_product
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from investment_product
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentProduct" useGeneratedKeys="true" keyProperty="id">
+        insert into investment_product (product_code, name,
+        "annualized_ income", repayment_mode, starting_amount,
+        value_date, deadline, remark,
+        more_details, type, is_recommend,
+        is_purchase_limit, is_shelf, gmt_create,
+        gmt_update)
+        values (#{productCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{annualizedIncome,jdbcType=DOUBLE}, #{repaymentMode,jdbcType=TINYINT}, #{startingAmount,jdbcType=INTEGER},
+        #{valueDate,jdbcType=INTEGER}, #{deadline,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+        #{moreDetails,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{isRecommend,jdbcType=TINYINT},
+        #{isPurchaseLimit,jdbcType=TINYINT}, #{isShelf,jdbcType=TINYINT}, #{gmtCreate,jdbcType=BIGINT},
+        #{gmtUpdate,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentProduct" useGeneratedKeys="true" keyProperty="id">
+        insert into investment_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="annualizedIncome != null">
+                "annualized_ income",
+            </if>
+            <if test="repaymentMode != null">
+                repayment_mode,
+            </if>
+            <if test="startingAmount != null">
+                starting_amount,
+            </if>
+            <if test="valueDate != null">
+                value_date,
+            </if>
+            <if test="deadline != null">
+                deadline,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="moreDetails != null">
+                more_details,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="isRecommend != null">
+                is_recommend,
+            </if>
+            <if test="isPurchaseLimit != null">
+                is_purchase_limit,
+            </if>
+            <if test="isShelf != null">
+                is_shelf,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="annualizedIncome != null">
+                #{annualizedIncome,jdbcType=DOUBLE},
+            </if>
+            <if test="repaymentMode != null">
+                #{repaymentMode,jdbcType=TINYINT},
+            </if>
+            <if test="startingAmount != null">
+                #{startingAmount,jdbcType=INTEGER},
+            </if>
+            <if test="valueDate != null">
+                #{valueDate,jdbcType=INTEGER},
+            </if>
+            <if test="deadline != null">
+                #{deadline,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="moreDetails != null">
+                #{moreDetails,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="isRecommend != null">
+                #{isRecommend,jdbcType=TINYINT},
+            </if>
+            <if test="isPurchaseLimit != null">
+                #{isPurchaseLimit,jdbcType=TINYINT},
+            </if>
+            <if test="isShelf != null">
+                #{isShelf,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentProduct">
+        update investment_product
+        <set>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="annualizedIncome != null">
+                "annualized_ income" = #{annualizedIncome,jdbcType=DOUBLE},
+            </if>
+            <if test="repaymentMode != null">
+                repayment_mode = #{repaymentMode,jdbcType=TINYINT},
+            </if>
+            <if test="startingAmount != null">
+                starting_amount = #{startingAmount,jdbcType=INTEGER},
+            </if>
+            <if test="valueDate != null">
+                value_date = #{valueDate,jdbcType=INTEGER},
+            </if>
+            <if test="deadline != null">
+                deadline = #{deadline,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="moreDetails != null">
+                more_details = #{moreDetails,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="isRecommend != null">
+                is_recommend = #{isRecommend,jdbcType=TINYINT},
+            </if>
+            <if test="isPurchaseLimit != null">
+                is_purchase_limit = #{isPurchaseLimit,jdbcType=TINYINT},
+            </if>
+            <if test="isShelf != null">
+                is_shelf = #{isShelf,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentProduct">
+        update investment_product
+        set product_code = #{productCode,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        "annualized_ income" = #{annualizedIncome,jdbcType=DOUBLE},
+        repayment_mode = #{repaymentMode,jdbcType=TINYINT},
+        starting_amount = #{startingAmount,jdbcType=INTEGER},
+        value_date = #{valueDate,jdbcType=INTEGER},
+        deadline = #{deadline,jdbcType=INTEGER},
+        remark = #{remark,jdbcType=VARCHAR},
+        more_details = #{moreDetails,jdbcType=VARCHAR},
+        type = #{type,jdbcType=INTEGER},
+        is_recommend = #{isRecommend,jdbcType=TINYINT},
+        is_purchase_limit = #{isPurchaseLimit,jdbcType=TINYINT},
+        is_shelf = #{isShelf,jdbcType=TINYINT},
+        gmt_create = #{gmtCreate,jdbcType=BIGINT},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>
