@@ -30,7 +30,8 @@ public class ClaimMatchMapperTest {
         claimMatch.setStatus(1);
         claimMatch.setGmtCreate(System.currentTimeMillis());
 
-        claimMatchMapper.insert(claimMatch);
+        System.out.println(claimMatchMapper.insert(claimMatch));
+
         System.out.println(claimMatch.getId());
 
 
