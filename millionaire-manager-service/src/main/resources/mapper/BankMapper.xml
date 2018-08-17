@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.millionaire.millionairemanagerservice.dao.BankMapper">
+  <resultMap id="BaseResultMap" type="com.millionaire.millionairemanagerservice.module.Bank">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="bank_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="single_limit" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="daily_limit" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="payment_number" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="present_number" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="bank_logo" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="founder" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="modifier" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, bank_name, single_limit, daily_limit, payment_number, present_number, bank_logo, 
+    gmt_create, gmt_update, founder, modifier
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bank
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from bank
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.millionaire.millionairemanagerservice.module.Bank" useGeneratedKeys="true" keyProperty="id">
+    insert into bank (bank_name, single_limit,
+      daily_limit, payment_number, present_number, 
+      bank_logo, gmt_create, gmt_update, 
+      founder, modifier)
+    values (#{bankName,jdbcType=VARCHAR}, #{singleLimit,jdbcType=DOUBLE},
+      #{dailyLimit,jdbcType=DOUBLE}, #{paymentNumber,jdbcType=VARCHAR}, #{presentNumber,jdbcType=VARCHAR}, 
+      #{bankLogo,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT}, 
+      #{founder,jdbcType=VARCHAR}, #{modifier,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.millionaire.millionairemanagerservice.module.Bank" useGeneratedKeys="true" keyProperty="id">
+    insert into bank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="singleLimit != null">
+        single_limit,
+      </if>
+      <if test="dailyLimit != null">
+        daily_limit,
+      </if>
+      <if test="paymentNumber != null">
+        payment_number,
+      </if>
+      <if test="presentNumber != null">
+        present_number,
+      </if>
+      <if test="bankLogo != null">
+        bank_logo,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="founder != null">
+        founder,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="singleLimit != null">
+        #{singleLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="dailyLimit != null">
+        #{dailyLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="paymentNumber != null">
+        #{paymentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="presentNumber != null">
+        #{presentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bankLogo != null">
+        #{bankLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=BIGINT},
+      </if>
+      <if test="founder != null">
+        #{founder,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionairemanagerservice.module.Bank">
+    update bank
+    <set>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="singleLimit != null">
+        single_limit = #{singleLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="dailyLimit != null">
+        daily_limit = #{dailyLimit,jdbcType=DOUBLE},
+      </if>
+      <if test="paymentNumber != null">
+        payment_number = #{paymentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="presentNumber != null">
+        present_number = #{presentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bankLogo != null">
+        bank_logo = #{bankLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+      </if>
+      <if test="founder != null">
+        founder = #{founder,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.millionaire.millionairemanagerservice.module.Bank">
+    update bank
+    set bank_name = #{bankName,jdbcType=VARCHAR},
+      single_limit = #{singleLimit,jdbcType=DOUBLE},
+      daily_limit = #{dailyLimit,jdbcType=DOUBLE},
+      payment_number = #{paymentNumber,jdbcType=VARCHAR},
+      present_number = #{presentNumber,jdbcType=VARCHAR},
+      bank_logo = #{bankLogo,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+      founder = #{founder,jdbcType=VARCHAR},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
