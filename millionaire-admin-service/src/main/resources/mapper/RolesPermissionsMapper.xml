@@ -10,6 +10,13 @@
       <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
+  <resultMap id="RolesPermissions" type="com.millionaire.millionaireadminservice.module.RolesPermissions">
+    <id property="id" column="id"/>
+    <result property="roleId" column="role_id"/>
+    <result property="permissionId" column="permission_id"/>
+    <result property="gmtCreate" column="gmt_create"/>
+    <result property="gmtUpdate" column="gmt_update"/>
+  </resultMap>
   <sql id="Base_Column_List">
     id, permission_id, role_id, gmt_create, gmt_update
   </sql>
@@ -86,4 +93,11 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="findByRoleId" resultMap="RolesPermissions">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM roles_permissions
+    WHERE role_id=#{roleId}
+  </select>
 </mapper>

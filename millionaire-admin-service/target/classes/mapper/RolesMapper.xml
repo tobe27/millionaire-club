@@ -11,6 +11,14 @@
       <arg column="modifier" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+  <resultMap id="Roles" type="com.millionaire.millionaireadminservice.module.Roles">
+    <id property="id" column="id"/>
+    <result property="roleName" column="role_name"/>
+    <result property="gmtCreate" column="gmt_create"/>
+    <result property="gmtUpdate" column="gmt_update"/>
+    <result property="founder" column="founder"/>
+    <result property="modifier" column="modifier"/>
+  </resultMap>
   <sql id="Base_Column_List">
     id, role_name, gmt_create, gmt_update, founder, modifier
   </sql>
@@ -99,4 +107,16 @@
       modifier = #{modifier,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="findAll" resultMap="Roles">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM roles
+  </select>
+  <select id="findByName" resultMap="Roles">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM roles
+    WHERE role_name=#{roleName}
+  </select>
+
 </mapper>

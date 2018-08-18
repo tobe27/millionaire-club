@@ -5,15 +5,26 @@ public class Permissions {
 
     private String permission;
 
+    private String visible;
+
     private Long gmtCreate;
 
     private Long gmtUpdate;
 
-    public Permissions(Long id, String permission, Long gmtCreate, Long gmtUpdate) {
+    public Permissions(Long id, String permission, String visible, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
         this.permission = permission;
+        this.visible = visible;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
+    }
+
+    public String getVisible() {
+        return visible;
+    }
+
+    public void setVisible(String visible) {
+        this.visible = visible;
     }
 
     public void setId(Long id) {
@@ -49,5 +60,16 @@ public class Permissions {
     }
 
     public Permissions() {
+    }
+
+    @Override
+    public String toString() {
+        return "Permissions{" +
+                "id=" + id +
+                ", permission='" + permission + '\'' +
+                ", visible='" + visible + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtUpdate=" + gmtUpdate +
+                '}';
     }
 }

@@ -2,6 +2,8 @@ package com.millionaire.millionaireadminservice.service;
 
 import com.millionaire.millionaireadminservice.module.Roles;
 
+import java.util.List;
+
 public interface RolesService {
     void deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,8 @@ public interface RolesService {
     long updateByPrimaryKeySelective(Roles record);
 
     long updateByPrimaryKey(Roles record);
+
+    List<Roles> findAll();
+
+    Roles findByName(String name);
 }
