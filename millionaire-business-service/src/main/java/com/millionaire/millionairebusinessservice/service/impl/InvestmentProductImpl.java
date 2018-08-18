@@ -32,4 +32,15 @@ public class InvestmentProductImpl implements InvestmentProductService {
            investmentProductMapper.insertSelective(investmentProduct);            ;
         return investmentProduct.getId();
     }
+
+
+    /**
+     * @param investmentProduct 投资
+     * @return 返回编辑投资产品id
+     * @Description 编辑投资产品
+     **/
+    @Override
+    public Long updateProductByPrimaryKeySelective(InvestmentProduct investmentProduct) {
+        return null;
+    }
 }

@@ -18,6 +18,11 @@ public interface InvestmentProductService {
      **/
 Long insertProductSelective(InvestmentProduct investmentProduct);
 
-
+/**
+ * @Description 编辑投资产品
+ * @param  investmentProduct 投资
+ * @return 返回编辑投资产品id
+ **/
+Long updateProductByPrimaryKeySelective(InvestmentProduct investmentProduct);
 
 }
