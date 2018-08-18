@@ -53,6 +53,33 @@
         from investment_product order by gmt_update DESC
     </select>
 
+    <select id="selectProductByPage" resultMap="BaseResultMap">
+         select
+        <include refid="Base_Column_List" />
+        from investment_product
+        <where>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="productCode != null">
+              and  product_code = #{productCode,jdbcType=VARCHAR}
+            </if>
+            <if test="startingAmount != null">
+               and starting_amount =  #{startingAmount,jdbcType=INTEGER}
+            </if>
+            <if test="valueDate != null">
+                and value_date = #{valueDate,jdbcType=INTEGER}
+            </if>
+            <if test="isShelf != null">
+                and  is_shelf = #{isShelf,jdbcType=TINYINT}
+            </if>
+            <if test="lowerAnnualizedIncome !=null">
+                and  annualized_income <![CDATA[ >= ]]> #{lowerAnnualizedIncome,jdbcType=DOUBLE}
+            </if>
+        </where>
+    </select>
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from investment_product
         where id = #{id,jdbcType=BIGINT}

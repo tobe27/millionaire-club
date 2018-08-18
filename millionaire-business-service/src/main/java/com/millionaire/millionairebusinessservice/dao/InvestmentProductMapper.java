@@ -1,6 +1,7 @@
 package com.millionaire.millionairebusinessservice.dao;
 
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
+import com.millionaire.millionairebusinessservice.module.ProductQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -35,6 +36,13 @@ public interface InvestmentProductMapper {
      * @Description 投资产品分页查看 按照更新时间降序排列
      **/
     List<InvestmentProduct> selectAll();
+
+    /**
+     * @Description 投资产品分页查看 传递产品参数
+     * @param
+     * @return 投资产品列表
+     **/
+    List<InvestmentProduct> selectProductByPage(ProductQuery query);
 
     int updateByPrimaryKeySelective(InvestmentProduct record);
 

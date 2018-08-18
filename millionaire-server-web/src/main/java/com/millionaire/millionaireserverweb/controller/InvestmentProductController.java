@@ -3,8 +3,8 @@ package com.millionaire.millionaireserverweb.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
+import com.millionaire.millionairebusinessservice.module.ProductQuery;
 import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
-import com.millionaire.millionaireserverweb.pojo.ProductQuery;
 import com.millionaire.millionaireserverweb.result.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +41,7 @@ public class InvestmentProductController {
     public ResultBean getListInvestmentProduct(@RequestParam("pageSize")int pageSize ,
                                                @RequestParam("pageNum") int pageNum,
                                                ProductQuery productQuery){
+
         if(pageNum==0){
             pageNum=1;
         }

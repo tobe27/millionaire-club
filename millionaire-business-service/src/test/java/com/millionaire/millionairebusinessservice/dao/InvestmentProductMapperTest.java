@@ -3,12 +3,14 @@ package com.millionaire.millionairebusinessservice.dao;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
+import com.millionaire.millionairebusinessservice.module.ProductQuery;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import javax.sound.midi.Soundbank;
 
 import java.util.List;
 
@@ -61,6 +63,16 @@ InvestmentProductMapper investmentProductMapper;
         List<InvestmentProduct> productList=investmentProductMapper.selectAll();
         PageInfo<InvestmentProduct> pageInfo=new PageInfo<InvestmentProduct>(productList);
         System.out.println(pageInfo);
+    }
+
+    @Test
+    public void selectProductByPage() {
+//       InvestmentProduct product=new InvestmentProduct();
+        ProductQuery query=new ProductQuery();
+        query.setProductCode("XSB19");
+        List<InvestmentProduct> productList=investmentProductMapper.selectProductByPage(query);
+        System.err.println(productList);
+
     }
 
     @Test
