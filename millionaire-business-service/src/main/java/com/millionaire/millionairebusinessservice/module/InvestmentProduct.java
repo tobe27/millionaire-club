@@ -2,32 +2,65 @@ package com.millionaire.millionairebusinessservice.module;
 
 import lombok.Data;
 
+
 @Data
 public class InvestmentProduct {
+    /**
+     * 产品id
+     */
     private Long id;
 
+    /**
+     * 产品代号
+     */
     private String productCode;
 
+    /**
+     * 产品名称
+     */
     private String name;
 
+    /**
+     * 年化收益
+     */
     private Double annualizedIncome;
 
+    /**
+     * 还款方式
+     */
     private Byte repaymentMode;
 
+    /**
+     * 起投金额
+     */
     private Integer startingAmount;
 
+    /**
+     * 起息日期
+     */
     private Integer valueDate;
 
     private Integer deadline;
 
+    /**
+     * 备注
+     */
     private String remark;
-
+    /**
+     * 图片存储路径
+     */
     private String moreDetails;
-
+    /**
+     * 产品分类
+     */
     private Integer type;
-
+    /**
+     * 推荐
+     */
     private Byte isRecommend;
-
+    /**
+     * 限购
+     */
     private Byte isPurchaseLimit;
 
     private Byte isShelf;
@@ -35,6 +68,7 @@ public class InvestmentProduct {
     private Long gmtCreate;
 
     private Long gmtUpdate;
+
 
     public InvestmentProduct() {
     }
