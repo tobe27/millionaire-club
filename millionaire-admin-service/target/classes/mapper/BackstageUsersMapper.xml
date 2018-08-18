@@ -163,4 +163,24 @@
       modifier = #{modifier,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="findByNameOrRole" parameterType="com.millionaire.millionaireadminservice.module.Roles" resultMap="BackstageUsers">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM backstage_users
+    <where>
+      <if test="name != null">
+        name=#{name}
+      </if>
+      <if test="role != null">
+        AND role=#{role}
+      </if>
+    </where>
+  </select>
+    <select id="findByName" resultMap="BackstageUsers">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM backstage_users
+        WHERE name=#{name}
+    </select>
 </mapper>

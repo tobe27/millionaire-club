@@ -22,6 +22,30 @@ public class Roles {
         this.modifier = modifier;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public void setGmtUpdate(Long gmtUpdate) {
+        this.gmtUpdate = gmtUpdate;
+    }
+
+    public void setFounder(String founder) {
+        this.founder = founder;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
     public Long getId() {
         return id;
     }
@@ -44,5 +68,20 @@ public class Roles {
 
     public String getModifier() {
         return modifier;
+    }
+
+    public Roles() {
+    }
+
+    @Override
+    public String toString() {
+        return "Roles{" +
+                "id=" + id +
+                ", roleName='" + roleName + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtUpdate=" + gmtUpdate +
+                ", founder='" + founder + '\'' +
+                ", modifier='" + modifier + '\'' +
+                '}';
     }
 }

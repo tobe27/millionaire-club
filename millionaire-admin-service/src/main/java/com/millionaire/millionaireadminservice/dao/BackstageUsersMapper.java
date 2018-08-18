@@ -20,4 +20,8 @@ public interface BackstageUsersMapper {
     int updateByPrimaryKey(BackstageUsers record);
 
     List<BackstageUsers> findAll();
+
+    List<BackstageUsers> findByNameOrRole(BackstageUsers backstageUsers);
+
+    BackstageUsers findByName(String name);
 }
