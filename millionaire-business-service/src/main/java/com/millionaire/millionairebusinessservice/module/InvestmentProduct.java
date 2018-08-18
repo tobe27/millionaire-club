@@ -2,6 +2,7 @@ package com.millionaire.millionairebusinessservice.module;
 
 import lombok.Data;
 
+
 @Data
 public class InvestmentProduct {
     /**
@@ -67,6 +68,7 @@ public class InvestmentProduct {
     private Long gmtCreate;
 
     private Long gmtUpdate;
+
 
     public InvestmentProduct() {
     }

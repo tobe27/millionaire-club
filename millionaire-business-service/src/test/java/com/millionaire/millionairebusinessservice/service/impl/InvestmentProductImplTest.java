@@ -17,7 +17,8 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class InvestmentProductImplTest {
 
-@Resource InvestmentProductImpl insertProductSelective;
+    @Resource
+    private InvestmentProductImpl investmentProduct;
     //添加产品返回id
     @Test
     public void insertProductSelective() {
@@ -33,7 +34,13 @@ public class InvestmentProductImplTest {
         product.setDeadline(7);
         product.setMoreDetails("no details for now");
         product.setType(10);
-       insertProductSelective.insertProductSelective(product);
+        investmentProduct.insertProductSelective(product);
         System.out.println(product.getId());
+    }
+
+    @Test
+    public void updateProductByPrimaryKeyLimit() {
+        investmentProduct.updateProductByPrimaryKeyLimit(1L,20,(byte)0,(byte)0);
+
     }
 }

@@ -45,6 +45,9 @@ InvestmentProductMapper investmentProductMapper;
 
     @Test
     public void selectByPrimaryKey() {
+        InvestmentProduct product=investmentProductMapper.selectByPrimaryKey(1L);
+        System.out.println(product);
+
     }
 
     @Test
