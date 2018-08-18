@@ -1,5 +1,6 @@
 package com.millionaire.millionairebusinessservice.service;
 
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @Description: TODO 投资产品 新增 编辑 上下架
  * @date 2018/8/17 18:57
  */
-@Service
+
 public interface InvestmentProductService {
 
     /**
@@ -38,12 +39,12 @@ Long updateProductByPrimaryKeySelective(InvestmentProduct investmentProduct);
 Long updateProductByPrimaryKeyLimit(Long id,Integer type,Byte isRecommend, Byte isPurchaseLimit);
 
 /**
- * @Description 查看投资产品
- * @param
+ * @Description 分页查询所有投资产品
+ * @param pageNum
+ * @param pageSize
  * @return
  **/
-
-//List<InvestmentProduct> select
+PageInfo<InvestmentProduct> selectByPage(int pageSize,int pageNum);
 
 
 }

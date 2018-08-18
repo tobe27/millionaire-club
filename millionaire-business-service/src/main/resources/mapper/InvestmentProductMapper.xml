@@ -32,6 +32,27 @@
         from investment_product
         where id = #{id,jdbcType=BIGINT}
     </select>
+    
+    <select id="selectByProductCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from investment_product
+        where  product_code=#{productCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByProductName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from investment_product
+        where  name= #{name,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from investment_product order by gmt_update DESC
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from investment_product
         where id = #{id,jdbcType=BIGINT}
@@ -217,4 +238,7 @@
         gmt_update = #{gmtUpdate,jdbcType=BIGINT}
         where id = #{id,jdbcType=BIGINT}
     </update>
+
+
+
 </mapper>
