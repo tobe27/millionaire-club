@@ -57,7 +57,7 @@ public class BackstageUsersMapperTest {
     @Test
     public void testI(){
         BackstageUsers backstageUsers = new BackstageUsers();
-        backstageUsers.setName("孙壮壮");
+        backstageUsers.setName("孙");
         List<BackstageUsers> list = backstageUsersService.findByNameOrRole(backstageUsers);
         for (BackstageUsers backstageUsers1:list) {
             System.out.println(backstageUsers1);
@@ -145,11 +145,11 @@ PermissionsService permissionsService;
         defaultSecurityManager.setRealm(shiroRealm);
         SecurityUtils.setSecurityManager(defaultSecurityManager);
         Subject subject = SecurityUtils.getSubject();
-        AuthenticationToken token = new UsernamePasswordToken("孙壮壮","GFGF");
+        AuthenticationToken token = new UsernamePasswordToken("小白","123456");
         subject.login(token);
         System.out.println("是否认证："+subject.isAuthenticated());
-        subject.checkRole("管理员");
-        subject.checkPermission("后台管理");
+//        subject.checkRole("管理员");
+//        subject.checkPermission("后台管理");
     }
     @Resource
     RolesPermissionsMapper rolesPermissionsMapper;

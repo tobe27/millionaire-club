@@ -1,14 +1,17 @@
 package com.millionaire.millionaireadminservice.shiro;
 
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import javax.annotation.Resource;
+import java.util.Properties;
 
 @Configuration
 public class ShiroConfiguration {
@@ -29,7 +32,7 @@ public class ShiroConfiguration {
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //密码加密
-//        myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        shiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         securityManager.setRealm(shiroRealm);
 //        securityManager.setSessionManager(sessionManager());
 //        securityManager.setCacheManager(redisCacheManager);
@@ -48,20 +51,19 @@ public class ShiroConfiguration {
         //过滤器链
         shiroFilterFactoryBean.setFilterChainDefinitions("/backstageLogin = anon");
         shiroFilterFactoryBean.setFilterChainDefinitions("/subBackstageLogin = anon");
-        shiroFilterFactoryBean.setFilterChainDefinitions("/a/* = authc");//经过认证后才能访问相对的路径
-//        shiroFilterFactoryBean.setFilterChainDefinitions("/u/testPerms = roles[admin]");
+        shiroFilterFactoryBean.setFilterChainDefinitions("/a/** = authc");//经过认证后才能访问相对的路径
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         return shiroFilterFactoryBean;
     }
 
-    //对密码加密
-//    @Bean
-//    public HashedCredentialsMatcher hashedCredentialsMatcher(){
-//        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
-//        credentialsMatcher.setHashAlgorithmName("md5");
-//        credentialsMatcher.setHashIterations(1);
-//        return credentialsMatcher;
-//    }
+//    对密码加密
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher(){
+        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+        credentialsMatcher.setHashAlgorithmName("md5");
+        credentialsMatcher.setHashIterations(2);
+        return credentialsMatcher;
+    }
     //加入注解的使用，不加入这个注解不生效
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
@@ -70,14 +72,14 @@ public class ShiroConfiguration {
         return authorizationAttributeSourceAdvisor;
     }
 
-//    @Bean
-//    public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
-//        SimpleMappingExceptionResolver simpleMappingExceptionResolver = new SimpleMappingExceptionResolver();
-//        Properties mappings = new Properties();
-//        mappings.setProperty("UnauthorizedException", "/403");
-//        mappings.setProperty("UnauthenticatedException", "/403");
-//        simpleMappingExceptionResolver.setExceptionMappings(mappings);
-//        return simpleMappingExceptionResolver;
-//    }
+    @Bean
+    public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
+        SimpleMappingExceptionResolver simpleMappingExceptionResolver = new SimpleMappingExceptionResolver();
+        Properties mappings = new Properties();
+        mappings.setProperty("UnauthorizedException", "/403");
+        mappings.setProperty("UnauthenticatedException", "/403");
+        simpleMappingExceptionResolver.setExceptionMappings(mappings);
+        return simpleMappingExceptionResolver;
+    }
 }
 
