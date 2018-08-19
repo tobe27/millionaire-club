@@ -32,9 +32,11 @@ InvestmentProductMapper investmentProductMapper;
     public void insertSelective() {
         InvestmentProduct product = new InvestmentProduct();
         // 产品代号
-        product.setProductCode("XSB");
+        product.setProductCode("XSB21");
         //产品名称
-        product.setName("新手体验计划");
+        product.setName("新手体验计划21");
+        //年化收益
+        product.setAnnualizedIncome(0.12);
         //还款方式
         product.setRepaymentMode((byte)10);
         //起息日期
@@ -43,11 +45,16 @@ InvestmentProductMapper investmentProductMapper;
         product.setStartingAmount(50000);
         //期限
         product.setDeadline(7);
+        product.setRemark("备注信息");
         product.setMoreDetails("no details for now");
         product.setType(10);
+        product.setIsRecommend((byte)1);
+        product.setIsPurchaseLimit((byte)1);
+        product.setIsShelf((byte)1);
         product.setGmtCreate(System.currentTimeMillis());
-      int id=  investmentProductMapper.insertSelective(product);
-        System.out.println(id);
+        product.setGmtUpdate(System.currentTimeMillis());
+        investmentProductMapper.insertSelective(product);
+        System.out.println(product.getId());
     }
 
     @Test
@@ -69,7 +76,14 @@ InvestmentProductMapper investmentProductMapper;
     public void selectProductByPage() {
 //       InvestmentProduct product=new InvestmentProduct();
         ProductQuery query=new ProductQuery();
-        query.setProductCode("XSB19");
+        query.setName("新");
+        query.setProductCode("1");
+        query.setUpperAnnualizedIncome(0.2);
+        query.setLowerAnnualizedIncome(0.1);
+        query.setValueDate(10);
+//        query.setIsShelf((byte)2);
+        query.setLowerDeadline(4);
+        query.setUpperDeadline(5);
         List<InvestmentProduct> productList=investmentProductMapper.selectProductByPage(query);
         System.err.println(productList);
 
@@ -81,6 +95,8 @@ InvestmentProductMapper investmentProductMapper;
 
     @Test
     public void updateByPrimaryKey() {
+
+
     }
 
     @Test

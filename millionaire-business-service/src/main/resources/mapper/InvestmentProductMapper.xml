@@ -32,7 +32,7 @@
         from investment_product
         where id = #{id,jdbcType=BIGINT}
     </select>
-    
+
     <select id="selectByProductCode" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
@@ -53,30 +53,40 @@
         from investment_product order by gmt_update DESC
     </select>
 
-    <select id="selectProductByPage" resultMap="BaseResultMap">
+    <select id="selectProductByPage"  resultMap="BaseResultMap">
          select
         <include refid="Base_Column_List" />
         from investment_product
         <where>
             <if test="name != null">
-                name = #{name,jdbcType=VARCHAR}
+                name like "%"#{name,jdbcType=VARCHAR}"%"
             </if>
             <if test="productCode != null">
-              and  product_code = #{productCode,jdbcType=VARCHAR}
+              and  product_code like  "%"#{productCode,jdbcType=VARCHAR}"%"
             </if>
             <if test="startingAmount != null">
                and starting_amount =  #{startingAmount,jdbcType=INTEGER}
             </if>
-            <if test="valueDate != null">
+            <if test="valueDate != null and valueDate != 0">
                 and value_date = #{valueDate,jdbcType=INTEGER}
             </if>
-            <if test="isShelf != null">
+            <if test="isShelf != null and isShelf != 2">
                 and  is_shelf = #{isShelf,jdbcType=TINYINT}
             </if>
-            <if test="lowerAnnualizedIncome !=null">
+            <if test="lowerAnnualizedIncome != null">
                 and  annualized_income <![CDATA[ >= ]]> #{lowerAnnualizedIncome,jdbcType=DOUBLE}
             </if>
+            <if test="upperAnnualizedIncome != null">
+                and  annualized_income <![CDATA[ <= ]]> #{upperAnnualizedIncome,jdbcType=DOUBLE}
+            </if>
+            <if test="lowerDeadline != null">
+                and deadline <![CDATA[ >= ]]> #{lowerDeadline,jdbcType=INTEGER}
+            </if>
+            <if test="upperDeadline != null">
+                and deadline <![CDATA[ <= ]]> #{upperDeadline,jdbcType=INTEGER}
+            </if>
         </where>
+          order by gmt_update DESC
     </select>
 
 
