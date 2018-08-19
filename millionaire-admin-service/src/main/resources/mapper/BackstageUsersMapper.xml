@@ -169,8 +169,8 @@
     <include refid="Base_Column_List"/>
     FROM backstage_users
     <where>
-      <if test="name != null">
-        name=#{name}
+      <if test="name != null ">
+        name LIKE '%${name}%'
       </if>
       <if test="role != null">
         AND role=#{role}

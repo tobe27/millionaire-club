@@ -7,17 +7,17 @@ import java.util.List;
 
 @Mapper
 public interface RolesMapper {
-    int deleteByPrimaryKey(Long id);
+    void deleteByPrimaryKey(Long id);
 
-    int insert(Roles record);
+    Long insert(Roles record);
 
-    int insertSelective(Roles record);
+    Long insertSelective(Roles record);
 
     Roles selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(Roles record);
+    Long updateByPrimaryKeySelective(Roles record);
 
-    int updateByPrimaryKey(Roles record);
+    Long updateByPrimaryKey(Roles record);
 
     List<Roles> findAll();
 

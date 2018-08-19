@@ -5,15 +5,15 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface PermissionsMapper {
-    int deleteByPrimaryKey(Long id);
+    void deleteByPrimaryKey(Long id);
 
-    int insert(Permissions record);
+    Long insert(Permissions record);
 
-    int insertSelective(Permissions record);
+    Long insertSelective(Permissions record);
 
     Permissions selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(Permissions record);
+    Long updateByPrimaryKeySelective(Permissions record);
 
-    int updateByPrimaryKey(Permissions record);
+    Long updateByPrimaryKey(Permissions record);
 }
