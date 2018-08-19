@@ -14,7 +14,7 @@ public interface InvestmentProductMapper {
 
     int insertSelective(InvestmentProduct record);
 
-    InvestmentProduct selectByPrimaryKey(Long id);
+    InvestmentProduct selectByPrimaryKey(Long id) ;
 
     /**
      * @param code
@@ -38,11 +38,11 @@ public interface InvestmentProductMapper {
     List<InvestmentProduct> selectAll();
 
     /**
-     * @Description 投资产品分页查看 传递产品参数
-     * @param
+     * @Description 投资产品分页查看 包含查询参数
+     * @param productQuery 包装投资产品参数类
      * @return 投资产品列表
      **/
-    List<InvestmentProduct> selectProductByPage(ProductQuery query);
+    List<InvestmentProduct> selectProductByPage(ProductQuery productQuery);
 
     int updateByPrimaryKeySelective(InvestmentProduct record);
 

@@ -1,72 +1,66 @@
 package com.millionaire.millionairebusinessservice.module;
 
+import com.millionaire.millionairebusinessservice.validatedgroup.InsertProductGroup;
+import com.millionaire.millionairebusinessservice.validatedgroup.UpdateProductGroup;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 
 @Data
 public class InvestmentProduct {
-    /**
-     * 产品id
-     */
+
+    @Null
     private Long id;
 
-    /**
-     * 产品代号
-     */
+    @NotBlank
     private String productCode;
 
-    /**
-     * 产品名称
-     */
+    @NotBlank
     private String name;
 
-    /**
-     * 年化收益
-     */
+    @NotNull
     private Double annualizedIncome;
 
-    /**
-     * 还款方式
-     */
+    @NotNull
     private Byte repaymentMode;
 
-    /**
-     * 起投金额
-     */
+
+    @NotNull
+//    @Pattern()
     private Integer startingAmount;
 
-    /**
-     * 起息日期
-     */
+
+    @NotNull
     private Integer valueDate;
 
+    @NotNull
     private Integer deadline;
 
-    /**
-     * 备注
-     */
+
     private String remark;
-    /**
-     * 图片存储路径
-     */
+
+    @NotNull
     private String moreDetails;
-    /**
-     * 产品分类
-     */
+
+    @NotNull
     private Integer type;
-    /**
-     * 推荐
-     */
+
+    @NotNull
     private Byte isRecommend;
-    /**
-     * 限购
-     */
+
+    @NotNull
     private Byte isPurchaseLimit;
 
+    @NotNull
     private Byte isShelf;
 
+    //创建时间更新时间后台封装，无需传参
+    @Null
     private Long gmtCreate;
-
+    @Null
     private Long gmtUpdate;
 
 

@@ -15,6 +15,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -66,14 +67,17 @@ public class ShiroRealm extends AuthorizingRealm {
         String userName = (String) authenticationToken.getPrincipal();
         System.out.println(userName);
 //
-        String password = backstageUsersService.findByName(userName).getPassword();
-
+        BackstageUsers backstageUsers= backstageUsersService.findByName(userName);
+        String password = backstageUsers.getPassword();
         if (password == null) {
             //这里返回后会报出对应异常
             return null;
         } else {
             //这里验证authenticationToken和simpleAuthenticationInfo的信息
             SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(userName, password, getName());
+            String salt = backstageUsers.getSalt();
+            System.out.println(salt);
+            simpleAuthenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(salt));
             return simpleAuthenticationInfo;
         }
     }

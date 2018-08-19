@@ -7,7 +7,7 @@ package com.millionaire.millionairebusinessservice.module;
  */
 
 public class ProductQuery {
-
+    
     private String name;
     private String productCode;
     private Integer valueDate;
