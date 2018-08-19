@@ -17,4 +17,9 @@ public class ResultBean<T> {
         this.message = message;
         this.data = data;
     }
+
+    public ResultBean(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 }
