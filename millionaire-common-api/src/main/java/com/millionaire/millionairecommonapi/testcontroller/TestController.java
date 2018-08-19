@@ -1,7 +1,6 @@
-package com.millionaire.millionairecommonapi.controller;
+package com.millionaire.millionairecommonapi.testcontroller;
 
 import com.millionaire.millionairecommonapi.aliyun.AliyunOSSUtil;
-import com.millionaire.millionairecommonapi.aliyun.ConstantConfig;
 import com.millionaire.millionairecommonapi.excepion.AliyunAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
