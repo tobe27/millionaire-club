@@ -5,12 +5,13 @@
     <constructor>
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="permission" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="visible" javaType="java.lang.String" jdbcType="VARCHAR"/>
       <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, permission, gmt_create, gmt_update
+    id, permission, gmt_create, gmt_update, visible
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 

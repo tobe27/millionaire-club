@@ -18,4 +18,9 @@ public interface BackstageUsersService {
     long updateByPrimaryKey(BackstageUsers record);
 
     List<BackstageUsers> findAll();
+
+    List<BackstageUsers> findByNameOrRole(BackstageUsers backstageUsers);
+
+    BackstageUsers findByName(String name);
+
 }

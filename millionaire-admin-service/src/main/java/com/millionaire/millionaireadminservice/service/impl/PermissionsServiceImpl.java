@@ -1,9 +1,23 @@
 package com.millionaire.millionaireadminservice.service.impl;
 
+
+import com.millionaire.millionaireadminservice.dao.PermissionsMapper;
 import com.millionaire.millionaireadminservice.module.Permissions;
 import com.millionaire.millionaireadminservice.service.PermissionsService;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
+@Service
 public class PermissionsServiceImpl implements PermissionsService {
+    @Resource
+    private PermissionsMapper permissionsMapper;
+
+    /**
+     * 权限是死的
+     *
+     * @param id
+     */
     @Override
     public void deleteByPrimaryKey(Long id) {
     }
@@ -20,7 +34,7 @@ public class PermissionsServiceImpl implements PermissionsService {
 
     @Override
     public Permissions selectByPrimaryKey(Long id) {
-        return null;
+        return permissionsMapper.selectByPrimaryKey(id);
     }
 
     @Override
