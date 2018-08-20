@@ -3,6 +3,8 @@ package com.millionaire.millionaireuserservice.dao;
 import com.millionaire.millionaireuserservice.module.UserBank;
 import org.apache.ibatis.annotations.Mapper;
 
+
+
 @Mapper
 public interface UserBankMapper {
     int deleteByPrimaryKey(Long id);
@@ -16,4 +18,5 @@ public interface UserBankMapper {
     int updateByPrimaryKeySelective(UserBank record);
 
     int updateByPrimaryKey(UserBank record);
+
 }

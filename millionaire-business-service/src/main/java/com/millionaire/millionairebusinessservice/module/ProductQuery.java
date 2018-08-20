@@ -1,5 +1,7 @@
 package com.millionaire.millionairebusinessservice.module;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @author Liu Kai
  * @Description: TODO 接收产品列表返回的参数
@@ -7,7 +9,6 @@ package com.millionaire.millionairebusinessservice.module;
  */
 
 public class ProductQuery {
-    
     private String name;
     private String productCode;
     private Integer valueDate;
