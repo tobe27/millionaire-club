@@ -16,7 +16,7 @@ public class RolesPermissionsServiceImpl implements RolesPermissionsService {
     /**
      * 增加
      * 删除
-     *
+     *通过角色id查询
      * @param id
      */
     @Override

@@ -35,7 +35,7 @@ public class BackstageUsersMapperTest {
         backstageUsers.setPassword("GFGF");
         backstageUsers.setSalt("GFGFGF");
         backstageUsers.setPhone("GFGF");
-        backstageUsers.setRole("管理员");
+        backstageUsers.setRoleId(2L);
         backstageUsers.setGmtUpdate(System.currentTimeMillis());
         backstageUsers.setGmtCreate(5L);
         backstageUsers.setFounder("DSASD");
