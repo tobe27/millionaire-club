@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import javax.sound.midi.Soundbank;
 
 import java.util.List;
 
@@ -95,6 +94,7 @@ InvestmentProductMapper investmentProductMapper;
 
     @Test
     public void updateByPrimaryKey() {
+
 
 
     }
