@@ -41,9 +41,9 @@ public class ShiroRealm extends AuthorizingRealm {
         BackstageUsers backstageUsers = backstageUsersService.findByName(userName);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         //添加角色权限
-        simpleAuthorizationInfo.addRole(backstageUsers.getRole());
-        //通过用户表的角色名称查询角色
-        Roles roles = rolesService.findByName(backstageUsers.getRole());
+        Long roleId = backstageUsers.getRoleId();
+        Roles roles = rolesService.selectByPrimaryKey(roleId);
+        simpleAuthorizationInfo.addRole(roles.getRoleName());
         //通过角色id来查询权限id
         List<RolesPermissions> rolesPermissions = rolesPermissionsService.findByRoleId(roles.getId());
         for (RolesPermissions rolesPermission : rolesPermissions) {

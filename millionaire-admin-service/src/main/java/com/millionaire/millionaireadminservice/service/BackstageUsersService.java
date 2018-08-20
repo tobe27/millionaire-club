@@ -15,6 +15,8 @@ public interface BackstageUsersService {
 
     long updateByPrimaryKeySelective(BackstageUsers record);
 
+    Long updatePassword(BackstageUsers backstageUsers);
+
     long updateByPrimaryKey(BackstageUsers record);
 
     List<BackstageUsers> findAll();

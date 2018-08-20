@@ -39,7 +39,7 @@ public class RolesServiceImpl implements RolesService {
 
     @Override
     public Roles selectByPrimaryKey(Long id) {
-        return null;
+        return rolesMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class RolesServiceImpl implements RolesService {
 
     @Override
     public long updateByPrimaryKey(Roles record) {
-        rolesMapper.updateByPrimaryKey(record);
-        return record.getId();
+
+        return rolesMapper.updateByPrimaryKey(record);
     }
 
     @Override
