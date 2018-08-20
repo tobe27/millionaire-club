@@ -7,17 +7,21 @@ import java.util.List;
 
 @Mapper
 public interface BackstageUsersMapper {
-    int deleteByPrimaryKey(Long id);
+    void deleteByPrimaryKey(Long id);
 
-    int insert(BackstageUsers record);
+    Long insert(BackstageUsers record);
 
-    int insertSelective(BackstageUsers record);
+    Long insertSelective(BackstageUsers record);
 
     BackstageUsers selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(BackstageUsers record);
+    Long updateByPrimaryKeySelective(BackstageUsers record);
 
-    int updateByPrimaryKey(BackstageUsers record);
+    Long updateByPrimaryKey(BackstageUsers record);
 
     List<BackstageUsers> findAll();
+
+    List<BackstageUsers> findByNameOrRole(BackstageUsers backstageUsers);
+
+    BackstageUsers findByName(String name);
 }

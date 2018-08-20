@@ -19,6 +19,26 @@ public class RolesPermissions {
         this.gmtUpdate = gmtUpdate;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setPermissionId(Long permissionId) {
+        this.permissionId = permissionId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public void setGmtUpdate(Long gmtUpdate) {
+        this.gmtUpdate = gmtUpdate;
+    }
+
     public Long getId() {
         return id;
     }
@@ -37,5 +57,19 @@ public class RolesPermissions {
 
     public Long getGmtUpdate() {
         return gmtUpdate;
+    }
+
+    @Override
+    public String toString() {
+        return "RolesPermissions{" +
+                "id=" + id +
+                ", permissionId=" + permissionId +
+                ", roleId=" + roleId +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtUpdate=" + gmtUpdate +
+                '}';
+    }
+
+    public RolesPermissions() {
     }
 }

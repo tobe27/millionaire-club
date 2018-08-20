@@ -7,10 +7,22 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+
 @Service
 public class BackstageUsersServiceImpl implements BackstageUsersService {
     @Resource
     private BackstageUsersMapper backstageUsersMapper;
+
+    /**
+     * 增加
+     * 删除
+     * 查询所有
+     * 更新
+     * 条件查询
+     * 通过名称查询
+     *
+     * @param id
+     */
 
     @Override
     public void deleteByPrimaryKey(Long id) {
@@ -46,5 +58,15 @@ public class BackstageUsersServiceImpl implements BackstageUsersService {
     @Override
     public List<BackstageUsers> findAll() {
         return backstageUsersMapper.findAll();
+    }
+
+    @Override
+    public List<BackstageUsers> findByNameOrRole(BackstageUsers backstageUsers) {
+        return backstageUsersMapper.findByNameOrRole(backstageUsers);
+    }
+
+    @Override
+    public BackstageUsers findByName(String name) {
+        return backstageUsersMapper.findByName(name);
     }
 }
