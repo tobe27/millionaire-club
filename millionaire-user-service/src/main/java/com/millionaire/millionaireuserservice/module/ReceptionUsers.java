@@ -72,10 +72,6 @@ public class ReceptionUsers {
         this.gmtUpdate = gmtUpdate;
         this.loginTime = loginTime;
     }
-
-    public ReceptionUsers() {
-    }
-
     public Long getId() {
         return id;
     }

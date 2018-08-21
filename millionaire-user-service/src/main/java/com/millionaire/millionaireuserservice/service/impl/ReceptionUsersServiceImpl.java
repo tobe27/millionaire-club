@@ -75,7 +75,7 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
      **/
     @Override
     public ReceptionUsers selectByPrimaryKey(Long id) {
-        return usersMapper.selectByPrimaryKey(id);
+        return null;
     }
 
     /**

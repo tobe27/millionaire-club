@@ -72,6 +72,7 @@ public interface InvestmentProductService {
      **/
     InvestmentProduct selectByProductName(String name);
 
+
     /**
      * @param code
      * @return 投资产品

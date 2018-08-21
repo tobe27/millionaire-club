@@ -58,6 +58,7 @@
     id_front, id_back, address, bank_id, application_time, refusal, assets, profit, logo, 
     status, id_authentication, gmt_create, gmt_update, login_time
     </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
