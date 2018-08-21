@@ -47,10 +47,16 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!--添加business-service依赖-->
+        <!--对business-service模块依赖-->
         <dependency>
             <groupId>com.millionaire</groupId>
             <artifactId>millionaire-common-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--对user-service模块依赖-->
+        <dependency>
+            <groupId>com.millionaire</groupId>
+            <artifactId>millionaire-user-service</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -60,7 +66,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
+        <!--参数校验-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>

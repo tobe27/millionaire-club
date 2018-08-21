@@ -24,20 +24,20 @@ public interface InvestmentProductService {
 
     /**
      * @param investmentProduct 投资产品
-     * @return 返回编辑投资产品id
+     * @return 受影响行数
      * @Description 编辑投资产品方法一 不限定参数 包装更新时间
      **/
-    Long updateProductByPrimaryKeySelective(InvestmentProduct investmentProduct);
+    int updateProductByPrimaryKeySelective(InvestmentProduct investmentProduct);
 
     /**
      * @param id              产品id
      * @param type            产品分类
      * @param isRecommend     推荐
      * @param isPurchaseLimit 限购
-     * @return 返回编辑投资产品id
+     * @return 收影响行数
      * @Description 编辑投资产品方法二 限定只能更新1.产品分类 2.推荐 3.限购 包装更新时间
      **/
-    Long updateProductByPrimaryKeyLimit(Long id, Integer type, Byte isRecommend, Byte isPurchaseLimit);
+    int updateProductByPrimaryKeyLimit(Long id, Integer type, Byte isRecommend, Byte isPurchaseLimit);
 
 
     /**

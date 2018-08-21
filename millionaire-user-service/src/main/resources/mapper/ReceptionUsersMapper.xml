@@ -1,49 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.millionaire.millionaireuserservice.dao.ReceptionUsersMapper">
-  <resultMap id="BaseResultMap" type="com.millionaire.millionaireuserservice.module.ReceptionUsers">
-    <constructor>
-      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="user_number" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="salt" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="manager_number" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="id_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="id_number" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="id_front" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="id_back" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="bank_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="application_time" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="refusal" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="assets" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="profit" javaType="java.lang.Double" jdbcType="DOUBLE" />
-      <arg column="logo" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="id_authentication" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="login_time" javaType="java.lang.Long" jdbcType="BIGINT" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.millionaire.millionaireuserservice.module.ReceptionUsers">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="salt" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="manager_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="id_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="id_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="id_front" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="id_back" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="bank_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="application_time" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="refusal" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="assets" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="profit" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="logo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="id_authentication" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="login_time" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, user_number, phone, password, salt, manager_number, email, id_name, id_number, 
     id_front, id_back, address, bank_id, application_time, refusal, assets, profit, logo, 
     status, id_authentication, gmt_create, gmt_update, login_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from reception_users
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from reception_users
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from reception_users
+        order by gmt_create desc;
+    </select>
+    <select id="selectUserByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from reception_users
+        <where>
+            <if test="idName != null">
+                id_name like "%"#{idName,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="phone != null">
+                and phone like "%"#{phone,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="managerNumber != null">
+                and manager_number like "%" #{managerNumber,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="status != null">
+                and status =  #{status,jdbcType=TINYINT}
+            </if>
+            <if test="lowerDate != null">
+               and gmt_create <![CDATA[ >= ]]>  #{lowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="upperDate != null">
+                and gmt_create <![CDATA[ <= ]]>  #{upperDate,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from reception_users
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers"
+            useGeneratedKeys="true" keyProperty="id">
     insert into reception_users (user_number, phone,
       password, salt, manager_number, 
       email, id_name, id_number, 
@@ -61,218 +94,220 @@
       #{status,jdbcType=TINYINT}, #{idAuthentication,jdbcType=TINYINT}, #{gmtCreate,jdbcType=BIGINT}, 
       #{gmtUpdate,jdbcType=BIGINT}, #{loginTime,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers" useGeneratedKeys="true" keyProperty="id">
-    insert into reception_users
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userNumber != null">
-        user_number,
-      </if>
-      <if test="phone != null">
-        phone,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="salt != null">
-        salt,
-      </if>
-      <if test="managerNumber != null">
-        manager_number,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="idName != null">
-        id_name,
-      </if>
-      <if test="idNumber != null">
-        id_number,
-      </if>
-      <if test="idFront != null">
-        id_front,
-      </if>
-      <if test="idBack != null">
-        id_back,
-      </if>
-      <if test="address != null">
-        address,
-      </if>
-      <if test="bankId != null">
-        bank_id,
-      </if>
-      <if test="applicationTime != null">
-        application_time,
-      </if>
-      <if test="refusal != null">
-        refusal,
-      </if>
-      <if test="assets != null">
-        assets,
-      </if>
-      <if test="profit != null">
-        profit,
-      </if>
-      <if test="logo != null">
-        logo,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="idAuthentication != null">
-        id_authentication,
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create,
-      </if>
-      <if test="gmtUpdate != null">
-        gmt_update,
-      </if>
-      <if test="loginTime != null">
-        login_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userNumber != null">
-        #{userNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="salt != null">
-        #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="managerNumber != null">
-        #{managerNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="idName != null">
-        #{idName,jdbcType=VARCHAR},
-      </if>
-      <if test="idNumber != null">
-        #{idNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="idFront != null">
-        #{idFront,jdbcType=VARCHAR},
-      </if>
-      <if test="idBack != null">
-        #{idBack,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null">
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="bankId != null">
-        #{bankId,jdbcType=BIGINT},
-      </if>
-      <if test="applicationTime != null">
-        #{applicationTime,jdbcType=BIGINT},
-      </if>
-      <if test="refusal != null">
-        #{refusal,jdbcType=VARCHAR},
-      </if>
-      <if test="assets != null">
-        #{assets,jdbcType=DOUBLE},
-      </if>
-      <if test="profit != null">
-        #{profit,jdbcType=DOUBLE},
-      </if>
-      <if test="logo != null">
-        #{logo,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
-      <if test="idAuthentication != null">
-        #{idAuthentication,jdbcType=TINYINT},
-      </if>
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=BIGINT},
-      </if>
-      <if test="gmtUpdate != null">
-        #{gmtUpdate,jdbcType=BIGINT},
-      </if>
-      <if test="loginTime != null">
-        #{loginTime,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers">
-    update reception_users
-    <set>
-      <if test="userNumber != null">
-        user_number = #{userNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="salt != null">
-        salt = #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="managerNumber != null">
-        manager_number = #{managerNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="idName != null">
-        id_name = #{idName,jdbcType=VARCHAR},
-      </if>
-      <if test="idNumber != null">
-        id_number = #{idNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="idFront != null">
-        id_front = #{idFront,jdbcType=VARCHAR},
-      </if>
-      <if test="idBack != null">
-        id_back = #{idBack,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null">
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="bankId != null">
-        bank_id = #{bankId,jdbcType=BIGINT},
-      </if>
-      <if test="applicationTime != null">
-        application_time = #{applicationTime,jdbcType=BIGINT},
-      </if>
-      <if test="refusal != null">
-        refusal = #{refusal,jdbcType=VARCHAR},
-      </if>
-      <if test="assets != null">
-        assets = #{assets,jdbcType=DOUBLE},
-      </if>
-      <if test="profit != null">
-        profit = #{profit,jdbcType=DOUBLE},
-      </if>
-      <if test="logo != null">
-        logo = #{logo,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=TINYINT},
-      </if>
-      <if test="idAuthentication != null">
-        id_authentication = #{idAuthentication,jdbcType=TINYINT},
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=BIGINT},
-      </if>
-      <if test="gmtUpdate != null">
-        gmt_update = #{gmtUpdate,jdbcType=BIGINT},
-      </if>
-      <if test="loginTime != null">
-        login_time = #{loginTime,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers">
+    <insert id="insertSelective" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into reception_users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userNumber != null">
+                user_number,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="salt != null">
+                salt,
+            </if>
+            <if test="managerNumber != null">
+                manager_number,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="idName != null">
+                id_name,
+            </if>
+            <if test="idNumber != null">
+                id_number,
+            </if>
+            <if test="idFront != null">
+                id_front,
+            </if>
+            <if test="idBack != null">
+                id_back,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="bankId != null">
+                bank_id,
+            </if>
+            <if test="applicationTime != null">
+                application_time,
+            </if>
+            <if test="refusal != null">
+                refusal,
+            </if>
+            <if test="assets != null">
+                assets,
+            </if>
+            <if test="profit != null">
+                profit,
+            </if>
+            <if test="logo != null">
+                logo,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="idAuthentication != null">
+                id_authentication,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update,
+            </if>
+            <if test="loginTime != null">
+                login_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userNumber != null">
+                #{userNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="managerNumber != null">
+                #{managerNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="idName != null">
+                #{idName,jdbcType=VARCHAR},
+            </if>
+            <if test="idNumber != null">
+                #{idNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="idFront != null">
+                #{idFront,jdbcType=VARCHAR},
+            </if>
+            <if test="idBack != null">
+                #{idBack,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="bankId != null">
+                #{bankId,jdbcType=BIGINT},
+            </if>
+            <if test="applicationTime != null">
+                #{applicationTime,jdbcType=BIGINT},
+            </if>
+            <if test="refusal != null">
+                #{refusal,jdbcType=VARCHAR},
+            </if>
+            <if test="assets != null">
+                #{assets,jdbcType=DOUBLE},
+            </if>
+            <if test="profit != null">
+                #{profit,jdbcType=DOUBLE},
+            </if>
+            <if test="logo != null">
+                #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="idAuthentication != null">
+                #{idAuthentication,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+            <if test="loginTime != null">
+                #{loginTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers">
+        update reception_users
+        <set>
+            <if test="userNumber != null">
+                user_number = #{userNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                salt = #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="managerNumber != null">
+                manager_number = #{managerNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="idName != null">
+                id_name = #{idName,jdbcType=VARCHAR},
+            </if>
+            <if test="idNumber != null">
+                id_number = #{idNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="idFront != null">
+                id_front = #{idFront,jdbcType=VARCHAR},
+            </if>
+            <if test="idBack != null">
+                id_back = #{idBack,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="bankId != null">
+                bank_id = #{bankId,jdbcType=BIGINT},
+            </if>
+            <if test="applicationTime != null">
+                application_time = #{applicationTime,jdbcType=BIGINT},
+            </if>
+            <if test="refusal != null">
+                refusal = #{refusal,jdbcType=VARCHAR},
+            </if>
+            <if test="assets != null">
+                assets = #{assets,jdbcType=DOUBLE},
+            </if>
+            <if test="profit != null">
+                profit = #{profit,jdbcType=DOUBLE},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="idAuthentication != null">
+                id_authentication = #{idAuthentication,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers">
     update reception_users
     set user_number = #{userNumber,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},

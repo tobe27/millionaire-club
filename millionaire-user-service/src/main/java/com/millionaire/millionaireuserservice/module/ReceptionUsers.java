@@ -47,6 +47,8 @@ public class ReceptionUsers {
 
     private Long loginTime;
 
+
+
     public ReceptionUsers() {
     }
 

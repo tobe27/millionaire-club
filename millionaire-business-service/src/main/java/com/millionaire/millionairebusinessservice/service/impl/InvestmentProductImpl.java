@@ -47,16 +47,14 @@ public class InvestmentProductImpl implements InvestmentProductService {
 
     /**
      * @param investmentProduct 投资产品
-     * @return id 成功 返回编辑投资产品id 失败抛出异常
+     * @return 返回编辑投资产品id
      * @Description 编辑投资产品方法一 不限定参数 包装更新时间
      **/
     @Override
-    public Long updateProductByPrimaryKeySelective(InvestmentProduct investmentProduct)  {
-        Long id = investmentProduct.getId();
+    public int updateProductByPrimaryKeySelective(InvestmentProduct investmentProduct)  {
         //封装更新时间
         investmentProduct.setGmtUpdate(System.currentTimeMillis());
-        investmentProductMapper.updateByPrimaryKeySelective(investmentProduct);
-        return id;
+        return investmentProductMapper.updateByPrimaryKeySelective(investmentProduct);
     }
 
     /**
@@ -64,16 +62,11 @@ public class InvestmentProductImpl implements InvestmentProductService {
      * @param type            产品分类
      * @param isRecommend     推荐
      * @param isPurchaseLimit 限购
-     * @return 成功 返回编辑投资产品id 异常返回0
+     * @return  返回编辑投资产品id
      * @Description 编辑投资产品方法二 限定只能更新1.产品分类 2.推荐 3.限购 包装更新时间
      **/
     @Override
-    public Long updateProductByPrimaryKeyLimit(Long id, Integer type, Byte isRecommend, Byte isPurchaseLimit) {
-        InvestmentProduct product1 = investmentProductMapper.selectByPrimaryKey(id);
-        if (product1 == null) {
-            logger.info("更新产品失败，产品id:{}不存在", id);
-            return 0L;
-        }
+    public int updateProductByPrimaryKeyLimit(Long id, Integer type, Byte isRecommend, Byte isPurchaseLimit) {
         InvestmentProduct product = investmentProductMapper.selectByPrimaryKey(id);
         //产品分类
         product.setType(type);
@@ -84,8 +77,7 @@ public class InvestmentProductImpl implements InvestmentProductService {
         //更新时间
         product.setGmtUpdate(System.currentTimeMillis());
 //        logger.info("编辑投资产品 :{}", id);
-        investmentProductMapper.updateByPrimaryKeySelective(product);
-        return id;
+      return   investmentProductMapper.updateByPrimaryKeySelective(product);
     }
 
     /**

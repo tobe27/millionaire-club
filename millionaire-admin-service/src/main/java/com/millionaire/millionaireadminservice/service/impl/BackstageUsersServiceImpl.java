@@ -42,12 +42,17 @@ public class BackstageUsersServiceImpl implements BackstageUsersService {
 
     @Override
     public BackstageUsers selectByPrimaryKey(Long id) {
-        return null;
+        return backstageUsersMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public long updateByPrimaryKeySelective(BackstageUsers record) {
         return 0;
+    }
+
+    @Override
+    public Long updatePassword(BackstageUsers backstageUsers) {
+        return backstageUsersMapper.updatePassword(backstageUsers);
     }
 
     @Override

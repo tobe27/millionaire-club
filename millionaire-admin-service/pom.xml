@@ -38,6 +38,11 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.11</version>
+        </dependency>
         <!--shiro整合spring-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
