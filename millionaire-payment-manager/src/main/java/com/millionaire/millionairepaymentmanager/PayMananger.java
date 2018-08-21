@@ -13,8 +13,6 @@ public class PayMananger {
      */
     public void payManager() {
 
-
-
     }
 
 
