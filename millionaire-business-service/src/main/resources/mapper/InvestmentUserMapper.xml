@@ -33,13 +33,13 @@
     delete from investment_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
-    insert into investment_user (id, product_id, uid, 
+  <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser" useGeneratedKeys="true" keyProperty="id">
+    insert into investment_user (product_id, uid,
       value_date_start, value_date_end, lending_contract_number, 
       contract_sign, investment_amount, investment_status, 
       expected_income, distributed_income, gmt_create, 
       gmt_update)
-    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, 
+    values (#{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},
       #{valueDateStart,jdbcType=BIGINT}, #{valueDateEnd,jdbcType=BIGINT}, #{lendingContractNumber,jdbcType=VARCHAR}, 
       #{contractSign,jdbcType=VARCHAR}, #{investmentAmount,jdbcType=INTEGER}, #{investmentStatus,jdbcType=TINYINT}, 
       #{expectedIncome,jdbcType=DOUBLE}, #{distributedIncome,jdbcType=DOUBLE}, #{gmtCreate,jdbcType=BIGINT}, 
@@ -48,9 +48,6 @@
   <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
     insert into investment_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="productId != null">
         product_id,
       </if>
@@ -89,9 +86,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="productId != null">
         #{productId,jdbcType=BIGINT},
       </if>

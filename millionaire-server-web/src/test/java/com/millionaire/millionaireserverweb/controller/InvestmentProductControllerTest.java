@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -21,7 +22,7 @@ public class InvestmentProductControllerTest {
    @Autowired
    InvestmentProductService service;
 
-   @Autowired
+   @Resource
     InvestmentProductMapper mapper;
 
     @Test
@@ -49,11 +50,11 @@ public class InvestmentProductControllerTest {
         product.setName("体验计划" );
         //还款方式
         product.setRepaymentMode((byte) 10);
-        product.setValueDate(10);
+        product.setValueDate((byte)10);
         product.setStartingAmount(50000);
         product.setDeadline(7);
         product.setMoreDetails("no details for now");
-        product.setType(10);
+        product.setType((byte)10);
         product.setIsRecommend((byte)0);
         product.setIsShelf((byte)0);
         product.setIsPurchaseLimit((byte)0);

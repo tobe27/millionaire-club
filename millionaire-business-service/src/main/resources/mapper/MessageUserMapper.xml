@@ -25,20 +25,17 @@
     delete from message_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.MessageUser">
-    insert into message_user (id, code, investment_user_id, 
+  <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.MessageUser" useGeneratedKeys="true" keyProperty="id">
+    insert into message_user (code, investment_user_id,
       uid, is_look, gmt_create, 
       gmt_update)
-    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=TINYINT}, #{investmentUserId,jdbcType=BIGINT}, 
+    values (#{code,jdbcType=TINYINT}, #{investmentUserId,jdbcType=BIGINT},
       #{uid,jdbcType=BIGINT}, #{isLook,jdbcType=TINYINT}, #{gmtCreate,jdbcType=BIGINT}, 
       #{gmtUpdate,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.MessageUser">
+  <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.MessageUser" useGeneratedKeys="true" keyProperty="id">
     insert into message_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="code != null">
         code,
       </if>
@@ -59,9 +56,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="code != null">
         #{code,jdbcType=TINYINT},
       </if>

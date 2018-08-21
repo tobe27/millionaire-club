@@ -30,12 +30,12 @@
     delete from trading_flow
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.TradingFlow">
-    insert into trading_flow (id, product_name, phone, 
+  <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.TradingFlow" useGeneratedKeys="true" keyProperty="id">
+    insert into trading_flow (product_name, phone,
       name, amount, type, 
       bank_card_id, pay_type, status, 
       gmt_create, gmt_update)
-    values (#{id,jdbcType=BIGINT}, #{productName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+    values (#{productName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
       #{name,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
       #{bankCardId,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
       #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT})
@@ -43,9 +43,6 @@
   <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.TradingFlow">
     insert into trading_flow
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="productName != null">
         product_name,
       </if>
@@ -78,9 +75,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="productName != null">
         #{productName,jdbcType=VARCHAR},
       </if>

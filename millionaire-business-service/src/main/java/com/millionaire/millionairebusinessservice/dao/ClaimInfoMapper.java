@@ -1,7 +1,9 @@
 package com.millionaire.millionairebusinessservice.dao;
 
 import com.millionaire.millionairebusinessservice.module.ClaimInfo;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface ClaimInfoMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,7 @@ public interface ClaimInfoMapper {
     int updateByPrimaryKeySelective(ClaimInfo record);
 
     int updateByPrimaryKey(ClaimInfo record);
+
+//    根据债券代码查询
+    ClaimInfo selectByCode(String code);
 }

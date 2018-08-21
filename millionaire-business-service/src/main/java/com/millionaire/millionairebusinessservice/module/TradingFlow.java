@@ -3,20 +3,28 @@ package com.millionaire.millionairebusinessservice.module;
 public class TradingFlow {
     private Long id;
 
+//    产品名称
     private String productName;
 
+//    用户手机号
     private String phone;
 
+//    用户姓名
     private String name;
 
+//    投资金额
     private Integer amount;
 
+//    （-1付款，1回款）
     private Byte type;
 
+//    银行卡账号
     private String bankCardId;
 
+//    交易方式（哪家银行）
     private String payType;
 
+//    交易状态
     private Byte status;
 
     private Long gmtCreate;

@@ -98,7 +98,7 @@ public class ReceptionUsersController {
         //手机号正则式判断
         String pattern = "1[0-9]{10}";
         if (phone != null && phone.matches(pattern)) {
-            users.setPhone(phone);
+            users.setPhone(Long.valueOf(phone));
         }
         if (managerNum != null) {
             users.setManagerNumber(managerNum);

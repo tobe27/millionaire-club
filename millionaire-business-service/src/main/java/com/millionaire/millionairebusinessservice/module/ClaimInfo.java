@@ -3,32 +3,46 @@ package com.millionaire.millionairebusinessservice.module;
 public class ClaimInfo {
     private Long id;
 
+//    债权代号（原型图为给定生成规则：待定义）
     private String claimCode;
 
+//    债权姓名
     private String creditorName;
 
+//    债权人手机号
     private String creditorPhone;
 
+//    债权人身份证号码
     private String creditorIdNumber;
 
+//    出借日期
     private Long lendingDate;
 
+//    出借期限
     private Integer lendingPeriod;
 
+//    到期日期（=lendingDate+lendingPeriod）
     private Long expirationDate;
 
+//    出借金额
     private Integer lendingAmount;
 
+//    债权性质
     private String property;
 
+//    出借利率
     private Double interestRate;
 
+//    未匹配金额
     private Integer unMatchAmount;
 
+//    匹配利率
     private Double matchRate;
 
+//    备注
     private String remarks;
 
+//    状态（是否开始匹配债权，是否到期）
     private Integer status;
 
     private Long gmtCreate;

@@ -3,12 +3,16 @@ package com.millionaire.millionairebusinessservice.module;
 public class MessageUser {
     private Long id;
 
+//    代号
     private Byte code;
 
+//    用户投资id
     private Long investmentUserId;
 
+//    用户id
     private Long uid;
 
+//    是否有观看过信息
     private Byte isLook;
 
     private Long gmtCreate;

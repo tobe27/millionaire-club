@@ -3,24 +3,34 @@ package com.millionaire.millionairebusinessservice.module;
 public class InvestmentUser {
     private Long id;
 
+//    产品编号
     private Long productId;
 
+//    用户id
     private Long uid;
 
+//    起息时间
     private Long valueDateStart;
 
+//    到息时间
     private Long valueDateEnd;
 
+//    产品协议编号
     private String lendingContractNumber;
 
+//    用户合同签名
     private String contractSign;
 
+//    投资金额
     private Integer investmentAmount;
 
+//    投资状态
     private Byte investmentStatus;
 
+//    预期收益
     private Double expectedIncome;
 
+//    已分配收益
     private Double distributedIncome;
 
     private Long gmtCreate;

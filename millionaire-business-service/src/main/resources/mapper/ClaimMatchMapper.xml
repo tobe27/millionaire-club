@@ -24,20 +24,17 @@
     delete from claim_match
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.ClaimMatch">
-    insert into claim_match (id, claim_id, investment_user_id, 
+  <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.ClaimMatch" useGeneratedKeys="true" keyProperty="id">
+    insert into claim_match (claim_id, investment_user_id,
       credit_contract_number, gmt_create, gmt_update
       )
-    values (#{id,jdbcType=BIGINT}, #{claimId,jdbcType=BIGINT}, #{investmentUserId,jdbcType=BIGINT}, 
+    values (#{claimId,jdbcType=BIGINT}, #{investmentUserId,jdbcType=BIGINT},
       #{creditContractNumber,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.ClaimMatch">
+  <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.ClaimMatch" useGeneratedKeys="true" keyProperty="id">
     insert into claim_match
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="claimId != null">
         claim_id,
       </if>
@@ -55,9 +52,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="claimId != null">
         #{claimId,jdbcType=BIGINT},
       </if>

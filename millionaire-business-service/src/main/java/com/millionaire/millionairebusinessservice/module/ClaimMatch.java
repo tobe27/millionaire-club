@@ -3,10 +3,13 @@ package com.millionaire.millionairebusinessservice.module;
 public class ClaimMatch {
     private Long id;
 
+//    债权id
     private Long claimId;
 
+//    用户投资id
     private Long investmentUserId;
 
+//    债权编号，每一份匹配债权的合同编号不一样
     private String creditContractNumber;
 
     private Long gmtCreate;

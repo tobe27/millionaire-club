@@ -36,26 +36,23 @@
     delete from investment_product
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentProduct">
-    insert into investment_product (id, product_code, name, 
+  <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentProduct" useGeneratedKeys="true" keyProperty="id">
+    insert into investment_product (product_code, name,
       annualized_income, repayment_mode, starting_amount, 
       value_date, deadline, remark, 
       more_details, type, is_recommend, 
       is_purchase_limit, is_shelf, gmt_create, 
       gmt_update)
-    values (#{id,jdbcType=BIGINT}, #{productCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+    values (#{productCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
       #{annualizedIncome,jdbcType=DOUBLE}, #{repaymentMode,jdbcType=TINYINT}, #{startingAmount,jdbcType=INTEGER}, 
       #{valueDate,jdbcType=TINYINT}, #{deadline,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
       #{moreDetails,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{isRecommend,jdbcType=TINYINT}, 
       #{isPurchaseLimit,jdbcType=TINYINT}, #{isShelf,jdbcType=TINYINT}, #{gmtCreate,jdbcType=BIGINT}, 
       #{gmtUpdate,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentProduct">
+  <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentProduct" useGeneratedKeys="true" keyProperty="id">
     insert into investment_product
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="productCode != null">
         product_code,
       </if>
@@ -103,9 +100,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="productCode != null">
         #{productCode,jdbcType=VARCHAR},
       </if>
@@ -223,4 +217,63 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
+    <select id="selectByProductCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from investment_product
+        where  product_code=#{productCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByProductName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from investment_product
+        where  name= #{name,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from investment_product order by gmt_update DESC
+    </select>
+
+    <select id="selectProductByPage"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from investment_product
+        <where>
+            <if test="name != null">
+                name like "%"#{name,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="productCode != null">
+                and  product_code like  "%"#{productCode,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="startingAmount != null">
+                and starting_amount =  #{startingAmount,jdbcType=INTEGER}
+            </if>
+            <if test="valueDate != null and valueDate != 0">
+                and value_date = #{valueDate,jdbcType=TINYINT}
+            </if>
+            <if test="isShelf != null and isShelf != 2">
+                and  is_shelf = #{isShelf,jdbcType=TINYINT}
+            </if>
+            <if test="lowerAnnualizedIncome != null">
+                and  annualized_income <![CDATA[ >= ]]> #{lowerAnnualizedIncome,jdbcType=DOUBLE}
+            </if>
+            <if test="upperAnnualizedIncome != null">
+                and  annualized_income <![CDATA[ <= ]]> #{upperAnnualizedIncome,jdbcType=DOUBLE}
+            </if>
+            <if test="lowerDeadline != null">
+                and deadline <![CDATA[ >= ]]> #{lowerDeadline,jdbcType=INTEGER}
+            </if>
+            <if test="upperDeadline != null">
+                and deadline <![CDATA[ <= ]]> #{upperDeadline,jdbcType=INTEGER}
+            </if>
+        </where>
+        order by gmt_update DESC
+    </select>
+
+
 </mapper>

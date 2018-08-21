@@ -3,30 +3,43 @@ package com.millionaire.millionairebusinessservice.module;
 public class InvestmentProduct {
     private Long id;
 
+//    产品代号
     private String productCode;
 
+//    产品名称
     private String name;
 
+//    产品收益率
     private Double annualizedIncome;
 
+//    还款方式
     private Byte repaymentMode;
 
+//    起投金额
     private Integer startingAmount;
 
+//    起息日期
     private Byte valueDate;
 
+//    期限
     private Integer deadline;
 
+//    备注
     private String remark;
 
+//    产品详情
     private String moreDetails;
 
+//    类型
     private Byte type;
 
+//    是否推荐
     private Byte isRecommend;
 
+//    是否限购
     private Byte isPurchaseLimit;
 
+//    上下架
     private Byte isShelf;
 
     private Long gmtCreate;

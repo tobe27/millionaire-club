@@ -59,7 +59,7 @@ public class InvestmentProductController {
      * @return 0=成功  -1=失败
      * @Description 编辑产品上下架状态
      **/
-    @PutMapping("/product_shelf/{productId}")
+    @PutMapping("/product-shelf/{productId}")
     public ResultBean updateProductIsShelf(@PathVariable("productId") Long productId,
                                            @RequestParam("isShelf") Byte isShelf) {
 
@@ -89,7 +89,7 @@ public class InvestmentProductController {
      * @return 成功0 失败-1
      * @Description 新增投资产品产品
      **/
-    @PostMapping("/investment_product")
+    @PostMapping("/investment-product")
     public ResultBean insertInvestmentProduct(@Validated InvestmentProduct investmentProduct) {
         //产品名检验
         String name = investmentProduct.getName();
@@ -143,7 +143,7 @@ public class InvestmentProductController {
      **/
     @PutMapping("/product-info/{productId}")
     public ResultBean updateProductShelfCommendLimit(@PathVariable("productId") Long productId,
-                                                     @RequestParam("type") Integer type,
+                                                     @RequestParam("type") Byte type,
                                                      @RequestParam("isRecommend") Byte isRecommend,
                                                      @RequestParam("isPurchaseLimit") Byte isPurchaseLimit) {
         //非空判断
