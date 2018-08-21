@@ -26,8 +26,12 @@ public class InvestmentProductControllerTest {
 
     @Test
     public void getListInvestmentProduct() {
-        PageInfo<InvestmentProduct> pageInfo=service.selectByPage(1,1);
-        System.err.println(pageInfo);
+//        PageInfo<InvestmentProduct> pageInfo=service.selectByPage(1,1);
+//        System.err.println(pageInfo);
+        InvestmentProduct product=service.selectByPrimaryKey(1L);
+        System.out.println(product);
+        InvestmentProduct product1=mapper.selectByPrimaryKey(1L);
+        System.out.println("product1 = " + product1);
     }
 
     @Test
@@ -36,5 +40,25 @@ public class InvestmentProductControllerTest {
         System.out.println(list);
     }
 
-
+    @Test
+    public void name() {
+        InvestmentProduct product = new InvestmentProduct();
+        // 产品代号
+        product.setProductCode("XSB1" );
+        //产品名称
+        product.setName("体验计划" );
+        //还款方式
+        product.setRepaymentMode((byte) 10);
+        product.setValueDate(10);
+        product.setStartingAmount(50000);
+        product.setDeadline(7);
+        product.setMoreDetails("no details for now");
+        product.setType(10);
+        product.setIsRecommend((byte)0);
+        product.setIsShelf((byte)0);
+        product.setIsPurchaseLimit((byte)0);
+        service.insertProductSelective(product);
+        Long id=product.getId();
+        System.out.println(id);
+    }
 }

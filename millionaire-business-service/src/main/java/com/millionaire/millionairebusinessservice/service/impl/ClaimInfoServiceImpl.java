@@ -41,7 +41,7 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
         claim.setClaimContract("");
         // 封装到期日期
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(claim.getLendingDate());
+//        calendar.setTime(claim.getLendingDate());
         calendar.add(Calendar.MONTH,claim.getLendingPeriod());
         claim.setExpirationDate(calendar.getTime());
         return claimInfoMapper.insert(claim);

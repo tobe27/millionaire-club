@@ -1,5 +1,6 @@
-package com.millionaire.millionairemanagerservice.dao;
+package com.millionaire.millionairemanagerservice.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.Bank;
 import com.millionaire.millionairemanagerservice.request.BankQuery;
 import com.millionaire.millionairemanagerservice.service.BankService;
@@ -10,40 +11,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
-import java.util.List;
-
 import static org.junit.Assert.*;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class BankMapperTest {
-
-    @Resource
-    private BankMapper bankMapper;
-    @Resource
-    private BankService bankService;
+public class BankServiceImplTest {
+@Resource private BankService bankService;
 
     @Test
     public void deleteByPrimaryKey() {
-
     }
 
     @Test
     public void insert() {
-        Bank bank = new Bank();
-
-        bank.setBankName("DSFDFS");
-        bank.setSingleLimit(0.156D);
-        bank.setDailyLimit(0.15996D);
-        bank.setPaymentNumber("ADFSAF");
-        bank.setPresentNumber("ASDFADF");
-        bank.setBankLogo("AFDSASDF");
-        bank.setGmtCreate(System.currentTimeMillis());
-
-        bank.setFounder("DGFSGDFSDFSG");
-        bank.setModifier("DGFSDFSDFSG");
-
-        bankMapper.insert(bank);
-        System.out.println(bank.getId());
     }
 
     @Test
@@ -52,8 +32,6 @@ public class BankMapperTest {
 
     @Test
     public void selectByPrimaryKey() {
-        Bank bank=bankService.selectByPrimaryKey(1L);
-        System.out.println(bank);
     }
 
     @Test
@@ -67,7 +45,7 @@ public class BankMapperTest {
     @Test
     public void selectBankByPage() {
         BankQuery query=new BankQuery();
-        List<Bank> bankList=bankMapper.selectBankByPage(query);
-        System.out.println(bankList);
+        PageInfo<Bank> pageInfo=bankService.selectBankByPage(1,1,query);
+        System.out.println(pageInfo);
     }
 }
