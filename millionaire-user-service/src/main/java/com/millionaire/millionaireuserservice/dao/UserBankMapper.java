@@ -7,16 +7,16 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserBankMapper {
-    int deleteByPrimaryKey(Long id);
+    void deleteByPrimaryKey(Long id);
 
-    int insert(UserBank record);
+    Long insert(UserBank record);
 
-    int insertSelective(UserBank record);
+    Long insertSelective(UserBank record);
 
     UserBank selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(UserBank record);
+    Long updateByPrimaryKeySelective(UserBank record);
 
-    int updateByPrimaryKey(UserBank record);
+    Long updateByPrimaryKey(UserBank record);
 
 }

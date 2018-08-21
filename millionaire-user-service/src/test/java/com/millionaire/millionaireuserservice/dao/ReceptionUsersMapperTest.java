@@ -46,8 +46,10 @@ public class ReceptionUsersMapperTest {
 
     @Test
     public void selectAll() {
-        List<ReceptionUsers> usersList=usersMapper.selectAll();
-        System.out.println(usersList);
+        ReceptionUsers users=usersMapper.selectByPrimaryKey(1L);
+//        List<ReceptionUsers> usersList=usersMapper.selectAll();
+//        System.out.println(usersList);
+        System.out.println("users = " + users);
     }
 
     @Test

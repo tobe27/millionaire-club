@@ -1,14 +1,16 @@
-package com.millionaire.millionairemanagerservice.dao;
+package com.millionaire.millionairemanagerservice.service;
 
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.Bank;
 import com.millionaire.millionairemanagerservice.request.BankQuery;
-import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * @author Liu Kai
+ * @Description: TODO  后台银行信息管理
+ * @date 2018/8/21 15:39
+ */
+public interface BankService {
 
-import java.util.List;
-
-@Mapper
-public interface BankMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(Bank record);
@@ -21,7 +23,6 @@ public interface BankMapper {
 
     int updateByPrimaryKey(Bank record);
 
-    List<Bank> selectAll();
-
-    List<Bank> selectBankByPage(BankQuery query);
+    PageInfo<Bank> selectBankByPage(Integer pageNum, Integer pageSize,
+                                    BankQuery query);
 }

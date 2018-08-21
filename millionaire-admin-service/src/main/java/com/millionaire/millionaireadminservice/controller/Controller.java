@@ -28,7 +28,7 @@ public class Controller {
     @Resource
     private RolesPermissionsService rolesPermissionsService;
 
-    @GetMapping("backstageLogin")
+    @GetMapping("backstageLoginPage")
     public String backstageLogin(){
         return "登陆页";
     }
@@ -39,7 +39,7 @@ public class Controller {
      * @param password
      * @return
      */
-    @PostMapping("subLogin")
+    @PostMapping("backstageLogin")
     public List<Modular> subLogin(String name, String password) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(name, password);
