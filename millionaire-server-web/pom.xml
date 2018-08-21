@@ -63,7 +63,7 @@
         <dependency>
             <groupId>com.millionaire</groupId>
             <artifactId>millionaire-manager-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!--创建resultbean添加lombok-->

@@ -30,10 +30,10 @@ public class ReceptionUsersControllerTest {
 
     @Test
     public void selectUsers() {
-//        ReceptionUsers users=usersMapper.selectByPrimaryKey(8L);
-//        System.out.println("users = " + users);
-        ReceptionUsers users1=usersService.selectByPrimaryKey(8L);
-        System.out.println("users1 = " + users1);
+        ReceptionUsers users=usersMapper.selectByPrimaryKey(8L);
+        System.out.println("users = " + users);
+//        ReceptionUsers users1=usersService.selectByPrimaryKey(8L);
+//        System.out.println("users1 = " + users1);
     }
 
     @Test
