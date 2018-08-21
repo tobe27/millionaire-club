@@ -59,6 +59,12 @@
             <artifactId>millionaire-user-service</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!--对manager-service模块依赖-->
+        <dependency>
+            <groupId>com.millionaire</groupId>
+            <artifactId>millionaire-manager-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
         <!--创建resultbean添加lombok-->
         <dependency>

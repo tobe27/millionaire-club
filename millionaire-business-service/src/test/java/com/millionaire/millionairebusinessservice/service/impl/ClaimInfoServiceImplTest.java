@@ -29,7 +29,7 @@ public class ClaimInfoServiceImplTest {
         claimInfo.setCreditorName("李铁柱");
         claimInfo.setCreditorPhone("14786321223");
         claimInfo.setLendingPeriod(5);
-        claimInfo.setLendingDate(new Date());
+//        claimInfo.setLendingDate(new Date());
         claimInfo.setExpirationDate(new Date());
         claimInfo.setClaimCode("LTZ2");
         claimInfo.setRemarks("已公证");
