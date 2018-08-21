@@ -1,53 +1,74 @@
 package com.millionaire.millionairebusinessservice.module;
 
+import com.millionaire.millionairebusinessservice.validatedgroup.InsertClaimInfoGroup;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Date;
+
+/**
+ * insertClaimInfoGroup 添加债券参数分组校验
+ **/
 
 @Data
 public class ClaimInfo {
+
     private Long id;
 
+    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String claimCode;
 
     private String claimContract;
 
+    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String creditorName;
 
+    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String creditorPhone;
 
+    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String creditorIdNumber;
 
-    private Date lendingDate;
+//    @NotNull(groups = InsertClaimInfoGroup.class)
+    private String lendingDate;
 
+    @NotNull(groups = InsertClaimInfoGroup.class)
     private Integer lendingPeriod;
 
     private Date expirationDate;
 
+    @NotNull(groups = InsertClaimInfoGroup.class)
     private Integer lendingAmount;
 
+    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String property;
 
+    @NotNull(groups = InsertClaimInfoGroup.class)
     private Double interestRate;
 
-    private Double matchAmount;
+    private Integer matchAmount;
 
-    private Double matchrate;
+//    private Double matchrate;
+//
+//    private Double unmatchamount;
 
-    private Double unmatchamount;
-
-    private String describe;
+    @NotBlank(groups = InsertClaimInfoGroup.class)
+    private String remarks;
 
     private Integer status;
 
+    @Null(groups = InsertClaimInfoGroup.class)
     private Long gmtCreate;
 
+    @Null(groups = InsertClaimInfoGroup.class)
     private Long gmtUpdate;
 
     public ClaimInfo() {
     }
 
-    public ClaimInfo(Long id, String claimCode, String claimContract, String creditorName, String creditorPhone, String creditorIdNumber, Date lendingDate, Integer lendingPeriod, Date expirationDate, Integer lendingAmount, String property, Double interestRate, Double matchAmount, Double matchrate, Double unmatchamount, String describe, Integer status, Long gmtCreate, Long gmtUpdate) {
+    public ClaimInfo(Long id, String claimCode, String claimContract, String creditorName, String creditorPhone, String creditorIdNumber, String lendingDate, Integer lendingPeriod, Date expirationDate, Integer lendingAmount, String property, Double interestRate, Integer matchAmount, String remarks, Integer status, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
         this.claimCode = claimCode;
         this.claimContract = claimContract;
@@ -61,9 +82,9 @@ public class ClaimInfo {
         this.property = property;
         this.interestRate = interestRate;
         this.matchAmount = matchAmount;
-        this.matchrate = matchrate;
-        this.unmatchamount = unmatchamount;
-        this.describe = describe;
+//        this.matchrate = matchrate;
+//        this.unmatchamount = unmatchamount;
+        this.remarks = remarks;
         this.status = status;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
@@ -93,7 +114,7 @@ public class ClaimInfo {
         return creditorIdNumber;
     }
 
-    public Date getLendingDate() {
+    public String getLendingDate() {
         return lendingDate;
     }
 
@@ -117,20 +138,20 @@ public class ClaimInfo {
         return interestRate;
     }
 
-    public Double getMatchAmount() {
+    public Integer getMatchAmount() {
         return matchAmount;
     }
 
-    public Double getMatchrate() {
-        return matchrate;
-    }
+//    public Double getMatchrate() {
+//        return matchrate;
+//    }
+//
+//    public Double getUnmatchamount() {
+//        return unmatchamount;
+//    }
 
-    public Double getUnmatchamount() {
-        return unmatchamount;
-    }
-
-    public String getDescribe() {
-        return describe;
+    public String getremarks() {
+        return remarks;
     }
 
     public Integer getStatus() {
