@@ -8,17 +8,19 @@ import java.util.List;
 
 @Mapper
 public interface ReceptionUsersMapper {
-    int deleteByPrimaryKey(Long id);
+    void deleteByPrimaryKey(Long id);
 
-    int insert(ReceptionUsers record);
+    Long insert(ReceptionUsers record);
 
-    int insertSelective(ReceptionUsers record);
+    Long insertSelective(ReceptionUsers record);
 
     ReceptionUsers selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(ReceptionUsers record);
+    Long updateByPrimaryKeySelective(ReceptionUsers record);
 
-    int updateByPrimaryKey(ReceptionUsers record);
+    Long updateByPrimaryKey(ReceptionUsers record);
+
+    ReceptionUsers findByPhone(Long phone);
 
     /**
      * @author Liu Kai
@@ -26,6 +28,7 @@ public interface ReceptionUsersMapper {
      * @Description 查询所有投资用户
      **/
     List<ReceptionUsers> selectAll();
+    List<ReceptionUsers> findAll();
     /**
      * @Description 根据查询参数查询投资用户 按照注册时间降序排列
      * @param usersQuery 用户查询所需参数包装类
