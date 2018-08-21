@@ -52,6 +52,7 @@ public class ReceptionUsers {
     public ReceptionUsers() {
     }
 
+
     @Override
     public String toString() {
         return "ReceptionUsers{" +

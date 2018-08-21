@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -67,24 +68,28 @@ InvestmentProductMapper investmentProductMapper;
     public void selectByPage() {
         PageHelper.startPage(1,10);
         List<InvestmentProduct> productList=investmentProductMapper.selectAll();
-        PageInfo<InvestmentProduct> pageInfo=new PageInfo<InvestmentProduct>(productList);
-        System.out.println(pageInfo);
+        System.out.println(productList);
+//        PageInfo<InvestmentProduct> pageInfo=new PageInfo<InvestmentProduct>(productList);
+//        System.out.println(pageInfo);
     }
 
     @Test
     public void selectProductByPage() {
 //       InvestmentProduct product=new InvestmentProduct();
-        ProductQuery query=new ProductQuery();
-        query.setName("新");
-        query.setProductCode("1");
-        query.setUpperAnnualizedIncome(0.2);
-        query.setLowerAnnualizedIncome(0.1);
-        query.setValueDate(10);
+//        ProductQuery query=new ProductQuery();
+//        query.setName("新");
+//        query.setProductCode("1");
+//        query.setUpperAnnualizedIncome(0.2);
+//        query.setLowerAnnualizedIncome(0.1);
+//        query.setValueDate(10);
 //        query.setIsShelf((byte)2);
-        query.setLowerDeadline(4);
-        query.setUpperDeadline(5);
-        List<InvestmentProduct> productList=investmentProductMapper.selectProductByPage(query);
-        System.err.println(productList);
+//        query.setLowerDeadline(4);
+//        query.setUpperDeadline(5);
+//        List<InvestmentProduct> productList=investmentProductMapper.selectProductByPage(query);
+//        System.err.println(productList);
+
+        Date date = new Date(20180706);
+        System.err.println(date);
 
     }
 

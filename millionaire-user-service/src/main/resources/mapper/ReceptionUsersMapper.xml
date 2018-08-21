@@ -28,11 +28,13 @@
             <arg column="login_time" javaType="java.lang.Long" jdbcType="BIGINT"/>
         </constructor>
     </resultMap>
+
     <sql id="Base_Column_List">
     id, user_number, phone, password, salt, manager_number, email, id_name, id_number, 
     id_front, id_back, address, bank_id, application_time, refusal, assets, profit, logo, 
     status, id_authentication, gmt_create, gmt_update, login_time
   </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
