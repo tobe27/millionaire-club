@@ -101,9 +101,7 @@
   <update id="updateByPrimaryKey" parameterType="com.millionaire.millionaireadminservice.module.Roles">
     update roles
     set role_name = #{roleName,jdbcType=VARCHAR},
-      gmt_create = #{gmtCreate,jdbcType=BIGINT},
       gmt_update = #{gmtUpdate,jdbcType=BIGINT},
-      founder = #{founder,jdbcType=VARCHAR},
       modifier = #{modifier,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>

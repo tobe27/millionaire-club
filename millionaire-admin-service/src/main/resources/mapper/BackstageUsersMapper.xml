@@ -8,7 +8,7 @@
       <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="salt" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="role" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="founder" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -21,14 +21,14 @@
     <result property="password" column="password"/>
     <result property="salt" column="salt"/>
     <result property="phone" column="phone"/>
-    <result property="role" column="role"/>
+    <result property="roleId" column="role_id"/>
     <result property="gmtUpdate" column="gmt_create"/>
     <result property="gmtCreate" column="gmt_update"/>
     <result property="founder" column="founder"/>
     <result property="modifier" column="modifier"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, password, salt, phone, role, gmt_update, gmt_create, founder, modifier
+    id, name, password, salt, phone, role_id, gmt_update, gmt_create, founder, modifier
   </sql>
   <select id="findAll" resultMap="BackstageUsers">
     SELECT
@@ -48,11 +48,11 @@
   </delete>
   <insert id="insert" parameterType="com.millionaire.millionaireadminservice.module.BackstageUsers" useGeneratedKeys="true" keyProperty="id">
     insert into backstage_users (name, password,
-      salt, phone, role, 
+      salt, phone, role_id,
       gmt_update, gmt_create, founder, 
       modifier)
     values (#{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-      #{salt,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{roleId,jdbcType=BIGINT},
       #{gmtUpdate,jdbcType=BIGINT}, #{gmtCreate,jdbcType=BIGINT}, #{founder,jdbcType=VARCHAR}, 
       #{modifier,jdbcType=VARCHAR})
   </insert>
@@ -71,8 +71,8 @@
       <if test="phone != null">
         phone,
       </if>
-      <if test="role != null">
-        role,
+      <if test="roleId != null">
+        role_id,
       </if>
       <if test="gmtUpdate != null">
         gmt_update,
@@ -100,8 +100,8 @@
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="role != null">
-        #{role,jdbcType=VARCHAR},
+      <if test="role_id != null">
+        #{roleId,jdbcType=BIGINT},
       </if>
       <if test="gmtUpdate != null">
         #{gmtUpdate,jdbcType=BIGINT},
@@ -132,8 +132,8 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="role != null">
-        role = #{role,jdbcType=VARCHAR},
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=BIGINT},
       </if>
       <if test="gmtUpdate != null">
         gmt_update = #{gmtUpdate,jdbcType=BIGINT},
@@ -156,14 +156,19 @@
       password = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      role = #{role,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=BIGINT},
       gmt_update = #{gmtUpdate,jdbcType=BIGINT},
-      gmt_create = #{gmtCreate,jdbcType=BIGINT},
-      founder = #{founder,jdbcType=VARCHAR},
       modifier = #{modifier,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-
+  <update id="updatePassword" parameterType="com.millionaire.millionaireadminservice.module.BackstageUsers">
+    UPDATE backstage_users
+    SET password = #{password,jdbcType=VARCHAR},
+    salt = #{salt,jdbcType=VARCHAR},
+     gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+    modifier = #{modifier,jdbcType=VARCHAR}
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
   <select id="findByNameOrRole" parameterType="com.millionaire.millionaireadminservice.module.Roles" resultMap="BackstageUsers">
     SELECT
     <include refid="Base_Column_List"/>
@@ -172,8 +177,8 @@
       <if test="name != null ">
         name LIKE '%${name}%'
       </if>
-      <if test="role != null">
-        AND role=#{role}
+      <if test="roleId != null">
+        AND role_id=#{roleId}
       </if>
     </where>
   </select>

@@ -17,6 +17,8 @@ public interface BackstageUsersMapper {
 
     Long updateByPrimaryKeySelective(BackstageUsers record);
 
+    Long updatePassword(BackstageUsers backstageUsers);
+
     Long updateByPrimaryKey(BackstageUsers record);
 
     List<BackstageUsers> findAll();
@@ -24,4 +26,6 @@ public interface BackstageUsersMapper {
     List<BackstageUsers> findByNameOrRole(BackstageUsers backstageUsers);
 
     BackstageUsers findByName(String name);
+
+
 }

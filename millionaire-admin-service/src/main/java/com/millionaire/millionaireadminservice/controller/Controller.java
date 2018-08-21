@@ -1,5 +1,7 @@
 package com.millionaire.millionaireadminservice.controller;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSON;
 import com.millionaire.millionaireadminservice.module.*;
 import com.millionaire.millionaireadminservice.service.BackstageUsersService;
 import com.millionaire.millionaireadminservice.service.PermissionsService;
@@ -13,9 +15,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 public class Controller {
@@ -49,7 +49,7 @@ public class Controller {
             return null;
         }
         BackstageUsers backstageUsers = backstageUsersService.findByName(name);
-        Roles roles = rolesService.findByName(backstageUsers.getRole());
+        Roles roles = rolesService.selectByPrimaryKey(backstageUsers.getRoleId());
         //通过角色id来查询权限id
         Modular modular1 = new Modular();
         Modular modular2 = new Modular();
@@ -120,7 +120,10 @@ public class Controller {
     @GetMapping("/a/list/user/name")
     public List<BackstageUsers> getByName(String name,String role){
         BackstageUsers backstageUsers= new BackstageUsers();
-        backstageUsers.setRole(role);
+        if(role!=null){
+            Roles roles = rolesService.findByName(role);
+            backstageUsers.setRoleId(roles.getId());
+        }
         backstageUsers.setName(name);
         return backstageUsersService.findByNameOrRole(backstageUsers);
     }
@@ -147,6 +150,7 @@ public class Controller {
         if(!password.equals(rePassword)){
             return "两次密码不相同！";
         }
+        Roles roles = rolesService.findByName(role);
         BackstageUsers backstageUsers = new BackstageUsers();
         String userName=(String)SecurityUtils.getSubject().getPrincipal();
         String salt = String.valueOf(new Random().nextInt(899999)+100000);
@@ -155,7 +159,7 @@ public class Controller {
         backstageUsers.setPassword(md5HashPassword);
         backstageUsers.setSalt(salt);
         backstageUsers.setPhone(phone);
-        backstageUsers.setRole(role);
+        backstageUsers.setRoleId(roles.getId());
         backstageUsers.setGmtUpdate(System.currentTimeMillis());
         backstageUsers.setGmtCreate(System.currentTimeMillis());
         backstageUsers.setFounder(userName);
@@ -164,33 +168,173 @@ public class Controller {
         return "添加成功"+backstageUsers.getId();
     }
 
-    @RequestMapping(value = "/a/user/fg", method = RequestMethod.PUT)
-    public String updateById(@RequestParam String name,
-                             @RequestParam("password") String password,
-                             @RequestParam("rePassword") String rePassword,
-                             @RequestParam("phone") String phone,
-                             @RequestParam("role") String role
-//                             @PathVariable("id") Long id
-)
-    {
-
-        System.out.println(name);
-//        if(!password.equals(rePassword)){
-//            return "两次密码不相同！";
-//        }
-//        BackstageUsers backstageUsers = new BackstageUsers();
-//        String userName=(String)SecurityUtils.getSubject().getPrincipal();
-//        String salt = String.valueOf(new Random().nextInt(899999)+100000);
-//        String md5HashPassword = new Md5Hash(password,salt,2).toString();
-//        backstageUsers.setName(name);
-//        backstageUsers.setPassword(md5HashPassword);
-//        backstageUsers.setSalt(salt);
-//        backstageUsers.setPhone(phone);
-//        backstageUsers.setRole(role);
-//        backstageUsers.setGmtUpdate(System.currentTimeMillis());
-//        backstageUsers.setModifier(userName);
-//        backstageUsers.setId(id);
-//        backstageUsersService.updateByPrimaryKey(backstageUsers);
+    /**
+     * 修改用户
+     * @param name
+     * @param password
+     * @param rePassword
+     * @param phone
+     * @param role
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/a/user/{id}", method = RequestMethod.PUT)
+    public String updateById(String name,
+                             String password,
+                             String rePassword,
+                             String phone,
+                             String role,
+                             @PathVariable("id") Long id) {
+        if(!password.equals(rePassword)){
+            return "两次密码不相同！";
+        }
+        Roles roles = rolesService.findByName(role);
+        BackstageUsers backstageUsers = new BackstageUsers();
+        String userName=(String)SecurityUtils.getSubject().getPrincipal();
+        String salt = String.valueOf(new Random().nextInt(899999)+100000);
+        String md5HashPassword = new Md5Hash(password,salt,2).toString();
+        backstageUsers.setName(name);
+        backstageUsers.setPassword(md5HashPassword);
+        backstageUsers.setSalt(salt);
+        backstageUsers.setPhone(phone);
+        backstageUsers.setRoleId(roles.getId());
+        backstageUsers.setGmtUpdate(System.currentTimeMillis());
+        backstageUsers.setModifier(userName);
+        backstageUsers.setId(id);
+        backstageUsersService.updateByPrimaryKey(backstageUsers);
         return "修改成功";
+    }
+
+    /**
+     * 修改密码
+     * @param oldPassword
+     * @param password
+     * @param rePassword
+     * @return
+     */
+    @PutMapping("/a/user/password")
+    public String updatePassword(String oldPassword,
+                                 String password,
+                                 String rePassword){
+        String userName=(String)SecurityUtils.getSubject().getPrincipal();
+        BackstageUsers backstageUsers = backstageUsersService.findByName(userName);
+        Long id = backstageUsers.getId();
+        String salt = backstageUsers.getSalt();
+        String old = backstageUsers.getPassword();
+        String md5HashOldPassword = new Md5Hash(oldPassword,salt,2).toString();
+        if(!md5HashOldPassword.equals(old)){
+            return "旧密码错误";
+        }
+        if(!password.equals(rePassword)){
+            return "两次密码输入不一致";
+        }
+        String newSalt = String.valueOf(new Random().nextInt(899999)+100000);
+        String md5HashPassword = new Md5Hash(password,newSalt,2).toString();
+        BackstageUsers users = new BackstageUsers();
+        users.setPassword(md5HashPassword);
+        users.setSalt(newSalt);
+        users.setId(id);
+        users.setGmtUpdate(System.currentTimeMillis());
+        users.setModifier(userName);
+        backstageUsersService.updatePassword(users);
+        return "修改成功";
+    }
+
+    /**
+     * 获取角色
+     * @return
+     */
+    @GetMapping("/a/roles")
+    public List<Roles> getRoles(){
+        return rolesService.findAll();
+    }
+
+    /**
+     * 删除角色
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/a/role/{id}")
+    public String deleteRole(@PathVariable Long id){
+        rolesService.deleteByPrimaryKey(id);
+        return "删除成功";
+    }
+
+    @PostMapping("/a/roles")
+    public String insertRole(String name,
+                             String permissions){
+        List<Long> list = JSON.parseArray(permissions,Long.class);
+        String userName=(String)SecurityUtils.getSubject().getPrincipal();
+        Roles roles = new Roles();
+        roles.setRoleName(name);
+        roles.setGmtCreate(System.currentTimeMillis());
+        roles.setGmtUpdate(System.currentTimeMillis());
+        roles.setFounder(userName);
+        roles.setModifier(userName);
+        Long roleId = rolesService.insert(roles);
+        for (Long permission:list) {
+            RolesPermissions rolesPermissions = new RolesPermissions();
+            rolesPermissions.setRoleId(roleId);
+            rolesPermissions.setPermissionId(permission);
+            rolesPermissions.setGmtCreate(System.currentTimeMillis());
+            rolesPermissions.setGmtUpdate(System.currentTimeMillis());
+            rolesPermissionsService.insert(rolesPermissions);
+        }
+        return "添加成功";
+    }
+
+    /**
+     * 更新角色的权限
+     * @param id
+     * @param name
+     * @param permissions
+     * @return
+     */
+    @PutMapping("/a/roles/{id}")
+    public String updateRole(@PathVariable Long id,
+                             String name,
+                             String permissions){
+        List<Long> list = JSON.parseArray(permissions,Long.class);
+        String userName=(String)SecurityUtils.getSubject().getPrincipal();
+        Roles roles = new Roles();
+        roles.setRoleName(name);
+        roles.setGmtUpdate(System.currentTimeMillis());
+        roles.setModifier(userName);
+        roles.setId(id);
+        rolesService.updateByPrimaryKey(roles);
+        List<RolesPermissions> rolesPermissionsList = rolesPermissionsService.findByRoleId(id);
+        for (RolesPermissions rolesPermission:rolesPermissionsList) {
+            Long rolePermissionId = rolesPermission.getId();
+            rolesPermissionsService.deleteByPrimaryKey(rolePermissionId);
+        }
+        for (Long permission:list) {
+            RolesPermissions rolesPermissions = new RolesPermissions();
+            rolesPermissions.setRoleId(id);
+            rolesPermissions.setPermissionId(permission);
+            rolesPermissions.setGmtCreate(System.currentTimeMillis());
+            rolesPermissions.setGmtUpdate(System.currentTimeMillis());
+            rolesPermissionsService.insert(rolesPermissions);
+        }
+        return "更新成功";
+    }
+
+    /**
+     * 获得角色的权限id
+     * @param id
+     * @return
+     */
+    @GetMapping("/a/rolePermission/{id}")
+    public Map selectRolePermission(@PathVariable Long id){
+        Map map = new HashMap();
+        String roleName = rolesService.selectByPrimaryKey(id).getRoleName();
+        map.put("name",roleName);
+        List<Long> permissionsId = new ArrayList<>();
+        List<RolesPermissions> rolesPermissions = rolesPermissionsService.findByRoleId(id);
+        for (RolesPermissions rolesPermission:rolesPermissions) {
+            Long permissionId = rolesPermission.getPermissionId();
+            permissionsId.add(permissionId);
+        }
+        map.put("permissions",permissionsId);
+        return map;
     }
 }
