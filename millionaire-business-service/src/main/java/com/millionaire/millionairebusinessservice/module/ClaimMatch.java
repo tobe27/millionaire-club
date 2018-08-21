@@ -1,8 +1,5 @@
 package com.millionaire.millionairebusinessservice.module;
 
-import lombok.Data;
-
-@Data
 public class ClaimMatch {
     private Long id;
 
@@ -12,23 +9,57 @@ public class ClaimMatch {
 
     private String creditContractNumber;
 
-    private Integer status;
-
     private Long gmtCreate;
 
     private Long gmtUpdate;
 
-    public ClaimMatch(Long id, Long claimId, Long investmentUserId, String creditContractNumber, Integer status, Long gmtCreate, Long gmtUpdate) {
+    public ClaimMatch(Long id, Long claimId, Long investmentUserId, String creditContractNumber, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
         this.claimId = claimId;
         this.investmentUserId = investmentUserId;
         this.creditContractNumber = creditContractNumber;
-        this.status = status;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
     }
 
+    @Override
+    public String toString() {
+        return "ClaimMatch{" +
+                "id=" + id +
+                ", claimId=" + claimId +
+                ", investmentUserId=" + investmentUserId +
+                ", creditContractNumber='" + creditContractNumber + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtUpdate=" + gmtUpdate +
+                '}';
+    }
+
     public ClaimMatch() {
+    }
+
+    public void setId(Long id) {
+
+        this.id = id;
+    }
+
+    public void setClaimId(Long claimId) {
+        this.claimId = claimId;
+    }
+
+    public void setInvestmentUserId(Long investmentUserId) {
+        this.investmentUserId = investmentUserId;
+    }
+
+    public void setCreditContractNumber(String creditContractNumber) {
+        this.creditContractNumber = creditContractNumber;
+    }
+
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public void setGmtUpdate(Long gmtUpdate) {
+        this.gmtUpdate = gmtUpdate;
     }
 
     public Long getId() {
@@ -45,10 +76,6 @@ public class ClaimMatch {
 
     public String getCreditContractNumber() {
         return creditContractNumber;
-    }
-
-    public Integer getStatus() {
-        return status;
     }
 
     public Long getGmtCreate() {

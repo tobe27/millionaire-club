@@ -52,8 +52,13 @@
             <artifactId>millionaire-common-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.millionaire</groupId>
+            <artifactId>millionaire-payment-manager</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>

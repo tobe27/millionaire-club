@@ -1,77 +1,43 @@
 package com.millionaire.millionairebusinessservice.module;
 
-import com.millionaire.millionairebusinessservice.validatedgroup.InsertClaimInfoGroup;
-import lombok.Data;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import java.util.Date;
-
-/**
- * insertClaimInfoGroup 添加债券参数分组校验
- **/
-
-@Data
 public class ClaimInfo {
-
     private Long id;
 
-    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String claimCode;
 
-    private String claimContract;
-
-    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String creditorName;
 
-    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String creditorPhone;
 
-    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String creditorIdNumber;
 
-//    @NotNull(groups = InsertClaimInfoGroup.class)
-    private String lendingDate;
+    private Long lendingDate;
 
-    @NotNull(groups = InsertClaimInfoGroup.class)
     private Integer lendingPeriod;
 
-    private Date expirationDate;
+    private Long expirationDate;
 
-    @NotNull(groups = InsertClaimInfoGroup.class)
     private Integer lendingAmount;
 
-    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String property;
 
-    @NotNull(groups = InsertClaimInfoGroup.class)
     private Double interestRate;
 
-    private Integer matchAmount;
+    private Integer unMatchAmount;
 
-//    private Double matchrate;
-//
-//    private Double unmatchamount;
+    private Double matchRate;
 
-    @NotBlank(groups = InsertClaimInfoGroup.class)
     private String remarks;
 
     private Integer status;
 
-    @Null(groups = InsertClaimInfoGroup.class)
     private Long gmtCreate;
 
-    @Null(groups = InsertClaimInfoGroup.class)
     private Long gmtUpdate;
 
-    public ClaimInfo() {
-    }
-
-    public ClaimInfo(Long id, String claimCode, String claimContract, String creditorName, String creditorPhone, String creditorIdNumber, String lendingDate, Integer lendingPeriod, Date expirationDate, Integer lendingAmount, String property, Double interestRate, Integer matchAmount, String remarks, Integer status, Long gmtCreate, Long gmtUpdate) {
+    public ClaimInfo(Long id, String claimCode, String creditorName, String creditorPhone, String creditorIdNumber, Long lendingDate, Integer lendingPeriod, Long expirationDate, Integer lendingAmount, String property, Double interestRate, Integer unMatchAmount, Double matchRate, String remarks, Integer status, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
         this.claimCode = claimCode;
-        this.claimContract = claimContract;
         this.creditorName = creditorName;
         this.creditorPhone = creditorPhone;
         this.creditorIdNumber = creditorIdNumber;
@@ -81,12 +47,105 @@ public class ClaimInfo {
         this.lendingAmount = lendingAmount;
         this.property = property;
         this.interestRate = interestRate;
-        this.matchAmount = matchAmount;
-//        this.matchrate = matchrate;
-//        this.unmatchamount = unmatchamount;
+        this.unMatchAmount = unMatchAmount;
+        this.matchRate = matchRate;
         this.remarks = remarks;
         this.status = status;
         this.gmtCreate = gmtCreate;
+        this.gmtUpdate = gmtUpdate;
+    }
+
+    @Override
+    public String toString() {
+        return "ClaimInfo{" +
+                "id=" + id +
+                ", claimCode='" + claimCode + '\'' +
+                ", creditorName='" + creditorName + '\'' +
+                ", creditorPhone='" + creditorPhone + '\'' +
+                ", creditorIdNumber='" + creditorIdNumber + '\'' +
+                ", lendingDate=" + lendingDate +
+                ", lendingPeriod=" + lendingPeriod +
+                ", expirationDate=" + expirationDate +
+                ", lendingAmount=" + lendingAmount +
+                ", property='" + property + '\'' +
+                ", interestRate=" + interestRate +
+                ", unMatchAmount=" + unMatchAmount +
+                ", matchRate=" + matchRate +
+                ", remarks='" + remarks + '\'' +
+                ", status=" + status +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtUpdate=" + gmtUpdate +
+                '}';
+    }
+
+    public ClaimInfo() {
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setClaimCode(String claimCode) {
+        this.claimCode = claimCode;
+    }
+
+    public void setCreditorName(String creditorName) {
+        this.creditorName = creditorName;
+    }
+
+    public void setCreditorPhone(String creditorPhone) {
+        this.creditorPhone = creditorPhone;
+    }
+
+    public void setCreditorIdNumber(String creditorIdNumber) {
+        this.creditorIdNumber = creditorIdNumber;
+    }
+
+    public void setLendingDate(Long lendingDate) {
+        this.lendingDate = lendingDate;
+    }
+
+    public void setLendingPeriod(Integer lendingPeriod) {
+        this.lendingPeriod = lendingPeriod;
+    }
+
+    public void setExpirationDate(Long expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public void setLendingAmount(Integer lendingAmount) {
+        this.lendingAmount = lendingAmount;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
+    }
+
+    public void setInterestRate(Double interestRate) {
+        this.interestRate = interestRate;
+    }
+
+    public void setUnMatchAmount(Integer unMatchAmount) {
+        this.unMatchAmount = unMatchAmount;
+    }
+
+    public void setMatchRate(Double matchRate) {
+        this.matchRate = matchRate;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public void setGmtUpdate(Long gmtUpdate) {
         this.gmtUpdate = gmtUpdate;
     }
 
@@ -96,10 +155,6 @@ public class ClaimInfo {
 
     public String getClaimCode() {
         return claimCode;
-    }
-
-    public String getClaimContract() {
-        return claimContract;
     }
 
     public String getCreditorName() {
@@ -114,7 +169,7 @@ public class ClaimInfo {
         return creditorIdNumber;
     }
 
-    public String getLendingDate() {
+    public Long getLendingDate() {
         return lendingDate;
     }
 
@@ -122,7 +177,7 @@ public class ClaimInfo {
         return lendingPeriod;
     }
 
-    public Date getExpirationDate() {
+    public Long getExpirationDate() {
         return expirationDate;
     }
 
@@ -138,19 +193,15 @@ public class ClaimInfo {
         return interestRate;
     }
 
-    public Integer getMatchAmount() {
-        return matchAmount;
+    public Integer getUnMatchAmount() {
+        return unMatchAmount;
     }
 
-//    public Double getMatchrate() {
-//        return matchrate;
-//    }
-//
-//    public Double getUnmatchamount() {
-//        return unmatchamount;
-//    }
+    public Double getMatchRate() {
+        return matchRate;
+    }
 
-    public String getremarks() {
+    public String getRemarks() {
         return remarks;
     }
 
