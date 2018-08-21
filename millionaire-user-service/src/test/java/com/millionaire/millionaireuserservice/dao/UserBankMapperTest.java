@@ -4,6 +4,7 @@ import com.millionaire.millionaireuserservice.module.UserBank;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
@@ -15,9 +16,13 @@ import static org.junit.Assert.*;
 public class UserBankMapperTest {
 
     @Resource UserBankMapper userBankMapper;
+
+    @Resource
+    private RedisTemplate redisTemplate;
+
     @Test
     public void deleteByPrimaryKey() {
-
+        System.out.println( redisTemplate.opsForValue().get("15265446"));
     }
 
     @Test

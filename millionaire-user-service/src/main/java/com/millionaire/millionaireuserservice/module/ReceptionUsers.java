@@ -5,7 +5,7 @@ public class ReceptionUsers {
 
     private String userNumber;
 
-    private String phone;
+    private Long phone;
 
     private String password;
 
@@ -31,9 +31,9 @@ public class ReceptionUsers {
 
     private String refusal;
 
-    private Double assets;
+    private Integer assets;
 
-    private Double profit;
+    private Integer profit;
 
     private String logo;
 
@@ -47,43 +47,32 @@ public class ReceptionUsers {
 
     private Long loginTime;
 
-
-
-    public ReceptionUsers() {
+    public ReceptionUsers(Long id, String userNumber, Long phone, String password, String salt, String managerNumber, String email, String idName, String idNumber, String idFront, String idBack, String address, Long bankId, Long applicationTime, String refusal, Integer assets, Integer profit, String logo, Byte status, Byte idAuthentication, Long gmtCreate, Long gmtUpdate, Long loginTime) {
+        this.id = id;
+        this.userNumber = userNumber;
+        this.phone = phone;
+        this.password = password;
+        this.salt = salt;
+        this.managerNumber = managerNumber;
+        this.email = email;
+        this.idName = idName;
+        this.idNumber = idNumber;
+        this.idFront = idFront;
+        this.idBack = idBack;
+        this.address = address;
+        this.bankId = bankId;
+        this.applicationTime = applicationTime;
+        this.refusal = refusal;
+        this.assets = assets;
+        this.profit = profit;
+        this.logo = logo;
+        this.status = status;
+        this.idAuthentication = idAuthentication;
+        this.gmtCreate = gmtCreate;
+        this.gmtUpdate = gmtUpdate;
+        this.loginTime = loginTime;
     }
-
-
-    @Override
-    public String toString() {
-        return "ReceptionUsers{" +
-                "id=" + id +
-                ", userNumber='" + userNumber + '\'' +
-                ", phone='" + phone + '\'' +
-                ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
-                ", managerNumber='" + managerNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", idName='" + idName + '\'' +
-                ", idNumber='" + idNumber + '\'' +
-                ", idFront='" + idFront + '\'' +
-                ", idBack='" + idBack + '\'' +
-                ", address='" + address + '\'' +
-                ", bankId=" + bankId +
-                ", applicationTime=" + applicationTime +
-                ", refusal='" + refusal + '\'' +
-                ", assets=" + assets +
-                ", profit=" + profit +
-                ", logo='" + logo + '\'' +
-                ", status=" + status +
-                ", idAuthentication=" + idAuthentication +
-                ", gmtCreate=" + gmtCreate +
-                ", gmtUpdate=" + gmtUpdate +
-                ", loginTime=" + loginTime +
-                '}';
-    }
-
     public Long getId() {
-
         return id;
     }
 
@@ -99,11 +88,11 @@ public class ReceptionUsers {
         this.userNumber = userNumber;
     }
 
-    public String getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 
@@ -203,19 +192,19 @@ public class ReceptionUsers {
         this.refusal = refusal;
     }
 
-    public Double getAssets() {
+    public Integer getAssets() {
         return assets;
     }
 
-    public void setAssets(Double assets) {
+    public void setAssets(Integer assets) {
         this.assets = assets;
     }
 
-    public Double getProfit() {
+    public Integer getProfit() {
         return profit;
     }
 
-    public void setProfit(Double profit) {
+    public void setProfit(Integer profit) {
         this.profit = profit;
     }
 
@@ -265,5 +254,34 @@ public class ReceptionUsers {
 
     public void setLoginTime(Long loginTime) {
         this.loginTime = loginTime;
+    }
+
+    @Override
+    public String toString() {
+        return "ReceptionUsers{" +
+                "id=" + id +
+                ", userNumber='" + userNumber + '\'' +
+                ", phone=" + phone +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", managerNumber='" + managerNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", idName='" + idName + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", idFront='" + idFront + '\'' +
+                ", idBack='" + idBack + '\'' +
+                ", address='" + address + '\'' +
+                ", bankId=" + bankId +
+                ", applicationTime=" + applicationTime +
+                ", refusal='" + refusal + '\'' +
+                ", assets=" + assets +
+                ", profit=" + profit +
+                ", logo='" + logo + '\'' +
+                ", status=" + status +
+                ", idAuthentication=" + idAuthentication +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtUpdate=" + gmtUpdate +
+                ", loginTime=" + loginTime +
+                '}';
     }
 }

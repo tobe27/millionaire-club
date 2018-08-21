@@ -46,7 +46,7 @@ public class ShiroConfiguration {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //登陆页的URL
-        shiroFilterFactoryBean.setLoginUrl("/backstageLogin");
+        shiroFilterFactoryBean.setLoginUrl("/backstageLoginPage");
         //未认证的跳转页
         //过滤器链
         shiroFilterFactoryBean.setFilterChainDefinitions("/backstageLogin = anon");

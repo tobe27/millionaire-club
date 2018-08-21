@@ -6,9 +6,9 @@ import com.millionaire.millionaireuserservice.dao.ReceptionUsersMapper;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.ReceptionUsersQuery;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,8 +19,39 @@ import java.util.List;
 
 @Service
 public class ReceptionUsersServiceImpl implements ReceptionUsersService {
-    @Autowired
-    ReceptionUsersMapper usersMapper;
+    @Resource
+    private ReceptionUsersMapper usersMapper;
+
+    @Override
+    public void deleteByPrimaryKey(Long id) {
+    }
+
+    @Override
+    public Long insert(ReceptionUsers record) {
+        usersMapper.insert(record);
+        return record.getId();
+    }
+
+    @Override
+    public Long insertSelective(ReceptionUsers record) {
+        return 0L;
+    }
+
+    @Override
+    public Long updateByPrimaryKey(ReceptionUsers record) {
+        return usersMapper.updateByPrimaryKey(record);
+    }
+
+    /**
+     * 通过电话查用户登陆
+     * 孙壮壮
+     * @param phone
+     * @return
+     */
+    @Override
+    public ReceptionUsers findByPhone(Long phone) {
+        return usersMapper.findByPhone(phone);
+    }
 
     /**
      * @param usersQuery 用户查询所需参数
@@ -53,7 +84,7 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
      * @Description 编辑投资用户 不限定参数 封装更新时间
      **/
     @Override
-    public int updateByPrimaryKeySelective(ReceptionUsers record) {
+    public Long updateByPrimaryKeySelective(ReceptionUsers record) {
         record.setGmtUpdate(System.currentTimeMillis());
         return usersMapper.updateByPrimaryKeySelective(record);
     }

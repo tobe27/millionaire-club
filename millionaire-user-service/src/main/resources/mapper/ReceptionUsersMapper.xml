@@ -5,7 +5,7 @@
         <constructor>
             <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="user_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="phone" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="salt" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="manager_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -18,8 +18,8 @@
             <arg column="bank_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="application_time" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="refusal" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="assets" javaType="java.lang.Double" jdbcType="DOUBLE"/>
-            <arg column="profit" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="assets" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="profit" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="logo" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT"/>
             <arg column="id_authentication" javaType="java.lang.Byte" jdbcType="TINYINT"/>
@@ -28,12 +28,36 @@
             <arg column="login_time" javaType="java.lang.Long" jdbcType="BIGINT"/>
         </constructor>
     </resultMap>
-
+    <resultMap id="ReceptionUsers" type="com.millionaire.millionaireuserservice.module.ReceptionUsers">
+        <id property="id" column="id"/>
+        <result property="userNumber" column="user_number"/>
+        <result property="phone" column="phone"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="managerNumber" column="manager_number"/>
+        <result property="email" column="email"/>
+        <result property="idName" column="id_name"/>
+        <result property="idNumber" column="id_number"/>
+        <result property="idFront" column="id_front"/>
+        <result property="idBack" column="id_back"/>
+        <result property="address" column="address"/>
+        <result property="bankId" column="bank_id"/>
+        <result property="applicationTime" column="application_time"/>
+        <result property="refusal" column="refusal"/>
+        <result property="assets" column="assets"/>
+        <result property="profit" column="profit"/>
+        <result property="logo" column="logo"/>
+        <result property="status" column="status"/>
+        <result property="idAuthentication" column="id_authentication"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtUpdate" column="gmt_update"/>
+        <result property="loginTime" column="login_time"/>
+    </resultMap>
     <sql id="Base_Column_List">
     id, user_number, phone, password, salt, manager_number, email, id_name, id_number, 
     id_front, id_back, address, bank_id, application_time, refusal, assets, profit, logo, 
     status, id_authentication, gmt_create, gmt_update, login_time
-  </sql>
+    </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -56,7 +80,7 @@
                 id_name like "%"#{idName,jdbcType=VARCHAR}"%"
             </if>
             <if test="phone != null">
-                and phone like "%"#{phone,jdbcType=VARCHAR}"%"
+                and phone like "%"#{phone,jdbcType=BIGINT}"%"
             </if>
             <if test="managerNumber != null">
                 and manager_number like "%" #{managerNumber,jdbcType=VARCHAR}"%"
@@ -87,13 +111,13 @@
       assets, profit, logo, 
       status, id_authentication, gmt_create, 
       gmt_update, login_time)
-    values (#{userNumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+    values (#{userNumber,jdbcType=VARCHAR}, #{phone,jdbcType=BIGINT},
       #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{managerNumber,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{idName,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, 
       #{idFront,jdbcType=VARCHAR}, #{idBack,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{bankId,jdbcType=BIGINT}, #{applicationTime,jdbcType=BIGINT}, #{refusal,jdbcType=VARCHAR}, 
-      #{assets,jdbcType=DOUBLE}, #{profit,jdbcType=DOUBLE}, #{logo,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{idAuthentication,jdbcType=TINYINT}, #{gmtCreate,jdbcType=BIGINT}, 
+      #{assets,jdbcType=INTEGER}, #{profit,jdbcType=INTEGER}, #{logo,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT}, #{idAuthentication,jdbcType=TINYINT}, #{gmtCreate,jdbcType=BIGINT},
       #{gmtUpdate,jdbcType=BIGINT}, #{loginTime,jdbcType=BIGINT})
   </insert>
     <insert id="insertSelective" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers"
@@ -172,7 +196,7 @@
                 #{userNumber,jdbcType=VARCHAR},
             </if>
             <if test="phone != null">
-                #{phone,jdbcType=VARCHAR},
+                #{phone,jdbcType=BIGINT},
             </if>
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
@@ -211,10 +235,10 @@
                 #{refusal,jdbcType=VARCHAR},
             </if>
             <if test="assets != null">
-                #{assets,jdbcType=DOUBLE},
+                #{assets,jdbcType=INTEGER},
             </if>
             <if test="profit != null">
-                #{profit,jdbcType=DOUBLE},
+                #{profit,jdbcType=INTEGER},
             </if>
             <if test="logo != null">
                 #{logo,jdbcType=VARCHAR},
@@ -244,7 +268,7 @@
                 user_number = #{userNumber,jdbcType=VARCHAR},
             </if>
             <if test="phone != null">
-                phone = #{phone,jdbcType=VARCHAR},
+                phone = #{phone,jdbcType=BIGINT},
             </if>
             <if test="password != null">
                 password = #{password,jdbcType=VARCHAR},
@@ -283,10 +307,10 @@
                 refusal = #{refusal,jdbcType=VARCHAR},
             </if>
             <if test="assets != null">
-                assets = #{assets,jdbcType=DOUBLE},
+                assets = #{assets,jdbcType=INTEGER},
             </if>
             <if test="profit != null">
-                profit = #{profit,jdbcType=DOUBLE},
+                profit = #{profit,jdbcType=INTEGER},
             </if>
             <if test="logo != null">
                 logo = #{logo,jdbcType=VARCHAR},
@@ -312,7 +336,7 @@
     <update id="updateByPrimaryKey" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers">
     update reception_users
     set user_number = #{userNumber,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=BIGINT},
       password = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
       manager_number = #{managerNumber,jdbcType=VARCHAR},
@@ -325,14 +349,25 @@
       bank_id = #{bankId,jdbcType=BIGINT},
       application_time = #{applicationTime,jdbcType=BIGINT},
       refusal = #{refusal,jdbcType=VARCHAR},
-      assets = #{assets,jdbcType=DOUBLE},
-      profit = #{profit,jdbcType=DOUBLE},
+      assets = #{assets,jdbcType=INTEGER},
+      profit = #{profit,jdbcType=INTEGER},
       logo = #{logo,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
       id_authentication = #{idAuthentication,jdbcType=TINYINT},
-      gmt_create = #{gmtCreate,jdbcType=BIGINT},
       gmt_update = #{gmtUpdate,jdbcType=BIGINT},
       login_time = #{loginTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="findAll" resultMap="ReceptionUsers">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM reception_users
+    </select>
+
+    <select id="findByPhone" resultMap="ReceptionUsers">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM reception_users
+        WHERE phone=#{phone}
+    </select>
 </mapper>

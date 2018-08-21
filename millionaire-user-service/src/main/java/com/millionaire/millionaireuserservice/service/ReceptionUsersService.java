@@ -10,6 +10,22 @@ import com.millionaire.millionaireuserservice.module.ReceptionUsersQuery;
  * @date 2018/8/20 12:37
  */
 public interface ReceptionUsersService {
+
+    void deleteByPrimaryKey(Long id);
+
+    Long insert(ReceptionUsers record);
+
+    Long insertSelective(ReceptionUsers record);
+
+    Long updateByPrimaryKey(ReceptionUsers record);
+
+    /**
+     * 通过电话查用户 登陆时使用
+     * 孙壮壮
+     * @param phone
+     * @return
+     */
+    ReceptionUsers findByPhone(Long phone);
 /**
  * @Description 分页查询投资用户信息
  * @param usersQuery 用户查询所需参数
@@ -33,5 +49,5 @@ ReceptionUsers selectByPrimaryKey(Long id);
  * @return 收影响行数
  **/
 
-int updateByPrimaryKeySelective(ReceptionUsers record);
+Long updateByPrimaryKeySelective(ReceptionUsers record);
 }
