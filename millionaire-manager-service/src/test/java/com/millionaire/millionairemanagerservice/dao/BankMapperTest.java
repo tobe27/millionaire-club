@@ -38,11 +38,12 @@ public class BankMapperTest {
         bank.setPresentNumber("ASDFADF");
         bank.setBankLogo("AFDSASDF");
         bank.setGmtCreate(System.currentTimeMillis());
-
+        bank.setGmtUpdate(System.currentTimeMillis());
         bank.setFounder("DGFSGDFSDFSG");
         bank.setModifier("DGFSDFSDFSG");
 
-        bankMapper.insert(bank);
+       int i= bankMapper.insert(bank);
+        System.out.println("i = " + i);
         System.out.println(bank.getId());
     }
 
