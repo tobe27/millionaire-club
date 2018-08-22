@@ -1,7 +1,7 @@
 package com.millionaire.millionairebusinessservice.dao;
 
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
-import com.millionaire.millionairebusinessservice.module.ProductQuery;
+import com.millionaire.millionairebusinessservice.request.ProductQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,7 +14,11 @@ public interface InvestmentProductMapper {
 
     int insertSelective(InvestmentProduct record);
 
-    InvestmentProduct selectByPrimaryKey(Long id) ;
+    InvestmentProduct selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(InvestmentProduct record);
+
+    int updateByPrimaryKey(InvestmentProduct record);
 
     /**
      * @param code
@@ -43,10 +47,5 @@ public interface InvestmentProductMapper {
      * @return 投资产品列表
      **/
     List<InvestmentProduct> selectProductByPage(ProductQuery productQuery);
-
-    int updateByPrimaryKeySelective(InvestmentProduct record);
-
-    int updateByPrimaryKey(InvestmentProduct record);
-
 
 }

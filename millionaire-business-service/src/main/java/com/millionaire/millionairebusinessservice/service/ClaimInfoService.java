@@ -14,7 +14,7 @@ public interface ClaimInfoService {
  * @param record 债券信息
  * @return  成功0 失败-1
  **/
-int insert(ClaimInfo record);
+Long insert(ClaimInfo record);
 
 
 /**

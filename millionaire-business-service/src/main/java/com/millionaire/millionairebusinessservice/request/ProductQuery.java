@@ -1,6 +1,4 @@
-package com.millionaire.millionairebusinessservice.module;
-
-import javax.validation.constraints.NotBlank;
+package com.millionaire.millionairebusinessservice.request;
 
 /**
  * @author Liu Kai
@@ -11,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 public class ProductQuery {
     private String name;
     private String productCode;
-    private Integer valueDate;
+    private Byte valueDate;
     private Double lowerAnnualizedIncome;
     private Double upperAnnualizedIncome;
     private Integer startingAmount;
@@ -59,11 +57,11 @@ public class ProductQuery {
         return this;
     }
 
-    public Integer getValueDate() {
+    public Byte getValueDate() {
         return valueDate;
     }
 
-    public ProductQuery setValueDate(Integer valueDate) {
+    public ProductQuery setValueDate(Byte valueDate) {
         this.valueDate = valueDate;
         return this;
     }

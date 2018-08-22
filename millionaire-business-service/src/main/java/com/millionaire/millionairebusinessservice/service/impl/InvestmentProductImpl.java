@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.dao.InvestmentProductMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
-import com.millionaire.millionairebusinessservice.module.ProductQuery;
+import com.millionaire.millionairebusinessservice.request.ProductQuery;
 import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import java.util.List;
 public class InvestmentProductImpl implements InvestmentProductService {
     Logger logger = LoggerFactory.getLogger(InvestmentProductImpl.class);
     /**
-     * 投资产品mmapper
+     * 投资产品mapper
      */
     @Resource
     InvestmentProductMapper investmentProductMapper;
@@ -34,6 +34,7 @@ public class InvestmentProductImpl implements InvestmentProductService {
      **/
     @Override
     public Long insertProductSelective(InvestmentProduct investmentProduct) {
+
         //封装创建时间和更新时间
         long time = System.currentTimeMillis();
         investmentProduct.setGmtCreate(time);
@@ -57,6 +58,7 @@ public class InvestmentProductImpl implements InvestmentProductService {
         return investmentProductMapper.updateByPrimaryKeySelective(investmentProduct);
     }
 
+
     /**
      * @param id              产品id
      * @param type            产品分类
@@ -66,7 +68,7 @@ public class InvestmentProductImpl implements InvestmentProductService {
      * @Description 编辑投资产品方法二 限定只能更新1.产品分类 2.推荐 3.限购 包装更新时间
      **/
     @Override
-    public int updateProductByPrimaryKeyLimit(Long id, Integer type, Byte isRecommend, Byte isPurchaseLimit) {
+    public int updateProductByPrimaryKeyLimit(Long id, Byte type, Byte isRecommend, Byte isPurchaseLimit) {
         InvestmentProduct product = investmentProductMapper.selectByPrimaryKey(id);
         //产品分类
         product.setType(type);

@@ -6,8 +6,6 @@ import com.millionaire.millionairebusinessservice.service.ClaimInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * @author Liu Kai
@@ -22,6 +20,7 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
     ClaimInfoMapper claimInfoMapper;
 
     /**
+     * TODO 这个实现类需要修改
      * @param claim 债券信息
      * @return 成功0 失败-1
      * @Description 新增债券信息 动态插入 封装部分参数
@@ -32,19 +31,20 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
      * ClaimContract ="" 债券协议
      **/
     @Override
-    public int insert(ClaimInfo claim) {
+    public Long insert(ClaimInfo claim) {
         long time = System.currentTimeMillis();
         claim.setGmtCreate(time);
         claim.setGmtUpdate(time);
-        claim.setMatchAmount(0);
+
+//        过期时间计算（=lendingDate+lendingPeriod）转存
+        Long expirationDate = claim.getLendingDate() + claim.getLendingPeriod() * (24 * 60 * 60 * 1000);
+        claim.setExpirationDate(expirationDate);
+        claim.setUnMatchAmount(claim.getLendingAmount());
+        claim.setMatchRate(0.0);
         claim.setStatus(0);
-        claim.setClaimContract("");
-        // 封装到期日期
-        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(claim.getLendingDate());
-        calendar.add(Calendar.MONTH,claim.getLendingPeriod());
-        claim.setExpirationDate(calendar.getTime());
-        return claimInfoMapper.insert(claim);
+        claimInfoMapper.insert(claim);
+
+        return claim.getId();
     }
 
 

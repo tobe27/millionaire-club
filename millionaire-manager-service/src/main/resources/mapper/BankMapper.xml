@@ -40,29 +40,28 @@
                 bank_name like "%"#{bankName,jdbcType=VARCHAR}"%"
             </if>
             <if test="upperSingleLimit != null">
-              and single_limit <![CDATA[ <= ]]> #{upperSingleLimit,jdbcType=DOUBLE}
+                and single_limit <![CDATA[ <= ]]> #{upperSingleLimit,jdbcType=DOUBLE}
             </if>
             <if test="lowerSingleLimit != null">
                 and single_limit <![CDATA[ >= ]]> #{lowerSingleLimit,jdbcType=DOUBLE}
             </if>
             <if test="upperDailyLimit != null">
-               and daily_limit <![CDATA[ <= ]]> #{upperDailyLimit,jdbcType=DOUBLE}
+                and daily_limit <![CDATA[ <= ]]> #{upperDailyLimit,jdbcType=DOUBLE}
             </if>
             <if test="lowerDailyLimit != null">
                 and daily_limit <![CDATA[ >= ]]> #{lowerDailyLimit,jdbcType=DOUBLE}
             </if>
             <if test="lowerDate != null">
-              and gmt_update <![CDATA[ >= ]]> #{lowerDate,jdbcType=BIGINT}
+                and gmt_update <![CDATA[ >= ]]> #{lowerDate,jdbcType=BIGINT}
             </if>
             <if test="upperDate != null">
-               and gmt_update <![CDATA[ <= ]]> #{upperDate,jdbcType=BIGINT}
+                and gmt_update <![CDATA[ <= ]]> #{upperDate,jdbcType=BIGINT}
             </if>
             <if test="modifier != null">
-              and modifier like "%"#{modifier,jdbcType=VARCHAR}"%"
+                and modifier like "%"#{modifier,jdbcType=VARCHAR}"%"
             </if>
         </where>
     </select>
-
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from bank
     where id = #{id,jdbcType=BIGINT}
@@ -182,6 +181,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.millionaire.millionairemanagerservice.module.Bank">
     update bank
     set bank_name = #{bankName,jdbcType=VARCHAR},
@@ -196,4 +196,5 @@
       modifier = #{modifier,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
 </mapper>

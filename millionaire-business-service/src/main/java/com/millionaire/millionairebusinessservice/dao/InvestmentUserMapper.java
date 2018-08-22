@@ -15,7 +15,5 @@ public interface InvestmentUserMapper {
 
     int updateByPrimaryKeySelective(InvestmentUser record);
 
-    int updateByPrimaryKeyWithBLOBs(InvestmentUser record);
-
     int updateByPrimaryKey(InvestmentUser record);
 }

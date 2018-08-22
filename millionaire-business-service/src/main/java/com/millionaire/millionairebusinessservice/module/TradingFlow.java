@@ -1,59 +1,129 @@
 package com.millionaire.millionairebusinessservice.module;
 
-import lombok.Data;
-
-@Data
 public class TradingFlow {
     private Long id;
 
-    private Long userInvestmentId;
+//    产品名称
+    private String productName;
 
-    private Long productName;
+//    用户手机号
+    private String phone;
 
-    private Long uid;
+//    用户姓名
+    private String name;
 
+//    投资金额
     private Integer amount;
 
+//    （-1付款，1回款）
     private Byte type;
 
+//    银行卡账号
     private String bankCardId;
 
+//    交易方式（哪家银行）
+    private String payType;
+
+//    交易状态
     private Byte status;
 
     private Long gmtCreate;
 
     private Long gmtUpdate;
 
-    public TradingFlow() {
-    }
-
-    public TradingFlow(Long id, Long userInvestmentId, Long productName, Long uid, Integer amount, Byte type, String bankCardId, Byte status, Long gmtCreate, Long gmtUpdate) {
+    public TradingFlow(Long id, String productName, String phone, String name, Integer amount, Byte type, String bankCardId, String payType, Byte status, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
-        this.userInvestmentId = userInvestmentId;
         this.productName = productName;
-        this.uid = uid;
+        this.phone = phone;
+        this.name = name;
         this.amount = amount;
         this.type = type;
         this.bankCardId = bankCardId;
+        this.payType = payType;
         this.status = status;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
+    }
+
+    @Override
+    public String toString() {
+        return "TradingFlow{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                ", amount=" + amount +
+                ", type=" + type +
+                ", bankCardId='" + bankCardId + '\'' +
+                ", payType='" + payType + '\'' +
+                ", status=" + status +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtUpdate=" + gmtUpdate +
+                '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    public void setBankCardId(String bankCardId) {
+        this.bankCardId = bankCardId;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public void setGmtUpdate(Long gmtUpdate) {
+        this.gmtUpdate = gmtUpdate;
+    }
+
+    public TradingFlow() {
+
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getUserInvestmentId() {
-        return userInvestmentId;
-    }
-
-    public Long getProductName() {
+    public String getProductName() {
         return productName;
     }
 
-    public Long getUid() {
-        return uid;
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Integer getAmount() {
@@ -68,6 +138,10 @@ public class TradingFlow {
         return bankCardId;
     }
 
+    public String getPayType() {
+        return payType;
+    }
+
     public Byte getStatus() {
         return status;
     }
@@ -79,4 +153,5 @@ public class TradingFlow {
     public Long getGmtUpdate() {
         return gmtUpdate;
     }
+
 }

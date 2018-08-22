@@ -2,16 +2,13 @@ package com.millionaire.millionairebusinessservice.service;
 
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
-import com.millionaire.millionairebusinessservice.module.ProductQuery;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
+import com.millionaire.millionairebusinessservice.request.ProductQuery;
 
 /**
- * @author Liu Kai
- * @Description: TODO 投资产品 新增 编辑 上下架
- * @date 2018/8/17 18:57
- */
+        * @author Liu Kai
+        * @Description: TODO 投资产品 新增 编辑 上下架
+        * @date 2018/8/17 18:57
+        */
 
 public interface InvestmentProductService {
 
@@ -37,7 +34,7 @@ public interface InvestmentProductService {
      * @return 收影响行数
      * @Description 编辑投资产品方法二 限定只能更新1.产品分类 2.推荐 3.限购 包装更新时间
      **/
-    int updateProductByPrimaryKeyLimit(Long id, Integer type, Byte isRecommend, Byte isPurchaseLimit);
+    int updateProductByPrimaryKeyLimit(Long id, Byte type, Byte isRecommend, Byte isPurchaseLimit);
 
 
     /**
