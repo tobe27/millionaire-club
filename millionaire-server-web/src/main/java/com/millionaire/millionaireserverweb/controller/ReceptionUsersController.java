@@ -3,12 +3,16 @@ package com.millionaire.millionaireserverweb.controller;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionaireserverweb.result.ResultBean;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
-import com.millionaire.millionaireuserservice.module.ReceptionUsersQuery;
+import com.millionaire.millionaireuserservice.module.UserBank;
+import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
+import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
+import com.millionaire.millionaireuserservice.transport.ReceptionUsersDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * @author Liu Kai
@@ -18,9 +22,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/a")
 public class ReceptionUsersController {
-    Logger logger = LoggerFactory.getLogger(ReceptionUsersController.class);
-    @Autowired
-    ReceptionUsersService usersService;
+ private    Logger logger = LoggerFactory.getLogger(ReceptionUsersController.class);
+    @Resource
+    private ReceptionUsersService usersService;
+
 
     /**
      * @param pageNum    页码
@@ -45,6 +50,57 @@ public class ReceptionUsersController {
     }
 
     /**
+     * @Description 查看用户实名列表
+     **/
+    @GetMapping("/list/user-verification")
+    public ResultBean listUsersVerification(@RequestParam(value = "pageSize") Integer pageSize,
+                                            @RequestParam(value = "pageNum") Integer pageNum,
+                                            UsersVerificationQuery usersVerificationQuery) {
+        if (pageNum == null || pageSize == null) {
+            logger.info("页码为空:{}或每页数为空:{}", pageNum, pageSize);
+            return new ResultBean(-1, "error pageSize or pageNum is null");
+        } else {
+            PageInfo<ReceptionUsers> pageInfo =
+                    usersService.selectUserVerificationByPage(pageSize, pageNum, usersVerificationQuery);
+            logger.info("查询投资用户参数：{}", usersVerificationQuery);
+            return new ResultBean(0, "success", pageInfo);
+        }
+    }
+
+    /**
+     * @param uid 用户id
+     * @return 成功0 失败-1
+     * @Description 查询用户详细信息
+     **/
+    @GetMapping("/user/{uid}")
+    public ResultBean selectUsers(@PathVariable("uid") Long uid) {
+        ReceptionUsersDTO users = usersService.selectByID(uid);
+
+        if (users == null) {
+            return new ResultBean(-1, "error no such uid", uid);
+        } else {
+            logger.info("查看投资用户id:{}", uid);
+            return new ResultBean(0, "success", users);
+        }
+    }
+
+    /**
+     * @param uid 用户id
+     * @return 成功0 失败-1
+     * @Description 查询用户实名信息
+     **/
+    @GetMapping("/user-verification/{uid}")
+    public ResultBean selectUsersVerification(@PathVariable("uid") Long uid) {
+        ReceptionUsers users = usersService.selectByPrimaryKey(uid);
+        if (users == null) {
+            return new ResultBean(-1, "error no such uid", uid);
+        } else {
+            logger.info("查看投资用户id:{}", uid);
+            return new ResultBean(0, "success", users);
+        }
+    }
+
+    /**
      * @param uid    用户id
      * @param status 账户冻结状态 10正常 20冻结
      * @return 成功0 失败-1
@@ -59,26 +115,11 @@ public class ReceptionUsersController {
         } else {
             users.setStatus(status);
             usersService.updateByPrimaryKeySelective(users);
-            logger.info("更新用户id{}账户冻结状态:{}", uid, status);
+            logger.info("更新用户id{},账户冻结状态:{}", uid, status);
             return new ResultBean(0, "success");
         }
     }
 
-    /**
-     * @param uid 用户id
-     * @return 成功0 失败-1
-     * @Description 查询用户详细信息
-     **/
-    @GetMapping("/user/{uid}")
-    public ResultBean selectUsers(@PathVariable("uid") Long uid) {
-        ReceptionUsers users = usersService.selectByPrimaryKey(uid);
-        if (users == null) {
-            return new ResultBean(-1, "error no such uid", uid);
-        } else {
-            logger.info("查看投资用户id:{}", uid);
-            return new ResultBean(0, "success", users);
-        }
-    }
 
     /**
      * @param uid        用户id
@@ -109,16 +150,53 @@ public class ReceptionUsersController {
     }
 
     /**
-     * @param
+     * @return 成功0 失败-1
+     * @Description 修改用户实名状态
+     **/
+    @PutMapping("/user-verification/{uid}")
+    public ResultBean updateAuthentication(@PathVariable("uid") Long uid,
+                                           @RequestParam("idAuthentication") Byte idAuthentication,
+                                           @RequestParam("refusal") String refusal) {
+        ReceptionUsers users = usersService.selectByPrimaryKey(uid);
+        if (users == null) {
+            return new ResultBean(-1, "error no such id", uid);
+        }
+        // 取消实名删除银行卡绑定信息
+        if (idAuthentication != 20) {
+            usersService.deleteBankCardByUID(uid);
+            logger.info("删除用户银行卡绑定 id:{}", uid);
+        }
+        users.setIdAuthentication(idAuthentication);
+        users.setRefusal(refusal);
+        usersService.updateByPrimaryKeySelective(users);
+        logger.info("修改用户实名信息id：{}，认证状态：{}，理由：{}", uid, idAuthentication, refusal);
+        return new ResultBean(0, "success");
+    }
+
+    /**
+     * @param uid        用户id
+     * @param cardNumber 银行卡
      * @return 成功0 失败-1
      * @Description 删除绑定银行卡
      **/
     @DeleteMapping("/user-bank/{uid}")
-    public ResultBean deleteBankCard(@PathVariable("uid") Long uid,
-                                     @RequestParam("cardNumber")String cardNumber) {
-
-
-        return new ResultBean(0, "success");
+    public ResultBean deleteUserBankCard(@PathVariable("uid") Long uid,
+                                         @RequestParam("cardNumber") String cardNumber) {
+        ReceptionUsers users = usersService.selectByPrimaryKey(uid);
+        if (users == null) {
+            return new ResultBean(-1, "error no such id", uid);
+        }
+        UserBank userBank = usersService.selectByCardNum(cardNumber);
+        if (userBank == null) {
+            return new ResultBean(-1, "error no such cardNumber", cardNumber);
+        } else {
+            usersService.deleteByCardNum(cardNumber);
+            logger.info("id:{} 删除绑定银行卡:{} ", uid, cardNumber);
+            return new ResultBean(0, "success");
+        }
     }
+
+
+
 
 }

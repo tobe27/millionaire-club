@@ -33,9 +33,19 @@ private  Logger logger = LoggerFactory.getLogger(BankServiceImpl.class);
         return 0;
     }
 
+    /**
+     * @Description 添加银行信息，返回新增银行id 封装 createtime updatetime modifier
+     * @param record
+     * @return  新增银行id
+     **/
     @Override
-    public int insert(Bank record) {
-        return 0;
+    public Long insert(Bank record) {
+        long time=System.currentTimeMillis();
+        record.setGmtCreate(time);
+        record.setGmtUpdate(time);
+        record.setModifier(record.getFounder());
+        bankMapper.insert(record);
+        return record.getId();
     }
 
     @Override
@@ -46,7 +56,6 @@ private  Logger logger = LoggerFactory.getLogger(BankServiceImpl.class);
     @Override
     public Bank selectByPrimaryKey(Long id) {
         System.out.println(id);
-
         return bankMapper.selectByPrimaryKey(id);
     }
 
@@ -57,7 +66,8 @@ private  Logger logger = LoggerFactory.getLogger(BankServiceImpl.class);
 
     @Override
     public int updateByPrimaryKey(Bank record) {
-        return 0;
+        record.setGmtUpdate(System.currentTimeMillis());
+        return bankMapper.updateByPrimaryKey(record);
     }
 
 

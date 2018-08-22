@@ -3,6 +3,8 @@ package com.millionaire.millionairemanagerservice.dao;
 import com.millionaire.millionairemanagerservice.module.Bank;
 import com.millionaire.millionairemanagerservice.request.BankQuery;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
@@ -15,7 +17,10 @@ public interface BankMapper {
 
     int insertSelective(Bank record);
 
+//  @Select("select * from bank where id = #{id}")
     Bank selectByPrimaryKey(Long id);
+
+    Bank selectByBankName(String bankName);
 
     int updateByPrimaryKeySelective(Bank record);
 
