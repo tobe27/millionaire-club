@@ -75,7 +75,7 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
      **/
     @Override
     public ReceptionUsers selectByPrimaryKey(Long id) {
-        return null;
+        return usersMapper.selectByPrimaryKey(id);
     }
 
     /**
@@ -88,4 +88,5 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
         record.setGmtUpdate(System.currentTimeMillis());
         return usersMapper.updateByPrimaryKeySelective(record);
     }
+
 }

@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.millionaire"})
+
 public class MillionaireUserServiceApplication {
 
 	public static void main(String[] args) {
