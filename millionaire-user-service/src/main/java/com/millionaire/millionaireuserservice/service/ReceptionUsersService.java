@@ -15,6 +15,7 @@ public interface ReceptionUsersService {
 
     Long insert(ReceptionUsers record);
 
+
     Long insertSelective(ReceptionUsers record);
 
     Long updateByPrimaryKey(ReceptionUsers record);
