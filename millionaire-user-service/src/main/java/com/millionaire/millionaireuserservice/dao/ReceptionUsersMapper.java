@@ -1,7 +1,8 @@
 package com.millionaire.millionaireuserservice.dao;
 
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
-import com.millionaire.millionaireuserservice.module.ReceptionUsersQuery;
+import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
+import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -35,4 +36,9 @@ public interface ReceptionUsersMapper {
      * @return  投资用户list
      **/
     List<ReceptionUsers> selectUserByPage(ReceptionUsersQuery usersQuery);
+    /**
+     * @Description  查询实名认证列表
+     **/
+    List<ReceptionUsers> selectUserVerificationByPage(UsersVerificationQuery verificationQuery);
+
 }

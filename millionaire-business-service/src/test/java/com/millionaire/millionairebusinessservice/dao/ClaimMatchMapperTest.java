@@ -21,20 +21,14 @@ public class ClaimMatchMapperTest {
 
     @Test
     public void insert() {
-        ClaimMatch claimMatch = new ClaimMatch();
-
-        claimMatch.setClaimId(1L);
-        claimMatch.setInvestmentUserId(1L);
-        claimMatch.setCreditContractNumber("122545");
-        claimMatch.setStatus(1);
-        claimMatch.setGmtCreate(System.currentTimeMillis());
-
-        System.out.println(claimMatchMapper.insert(claimMatch));
-
-        System.out.println(claimMatch.getId());
-
-
-
+//        ClaimMatch claimMatch = new ClaimMatch();
+//        claimMatch.setClaimId(1L);
+//        claimMatch.setInvestmentUserId(1L);
+//        claimMatch.setCreditContractNumber("122545");
+//        claimMatch.setStatus(1);
+//        claimMatch.setGmtCreate(System.currentTimeMillis());
+//        System.out.println(claimMatchMapper.insert(claimMatch));
+//        System.out.println(claimMatch.getId());
     }
 
     @Test

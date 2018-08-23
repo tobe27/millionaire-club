@@ -1,6 +1,8 @@
 package com.millionaire.millionairemanagerservice.service;
 
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.Content;
+import com.millionaire.millionairemanagerservice.request.ContentQuery;
 
 /**
  * @author Liu Kai
@@ -21,6 +23,6 @@ public interface ContentService {
 
     int updateByPrimaryKey(Content record);
 
-
+    PageInfo<Content> selectContentByPage(Integer pageNum, Integer pageSize, ContentQuery query);
 
 }

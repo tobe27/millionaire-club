@@ -85,7 +85,7 @@
             <if test="managerNumber != null">
                 and manager_number like "%" #{managerNumber,jdbcType=VARCHAR}"%"
             </if>
-            <if test="status != null">
+            <if test="status != null and status != 0">
                 and status =  #{status,jdbcType=TINYINT}
             </if>
             <if test="lowerDate != null">
@@ -93,6 +93,33 @@
             </if>
             <if test="upperDate != null">
                 and gmt_create <![CDATA[ <= ]]>  #{upperDate,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectUserVerificationByPage" resultMap="ReceptionUsers">
+        select
+        <include refid="Select_Column_List"/>
+        from reception_users
+        <where>
+            <if test="idName != null">
+                id_name like "%"#{idName,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="phone != null">
+                and phone like "%"#{phone,jdbcType=BIGINT}"%"
+            </if>
+            <if test="userNumber != null">
+                and  user_number = #{userNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="idAuthentication != null and idAuthentication != 0">
+                and  id_authentication = #{idAuthentication,jdbcType=TINYINT}
+            </if>
+            <if test="lowerDate != null">
+                and application_time <![CDATA[ >= ]]>  #{lowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="upperDate != null">
+                and application_time <![CDATA[ <= ]]>  #{upperDate,jdbcType=BIGINT}
             </if>
         </where>
     </select>

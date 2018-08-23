@@ -27,35 +27,35 @@ InvestmentProductMapper investmentProductMapper;
     @Test
     public void insert() {
     }
-
-    @Test
-    public void insertSelective() {
-        InvestmentProduct product = new InvestmentProduct();
-        // 产品代号
-        product.setProductCode("XSB21");
-        //产品名称
-        product.setName("新手体验计划21");
-        //年化收益
-        product.setAnnualizedIncome(0.12);
-        //还款方式
-        product.setRepaymentMode((byte)10);
-        //起息日期
-        product.setValueDate(10);
-        //起投金额
-        product.setStartingAmount(50000);
-        //期限
-        product.setDeadline(7);
-        product.setRemark("备注信息");
-        product.setMoreDetails("no details for now");
-        product.setType(10);
-        product.setIsRecommend((byte)1);
-        product.setIsPurchaseLimit((byte)1);
-        product.setIsShelf((byte)1);
-        product.setGmtCreate(System.currentTimeMillis());
-        product.setGmtUpdate(System.currentTimeMillis());
-        investmentProductMapper.insertSelective(product);
-        System.out.println(product.getId());
-    }
+//
+//    @Test
+//    public void insertSelective() {
+//        InvestmentProduct product = new InvestmentProduct();
+//        // 产品代号
+//        product.setProductCode("XSB21");
+//        //产品名称
+//        product.setName("新手体验计划21");
+//        //年化收益
+//        product.setAnnualizedIncome(0.12);
+//        //还款方式
+//        product.setRepaymentMode((byte)10);
+//        //起息日期
+//        product.setValueDate(10);
+//        //起投金额
+//        product.setStartingAmount(50000);
+//        //期限
+//        product.setDeadline(7);
+//        product.setRemark("备注信息");
+//        product.setMoreDetails("no details for now");
+//        product.setType(10);
+//        product.setIsRecommend((byte)1);
+//        product.setIsPurchaseLimit((byte)1);
+//        product.setIsShelf((byte)1);
+//        product.setGmtCreate(System.currentTimeMillis());
+//        product.setGmtUpdate(System.currentTimeMillis());
+//        investmentProductMapper.insertSelective(product);
+//        System.out.println(product.getId());
+//    }
 
     @Test
     public void selectByPrimaryKey() {

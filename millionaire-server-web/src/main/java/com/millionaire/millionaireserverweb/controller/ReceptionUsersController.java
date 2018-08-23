@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/a")
 public class ReceptionUsersController {
- private    Logger logger = LoggerFactory.getLogger(ReceptionUsersController.class);
+    private Logger logger = LoggerFactory.getLogger(ReceptionUsersController.class);
     @Resource
     private ReceptionUsersService usersService;
 
@@ -161,16 +161,20 @@ public class ReceptionUsersController {
         if (users == null) {
             return new ResultBean(-1, "error no such id", uid);
         }
-        // 取消实名删除银行卡绑定信息
+        // 取消实名 删除银行卡绑定信息  删除拒绝理由
+        //取消实名 用户姓名 身份证号设为""
         if (idAuthentication != 20) {
             usersService.deleteBankCardByUID(uid);
+            users.setIdName("");
+            users.setIdNumber("");
             logger.info("删除用户银行卡绑定 id:{}", uid);
         }
         users.setIdAuthentication(idAuthentication);
         users.setRefusal(refusal);
+
         usersService.updateByPrimaryKeySelective(users);
         logger.info("修改用户实名信息id：{}，认证状态：{}，理由：{}", uid, idAuthentication, refusal);
-        return new ResultBean(0, "success");
+        return new ResultBean(0, "success", users);
     }
 
     /**
@@ -189,14 +193,12 @@ public class ReceptionUsersController {
         UserBank userBank = usersService.selectByCardNum(cardNumber);
         if (userBank == null) {
             return new ResultBean(-1, "error no such cardNumber", cardNumber);
-        } else {
-            usersService.deleteByCardNum(cardNumber);
-            logger.info("id:{} 删除绑定银行卡:{} ", uid, cardNumber);
-            return new ResultBean(0, "success");
         }
+        usersService.deleteByCardNum(cardNumber);
+        logger.info("id:{} 删除绑定银行卡:{} ", uid, cardNumber);
+        return new ResultBean(0, "success",uid);
+
     }
-
-
 
 
 }

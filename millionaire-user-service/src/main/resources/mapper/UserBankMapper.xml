@@ -35,10 +35,37 @@
     from user_bank
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByUID" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from user_bank
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCardNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from user_bank
+    where  card_number = #{cardNum,jdbcType=VARCHAR}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user_bank
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
+  <delete id="deleteByCardNum" parameterType="java.lang.String">
+    delete from user_bank
+    where card_number = #{cardNum,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByUID" parameterType="java.lang.Long">
+        delete from user_bank
+    where uid = #{uid,jdbcType=BIGINT}
+    </delete>
+
+
+
   <insert id="insert" parameterType="com.millionaire.millionaireuserservice.module.UserBank" useGeneratedKeys="true" keyProperty="id">
     insert into user_bank (
     city, bank_name, card_number,
