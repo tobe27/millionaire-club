@@ -1,6 +1,4 @@
-package com.millionaire.millionaireuserservice.module;
-
-import org.springframework.stereotype.Component;
+package com.millionaire.millionaireuserservice.request;
 
 /**
  * @author Liu Kai
