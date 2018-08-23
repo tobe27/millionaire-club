@@ -25,6 +25,8 @@ import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import com.millionaire.millionaireuserservice.service.UserBankService;
 import com.millionaire.millionaireuserservice.util.CookieUtil;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,6 +65,7 @@ public class Controller {
     private ContentMapper contentMapper;
     @Resource
     private ProposalMapper proposalMapper;
+    Logger logger = LoggerFactory.getLogger(Controller.class);
 
     @GetMapping("loginPage")
     public String loginPage() {
@@ -212,8 +215,6 @@ public class Controller {
         Cookie cookie = CookieUtil.getCookie("cookie",request);
         String id = cookie.getValue();
         Long uid = Long.valueOf(id);
-        System.out.println(id);
-        System.out.println(uid);
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
         return receptionUsers;
     }
@@ -229,6 +230,18 @@ public class Controller {
      */
     @PostMapping("/u/banks")
     public String insertUserBank(String city,String bankName,String bankPhone,String cardNumber,HttpServletRequest request){
+        if(city.length()==0){
+            return "城市不能为空！";
+        }
+        if(bankName.length()==0){
+            return "银行名称不能为空！";
+        }
+        if(bankPhone.length()==0){
+            return "银行预留手机号不能为空";
+        }
+        if(cardNumber.length()==0){
+            return "银行卡号不能为空";
+        }
         Cookie cookie = CookieUtil.getCookie("cookie",request);
         String id = cookie.getValue();
         Long uid = Long.valueOf(id);
@@ -305,7 +318,6 @@ public class Controller {
     public Map getById(@PathVariable Long id){
         Map map = new HashMap();
         InvestmentUser investmentUser = investmentUserMapper.selectByPrimaryKey(id);
-        System.out.println(investmentUser);
         Long productId = investmentUser.getProductId();
         InvestmentProduct investmentProduct = investmentProductMapper.selectByPrimaryKey(productId);
         map.put("investmentProduct",investmentProduct);
@@ -314,7 +326,7 @@ public class Controller {
     }
 
     /**
-     * 通过用户id 查询多条信息for循环用户投资关联id连表查询获得名称。
+     * 通过用户id 查询多条信息for循环用户投资关联id连表查询获得名称。未完成！
      * @param request
      * @return
      */
@@ -324,17 +336,18 @@ public class Controller {
         String id = cookie.getValue();
         Long uid = Long.valueOf(id);
         Map map = new HashMap();
+        logger.info("查询个人消息!");
         MessageUser messageUsers = messageUserMapper.selectByPrimaryKey(1L);
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
         byte authentication =  receptionUsers.getIdAuthentication();
         if(authentication == 20 ){
-            System.out.println("认证后");
+            logger.info("查询实名认证后的平台消息!");
             MessagePlatform messagePlatform = messagePlatformMapper.selectByPrimaryKey(1L);
             map.put("messageUsers",messageUsers);
             map.put("messagePlatform",messagePlatform);
             return map;
         }
-        System.out.println("未认证！");
+        logger.info("查询未实名认证后的平台消息");
         MessagePlatform messagePlatforms = messagePlatformMapper.selectByPrimaryKey(1L);
         map.put("messageUsers",messageUsers);
         map.put("messagePlatforms",messagePlatforms);
@@ -381,6 +394,18 @@ public class Controller {
      */
     @PutMapping("/u/authentication")
     public String updateAuthentication(String idName,String idNumber,String idFront,String idBank,HttpServletRequest request){
+        if(idName.length()==0){
+            return "真实姓名不能为空!";
+        }
+        if(idNumber.length()==0){
+            return "身份证号不能为空!";
+        }
+        if(idFront.length()==0){
+            return "身份证正面照片不能为空!";
+        }
+        if(idBank.length()==0){
+            return "身份证反面照片不能为空!";
+        }
         Cookie cookie = CookieUtil.getCookie("cookie",request);
         Long uid = Long.valueOf(cookie.getValue());
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
@@ -394,6 +419,7 @@ public class Controller {
             receptionUsers.setGmtUpdate(System.currentTimeMillis());
             receptionUsers.setId(uid);
             receptionUsersService.updateByPrimaryKey(receptionUsers);
+            logger.info("第一次提交实名认证");
         }else {
             receptionUsers.setIdName(idName);
             receptionUsers.setIdNumber(idNumber);
@@ -404,6 +430,7 @@ public class Controller {
             receptionUsers.setGmtUpdate(System.currentTimeMillis());
             receptionUsers.setId(uid);
             receptionUsersService.updateByPrimaryKey(receptionUsers);
+            logger.info("多次提交实名认证");
         }
         return "提交实名成功！";
     }
@@ -445,6 +472,7 @@ public class Controller {
         receptionUsers.setSalt(salt);
         receptionUsers.setGmtUpdate(System.currentTimeMillis());
         receptionUsersService.updateByPrimaryKey(receptionUsers);
+        logger.info("用户修改密码");
         return "修改密码成功";
     }
     /**
