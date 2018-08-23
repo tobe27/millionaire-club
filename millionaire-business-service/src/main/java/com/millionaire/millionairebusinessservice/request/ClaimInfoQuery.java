@@ -27,19 +27,19 @@ public class ClaimInfoQuery {
     private Integer status;
 
     //    出借日期上下限
-    private Long lowerlendingDate;
-    private Long upperlendingDate;
+    private Long lowerLendingDate;
+    private Long upperLendingDate;
     //    出借期限上下限
-    private Integer lowerlendingPeriod;
-    private Integer upperlendingPeriod;
+    private Integer lowerLendingPeriod;
+    private Integer upperLendingPeriod;
 
     //    到期日期上下限
-    private Long lowerexpirationDate;
-    private Long upperexpirationDate;
+    private Long lowerExpirationDate;
+    private Long upperExpirationDate;
 
     //    出借金额上下限
-    private Integer lowerlendingAmount;
-    private Integer upperlendingAmount;
+    private Integer lowerLendingAmount;
+    private Integer upperLendingAmount;
 
 
     public ClaimInfoQuery() {
@@ -90,75 +90,75 @@ public class ClaimInfoQuery {
         return this;
     }
 
-    public Long getLowerlendingDate() {
-        return lowerlendingDate;
+    public Long getLowerLendingDate() {
+        return lowerLendingDate;
     }
 
-    public ClaimInfoQuery setLowerlendingDate(Long lowerlendingDate) {
-        this.lowerlendingDate = lowerlendingDate;
+    public ClaimInfoQuery setLowerLendingDate(Long lowerLendingDate) {
+        this.lowerLendingDate = lowerLendingDate;
         return this;
     }
 
-    public Long getUpperlendingDate() {
-        return upperlendingDate;
+    public Long getUpperLendingDate() {
+        return upperLendingDate;
     }
 
-    public ClaimInfoQuery setUpperlendingDate(Long upperlendingDate) {
-        this.upperlendingDate = upperlendingDate;
+    public ClaimInfoQuery setUpperLendingDate(Long upperLendingDate) {
+        this.upperLendingDate = upperLendingDate;
         return this;
     }
 
-    public Integer getLowerlendingPeriod() {
-        return lowerlendingPeriod;
+    public Integer getLowerLendingPeriod() {
+        return lowerLendingPeriod;
     }
 
-    public ClaimInfoQuery setLowerlendingPeriod(Integer lowerlendingPeriod) {
-        this.lowerlendingPeriod = lowerlendingPeriod;
+    public ClaimInfoQuery setLowerLendingPeriod(Integer lowerLendingPeriod) {
+        this.lowerLendingPeriod = lowerLendingPeriod;
         return this;
     }
 
-    public Integer getUpperlendingPeriod() {
-        return upperlendingPeriod;
+    public Integer getUpperLendingPeriod() {
+        return upperLendingPeriod;
     }
 
-    public ClaimInfoQuery setUpperlendingPeriod(Integer upperlendingPeriod) {
-        this.upperlendingPeriod = upperlendingPeriod;
+    public ClaimInfoQuery setUpperLendingPeriod(Integer upperLendingPeriod) {
+        this.upperLendingPeriod = upperLendingPeriod;
         return this;
     }
 
-    public Long getLowerexpirationDate() {
-        return lowerexpirationDate;
+    public Long getLowerExpirationDate() {
+        return lowerExpirationDate;
     }
 
-    public ClaimInfoQuery setLowerexpirationDate(Long lowerexpirationDate) {
-        this.lowerexpirationDate = lowerexpirationDate;
+    public ClaimInfoQuery setLowerExpirationDate(Long lowerExpirationDate) {
+        this.lowerExpirationDate = lowerExpirationDate;
         return this;
     }
 
-    public Long getUpperexpirationDate() {
-        return upperexpirationDate;
+    public Long getUpperExpirationDate() {
+        return upperExpirationDate;
     }
 
-    public ClaimInfoQuery setUpperexpirationDate(Long upperexpirationDate) {
-        this.upperexpirationDate = upperexpirationDate;
+    public ClaimInfoQuery setUpperExpirationDate(Long upperExpirationDate) {
+        this.upperExpirationDate = upperExpirationDate;
         return this;
     }
 
-    public Integer getLowerlendingAmount() {
-        return lowerlendingAmount;
+    public Integer getLowerLendingAmount() {
+        return lowerLendingAmount;
     }
 
-    public ClaimInfoQuery setLowerlendingAmount(Integer lowerlendingAmount) {
-        this.lowerlendingAmount = lowerlendingAmount;
+    public ClaimInfoQuery setLowerLendingAmount(Integer lowerLendingAmount) {
+        this.lowerLendingAmount = lowerLendingAmount;
         return this;
     }
 
-    public Integer getUpperlendingAmount() {
-        return upperlendingAmount;
+    public Integer getUpperLendingAmount() {
+        return upperLendingAmount;
     }
 
-    public ClaimInfoQuery setUpperlendingAmount(Integer upperlendingAmount) {
-        this.upperlendingAmount = upperlendingAmount;
+    public ClaimInfoQuery setUpperLendingAmount(Integer upperLendingAmount) {
+        this.upperLendingAmount = upperLendingAmount;
         return this;
     }
 }

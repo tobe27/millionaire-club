@@ -3,6 +3,8 @@ package com.millionaire.millionairebusinessservice.module;
 public class TradingFlow {
     private Long id;
 
+    private Long uid;
+
 //    产品名称
     private String productName;
 
@@ -31,8 +33,9 @@ public class TradingFlow {
 
     private Long gmtUpdate;
 
-    public TradingFlow(Long id, String productName, String phone, String name, Integer amount, Byte type, String bankCardId, String payType, Byte status, Long gmtCreate, Long gmtUpdate) {
+    public TradingFlow(Long id, Long uid, String productName, String phone, String name, Integer amount, Byte type, String bankCardId, String payType, Byte status, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
+        this.uid = uid;
         this.productName = productName;
         this.phone = phone;
         this.name = name;
@@ -49,6 +52,7 @@ public class TradingFlow {
     public String toString() {
         return "TradingFlow{" +
                 "id=" + id +
+                ", uid=" + uid +
                 ", productName='" + productName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", name='" + name + '\'' +
@@ -60,6 +64,15 @@ public class TradingFlow {
                 ", gmtCreate=" + gmtCreate +
                 ", gmtUpdate=" + gmtUpdate +
                 '}';
+    }
+
+    public Long getUid() {
+        return uid;
+    }
+
+    public TradingFlow setUid(Long uid) {
+        this.uid = uid;
+        return this;
     }
 
     public void setId(Long id) {

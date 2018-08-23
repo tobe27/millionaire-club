@@ -1,9 +1,10 @@
 package com.millionaire.millionaireserverweb.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.Content;
+import com.millionaire.millionairemanagerservice.request.ContentQuery;
 import com.millionaire.millionairemanagerservice.service.ContentService;
 import com.millionaire.millionaireserverweb.result.ResultBean;
-import com.sun.org.apache.regexp.internal.RE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
@@ -24,15 +25,26 @@ public class ContentController {
     @Resource
     private ContentService contentService;
 
+    /**
+     * @Description 查看内容列表
+     **/
+    @GetMapping("/list/content")
+    public ResultBean listContent(@RequestParam("pageSize") Integer pageSize,
+                                  @RequestParam("pageNum") Integer pageNum,
+                                  ContentQuery query) {
+        PageInfo<Content> pageInfo = contentService.selectContentByPage(pageNum, pageSize, query);
+        logger.info("查询运营内容列表:{}", query);
+        return new ResultBean(0, "success", pageInfo);
+    }
 
     /**
      * @Description 查询运营内容详细
      **/
     @GetMapping("/content/{contentId}")
     public ResultBean getContent(@PathVariable("contentId") Long id) {
-          Content content=contentService.selectByPrimaryKey(id);
-          logger.info("查询运营内容id:{}",id);
-        return new ResultBean(0, "success",content);
+        Content content = contentService.selectByPrimaryKey(id);
+        logger.info("查询运营内容id:{}", id);
+        return new ResultBean(0, "success", content);
     }
 
 
@@ -67,4 +79,22 @@ public class ContentController {
         return new ResultBean(0, "success", id);
     }
 
+    /**
+     * @Description 修改运营内容状态
+     **/
+    @PutMapping("/content-status/{contentId}")
+    public ResultBean updateStatus(@PathVariable("contentId") Long id,
+                                   @RequestParam("status") Byte status) {
+        Content content = contentService.selectByPrimaryKey(id);
+        if (content == null) {
+            return new ResultBean(-1, "error id", id);
+        }
+        if (status == null) {
+            return new ResultBean(-1, "error status is null", status);
+        }
+        content.setState(status);
+        contentService.updateByPrimaryKeySelective(content);
+         logger.info("更新运营内容状态id：{},status:{}",id,status);
+        return new ResultBean(0, "success",content);
+    }
 }

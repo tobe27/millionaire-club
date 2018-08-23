@@ -31,12 +31,9 @@
         <include refid="Base_Column_List"/>
         from bank
     </select>
-    <select id="selectByBankName" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from bank
-        where  bank_name = #{bankName,jdbcType=VARCHAR}
-    </select>
+
+
+
     <select id="selectBankByPage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -72,6 +69,10 @@
     delete from bank
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
+
+
+
     <insert id="insert" parameterType="com.millionaire.millionairemanagerservice.module.Bank" useGeneratedKeys="true"
             keyProperty="id">
     insert into bank (bank_name, single_limit,

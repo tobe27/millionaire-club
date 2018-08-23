@@ -1,15 +1,15 @@
-package com.millionaire.millionairemanagerservice.dao;
+package com.millionaire.millionairemanagerservice.service;
 
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
-import com.millionaire.millionairemanagerservice.module.Proposal;
 import com.millionaire.millionairemanagerservice.request.MessagePlatformQuery;
-import com.millionaire.millionairemanagerservice.request.ProposalQuery;
-import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
-@Mapper
-public interface MessagePlatformMapper {
+/**
+ * @author Liu Kai
+ * @Description: TODO 平台消息 新增 编辑 删除 查看
+ * @date 2018/8/23 13:07
+ */
+public interface MessagePlatformService {
     int deleteByPrimaryKey(Long id);
 
     int insert(MessagePlatform record);
@@ -22,5 +22,6 @@ public interface MessagePlatformMapper {
 
     int updateByPrimaryKey(MessagePlatform record);
 
-    List<MessagePlatform> selectByQuery(MessagePlatformQuery query);
+    PageInfo<MessagePlatform> listMessageByPage(Integer pageNum, Integer pageSize, MessagePlatformQuery query);
+
 }
