@@ -6,6 +6,8 @@ import com.millionaire.millionaireuserservice.service.UserBankService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+
 @Service
 public class UserBankServiceImpl implements UserBankService {
     @Resource
@@ -40,5 +42,10 @@ public class UserBankServiceImpl implements UserBankService {
     public Long updateByPrimaryKey(UserBank record) {
         userBankMapper.updateByPrimaryKey(record);
         return record.getId();
+    }
+
+    @Override
+    public List<UserBank> selectByUID(Long uid) {
+        return userBankMapper.selectByUID(uid);
     }
 }
