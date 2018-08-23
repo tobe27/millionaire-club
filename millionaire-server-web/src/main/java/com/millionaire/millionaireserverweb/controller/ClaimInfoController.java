@@ -29,7 +29,7 @@ public class ClaimInfoController {
      * @return 成功0 失败-1
      * @Description 新增债券信息
      **/
-    @PostMapping("/claim-info")
+    @PostMapping("/claim_info")
     public ResultBean insertClaimInfo(ClaimInfo claimInfo) {
         String code = claimInfo.getClaimCode();
         ClaimInfo claimInfoCheck = claimInfoService.selectByCode(code);

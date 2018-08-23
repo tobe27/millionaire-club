@@ -82,7 +82,7 @@ public class ContentController {
     /**
      * @Description 修改运营内容状态
      **/
-    @PutMapping("content-status/{contentId}")
+    @PutMapping("/content-status/{contentId}")
     public ResultBean updateStatus(@PathVariable("contentId") Long id,
                                    @RequestParam("status") Byte status) {
         Content content = contentService.selectByPrimaryKey(id);

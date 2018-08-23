@@ -1,13 +1,16 @@
-package com.millionaire.millionairebusinessservice.dao;
+package com.millionaire.millionairebusinessservice.service;
 
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
 import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
-import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
+/**
+ * @author Liu Kai
+ * @Description: TODO
+ * @date 2018/8/23 20:31
+ */
+public interface TradingFlowService {
 
-@Mapper
-public interface TradingFlowMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(TradingFlow record);
@@ -20,6 +23,5 @@ public interface TradingFlowMapper {
 
     int updateByPrimaryKey(TradingFlow record);
 
-    List<TradingFlow> selectByUIDandQuery(TradingFlowQuery query);
-
+    PageInfo<TradingFlow> selectTradingFlowBypage(Integer pageNum, Integer PageSize, TradingFlowQuery query);
 }

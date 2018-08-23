@@ -1,6 +1,9 @@
 package com.millionaire.millionaireserverweb.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.millionaire.millionairebusinessservice.module.TradingFlow;
+import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
+import com.millionaire.millionairebusinessservice.service.TradingFlowService;
 import com.millionaire.millionaireserverweb.result.ResultBean;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
@@ -13,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Liu Kai
@@ -26,6 +30,8 @@ public class ReceptionUsersController {
     @Resource
     private ReceptionUsersService usersService;
 
+    @Resource
+    private TradingFlowService flowService;
 
     /**
      * @param pageNum    页码
@@ -74,8 +80,9 @@ public class ReceptionUsersController {
      **/
     @GetMapping("/user/{uid}")
     public ResultBean selectUsers(@PathVariable("uid") Long uid) {
-        ReceptionUsersDTO users = usersService.selectByID(uid);
 
+
+        ReceptionUsers users = usersService.selectByPrimaryKey(uid);
         if (users == null) {
             return new ResultBean(-1, "error no such uid", uid);
         } else {
@@ -91,7 +98,8 @@ public class ReceptionUsersController {
      **/
     @GetMapping("/user-verification/{uid}")
     public ResultBean selectUsersVerification(@PathVariable("uid") Long uid) {
-        ReceptionUsers users = usersService.selectByPrimaryKey(uid);
+        ReceptionUsersDTO users = usersService.selectByID(uid);
+//        List<UserBank> bankId=usersService.
         if (users == null) {
             return new ResultBean(-1, "error no such uid", uid);
         } else {
@@ -196,9 +204,21 @@ public class ReceptionUsersController {
         }
         usersService.deleteByCardNum(cardNumber);
         logger.info("id:{} 删除绑定银行卡:{} ", uid, cardNumber);
-        return new ResultBean(0, "success",uid);
-
+        return new ResultBean(0, "success", uid);
     }
 
 
+    /**
+     * @Description 用户交易信息查询
+     **/
+    @GetMapping("/list/trading-flow/{uid}")
+    public ResultBean listUserTradingFlow(@PathVariable("uid") Long uid,
+                                          @RequestParam(value = "pageSize") Integer pageSize,
+                                          @RequestParam(value = "pageNum") Integer pageNum,
+                                          TradingFlowQuery query) {
+        query.setUid(uid);
+        PageInfo<TradingFlow> pageInfo =flowService.selectTradingFlowBypage(pageNum,pageSize,query);
+        logger.info("查询交易流水uid:{}",uid);
+        return new ResultBean(0, "success",pageInfo);
+    }
 }
