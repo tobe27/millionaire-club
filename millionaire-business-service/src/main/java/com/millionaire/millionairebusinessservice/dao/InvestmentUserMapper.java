@@ -16,4 +16,7 @@ public interface InvestmentUserMapper {
     int updateByPrimaryKeySelective(InvestmentUser record);
 
     int updateByPrimaryKey(InvestmentUser record);
+
+//    查询最新的用户id
+    Long selectTimeLimit();
 }
