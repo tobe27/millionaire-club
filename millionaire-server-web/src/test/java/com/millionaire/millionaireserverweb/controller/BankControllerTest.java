@@ -22,7 +22,6 @@ public class BankControllerTest {
     private BankMapper mapper;
     @Test
     public void selectBankByPage() {
-
         BankQuery query=new BankQuery();
         query.setBankName("a");
         PageInfo<Bank> pageInfo=service.selectBankByPage(1,1,query);
@@ -30,11 +29,11 @@ public class BankControllerTest {
     }
 
     @Test
-    public void mytest() {
-//        Bank bank=service.sbank)electByPrimaryKey(1L);
-//        System.out.println(;
-        Bank bank=service.selectByPrimaryKey(1L);
-        System.out.println(bank);
+    public void selectByPrimaryKey() {
+//        Bank bank=service.selectByPrimaryKey(1L);
+//        System.out.println(bank);
+        Bank bank1=service.selectByPrimaryKey(1L);
+        System.out.println(bank1);
     }
     @Test
     public void dummy() {
