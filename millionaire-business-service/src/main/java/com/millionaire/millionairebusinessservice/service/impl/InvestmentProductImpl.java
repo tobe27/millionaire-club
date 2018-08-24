@@ -25,7 +25,7 @@ public class InvestmentProductImpl implements InvestmentProductService {
      * 投资产品mapper
      */
     @Resource
- private  InvestmentProductMapper investmentProductMapper;
+    InvestmentProductMapper investmentProductMapper;
 
     /**
      * @param investmentProduct 投资产品

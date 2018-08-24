@@ -23,33 +23,6 @@
     from content
     where id = #{id,jdbcType=BIGINT}
   </select>
-
-    <select id="listContentByQuery" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from content
-        <where>
-            <if test="title != null">
-                title like "%"#{title,jdbcType=VARCHAR}"%"
-            </if>
-            <if test="type != null">
-               and type = #{type,jdbcType=TINYINT}
-            </if>
-            <if test="state != null">
-               and state = #{state,jdbcType=TINYINT}
-            </if>
-            <if test="editors != null">
-              and editors like "%"#{editors,jdbcType=VARCHAR}"%"
-            </if>
-            <if test="lowerDate != null">
-              and  gmt_update <![CDATA[ >= ]]> #{lowerDate,jdbcType=BIGINT}
-            </if>
-            <if test="upperDate != null">
-              and  gmt_update  <![CDATA[ <= ]]> #{upperDate,jdbcType=BIGINT}
-            </if>
-        </where>
-    </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from content
     where id = #{id,jdbcType=BIGINT}

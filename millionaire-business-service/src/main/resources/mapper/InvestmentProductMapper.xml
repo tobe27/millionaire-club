@@ -45,7 +45,7 @@
       gmt_update)
     values (#{productCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
       #{annualizedIncome,jdbcType=DOUBLE}, #{repaymentMode,jdbcType=TINYINT}, #{startingAmount,jdbcType=INTEGER}, 
-      #{valueDate,jdbcType=TINYINT}, #{deadline,jdbcType=INTEGER}, #{describe,jdbcType=VARCHAR},
+      #{valueDate,jdbcType=TINYINT}, #{deadline,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
       #{moreDetails,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{isRecommend,jdbcType=TINYINT}, 
       #{isPurchaseLimit,jdbcType=TINYINT}, #{isShelf,jdbcType=TINYINT}, #{gmtCreate,jdbcType=BIGINT}, 
       #{gmtUpdate,jdbcType=BIGINT})
@@ -74,7 +74,7 @@
       <if test="deadline != null">
         deadline,
       </if>
-      <if test="describe != null">
+      <if test="remark != null">
         remark,
       </if>
       <if test="moreDetails != null">
@@ -121,8 +121,8 @@
       <if test="deadline != null">
         #{deadline,jdbcType=INTEGER},
       </if>
-      <if test="describe != null">
-        #{describe,jdbcType=VARCHAR},
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
       </if>
       <if test="moreDetails != null">
         #{moreDetails,jdbcType=VARCHAR},
@@ -171,8 +171,8 @@
       <if test="deadline != null">
         deadline = #{deadline,jdbcType=INTEGER},
       </if>
-      <if test=" describe != null">
-        remark = #{describe,jdbcType=VARCHAR},
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
       <if test="moreDetails != null">
         more_details = #{moreDetails,jdbcType=VARCHAR},
@@ -207,7 +207,7 @@
       starting_amount = #{startingAmount,jdbcType=INTEGER},
       value_date = #{valueDate,jdbcType=TINYINT},
       deadline = #{deadline,jdbcType=INTEGER},
-      remark = #{describe,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
       more_details = #{moreDetails,jdbcType=VARCHAR},
       type = #{type,jdbcType=TINYINT},
       is_recommend = #{isRecommend,jdbcType=TINYINT},

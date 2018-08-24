@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/a")
 public class InvestmentProductController {
-  private   Logger logger = LoggerFactory.getLogger(InvestmentProductController.class);
+    Logger logger = LoggerFactory.getLogger(InvestmentProductController.class);
     private final InvestmentProductService investmentProductService;
     @Autowired
     public InvestmentProductController(InvestmentProductService investmentProductService) {
@@ -30,38 +30,29 @@ public class InvestmentProductController {
     }
 
 
+
+
     /**
-     * @param investmentProduct 投资产品类
-     * @return 成功0 失败-1
-     * @Description 新增投资产品
+     * @param pageSize     每页大小
+     * @param pageNum      页码
+     * @param productQuery 包装查询产品的相关参数
+     * @return 根据条件查询的分页产品信息
+     * @Description 分页查看所有产品信息
      **/
-    @PostMapping("/investment-product")
-    public ResultBean insertInvestmentProduct(@Validated InvestmentProduct investmentProduct) {
-        //产品名检验
-        String name = investmentProduct.getName();
-        InvestmentProduct product1 = investmentProductService.selectByProductName(name);
-        //产品代码校验
-        String code = investmentProduct.getProductCode();
-        InvestmentProduct product2 = investmentProductService.selectByProductCode(code);
-        //起投金额
-        Integer startAmount=investmentProduct.getStartingAmount();
-        if (product1 != null) {
-            return new ResultBean(-1, "产品名重复", name);
-        }
-        if (product2 != null) {
-            return new ResultBean(-1, "产品代号重复", code);
-        }
-        if(startAmount%10000 != 0){
-            return new ResultBean(-1, "起投金额需为万的倍数",startAmount);
-        }
-        else {
-            investmentProductService.insertProductSelective(investmentProduct);
-            Long id = investmentProduct.getId();
-            logger.info("新增投资产品id:{}", id);
-            return new ResultBean(0, "success", id);
+    @GetMapping("/list/investment-product")
+    public ResultBean getListInvestmentProduct(@RequestParam(value = "pageSize") Integer pageSize,
+                                               @RequestParam(value = "pageNum") Integer pageNum,
+                                               ProductQuery productQuery) {
+        if (pageNum == null || pageSize == null) {
+            logger.info("页码为空:{}或每页数为空:{}", pageNum, pageSize);
+            return new ResultBean(-1, "error pageSize or pageNum is null");
+        } else {
+            PageInfo<InvestmentProduct> pageInfo =
+                    investmentProductService.selectProductByPage(productQuery, pageSize, pageNum);
+            logger.info("查询产品参数：{}", productQuery);
+            return new ResultBean(0, "success", pageInfo);
         }
     }
-
     /**
      * @param productId 产品id
      * @param isShelf   上下架状态 0/1
@@ -92,6 +83,56 @@ public class InvestmentProductController {
         }
     }
 
+
+    /**
+     * @param investmentProduct 投资产品类
+     * @return 成功0 失败-1
+     * @Description 新增投资产品产品
+     **/
+    @PostMapping("/investment-product")
+    public ResultBean insertInvestmentProduct(@Validated InvestmentProduct investmentProduct) {
+        //产品名检验
+        String name = investmentProduct.getName();
+        InvestmentProduct product1 = investmentProductService.selectByProductName(name);
+        //产品代码校验
+        String code = investmentProduct.getProductCode();
+        InvestmentProduct product2 = investmentProductService.selectByProductCode(code);
+        //起投金额
+        Integer startAmount=investmentProduct.getStartingAmount();
+        if (product1 != null) {
+            return new ResultBean(-1, "产品名重复", name);
+        }
+        if (product2 != null) {
+            return new ResultBean(-1, "产品代号重复", code);
+        }
+        if(startAmount%10000 != 0){
+            return new ResultBean(-1, "起投金额需为万的倍数",startAmount);
+        }
+        else {
+            investmentProductService.insertProductSelective(investmentProduct);
+            Long id = investmentProduct.getId();
+            logger.info("新增投资产品id:{}", id);
+            return new ResultBean(0, "success", id);
+        }
+    }
+
+
+    /**
+     * @param productId 产品id
+     * @return 成功0 失败-1
+     * @Description 通过id查询产品
+     **/
+    @GetMapping("/product-info/{productId}")
+    public ResultBean selectInvestmentProduct(@PathVariable("productId") Long productId) {
+        InvestmentProduct product = investmentProductService.selectByPrimaryKey(productId);
+        if (product == null) {
+            return new ResultBean(-1, "error no such productID", productId);
+        } else {
+            logger.info("查询投资产品 id:{}", productId);
+            return new ResultBean(0, "success", product);
+        }
+    }
+
     /**
      * @param productId 产品id
      * @param type 产品类型
@@ -119,50 +160,8 @@ public class InvestmentProductController {
             product.setType(type);
             investmentProductService.updateProductByPrimaryKeySelective(product);
             logger.info("更新产品角标限购推荐状态 id:{}，type:{}，isLimit:{}，isRecommend:{}",
-                    productId,type,isPurchaseLimit,isRecommend);
+                                              productId,type,isPurchaseLimit,isRecommend);
             return new ResultBean(0, "success");
         }
     }
-
-    /**
-     * @param pageSize     每页大小
-     * @param pageNum      页码
-     * @param productQuery 包装查询产品的相关参数
-     * @return 根据条件查询的分页产品信息
-     * @Description 分页查看所有产品信息
-     **/
-    @GetMapping("/list/investment-product")
-    public ResultBean getListInvestmentProduct(@RequestParam(value = "pageSize") Integer pageSize,
-                                               @RequestParam(value = "pageNum") Integer pageNum,
-                                               ProductQuery productQuery) {
-        if (pageNum == null || pageSize == null) {
-            logger.info("页码为空:{}或每页数为空:{}", pageNum, pageSize);
-            return new ResultBean(-1, "error pageSize or pageNum is null");
-        } else {
-            PageInfo<InvestmentProduct> pageInfo =
-                    investmentProductService.selectProductByPage(productQuery, pageSize, pageNum);
-            logger.info("查询产品参数：{}", productQuery);
-            return new ResultBean(0, "success", pageInfo);
-        }
-    }
-
-
-
-    /**
-     * @param productId 产品id
-     * @return 成功0 失败-1
-     * @Description 通过id查询产品
-     **/
-    @GetMapping("/product-info/{productId}")
-    public ResultBean selectInvestmentProduct(@PathVariable("productId") Long productId) {
-        InvestmentProduct product = investmentProductService.selectByPrimaryKey(productId);
-        if (product == null) {
-            return new ResultBean(-1, "error no such productID", productId);
-        } else {
-            logger.info("查询投资产品 id:{}", productId);
-            return new ResultBean(0, "success", product);
-        }
-    }
-
-
 }

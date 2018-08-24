@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.Resource;
 
 import static org.junit.Assert.*;
 
@@ -21,14 +22,14 @@ public class InvestmentProductImplTest {
     @Test
     public void insertProductSelective() {
         InvestmentProduct investmentProduct = new InvestmentProduct();
-        investmentProduct.setProductCode("mm1");
-        investmentProduct.setName("mmm1");
+        investmentProduct.setProductCode("mm");
+        investmentProduct.setName("mmm");
         investmentProduct.setAnnualizedIncome(0.15D);
         investmentProduct.setRepaymentMode((byte)1);
         investmentProduct.setStartingAmount(100000);
         investmentProduct.setValueDate((byte)1);
         investmentProduct.setDeadline(30);
-        investmentProduct.setDescribe("nnn");
+        investmentProduct.setRemark("nnn");
         investmentProduct.setMoreDetails("nn");
         investmentProduct.setType((byte)1);
         investmentProduct.setIsRecommend((byte)1);
@@ -89,6 +90,4 @@ public class InvestmentProductImplTest {
     @Test
     public void selectByProductCode() {
     }
-    
-
 }

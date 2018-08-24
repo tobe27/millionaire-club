@@ -18,10 +18,10 @@ public class ClaimInfoServiceImplTest {
     @Test
     public void insert() {
         ClaimInfo claimInfo = new ClaimInfo();
-        claimInfo.setClaimCode("fsdc1");
-        claimInfo.setCreditorName("adfsdfas1");
-        claimInfo.setCreditorPhone("dfasadfs1");
-        claimInfo.setCreditorIdNumber("adfsdafsadsf1");
+        claimInfo.setClaimCode("fsdc");
+        claimInfo.setCreditorName("adfsdfas");
+        claimInfo.setCreditorPhone("dfasadfs");
+        claimInfo.setCreditorIdNumber("adfsdafsadsf");
         claimInfo.setLendingDate(System.currentTimeMillis());
         claimInfo.setLendingPeriod(30);
         claimInfo.setLendingAmount(100000);

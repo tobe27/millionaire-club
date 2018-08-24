@@ -13,12 +13,7 @@ public interface BankService {
 
     int deleteByPrimaryKey(Long id);
 
-    /**
-     * @Description 添加银行信息，返回新增银行id 封装 createtime updatetime modifier
-    * @param record
-     * @return  新增银行id
-     **/
-    Long insert(Bank record);
+    int insert(Bank record);
 
     int insertSelective(Bank record);
 

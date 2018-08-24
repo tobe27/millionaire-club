@@ -4,6 +4,8 @@
   <resultMap id="BaseResultMap" type="com.millionaire.millionaireuserservice.module.UserBank">
     <constructor>
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="id_number" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="city" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="bank_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="card_number" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -14,19 +16,8 @@
       <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
-  <resultMap id="UserBank" type="com.millionaire.millionaireuserservice.module.UserBank">
-    <id property="id" column="id"/>
-    <result property="city" column="city"/>
-    <result property="bankName" column="bank_name"/>
-    <result property="cardNumber" column="card_number"/>
-    <result property="cardType" column="card_type"/>
-    <result property="bankPhone" column="bank_phone"/>
-    <result property="uid" column="uid"/>
-    <result property="gmtCreate" column="gmt_create"/>
-    <result property="gmtUpdate" column="gmt_update"/>
-  </resultMap>
   <sql id="Base_Column_List">
-    id, city, bank_name, card_number, card_type, bank_phone, uid, gmt_create,
+    id, name, id_number, city, bank_name, card_number, card_type, bank_phone, uid, gmt_create, 
     gmt_update
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -35,43 +26,16 @@
     from user_bank
     where id = #{id,jdbcType=BIGINT}
   </select>
-
-  <select id="selectByUID" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from user_bank
-    where uid = #{uid,jdbcType=BIGINT}
-  </select>
-  <select id="selectByCardNum" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from user_bank
-    where  card_number = #{cardNum,jdbcType=VARCHAR}
-  </select>
-
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user_bank
     where id = #{id,jdbcType=BIGINT}
   </delete>
-
-  <delete id="deleteByCardNum" parameterType="java.lang.String">
-    delete from user_bank
-    where card_number = #{cardNum,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByUID" parameterType="java.lang.Long">
-        delete from user_bank
-    where uid = #{uid,jdbcType=BIGINT}
-    </delete>
-
-
-
   <insert id="insert" parameterType="com.millionaire.millionaireuserservice.module.UserBank" useGeneratedKeys="true" keyProperty="id">
-    insert into user_bank (
-    city, bank_name, card_number,
+    insert into user_bank (name, id_number,
+      city, bank_name, card_number, 
       card_type, bank_phone, uid, 
       gmt_create, gmt_update)
-    values (
+    values (#{name,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR},
       #{city,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{cardNumber,jdbcType=VARCHAR}, 
       #{cardType,jdbcType=VARCHAR}, #{bankPhone,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, 
       #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT})
@@ -79,6 +43,12 @@
   <insert id="insertSelective" parameterType="com.millionaire.millionaireuserservice.module.UserBank" useGeneratedKeys="true" keyProperty="id">
     insert into user_bank
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="idNumber != null">
+        id_number,
+      </if>
       <if test="city != null">
         city,
       </if>
@@ -105,6 +75,12 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null">
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
       <if test="city != null">
         #{city,jdbcType=VARCHAR},
       </if>
@@ -134,6 +110,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionaireuserservice.module.UserBank">
     update user_bank
     <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null">
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
       <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
       </if>
@@ -163,7 +145,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.millionaire.millionaireuserservice.module.UserBank">
     update user_bank
-    set
+    set name = #{name,jdbcType=VARCHAR},
+      id_number = #{idNumber,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       bank_name = #{bankName,jdbcType=VARCHAR},
       card_number = #{cardNumber,jdbcType=VARCHAR},

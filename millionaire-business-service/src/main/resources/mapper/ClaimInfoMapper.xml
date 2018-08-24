@@ -3,23 +3,23 @@
 <mapper namespace="com.millionaire.millionairebusinessservice.dao.ClaimInfoMapper">
     <resultMap id="BaseResultMap" type="com.millionaire.millionairebusinessservice.module.ClaimInfo">
         <constructor>
-            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
-            <arg column="claim_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="creditor_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="creditor_phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="creditor_id_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="lending_date" javaType="java.lang.Long" jdbcType="BIGINT"/>
-            <arg column="lending_period" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="expiration_date" javaType="java.lang.Long" jdbcType="BIGINT"/>
-            <arg column="lending_amount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="property" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="interest_rate" javaType="java.lang.Double" jdbcType="DOUBLE"/>
-            <arg column="un_match_amount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="match_rate" javaType="java.lang.Double" jdbcType="DOUBLE"/>
-            <arg column="remarks" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
-            <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="claim_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="creditor_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="creditor_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="creditor_id_number" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="lending_date" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="lending_period" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="expiration_date" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="lending_amount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="property" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="interest_rate" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="un_match_amount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="match_rate" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="remarks" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
@@ -29,72 +29,21 @@
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from claim_info
         where id = #{id,jdbcType=BIGINT}
     </select>
     <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from claim_info
         where claim_code = #{claimCode,jdbcType=VARCHAR}
     </select>
-    <select id="selectClaimByPage" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from claim_info
-        <where>
-            <if test="claimCode != null">
-                claim_code = #{claimCode,jdbcType=VARCHAR}
-            </if>
-            <if test="creditorName != null">
-                and creditor_name = #{creditorName,jdbcType=VARCHAR}
-            </if>
-            <if test="creditorPhone != null">
-                and creditor_phone = #{creditorPhone,jdbcType=VARCHAR}
-            </if>
-            <if test="creditorIdNumber != null">
-                and creditor_id_number = #{creditorIdNumber,jdbcType=VARCHAR}
-            </if>
-            <if test="status != null and status != 4">
-                and status = #{status,jdbcType=INTEGER}
-            </if>
-            <if test="lowerLendingDate != null">
-                and lending_date  <![CDATA[ >= ]]> #{lowerLendingDate,jdbcType=BIGINT}
-            </if>
-            <if test="upperLendingDate != null">
-                and lending_date  <![CDATA[ <= ]]> #{upperLendingDate,jdbcType=BIGINT}
-            </if>
-
-            <if test="lowerLendingAmount != null">
-                and lending_amount <![CDATA[ >= ]]> #{lowerLendingAmount,jdbcType=INTEGER}
-            </if>
-            <if test="upperLendingAmount != null">
-                and lending_amount <![CDATA[ <= ]]> #{upperLendingAmount,jdbcType=INTEGER}
-            </if>
-
-            <if test="lowerLendingPeriod != null">
-                abd lending_period <![CDATA[ >= ]]> #{lowerLendingPeriod,jdbcType=INTEGER}
-            </if>
-            <if test="upperLendingPeriod != null">
-                and lending_period <![CDATA[ <= ]]> #{upperLendingPeriod,jdbcType=INTEGER}
-            </if>
-
-            <if test="lowerExpirationDate != null">
-                and expiration_date <![CDATA[ >= ]]> #{lowerExpirationDate,jdbcType=BIGINT}
-            </if>
-            <if test="upperExpirationDate != null">
-                and expiration_date <![CDATA[ <= ]]> #{upperExpirationDate,jdbcType=BIGINT}
-            </if>
-        </where>
-    </select>
-
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from claim_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.ClaimInfo"
-            useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.ClaimInfo" useGeneratedKeys="true" keyProperty="id">
     insert into claim_info (claim_code, creditor_name,
       creditor_phone, creditor_id_number, lending_date, 
       lending_period, expiration_date, lending_amount, 
@@ -108,8 +57,7 @@
       #{matchRate,jdbcType=DOUBLE}, #{remarks,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT})
   </insert>
-    <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.ClaimInfo"
-            useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.ClaimInfo" useGeneratedKeys="true" keyProperty="id">
         insert into claim_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="claimCode != null">
@@ -212,8 +160,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective"
-            parameterType="com.millionaire.millionairebusinessservice.module.ClaimInfo">
+    <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionairebusinessservice.module.ClaimInfo">
         update claim_info
         <set>
             <if test="claimCode != null">

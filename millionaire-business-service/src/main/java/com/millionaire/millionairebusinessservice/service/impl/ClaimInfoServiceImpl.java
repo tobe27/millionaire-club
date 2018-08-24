@@ -1,15 +1,11 @@
 package com.millionaire.millionairebusinessservice.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.dao.ClaimInfoMapper;
 import com.millionaire.millionairebusinessservice.module.ClaimInfo;
-import com.millionaire.millionairebusinessservice.request.ClaimInfoQuery;
 import com.millionaire.millionairebusinessservice.service.ClaimInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author Liu Kai
@@ -25,18 +21,17 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
 
     /**
      * TODO 这个实现类需要修改
-     *
      * @param claim 债券信息
      * @return 成功0 失败-1
      * @Description 新增债券信息 动态插入 封装部分参数
      * create update
      * status=0  使用状态
      * expirationDate = lendingdate + lendingperiod 到期日期=出借日期+出借期限，单位为月
-     * matchAmount=0 匹配金额 删除该字段
+     * matchAmount=0 匹配金额
      * ClaimContract ="" 债券协议
      **/
     @Override
-    public int insert(ClaimInfo claim) {
+    public Long insert(ClaimInfo claim) {
         long time = System.currentTimeMillis();
         claim.setGmtCreate(time);
         claim.setGmtUpdate(time);
@@ -47,7 +42,9 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
         claim.setUnMatchAmount(claim.getLendingAmount());
         claim.setMatchRate(0.0);
         claim.setStatus(0);
-        return claimInfoMapper.insert(claim);
+        claimInfoMapper.insert(claim);
+
+        return claim.getId();
     }
 
 
@@ -59,43 +56,5 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
     @Override
     public ClaimInfo selectByCode(String code) {
         return claimInfoMapper.selectByCode(code);
-    }
-
-    /**
-     * @param query 前台参数
-     * @return 成功0 失败-1
-     * @Description 根据前台参数分页查询
-     **/
-    @Override
-    public PageInfo<ClaimInfo> selectClaimBypage(Integer pageSize, Integer pageNum, ClaimInfoQuery query) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<ClaimInfo> claimInfoList = claimInfoMapper.selectClaimByPage(query);
-        PageInfo<ClaimInfo> pageInfo = new PageInfo<>(claimInfoList);
-        return pageInfo;
-    }
-
-    @Override
-    public int deleteByPrimaryKey(Long id) {
-        return claimInfoMapper.deleteByPrimaryKey(id);
-    }
-
-    @Override
-    public int insertSelective(ClaimInfo record) {
-        return claimInfoMapper.insertSelective(record);
-    }
-
-    @Override
-    public ClaimInfo selectByPrimaryKey(Long id) {
-        return claimInfoMapper.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(ClaimInfo record) {
-        return claimInfoMapper.updateByPrimaryKeySelective(record);
-    }
-
-    @Override
-    public int updateByPrimaryKey(ClaimInfo record) {
-        return claimInfoMapper.updateByPrimaryKey(record);
     }
 }

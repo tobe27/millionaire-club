@@ -3,7 +3,11 @@ package com.millionaire.millionairemanagerservice.module;
 public class Proposal {
     private Long id;
 
-    private Long uid;
+    private String phone;
+
+    private String name;
+
+    private String email;
 
     private String proposal;
 
@@ -11,70 +15,86 @@ public class Proposal {
 
     private Long gmtUpdate;
 
-    public Proposal(Long id, Long uid, String proposal, Long gmtCreate, Long gmtUpdate) {
+    public Proposal(Long id, String phone, String name, String email, String proposal, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
-        this.uid = uid;
+        this.phone = phone;
+        this.name = name;
+        this.email = email;
         this.proposal = proposal;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
-    }
-
-    public Proposal() {
-    }
-
-    @Override
-    public String toString() {
-        return "Proposal{" +
-                "id=" + id +
-                ", uid=" + uid +
-                ", proposal='" + proposal + '\'' +
-                ", gmtCreate=" + gmtCreate +
-                ", gmtUpdate=" + gmtUpdate +
-                '}';
     }
 
     public Long getId() {
         return id;
     }
 
-    public Proposal setId(Long id) {
-        this.id = id;
-        return this;
+    public String getPhone() {
+        return phone;
     }
 
-    public Long getUid() {
-        return uid;
+    public String getName() {
+        return name;
     }
 
-    public Proposal setUid(Long uid) {
-        this.uid = uid;
-        return this;
+    public String getEmail() {
+        return email;
     }
 
     public String getProposal() {
         return proposal;
     }
 
-    public Proposal setProposal(String proposal) {
-        this.proposal = proposal;
-        return this;
-    }
-
     public Long getGmtCreate() {
         return gmtCreate;
-    }
-
-    public Proposal setGmtCreate(Long gmtCreate) {
-        this.gmtCreate = gmtCreate;
-        return this;
     }
 
     public Long getGmtUpdate() {
         return gmtUpdate;
     }
 
-    public Proposal setGmtUpdate(Long gmtUpdate) {
+    @Override
+    public String toString() {
+        return "Proposal{" +
+                "id=" + id +
+                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", proposal='" + proposal + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtUpdate=" + gmtUpdate +
+                '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setProposal(String proposal) {
+        this.proposal = proposal;
+    }
+
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public void setGmtUpdate(Long gmtUpdate) {
         this.gmtUpdate = gmtUpdate;
-        return this;
+    }
+
+    public Proposal() {
+
     }
 }

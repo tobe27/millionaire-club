@@ -3,13 +3,9 @@ package com.millionaire.millionaireuserservice.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionaireuserservice.dao.ReceptionUsersMapper;
-import com.millionaire.millionaireuserservice.dao.UserBankMapper;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
-import com.millionaire.millionaireuserservice.module.UserBank;
-import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
-import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
+import com.millionaire.millionaireuserservice.module.ReceptionUsersQuery;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
-import com.millionaire.millionaireuserservice.transport.ReceptionUsersDTO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,9 +21,6 @@ import java.util.List;
 public class ReceptionUsersServiceImpl implements ReceptionUsersService {
     @Resource
     private ReceptionUsersMapper usersMapper;
-
-    @Resource
-    private UserBankMapper userBankMapper;
 
     @Override
     public void deleteByPrimaryKey(Long id) {
@@ -47,11 +40,6 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
     @Override
     public Long updateByPrimaryKey(ReceptionUsers record) {
         return usersMapper.updateByPrimaryKey(record);
-    }
-
-    @Override
-    public List<ReceptionUsers> findByUser(ReceptionUsers record) {
-        return usersMapper.findByUser(record);
     }
 
     /**
@@ -87,7 +75,7 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
      **/
     @Override
     public ReceptionUsers selectByPrimaryKey(Long id) {
-        return usersMapper.selectByPrimaryKey(id);
+        return null;
     }
 
     /**
@@ -100,55 +88,4 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
         record.setGmtUpdate(System.currentTimeMillis());
         return usersMapper.updateByPrimaryKeySelective(record);
     }
-
-    /**
-     * @param verificationQuery
-     * @Description 查询实名认证列表分页查看
-     */
-    @Override
-    public PageInfo<ReceptionUsers> selectUserVerificationByPage( Integer pageSize, Integer pageNum,UsersVerificationQuery verificationQuery) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<ReceptionUsers> usersList = usersMapper.selectUserVerificationByPage(verificationQuery);
-        PageInfo<ReceptionUsers> pageInfo = new PageInfo<>(usersList);
-        return pageInfo;
-    }
-    /**
-     * @param id
-     * @return 成功0 失败-1
-     * @Description 根据用户id查询用户信息和绑定银行卡表
-     **/
-    @Override
-    public ReceptionUsersDTO selectByID(Long id) {
-        ReceptionUsersDTO usersDTO = new ReceptionUsersDTO();
-        ReceptionUsers users = usersMapper.selectByPrimaryKey(id);
-        List<UserBank> listUserBank = userBankMapper.selectByUID(id);
-        usersDTO.setUsers(users);
-        usersDTO.setListUserBank(listUserBank);
-        return usersDTO;
-    }
-
-    /**
-     * @param uid
-     * @Description 根据uid 删除银行卡
-     */
-    @Override
-    public void deleteBankCardByUID(Long uid) {
-        userBankMapper.deleteByUID(uid);
-    }
-
-    /**
-     * @param cardNum 银行卡号码
-     * @Description 根据卡号删除银行卡
-     **/
-    @Override
-    public void deleteByCardNum(String cardNum) {
-        userBankMapper.deleteByCardNum(cardNum);
-    }
-
-
-    @Override
-    public UserBank selectByCardNum(String cardNum) {
-        return userBankMapper.selectByCardNum(cardNum);
-    }
-
 }

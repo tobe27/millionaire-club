@@ -370,21 +370,4 @@
         FROM reception_users
         WHERE phone=#{phone}
     </select>
-
-    <select id="findByUser" resultMap="ReceptionUsers">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM reception_users
-        <where>
-            <if test="phone != null">
-               and phone like '${phone}%'
-            </if>
-            <if test="email!=null">
-               and email like '${email}%'
-            </if>
-            <if test="idName!=null">
-               and id_name like '${idName}%'
-            </if>
-        </where>
-    </select>
 </mapper>

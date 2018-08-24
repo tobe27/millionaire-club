@@ -31,12 +31,6 @@
         <include refid="Base_Column_List"/>
         from bank
     </select>
-    <select id="selectByBankName" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from bank
-        where  bank_name = #{bankName,jdbcType=VARCHAR}
-    </select>
     <select id="selectBankByPage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

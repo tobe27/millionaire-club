@@ -29,6 +29,11 @@
     from investment_user
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+    <!--查询最新记录id-->
+    <select id="selectTimeLimit" resultType="java.lang.Long">
+        SELECT id FROM investment_user ORDER by gmt_create desc LIMIT 1
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from investment_user
     where id = #{id,jdbcType=BIGINT}

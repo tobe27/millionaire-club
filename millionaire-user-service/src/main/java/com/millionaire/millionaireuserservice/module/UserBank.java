@@ -3,6 +3,10 @@ package com.millionaire.millionaireuserservice.module;
 public class UserBank {
     private Long id;
 
+    private String name;
+
+    private String idNumber;
+
     private String city;
 
     private String bankName;
@@ -19,8 +23,10 @@ public class UserBank {
 
     private Long gmtUpdate;
 
-    public UserBank(Long id, String city, String bankName, String cardNumber, String cardType, String bankPhone, Long uid, Long gmtCreate, Long gmtUpdate) {
+    public UserBank(Long id, String name, String idNumber, String city, String bankName, String cardNumber, String cardType, String bankPhone, Long uid, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
+        this.name = name;
+        this.idNumber = idNumber;
         this.city = city;
         this.bankName = bankName;
         this.cardNumber = cardNumber;
@@ -29,87 +35,58 @@ public class UserBank {
         this.uid = uid;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
-    }
-
-    public UserBank() {
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getName() {
+        return name;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getBankName() {
         return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
     }
 
     public String getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
     public String getCardType() {
         return cardType;
-    }
-
-    public void setCardType(String cardType) {
-        this.cardType = cardType;
     }
 
     public String getBankPhone() {
         return bankPhone;
     }
 
-    public void setBankPhone(String bankPhone) {
-        this.bankPhone = bankPhone;
-    }
-
     public Long getUid() {
         return uid;
-    }
-
-    public void setUid(Long uid) {
-        this.uid = uid;
     }
 
     public Long getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Long gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
     public Long getGmtUpdate() {
         return gmtUpdate;
-    }
-
-    public void setGmtUpdate(Long gmtUpdate) {
-        this.gmtUpdate = gmtUpdate;
     }
 
     @Override
     public String toString() {
         return "UserBank{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
+                ", idNumber='" + idNumber + '\'' +
                 ", city='" + city + '\'' +
                 ", bankName='" + bankName + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
@@ -119,5 +96,53 @@ public class UserBank {
                 ", gmtCreate=" + gmtCreate +
                 ", gmtUpdate=" + gmtUpdate +
                 '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
+    }
+
+    public void setBankPhone(String bankPhone) {
+        this.bankPhone = bankPhone;
+    }
+
+    public void setUid(Long uid) {
+        this.uid = uid;
+    }
+
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public void setGmtUpdate(Long gmtUpdate) {
+        this.gmtUpdate = gmtUpdate;
+    }
+
+    public UserBank() {
+
     }
 }

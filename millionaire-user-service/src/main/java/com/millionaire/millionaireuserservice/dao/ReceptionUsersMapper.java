@@ -1,8 +1,7 @@
 package com.millionaire.millionaireuserservice.dao;
 
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
-import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
-import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
+import com.millionaire.millionaireuserservice.module.ReceptionUsersQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -24,13 +23,6 @@ public interface ReceptionUsersMapper {
     ReceptionUsers findByPhone(Long phone);
 
     /**
-     * 通过手机，邮箱，姓名
-     * @param record
-     * @return
-     */
-    List<ReceptionUsers> findByUser(ReceptionUsers record);
-
-    /**
      * @author Liu Kai
      * @return 投资用户list
      * @Description 查询所有投资用户
@@ -43,9 +35,4 @@ public interface ReceptionUsersMapper {
      * @return  投资用户list
      **/
     List<ReceptionUsers> selectUserByPage(ReceptionUsersQuery usersQuery);
-    /**
-     * @Description  查询实名认证列表
-     **/
-    List<ReceptionUsers> selectUserVerificationByPage(UsersVerificationQuery verificationQuery);
-
 }
