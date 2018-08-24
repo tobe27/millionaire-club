@@ -1,6 +1,8 @@
 package com.millionaire.millionaireuserservice.module;
 
-public class UserBank {
+import java.io.Serializable;
+
+public class UserBank implements Serializable {
     private Long id;
 
     private String city;
