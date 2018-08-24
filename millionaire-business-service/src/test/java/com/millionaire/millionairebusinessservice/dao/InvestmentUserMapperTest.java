@@ -33,6 +33,8 @@ private InvestmentUserMapper userMapper;
 
     @Test
     public void selectByPrimaryKey() {
+        InvestmentUser user=userMapper.selectByPrimaryKey(1L);
+        System.out.println("user = " + user);
     }
 
     @Test
