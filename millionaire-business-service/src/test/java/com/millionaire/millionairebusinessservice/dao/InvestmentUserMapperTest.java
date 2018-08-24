@@ -53,7 +53,7 @@ private InvestmentUserMapper userMapper;
     public void listInvestmentUserByQuery() {
         InvestmentUserQuery query=new InvestmentUserQuery();
         query.setUid(8L);
-
+        query.setProductName("mmm");
         List<InvestmentUserDTO> list=userMapper.listInvestmentUserByQuery(query);
         System.out.println("list = " + list);
 

@@ -1,6 +1,8 @@
 package com.millionaire.millionairebusinessservice.service;
 
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
+import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
+import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 
 import java.util.List;
 
@@ -25,5 +27,20 @@ public interface InvestmentUserService {
     Long selectTimeLimit();
 
 
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @Description 通过查询参数查询用户投资记录
+     * @author Liu Kai
+     **/
+    List<InvestmentUserDTO> listInvestmentUserByQuery(InvestmentUserQuery query);
 
 }

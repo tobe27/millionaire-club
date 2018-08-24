@@ -1,9 +1,13 @@
 package com.millionaire.millionaireserverweb.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
+import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
+import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.service.TradingFlowService;
+import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import com.millionaire.millionaireserverweb.result.ResultBean;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
@@ -32,6 +36,9 @@ public class ReceptionUsersController {
 
     @Resource
     private TradingFlowService flowService;
+
+    @Resource
+    private InvestmentUserService investmentUserService;
 
     /**
      * @param pageNum    页码
@@ -157,9 +164,45 @@ public class ReceptionUsersController {
         return new ResultBean(0, "success", users.getId());
     }
 
+//    /**
+//     * @Description 取消用户实名状态
+//     **/
+//    @PutMapping("/user-verification-cancel/{uid}")
+//    public  ResultBean cancelUserVerification()  {
+//        return new ResultBean(0,"success");
+//    }
+
+
+/**
+ * @Description 修改用户实名状态 审核用户实名接口 未完成
+ **/
+//@PutMapping("/user-verification/{uid}")
+//public ResultBean updateAuthentication(@PathVariable("uid") Long uid,
+//                                       @RequestParam("code") Byte code,
+//                                       @RequestParam("refusal") String refusal) {
+//    ReceptionUsers users = usersService.selectByPrimaryKey(uid);
+//    if (users == null) {
+//        return new ResultBean(-1, "error no such id", uid);
+//    }
+//
+//    //code=0 表示审核通过
+//    if (code == 0) {
+//        usersService.deleteBankCardByUID(uid);
+//        users.setIdName("");
+//        users.setIdNumber("");
+//        logger.info("删除用户银行卡绑定 id:{}", uid);
+//    }
+//    users.setIdAuthentication(idAuthentication);
+//    users.setRefusal(refusal);
+//    usersService.updateByPrimaryKeySelective(users);
+//    logger.info("修改用户实名信息id：{}，认证状态：{}，理由：{}", uid, idAuthentication, refusal);
+//    return new ResultBean(0, "success", users);
+//}
+
+
     /**
      * @return 成功0 失败-1
-     * @Description 修改用户实名状态
+     * @Description 修改用户实名状态 修改实名认证状态接口
      **/
     @PutMapping("/user-verification/{uid}")
     public ResultBean updateAuthentication(@PathVariable("uid") Long uid,
@@ -171,7 +214,7 @@ public class ReceptionUsersController {
         }
         // 取消实名 删除银行卡绑定信息  删除拒绝理由
         //取消实名 用户姓名 身份证号设为""
-        if (idAuthentication != 20) {
+        if (idAuthentication == 60) {
             usersService.deleteBankCardByUID(uid);
             users.setIdName("");
             users.setIdNumber("");
@@ -179,11 +222,14 @@ public class ReceptionUsersController {
         }
         users.setIdAuthentication(idAuthentication);
         users.setRefusal(refusal);
-
         usersService.updateByPrimaryKeySelective(users);
         logger.info("修改用户实名信息id：{}，认证状态：{}，理由：{}", uid, idAuthentication, refusal);
         return new ResultBean(0, "success", users);
     }
+
+
+
+
 
     /**
      * @param uid        用户id
@@ -223,14 +269,17 @@ public class ReceptionUsersController {
     }
 
     /**
-     * @Description  用户投资信息查询
+     * @Description 用户投资信息列表
      **/
     @GetMapping("/list/investment-user/{uid}")
     public ResultBean listUserInvestment(@PathVariable("uid") Long uid,
                                          @RequestParam(value = "pageSize") Integer pageSize,
-                                         @RequestParam(value = "pageNum") Integer pageNum){
-
-        return new ResultBean(0,"success");
+                                         @RequestParam(value = "pageNum") Integer pageNum,
+                                         InvestmentUserQuery query) {
+        query.setUid(uid);
+        PageHelper.startPage(pageNum, pageSize);
+        List<InvestmentUserDTO> investmentUserDTOList=investmentUserService.listInvestmentUserByQuery(query);
+        PageInfo<InvestmentUserDTO> pageInfo=new PageInfo<>(investmentUserDTOList);
+        return new ResultBean(0, "success",pageInfo);
     }
-
 }

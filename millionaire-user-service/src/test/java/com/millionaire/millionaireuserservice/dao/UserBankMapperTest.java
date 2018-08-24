@@ -22,18 +22,18 @@ public class UserBankMapperTest {
 
     @Test
     public void insert() {
-        UserBank userBank = new UserBank();
-        userBank.setName("GFDGFD");
-        userBank.setIdNumber("GFDSSGFD");
-        userBank.setCity("GFSGFSD");
-        userBank.setBankName("DGFSDGFS");
-        userBank.setCardNumber("DGFSDGFS");
-        userBank.setCardType("GSD");
-        userBank.setBankPhone("GSDDGF");
-        userBank.setUid(2l);
-        userBank.setGmtCreate(System.currentTimeMillis());
-        userBankMapper.insert(userBank);
-        System.out.println(userBank.getId());
+//        UserBank userBank = new UserBank();
+//        userBank.setName("GFDGFD");
+//        userBank.setIdNumber("GFDSSGFD");
+//        userBank.setCity("GFSGFSD");
+//        userBank.setBankName("DGFSDGFS");
+//        userBank.setCardNumber("DGFSDGFS");
+//        userBank.setCardType("GSD");
+//        userBank.setBankPhone("GSDDGF");
+//        userBank.setUid(2l);
+//        userBank.setGmtCreate(System.currentTimeMillis());
+//        userBankMapper.insert(userBank);
+//        System.out.println(userBank.getId());
     }
 
     @Test
