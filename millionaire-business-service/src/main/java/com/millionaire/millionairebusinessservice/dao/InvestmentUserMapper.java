@@ -32,4 +32,7 @@ public interface InvestmentUserMapper {
      * @author Liu Kai
      **/
     List<InvestmentUserDTO> listInvestmentUserByQuery(InvestmentUserQuery query);
+
+    //    查询最新的用户id
+    Long selectTimeLimit();
 }
