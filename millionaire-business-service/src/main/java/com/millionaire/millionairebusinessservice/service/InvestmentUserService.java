@@ -1,6 +1,8 @@
 package com.millionaire.millionairebusinessservice.service;
 
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
+import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
+import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 
 import java.util.List;
 
@@ -10,19 +12,11 @@ import java.util.List;
  * @date 2018/8/24 11:09
  */
 public interface InvestmentUserService {
-
     /**
-     * @Description 通过用户id查询用户投资记录
+     * @Description 通过查询参数查询用户投资记录
      * @author Liu Kai
      **/
-    List<InvestmentUser> listInvestmentUserByUID(Long uid);
-
-    Long insert(InvestmentUser record);
-
-    /**
-     * 查询最新记录的用户id
-     */
-    Long selectTimeLimit();
+    List<InvestmentUserDTO> listInvestmentUserByQuery(InvestmentUserQuery query);
 
 
 

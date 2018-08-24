@@ -3,11 +3,15 @@ package com.millionaire.millionairebusinessservice.module;
 public class InvestmentUser {
     private Long id;
 
+
 //    产品编号
     private Long productId;
 
 //    用户id
     private Long uid;
+
+    /** 匹配的债权id */
+    private Long claimId;
 
 //    起息时间
     private Long valueDateStart;
@@ -37,10 +41,11 @@ public class InvestmentUser {
 
     private Long gmtUpdate;
 
-    public InvestmentUser(Long id, Long productId, Long uid, Long valueDateStart, Long valueDateEnd, String lendingContractNumber, String contractSign, Integer investmentAmount, Byte investmentStatus, Double expectedIncome, Double distributedIncome, Long gmtCreate, Long gmtUpdate) {
+    public InvestmentUser(Long id, Long productId, Long uid, Long claimId, Long valueDateStart, Long valueDateEnd, String lendingContractNumber, String contractSign, Integer investmentAmount, Byte investmentStatus, Double expectedIncome, Double distributedIncome, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
         this.productId = productId;
         this.uid = uid;
+        this.claimId = claimId;
         this.valueDateStart = valueDateStart;
         this.valueDateEnd = valueDateEnd;
         this.lendingContractNumber = lendingContractNumber;
@@ -57,6 +62,7 @@ public class InvestmentUser {
     public String toString() {
         return "InvestmentUser{" +
                 "id=" + id +
+                ", claimId=" + claimId +
                 ", productId=" + productId +
                 ", uid=" + uid +
                 ", valueDateStart=" + valueDateStart +
@@ -70,6 +76,15 @@ public class InvestmentUser {
                 ", gmtCreate=" + gmtCreate +
                 ", gmtUpdate=" + gmtUpdate +
                 '}';
+    }
+
+    public Long getClaimId() {
+        return claimId;
+    }
+
+    public InvestmentUser setClaimId(Long claimId) {
+        this.claimId = claimId;
+        return this;
     }
 
     public void setId(Long id) {
