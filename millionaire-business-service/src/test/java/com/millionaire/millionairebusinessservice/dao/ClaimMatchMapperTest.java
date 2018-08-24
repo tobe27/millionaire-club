@@ -42,11 +42,19 @@ public class ClaimMatchMapperTest {
         System.out.println(claimMatch);
     }
 
-    @Test
-    public void updateByPrimaryKeySelective() {
-    }
 
     @Test
-    public void updateByPrimaryKey() {
+    public void insert1() {
+        ClaimMatch claimMatch = new ClaimMatch();
+        claimMatch.setClaimId(1L);
+        claimMatch.setInvestmentUserId(2L);
+        claimMatch.setCreditContractNumber("dgfs");
+        claimMatch.setGmtCreate(System.currentTimeMillis());
+        claimMatch.setGmtUpdate(System.currentTimeMillis());
+        claimMatch.setStatus((byte)1);
+        claimMatchMapper.insert(claimMatch);
+        System.out.println(claimMatch.getId());
+
     }
+
 }
