@@ -23,14 +23,4 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     private InvestmentUserMapper investmentUserMapper;
 
 
-    /**
-     * @param query
-     * @Description 通过查询参数查询用户投资记录
-     * @author Liu Kai
-     */
-    @Override
-    public List<InvestmentUserDTO> listInvestmentUserByQuery(InvestmentUserQuery query) {
-        return investmentUserMapper.listInvestmentUserByQuery(query);
-    }
-
 }
