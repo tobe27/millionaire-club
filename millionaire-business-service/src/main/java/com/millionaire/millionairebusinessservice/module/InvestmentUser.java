@@ -125,6 +125,7 @@ public class InvestmentUser {
     }
 
     public InvestmentUser() {
+
     }
 
     public Long getId() {

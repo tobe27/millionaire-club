@@ -3,11 +3,7 @@ package com.millionaire.millionairemanagerservice.module;
 public class Proposal {
     private Long id;
 
-    private String phone;
-
-    private String name;
-
-    private String email;
+    private Long uid;
 
     private String proposal;
 
@@ -15,86 +11,70 @@ public class Proposal {
 
     private Long gmtUpdate;
 
-    public Proposal(Long id, String phone, String name, String email, String proposal, Long gmtCreate, Long gmtUpdate) {
+    public Proposal(Long id, Long uid, String proposal, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
-        this.phone = phone;
-        this.name = name;
-        this.email = email;
+        this.uid = uid;
         this.proposal = proposal;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getProposal() {
-        return proposal;
-    }
-
-    public Long getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public Long getGmtUpdate() {
-        return gmtUpdate;
+    public Proposal() {
     }
 
     @Override
     public String toString() {
         return "Proposal{" +
                 "id=" + id +
-                ", phone='" + phone + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
+                ", uid=" + uid +
                 ", proposal='" + proposal + '\'' +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtUpdate=" + gmtUpdate +
                 '}';
     }
 
-    public void setId(Long id) {
+    public Long getId() {
+        return id;
+    }
+
+    public Proposal setId(Long id) {
         this.id = id;
+        return this;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public Long getUid() {
+        return uid;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Proposal setUid(Long uid) {
+        this.uid = uid;
+        return this;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getProposal() {
+        return proposal;
     }
 
-    public void setProposal(String proposal) {
+    public Proposal setProposal(String proposal) {
         this.proposal = proposal;
+        return this;
     }
 
-    public void setGmtCreate(Long gmtCreate) {
+    public Long getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public Proposal setGmtCreate(Long gmtCreate) {
         this.gmtCreate = gmtCreate;
+        return this;
     }
 
-    public void setGmtUpdate(Long gmtUpdate) {
+    public Long getGmtUpdate() {
+        return gmtUpdate;
+    }
+
+    public Proposal setGmtUpdate(Long gmtUpdate) {
         this.gmtUpdate = gmtUpdate;
-    }
-
-    public Proposal() {
-
+        return this;
     }
 }

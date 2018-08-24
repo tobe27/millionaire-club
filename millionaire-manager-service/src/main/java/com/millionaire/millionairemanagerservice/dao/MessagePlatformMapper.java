@@ -1,7 +1,12 @@
 package com.millionaire.millionairemanagerservice.dao;
 
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
+import com.millionaire.millionairemanagerservice.module.Proposal;
+import com.millionaire.millionairemanagerservice.request.MessagePlatformQuery;
+import com.millionaire.millionairemanagerservice.request.ProposalQuery;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface MessagePlatformMapper {
@@ -16,4 +21,6 @@ public interface MessagePlatformMapper {
     int updateByPrimaryKeySelective(MessagePlatform record);
 
     int updateByPrimaryKey(MessagePlatform record);
+
+    List<MessagePlatform> selectByQuery(MessagePlatformQuery query);
 }

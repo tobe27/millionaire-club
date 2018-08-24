@@ -1,52 +1,70 @@
 package com.millionaire.millionairebusinessservice.module;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
 public class InvestmentProduct {
+
+    @Null
     private Long id;
 
-//    产品代号
+    //    产品代号
+    @NotBlank
     private String productCode;
 
-//    产品名称
+    //    产品名称
+    @NotBlank
     private String name;
 
-//    产品收益率
+    //    产品收益率
+    @NotNull
     private Double annualizedIncome;
 
-//    还款方式
+    //    还款方式
+    @NotNull
     private Byte repaymentMode;
 
-//    起投金额
+    //    起投金额
+    @NotNull
     private Integer startingAmount;
 
-//    起息日期
+    //    起息日期
+    @NotNull
     private Byte valueDate;
 
-//    期限
+    //    期限
+    @NotNull
     private Integer deadline;
 
-//    备注
-    private String remark;
+    //    备注
+    private String describe;
 
-//    产品详情
+    //    产品详情
+    @NotNull
     private String moreDetails;
 
-//    类型
+    //    类型
+    @NotNull
     private Byte type;
 
-//    是否推荐
+    //    是否推荐
+    @NotNull
     private Byte isRecommend;
 
-//    是否限购
+    //    是否限购
+    @NotNull
     private Byte isPurchaseLimit;
 
-//    上下架
+    //    上下架
+    @NotNull
     private Byte isShelf;
-
+    @Null
     private Long gmtCreate;
-
+    @Null
     private Long gmtUpdate;
 
-    public InvestmentProduct(Long id, String productCode, String name, Double annualizedIncome, Byte repaymentMode, Integer startingAmount, Byte valueDate, Integer deadline, String remark, String moreDetails, Byte type, Byte isRecommend, Byte isPurchaseLimit, Byte isShelf, Long gmtCreate, Long gmtUpdate) {
+    public InvestmentProduct(Long id, String productCode, String name, Double annualizedIncome, Byte repaymentMode, Integer startingAmount, Byte valueDate, Integer deadline, String describe, String moreDetails, Byte type, Byte isRecommend, Byte isPurchaseLimit, Byte isShelf, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
         this.productCode = productCode;
         this.name = name;
@@ -55,7 +73,7 @@ public class InvestmentProduct {
         this.startingAmount = startingAmount;
         this.valueDate = valueDate;
         this.deadline = deadline;
-        this.remark = remark;
+        this.describe = describe;
         this.moreDetails = moreDetails;
         this.type = type;
         this.isRecommend = isRecommend;
@@ -76,7 +94,7 @@ public class InvestmentProduct {
                 ", startingAmount=" + startingAmount +
                 ", valueDate=" + valueDate +
                 ", deadline=" + deadline +
-                ", remark='" + remark + '\'' +
+                ", describe='" + describe + '\'' +
                 ", moreDetails='" + moreDetails + '\'' +
                 ", type=" + type +
                 ", isRecommend=" + isRecommend +
@@ -122,8 +140,8 @@ public class InvestmentProduct {
         this.deadline = deadline;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
     public void setMoreDetails(String moreDetails) {
@@ -186,8 +204,8 @@ public class InvestmentProduct {
         return deadline;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getDescribe() {
+        return describe;
     }
 
     public String getMoreDetails() {

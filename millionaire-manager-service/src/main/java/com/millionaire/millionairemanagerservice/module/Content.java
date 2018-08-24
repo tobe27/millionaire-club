@@ -1,22 +1,28 @@
 package com.millionaire.millionairemanagerservice.module;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
 public class Content {
+    @Null
     private Long id;
 
+    @NotBlank
     private String title;
-
+    @NotNull
     private Byte type;
 
     private String cover;
-
+    @NotNull
     private String content;
-
+    @NotNull
     private Byte state;
-
+    @NotBlank
     private String editors;
-
+    @Null
     private Long gmtCreate;
-
+    @Null
     private Long gmtUpdate;
 
     public Content(Long id, String title, Byte type, String cover, String content, Byte state, String editors, Long gmtCreate, Long gmtUpdate) {

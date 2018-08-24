@@ -7,7 +7,6 @@ import com.millionaire.millionairemanagerservice.request.BankQuery;
 import com.millionaire.millionairemanagerservice.service.BankService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -23,16 +22,18 @@ public class BankControllerTest {
     private BankMapper mapper;
     @Test
     public void selectBankByPage() {
-
+        BankQuery query=new BankQuery();
+        query.setBankName("a");
+        PageInfo<Bank> pageInfo=service.selectBankByPage(1,1,query);
+        System.out.println(pageInfo);
     }
 
-
     @Test
-    public void mytest() {
-//        Bank bank=service.sbank)electByPrimaryKey(1L);
-//        System.out.println(;
-        Bank bank=service.selectByPrimaryKey(1L);
-        System.out.println(bank);
+    public void selectByPrimaryKey() {
+//        Bank bank=service.selectByPrimaryKey(1L);
+//        System.out.println(bank);
+        Bank bank1=service.selectByPrimaryKey(1L);
+        System.out.println(bank1);
     }
     @Test
     public void dummy() {

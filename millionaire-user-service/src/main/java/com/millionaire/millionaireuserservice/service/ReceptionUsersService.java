@@ -2,7 +2,12 @@ package com.millionaire.millionaireuserservice.service;
 
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
-import com.millionaire.millionaireuserservice.module.ReceptionUsersQuery;
+import com.millionaire.millionaireuserservice.module.UserBank;
+import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
+import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
+import com.millionaire.millionaireuserservice.transport.ReceptionUsersDTO;
+
+import java.util.List;
 
 /**
  * @author Liu Kai
@@ -15,9 +20,17 @@ public interface ReceptionUsersService {
 
     Long insert(ReceptionUsers record);
 
+
     Long insertSelective(ReceptionUsers record);
 
     Long updateByPrimaryKey(ReceptionUsers record);
+
+    /**
+     * 通过 手机 姓名 邮箱
+     * @param record
+     * @return
+     */
+    List<ReceptionUsers> findByUser(ReceptionUsers record);
 
     /**
      * 通过电话查用户 登陆时使用
@@ -50,4 +63,31 @@ ReceptionUsers selectByPrimaryKey(Long id);
  **/
 
 Long updateByPrimaryKeySelective(ReceptionUsers record);
+
+    /**
+     * @Description  查询实名认证列表分页查看
+     **/
+    PageInfo<ReceptionUsers> selectUserVerificationByPage( Integer pageSize, Integer pageNum,UsersVerificationQuery verificationQuery);
+
+    /**
+     * @param id
+     * @return 成功0 失败-1
+     * @Description 根据用户id查询用户信息和绑定银行卡表
+     **/
+    ReceptionUsersDTO selectByID(Long id);
+
+    /**
+     * @Description 根据uid 删除银行卡
+     **/
+    void deleteBankCardByUID(Long uid);
+
+    /**
+     * @param cardNum 银行卡号码
+     * @Description 根据卡号删除银行卡
+     **/
+    void deleteByCardNum(String cardNum);
+
+
+    UserBank selectByCardNum(String cardNum);
+
 }

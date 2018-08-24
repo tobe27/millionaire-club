@@ -44,7 +44,7 @@ public interface InvestmentProductMapper {
     /**
      * @Description 投资产品分页查看 包含查询参数
      * @param productQuery 包装投资产品参数类
-     * @return 投资产品列表
+     * @return 投资产品列表 模糊查询
      **/
     List<InvestmentProduct> selectProductByPage(ProductQuery productQuery);
 
