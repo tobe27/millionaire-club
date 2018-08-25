@@ -41,12 +41,18 @@ public interface InvestmentUserMapper {
 
 
 
+
+
+
     /**
      *壮壮接口
      * @param user
      * @return
      */
     List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user);
+
+
+
 
 
 }

@@ -37,6 +37,12 @@ List<TradingFlowStatisticDTO> statisticInvestmentProductByQuery(TradingFlowStati
 List<TradingFlowDetailDTO> statisticProductDetailByQuery(TradingFlowDetailQuery query);
 
 
+
     //    根据用户id查询交易流水
     List<TradingFlow> fingByUid(Long uid);
+
+
+
+
+
 }
