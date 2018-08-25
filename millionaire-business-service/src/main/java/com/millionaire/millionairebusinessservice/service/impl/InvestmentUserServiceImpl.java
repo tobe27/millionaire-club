@@ -2,7 +2,9 @@ package com.millionaire.millionairebusinessservice.service.impl;
 
 import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
+import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
+import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,34 +22,23 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     @Resource
     private InvestmentUserMapper investmentUserMapper;
 
+    /**
+     * 用户投资记录插入，发生在用户签署合同以后
+     *
+     * @param record
+     * @return
+     */
     @Override
-    public int deleteByPrimaryKey(Long id) {
-        return 0;
+    public Long insert(InvestmentUser record) {
+        long time = System.currentTimeMillis();
+        record.setGmtCreate(time);
+        record.setGmtUpdate(time);
+        return record.getId();
     }
 
     @Override
-    public int insert(InvestmentUser record) {
-        return 0;
-    }
-
-    @Override
-    public int insertSelective(InvestmentUser record) {
-        return 0;
-    }
-
-    @Override
-    public InvestmentUser selectByPrimaryKey(Long id) {
-        return null;
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(InvestmentUser record) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKey(InvestmentUser record) {
-        return 0;
+    public Long selectTimeLimit() {
+        return investmentUserMapper.selectTimeLimit();
     }
 
     /**
@@ -57,6 +48,31 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
      */
     @Override
     public List<InvestmentUser> listInvestmentUserByUID(Long uid) {
-        return null;
+        return investmentUserMapper.listInvestmentUserByUID(uid);
     }
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @param query
+     * @Description 通过查询参数查询用户投资记录
+     * @author Liu Kai
+     */
+    @Override
+    public List<InvestmentUserDTO> listInvestmentUserByQuery(InvestmentUserQuery query) {
+        return investmentUserMapper.listInvestmentUserByQuery(query);
+    }
+
+
+
+
+
 }

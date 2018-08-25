@@ -12,6 +12,9 @@ public class ClaimMatch {
 //    债权编号，每一份匹配债权的合同编号不一样
     private String creditContractNumber;
 
+//    用户匹配状态
+    private Byte status;
+
     private Long gmtCreate;
 
     private Long gmtUpdate;
@@ -32,6 +35,7 @@ public class ClaimMatch {
                 ", claimId=" + claimId +
                 ", investmentUserId=" + investmentUserId +
                 ", creditContractNumber='" + creditContractNumber + '\'' +
+                ", status=" + status +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtUpdate=" + gmtUpdate +
                 '}';
@@ -87,5 +91,13 @@ public class ClaimMatch {
 
     public Long getGmtUpdate() {
         return gmtUpdate;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }

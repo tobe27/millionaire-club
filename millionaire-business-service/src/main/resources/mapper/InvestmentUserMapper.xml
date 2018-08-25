@@ -6,6 +6,7 @@
             <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="product_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="claim_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="value_date_start" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="value_date_end" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="lending_contract_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -19,7 +20,7 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-    id, product_id, uid, value_date_start, value_date_end, lending_contract_number, contract_sign, 
+    id,product_id, uid,claim_id, value_date_start, value_date_end, lending_contract_number, contract_sign,
     investment_amount, investment_status, expected_income, distributed_income, gmt_create, 
     gmt_update
   </sql>
@@ -80,7 +81,18 @@
             <if test="investmentStatus != null">
                 and  investment_user.investment_status =  #{investmentStatus,jdbcType=TINYINT}
             </if>
-            <!--<if test=""-->
+            <if test="valueStartlowerDate != null">
+                and  investment_user.value_date_start <![CDATA[ >= ]]> #{valueStartlowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="valueStartupperDate != null">
+                and investment_user.value_date_start <![CDATA[ <= ]]> #{valueStartupperDate,jdbcType=BIGINT}
+            </if>
+            <if test="valueEndlowerDate != null">
+                and investment_user.value_date_end <![CDATA[ >= ]]> #{valueEndlowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="valueEndupperDate != null">
+                and investment_user.value_date_end <![CDATA[ <= ]]> #{valueEndupperDate,jdbcType=BIGINT}
+            </if>
         </where>
 
     </select>
@@ -96,12 +108,12 @@
   </delete>
     <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser"
             useGeneratedKeys="true" keyProperty="id">
-    insert into investment_user (product_id, uid,
+    insert into investment_user (product_id, uid,claim_id,
       value_date_start, value_date_end, lending_contract_number, 
       contract_sign, investment_amount, investment_status, 
       expected_income, distributed_income, gmt_create, 
       gmt_update)
-    values (#{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},
+    values (#{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},#{claimId,jdbcType=BIGINT},
       #{valueDateStart,jdbcType=BIGINT}, #{valueDateEnd,jdbcType=BIGINT}, #{lendingContractNumber,jdbcType=VARCHAR}, 
       #{contractSign,jdbcType=VARCHAR}, #{investmentAmount,jdbcType=INTEGER}, #{investmentStatus,jdbcType=TINYINT}, 
       #{expectedIncome,jdbcType=DOUBLE}, #{distributedIncome,jdbcType=DOUBLE}, #{gmtCreate,jdbcType=BIGINT}, 
@@ -115,6 +127,9 @@
             </if>
             <if test="uid != null">
                 uid,
+            </if>
+            <if test="claimId != null">
+                claim_id,
             </if>
             <if test="valueDateStart != null">
                 value_date_start,
@@ -153,6 +168,9 @@
             </if>
             <if test="uid != null">
                 #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="claimId != null">
+                #{claimId,jdbcType=BIGINT},
             </if>
             <if test="valueDateStart != null">
                 #{valueDateStart,jdbcType=BIGINT},
@@ -196,6 +214,9 @@
             <if test="uid != null">
                 uid = #{uid,jdbcType=BIGINT},
             </if>
+            <if test="claimId != null">
+                claim_id = #{claimId,jdbcType=BIGINT},
+            </if>
             <if test="valueDateStart != null">
                 value_date_start = #{valueDateStart,jdbcType=BIGINT},
             </if>
@@ -233,6 +254,7 @@
     update investment_user
     set product_id = #{productId,jdbcType=BIGINT},
       uid = #{uid,jdbcType=BIGINT},
+       claim_id = #{claimId,jdbcType=BIGINT},
       value_date_start = #{valueDateStart,jdbcType=BIGINT},
       value_date_end = #{valueDateEnd,jdbcType=BIGINT},
       lending_contract_number = #{lendingContractNumber,jdbcType=VARCHAR},
