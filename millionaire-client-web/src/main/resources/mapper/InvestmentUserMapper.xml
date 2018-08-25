@@ -23,6 +23,12 @@
     investment_amount, investment_status, expected_income, distributed_income, gmt_create, 
     gmt_update
   </sql>
+    <select id="findByUidInvestmentStatus" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM investment_user
+        WHERE uid=#{uid} AND investment_status=#{investmentStatus}
+    </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

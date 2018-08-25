@@ -8,6 +8,7 @@ import com.millionaire.millionairebusinessservice.dao.TradingFlowMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.MessageUser;
+import com.millionaire.millionairebusinessservice.module.TradingFlow;
 import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.FlowNumberGeneration;
@@ -17,7 +18,9 @@ import com.millionaire.millionairemanagerservice.dao.ContentMapper;
 import com.millionaire.millionairemanagerservice.dao.MessagePlatformMapper;
 import com.millionaire.millionairemanagerservice.dao.ProposalMapper;
 import com.millionaire.millionairemanagerservice.module.Bank;
+import com.millionaire.millionairemanagerservice.module.Content;
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
+import com.millionaire.millionairemanagerservice.module.Proposal;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
@@ -285,28 +288,49 @@ public class SunController {
             return new ResultBean(0,"返回所有银行信息",banks);
         }
 
-//    /**
-//     * 用户交易的流水
-//     * @param request
-//     * @return
-//     */
-//    @GetMapping("/u/transaction")
-//    public List<TradingFlow> findAll(HttpServletRequest request){
-//        Cookie cookie = CookieUtil.getCookie("cookie",request);
-//        String id = cookie.getValue();
-//        Long uid = Long.valueOf(id);
-//        tradingFlowMapper.selectByPrimaryKey();
-//    }
+    /**
+     * 用户交易的流水
+     * @param request
+     * @return
+     */
+    @GetMapping("/u/transaction")
+    public ResultBean findAll(HttpServletRequest request){
+        Cookie cookie = CookieUtil.getCookie("cookie",request);
+        String id = cookie.getValue();
+        Long uid = Long.valueOf(id);
+        List<TradingFlow> tradingFlows = tradingFlowMapper.findByUid(uid);
+        return new ResultBean(0,"用户交易的流水",tradingFlows);
+    }
+
+    /**
+     * 交易流水详细信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/u/transaction/{id}")
+    public ResultBean findById(@PathVariable Long id){
+        TradingFlow tradingFlow = tradingFlowMapper.selectByPrimaryKey(id);
+        return new ResultBean(0,"交易流水详情",tradingFlow);
+    }
 
 
-//    @GetMapping("/u/investments")
-//    public List<InvestmentUser> getUserInvestments(byte investmentStatus,HttpServletRequest request){
-//        Cookie cookie = CookieUtil.getCookie("cookie",request);
-//        String id = cookie.getValue();
-//        Long uid = Long.valueOf(id);
-////        List<InvestmentUser> investmentUsers = investmentUserMapper.查询通过uid和投资状态
-//
-//    }
+    /**
+     * 查询用户投资通过状态
+     * @param investmentStatus
+     * @param request
+     * @return
+     */
+    @GetMapping("/u/investments")
+    public ResultBean getUserInvestments(byte investmentStatus,HttpServletRequest request){
+        Cookie cookie = CookieUtil.getCookie("cookie",request);
+        String id = cookie.getValue();
+        Long uid = Long.valueOf(id);
+        InvestmentUser investmentUser = new InvestmentUser();
+        investmentUser.setUid(uid);
+        investmentUser.setInvestmentStatus((byte) 10);
+        List<InvestmentUser> investmentUsers = investmentUserMapper.findByUidInvestmentStatus(investmentUser);
+        return new ResultBean(0,"通过用户传来的投资状态查询",investmentUsers);
+    }
 
         /**
          *投资详情
@@ -475,33 +499,45 @@ public class SunController {
             return new ResultBean(0,"修改密码成功");
         }
         /**
-         * 查询帮助
+         * 查询帮助需要判断类型和是否上线
          */
-//    @GetMapping("/u/help")
-//    public Content getHelp(){
-//        contentMapper.
-//    }
+    @GetMapping("/u/help")
+    public ResultBean getHelp(){
+        String content = contentMapper.findByType((byte) 20).getContent();
+        return new ResultBean(0,"内容中的帮助",content);
+    }
 
-//      @GetMapping("/u/company")
-//    public Content getHelp(){
-//        contentMapper.
-//    }
+    /**
+     * 查询关于我们需要判断类型和是否上线
+     * @return
+     */
+      @GetMapping("/u/company")
+    public ResultBean getCompany(){
+          String content = contentMapper.findByType((byte) 30).getContent();
+          return new ResultBean(0,"内容中的关于我们",content);
+    }
 
-//    @PostMapping("/u/proposal")
-//    public String insertProposal(String proposal,HttpServletRequest request){
-//        if(proposal.length()==0){
-//            return "内容不能为空";
-//        }
-//        Cookie cookie = CookieUtil.getCookie("cookie",request);
-//        Long uid = Long.valueOf(cookie.getValue());
-//        Proposal proposl = new Proposal();
-//        proposl.setProposal(proposal);
-//        proposl.setGmtCreate(System.currentTimeMillis());
-//        proposl.setGmtUpdate(System.currentTimeMillis());
-//        proposl.set
-//        proposalMapper.insert(proposl);
-//        return "提交建议成功";
-//    }
+    /**
+     * 用户提交意见
+     * @param proposal
+     * @param request
+     * @return
+     */
+    @PostMapping("/u/proposal")
+    public ResultBean insertProposal(String proposal,HttpServletRequest request){
+        if(proposal.length()==0){
+            return new ResultBean(1,"内容不能为空");
+        }
+        Cookie cookie = CookieUtil.getCookie("cookie",request);
+        Long uid = Long.valueOf(cookie.getValue());
+        Proposal proposals = new Proposal();
+        proposals.setUid(uid);
+        proposals.setProposal(proposal);
+        proposals.setGmtCreate(System.currentTimeMillis());
+        proposals.setGmtUpdate(System.currentTimeMillis());
+        proposalMapper.insert(proposals);
+        return new ResultBean(0,"提交建议成功");
+    }
 
 
 
