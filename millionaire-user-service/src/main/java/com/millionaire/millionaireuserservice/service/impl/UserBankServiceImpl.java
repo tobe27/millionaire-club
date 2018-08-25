@@ -68,4 +68,14 @@ public class UserBankServiceImpl implements UserBankService {
     public void addRedis(Object key,Object value){
         redisTemplate.opsForValue().set(key,value,1000*60*5,TimeUnit.MILLISECONDS);
     }
+
+
+    /**
+     * @param uid
+     * @Description 根据uid 删除银行卡
+     */
+    @Override
+    public void deleteByUID(Long uid) {
+        userBankMapper.deleteByUID(uid);
+    }
 }

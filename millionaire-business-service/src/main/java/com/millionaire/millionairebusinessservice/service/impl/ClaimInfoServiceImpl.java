@@ -79,23 +79,25 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
         return claimInfoMapper.deleteByPrimaryKey(id);
     }
 
-    @Override
-    public int insertSelective(ClaimInfo record) {
-        return claimInfoMapper.insertSelective(record);
-    }
+//    @Override
+//    public int insertSelective(ClaimInfo record) {
+//        return claimInfoMapper.insertSelective(record);
+//    }
 
     @Override
     public ClaimInfo selectByPrimaryKey(Long id) {
         return claimInfoMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public int updateByPrimaryKeySelective(ClaimInfo record) {
-        return claimInfoMapper.updateByPrimaryKeySelective(record);
-    }
+//    @Override
+//    public int updateByPrimaryKeySelective(ClaimInfo record) {
+//        return claimInfoMapper.updateByPrimaryKeySelective(record);
+//    }
 
-    @Override
-    public int updateByPrimaryKey(ClaimInfo record) {
-        return claimInfoMapper.updateByPrimaryKey(record);
-    }
+//    @Override
+//    public int updateByPrimaryKey(ClaimInfo record) {
+//        return claimInfoMapper.updateByPrimaryKey(record);
+//    }
+//}
+
 }

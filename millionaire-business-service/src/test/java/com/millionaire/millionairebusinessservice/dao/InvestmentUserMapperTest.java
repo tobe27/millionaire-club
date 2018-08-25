@@ -29,6 +29,17 @@ private InvestmentUserMapper userMapper;
 
     @Test
     public void insertSelective() {
+        InvestmentUser investmentUser=new InvestmentUser();
+        investmentUser.setProductId(2L);
+        investmentUser.setUid(8L);
+        investmentUser.setValueDateStart(2342423423L);
+        investmentUser.setValueDateEnd(69687987979L);
+        investmentUser.setLendingContractNumber("lendingNUm");
+        investmentUser.setContractSign("contractsign");
+        investmentUser.setInvestmentAmount(10000);
+        investmentUser.setGmtCreate(System.currentTimeMillis());
+        investmentUser.setGmtUpdate(System.currentTimeMillis());
+
     }
 
     @Test

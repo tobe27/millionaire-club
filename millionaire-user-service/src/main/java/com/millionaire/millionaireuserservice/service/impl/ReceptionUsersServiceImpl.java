@@ -73,7 +73,7 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
      * @Description 分页查询投资用户信息
      **/
     @Override
-    public PageInfo<ReceptionUsers> selectProductByPage(ReceptionUsersQuery usersQuery, Integer pageSize, Integer pageNum) {
+    public PageInfo<ReceptionUsers> selectReceptionUserByPage(ReceptionUsersQuery usersQuery, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum, pageSize);
         List<ReceptionUsers> usersList = usersMapper.selectUserByPage(usersQuery);
         PageInfo<ReceptionUsers> pageInfo = new PageInfo<>(usersList);

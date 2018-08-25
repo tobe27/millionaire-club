@@ -76,9 +76,9 @@
         from reception_users
         order by gmt_create desc;
     </select>
-    <select id="selectUserByPage" resultMap="BaseResultMap">
+    <select id="selectUserByPage" resultMap="ReceptionUsers">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Select_Column_List"/>
         from reception_users
         <where>
             <if test="idName != null">

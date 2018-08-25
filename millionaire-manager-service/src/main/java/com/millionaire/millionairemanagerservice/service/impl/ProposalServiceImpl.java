@@ -25,33 +25,33 @@ public class ProposalServiceImpl implements ProposalService {
 
     @Override
     public int deleteByPrimaryKey(Long id) {
-        return 0;
+        return proposalMapper.deleteByPrimaryKey(id);
     }
-
-    @Override
-    public int insert(Proposal record) {
-        return 0;
-    }
-
-    @Override
-    public int insertSelective(Proposal record) {
-        return 0;
-    }
-
-    @Override
-    public Proposal selectByPrimaryKey(Long id) {
-        return null;
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(Proposal record) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKey(Proposal record) {
-        return 0;
-    }
+//
+//    @Override
+//    public int insert(Proposal record) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public int insertSelective(Proposal record) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public Proposal selectByPrimaryKey(Long id) {
+//        return null;
+//    }
+//
+//    @Override
+//    public int updateByPrimaryKeySelective(Proposal record) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public int updateByPrimaryKey(Proposal record) {
+//        return 0;
+//    }
 
 
     @Override
