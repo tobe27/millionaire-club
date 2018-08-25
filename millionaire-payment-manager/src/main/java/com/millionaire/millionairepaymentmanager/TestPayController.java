@@ -14,10 +14,9 @@ public class TestPayController {
     private PayManager payManager;
 
     @GetMapping("/api/test")
-    public void test(UserInvestmentRequestBean requestBean,Long uid) throws IOException {
+    public String test(UserInvestmentRequestBean requestBean,Long uid) throws IOException {
         System.out.println(requestBean);
-    payManager.payment(requestBean,uid);
-
+        return payManager.payment(requestBean,uid);
     }
 
 }

@@ -56,7 +56,7 @@ public class PayManager {
      * if1.支付成功调用定时任务接口、用户消息推送、交易流水表数据插入
      * else 2.支付失败用户消息推送、交易流水表数据插入
      */
-    public  void payment(UserInvestmentRequestBean requestBean, long uid) throws IOException {
+    public String payment(UserInvestmentRequestBean requestBean, long uid) throws IOException {
 
 //        查询购买的产品信息
         InvestmentProduct investmentProduct = investmentProductService.selectByPrimaryKey(requestBean.getProductId());
@@ -141,11 +141,9 @@ public class PayManager {
 
 //        调用支付接口
         H5PayServlet h5PayServlet = new H5PayServlet();
-        h5PayServlet.sentPost(uid,requestBean.getAmount(),receptionUsers.getIdNumber(),investmentUser.getLendingContractNumber(),
-                userBank.getCardNumber(),receptionUsers.getIdName());
 
-        logger.info("支付接口调用成功,参数信息"+uid,requestBean.getAmount(),receptionUsers.getIdNumber(),investmentUser.getLendingContractNumber(),
-                userBank.getCardNumber(),receptionUsers.getIdName());
-
+//        返回支付页面
+        return h5PayServlet.sentPost(uid,requestBean.getAmount(),receptionUsers.getIdNumber(),
+                investmentUser.getLendingContractNumber(), userBank.getCardNumber(),receptionUsers.getIdName());
     }
 }
