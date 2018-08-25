@@ -103,29 +103,12 @@ public class Controller {
     }
 
     /**
-     * 查询所有后台用户
+     * 条件查询所有后台用户
      * @return
      */
-    @GetMapping("/a/list/users")
-    public List<BackstageUsers> getAll(){
+    @GetMapping("/a/list/backstageUsers")
+    public List<BackstageUsers> getAll(String pageSize,String pageNum,String name,String role){
         return backstageUsersService.findAll();
-    }
-
-    /**
-     * 模糊查询
-     * @param name
-     * @param role
-     * @return
-     */
-    @GetMapping("/a/list/user/name")
-    public List<BackstageUsers> getByName(String name,String role){
-        BackstageUsers backstageUsers= new BackstageUsers();
-        if(role!=null){
-            Roles roles = rolesService.findByName(role);
-            backstageUsers.setRoleId(roles.getId());
-        }
-        backstageUsers.setName(name);
-        return backstageUsersService.findByNameOrRole(backstageUsers);
     }
 
     /**
