@@ -27,8 +27,8 @@ public interface ContentMapper {
 
 
 
-    List<Content> findByType(Byte type);
 
+    List<Content> findByType(Byte type);
 
 
 }
