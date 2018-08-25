@@ -26,7 +26,102 @@
     from trading_flow
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+
+
+    <select id="selectByUIDandQuery" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from trading_flow
+        <where>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT}
+            </if>
+            <if test="productName != null">
+                and product_name = #{productName,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=TINYINT}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=TINYINT}
+            </if>
+            <if test="lowerDate != null">
+                and gmt_create <![CDATA[ >= ]]> #{lowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="upperDate != null">
+                and gmt_create <![CDATA[ <= ]]> #{upperDate,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <select id="statisticInvestmentProductByQuery"
+            resultType="com.millionaire.millionairebusinessservice.transport.TradingFlowStatisticDTO"
+            parameterType="com.millionaire.millionairebusinessservice.request.TradingFlowStatisticQuery">
+        select
+        trading_flow.product_name as productName,
+        count(trading_flow.uid) as purchaseNumber,
+        count(trading_flow.id) as purchase,
+        sum(trading_flow.amount) as totalPurchases,
+
+        investment_product.id as productId,
+        investment_product.product_code as productCode
+
+        from trading_flow
+        left join investment_product
+        on trading_flow.product_name =investment_product.name
+        <where>
+            <if test="type != null">
+                trading_flow.type = #{type,jdbcType=TINYINT}
+            </if>
+            <if test="status != null">
+                and trading_flow.status = #{status,jdbcType=TINYINT}
+            </if>
+            <if test="pruductName != null">
+                and trading_flow.product_name = #{pruductName,jdbcType=VARCHAR}
+            </if>
+            <if test="poductCode != null">
+                and investment_product.product_code = #{poductCode,jdbcType=VARCHAR}
+            </if>
+        </where>
+        group by
+        trading_flow.product_name
+    </select>
+
+    <select id="statisticProductDetailByQuery"
+            parameterType="com.millionaire.millionairebusinessservice.request.TradingFlowDetailQuery"
+            resultType="com.millionaire.millionairebusinessservice.transport.TradingFlowDetailDTO">
+        select
+        FROM_UNIXTIME(gmt_create/1000, '%Y%m%d') as purchaseDate,
+        count(uid) as purchaseNumber,
+        count(id) as purchase,
+        sum(amount) as totalPurchases
+        from
+        trading_flow
+        <where>
+            <if test="lowerDate != null">
+                gmt_create  <![CDATA[ >= ]]> #{lowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="upperDate != null">
+                and gmt_create <![CDATA[ <= ]]>  #{upperDate,jdbcType=BIGINT}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=TINYINT}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=TINYINT}
+            </if>
+            <if test="productName != null">
+                and product_name = #{productName,jdbcType=VARCHAR}
+            </if>
+        </where>
+        group  by
+        FROM_UNIXTIME(gmt_create/1000, '%Y%m%d')
+    </select>
+
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from trading_flow
     where id = #{id,jdbcType=BIGINT}
   </delete>
