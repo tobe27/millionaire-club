@@ -69,7 +69,7 @@ public class ReceptionUsersControllerTest {
     public void listUserTradingFlow() {
 
         TradingFlowQuery query=new TradingFlowQuery();
-        query.setUid(1L);
+        query.setUid(8L);
         PageInfo<TradingFlow> pageInfo = flowService.selectTradingFlowBypage(1, 1, query);
         System.out.println("pageInfo = " + pageInfo);
     }
