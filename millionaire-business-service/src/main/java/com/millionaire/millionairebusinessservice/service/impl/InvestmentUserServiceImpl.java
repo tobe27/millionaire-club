@@ -20,35 +20,20 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     @Resource
     private InvestmentUserMapper investmentUserMapper;
 
+
     @Override
-    public int deleteByPrimaryKey(Long id) {
-        return 0;
+    public Long insert(InvestmentUser record) {
+        record.setGmtCreate(System.currentTimeMillis());
+        record.setGmtUpdate(System.currentTimeMillis());
+        investmentUserMapper.insert(record);
+        return record.getId();
     }
 
     @Override
-    public int insert(InvestmentUser record) {
-        return 0;
-    }
-
-    @Override
-    public int insertSelective(InvestmentUser record) {
-        return 0;
-    }
-
-    @Override
-    public InvestmentUser selectByPrimaryKey(Long id) {
+    public Long selectTimeLimit() {
         return null;
     }
 
-    @Override
-    public int updateByPrimaryKeySelective(InvestmentUser record) {
-        return 0;
-    }
-
-    @Override
-    public int updateByPrimaryKey(InvestmentUser record) {
-        return 0;
-    }
 
     /**
      * @param uid
