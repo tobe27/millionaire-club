@@ -22,5 +22,8 @@ public interface ContentMapper {
 
     List<Content> listContentByQuery(ContentQuery query);
 
-    
+
+
+
+    List<Content> findByType(Byte type);
 }

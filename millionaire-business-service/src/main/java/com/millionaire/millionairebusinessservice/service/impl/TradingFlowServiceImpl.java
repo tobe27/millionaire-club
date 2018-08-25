@@ -8,8 +8,13 @@ import com.millionaire.millionairebusinessservice.request.TradingFlowDetailQuery
 import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
 import com.millionaire.millionairebusinessservice.request.TradingFlowStatisticQuery;
 import com.millionaire.millionairebusinessservice.service.TradingFlowService;
+
 import com.millionaire.millionairebusinessservice.transport.TradingFlowDetailDTO;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowStatisticDTO;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,6 +29,7 @@ import java.util.List;
 @Service
 public class TradingFlowServiceImpl  implements TradingFlowService {
 
+    private Logger logger = LoggerFactory.getLogger(TradingFlowServiceImpl.class);
     @Resource
     private TradingFlowMapper flowMapper;
 
@@ -56,6 +62,27 @@ public class TradingFlowServiceImpl  implements TradingFlowService {
 //    public int updateByPrimaryKey(TradingFlow record) {
 //        return 0;
 //    }
+
+
+    @Override
+    public int deleteByPrimaryKey(Long id) {
+        return 0;
+    }
+
+    @Override
+    public Long insert(TradingFlow record) {
+        record.setGmtCreate(System.currentTimeMillis());
+        record.setGmtUpdate(System.currentTimeMillis());
+        logger.info("交易信息插入："+record);
+        flowMapper.insert(record);
+        return record.getId();
+    }
+
+
+
+
+
+
 
     @Override
     public PageInfo<TradingFlow> selectTradingFlowBypage(Integer pageNum, Integer PageSize, TradingFlowQuery query) {

@@ -29,6 +29,12 @@ public interface TradingFlowService {
 //
 //    int updateByPrimaryKey(TradingFlow record);
 
+
+    int deleteByPrimaryKey(Long id);
+
+    Long insert(TradingFlow record);
+
+
     PageInfo<TradingFlow> selectTradingFlowBypage(Integer pageNum, Integer PageSize, TradingFlowQuery query);
 
     /**
