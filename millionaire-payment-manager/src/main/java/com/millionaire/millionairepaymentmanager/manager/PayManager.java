@@ -8,8 +8,6 @@ import com.millionaire.millionairebusinessservice.service.InvestmentProductServi
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.service.MessageUserService;
 import com.millionaire.millionairebusinessservice.service.TradingFlowService;
-import com.millionaire.millionairepaymentmanager.PayMananger;
-import com.millionaire.millionairepaymentmanager.fuyou.H5PayBackServlet;
 import com.millionaire.millionairepaymentmanager.fuyou.H5PayServlet;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
 import com.millionaire.millionairepaymentmanager.until.FlowNumberGeneration;
@@ -20,10 +18,11 @@ import com.millionaire.millionaireuserservice.service.UserBankService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-
-public class InvestmentUserInsert {
+@Component("payManager")
+public class PayManager {
     @Autowired
     private InvestmentProductService investmentProductService;
 
@@ -43,7 +42,7 @@ public class InvestmentUserInsert {
     private MessageUserService messageUserService;
 
 
-    private Logger logger = LoggerFactory.getLogger(PayMananger.class);
+    private Logger logger = LoggerFactory.getLogger(PayManager.class);
 
     private static final int TIME_DAY = 24 * 60 * 60 * 1000;
 
@@ -57,17 +56,20 @@ public class InvestmentUserInsert {
      * if1.支付成功调用定时任务接口、用户消息推送、交易流水表数据插入
      * else 2.支付失败用户消息推送、交易流水表数据插入
      */
-    public void investmentUserInsert(UserInvestmentRequestBean requestBean, long uid) throws IOException {
+    public  void payment(UserInvestmentRequestBean requestBean, long uid) throws IOException {
 
 //        查询购买的产品信息
         InvestmentProduct investmentProduct = investmentProductService.selectByPrimaryKey(requestBean.getProductId());
+        logger.info("产品信息："+investmentProduct);
 
 //        查询用户信息
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
 
-//        查询用户银行信息
-        UserBank userBank = userBankService.selectByPrimaryKey(uid);
+        logger.info("用户信息："+receptionUsers);
 
+//        查询用户银行信息
+        UserBank userBank = userBankService.selectByPrimaryKey(requestBean.getUserBankId());
+        logger.info("用户银行卡信息："+userBank);
 
         InvestmentUser investmentUser = new InvestmentUser();
         investmentUser.setProductId(requestBean.getProductId());
@@ -78,11 +80,13 @@ public class InvestmentUserInsert {
 
 //        计算用户收益（=产品收益率*投资金额*到期时间）
         double income = investmentProduct.getAnnualizedIncome() * requestBean.getAmount() * investmentProduct.getDeadline();
+        logger.info("计算用户收益:"+income);
         investmentUser.setExpectedIncome(income);
 //        未分配收益
         investmentUser.setDistributedIncome(income);
-//        当前用户id
+//        当前用户投资id
         Long num = investmentUserService.selectTimeLimit() + 1;
+        logger.info("当前用户id："+num);
         //        出借合同编号
         investmentUser.setLendingContractNumber(FlowNumberGeneration.lendProtocol(investmentProduct.getProductCode(), num));
 
@@ -97,14 +101,14 @@ public class InvestmentUserInsert {
         } else {
             logger.info("用户投资信息插入错误" + investmentProduct.getValueDate());
         }
+        logger.info("投资到期时间："+valueDateStart);
 
         Long valueDateEnd = valueDateStart + investmentProduct.getDeadline() * TIME_DAY;
         investmentUser.setValueDateStart(valueDateStart);
         investmentUser.setValueDateEnd(valueDateEnd);
-
-//        插入插入用户投资记录
+//        插入用户投资记录
         Long investmentUserId = investmentUserService.insert(investmentUser);
-        logger.info("插入用户投资记录id"+investmentUserId);
+        logger.info("操作成功用户投资记录id"+investmentUserId);
 
 
 //        交易流水生成
@@ -120,7 +124,8 @@ public class InvestmentUserInsert {
 //        默认失败
         tradingFlow.setStatus((byte)20);
         tradingFlowService.insert(tradingFlow);
-        logger.info("交易信息插入："+tradingFlow);
+        logger.info("操作成功用户交易记录id"+tradingFlow.getId());
+
 
 //        用户消息的生成
         MessageUser messageUser = new MessageUser();
@@ -131,16 +136,16 @@ public class InvestmentUserInsert {
 //        用户是否浏览过信息，默认没有看过
         messageUser.setIsLook((byte)0);
         messageUserService.insert(messageUser);
-        logger.info("用户消息记录插入："+messageUser);
+        logger.info("操作成功用户消息记录id"+messageUser.getId());
+
 
 //        调用支付接口
         H5PayServlet h5PayServlet = new H5PayServlet();
         h5PayServlet.sentPost(uid,requestBean.getAmount(),receptionUsers.getIdNumber(),investmentUser.getLendingContractNumber(),
-                                userBank.getCardNumber(),receptionUsers.getIdName());
+                userBank.getCardNumber(),receptionUsers.getIdName());
 
-        logger.info("支付接口调用成功");
+        logger.info("支付接口调用成功,参数信息"+uid,requestBean.getAmount(),receptionUsers.getIdNumber(),investmentUser.getLendingContractNumber(),
+                userBank.getCardNumber(),receptionUsers.getIdName());
 
-
-        return ;
     }
 }

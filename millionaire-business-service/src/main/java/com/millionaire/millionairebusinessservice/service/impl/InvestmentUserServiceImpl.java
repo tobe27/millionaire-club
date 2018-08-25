@@ -5,6 +5,9 @@ import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
+import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,7 @@ import java.util.List;
 @Service
 public class InvestmentUserServiceImpl implements InvestmentUserService {
 
+    private Logger logger = LoggerFactory.getLogger(InvestmentUserServiceImpl.class);
     @Resource
     private InvestmentUserMapper investmentUserMapper;
 
@@ -33,6 +37,8 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
         long time = System.currentTimeMillis();
         record.setGmtCreate(time);
         record.setGmtUpdate(time);
+        logger.info("用户投资记录插入:"+record);
+        investmentUserMapper.insert(record);
         return record.getId();
     }
 
@@ -50,15 +56,6 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     public List<InvestmentUser> listInvestmentUserByUID(Long uid) {
         return investmentUserMapper.listInvestmentUserByUID(uid);
     }
-
-
-
-
-
-
-
-
-
 
 
     /**

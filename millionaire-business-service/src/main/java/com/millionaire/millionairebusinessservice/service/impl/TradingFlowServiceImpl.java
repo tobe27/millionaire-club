@@ -6,6 +6,8 @@ import com.millionaire.millionairebusinessservice.dao.TradingFlowMapper;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
 import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
 import com.millionaire.millionairebusinessservice.service.TradingFlowService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,6 +22,7 @@ import java.util.List;
 @Service
 public class TradingFlowServiceImpl  implements TradingFlowService {
 
+    private Logger logger = LoggerFactory.getLogger(TradingFlowServiceImpl.class);
     @Resource
     private TradingFlowMapper flowMapper;
 
@@ -32,6 +35,7 @@ public class TradingFlowServiceImpl  implements TradingFlowService {
     public Long insert(TradingFlow record) {
         record.setGmtCreate(System.currentTimeMillis());
         record.setGmtUpdate(System.currentTimeMillis());
+        logger.info("交易信息插入："+record);
         flowMapper.insert(record);
         return record.getId();
     }
