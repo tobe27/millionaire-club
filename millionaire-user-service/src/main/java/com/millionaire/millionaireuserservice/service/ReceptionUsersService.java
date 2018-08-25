@@ -46,7 +46,7 @@ public interface ReceptionUsersService {
  * @param pageSize  每页数据
  * @return 分页查询数据
  **/
-PageInfo<ReceptionUsers> selectProductByPage(ReceptionUsersQuery usersQuery,
+PageInfo<ReceptionUsers> selectReceptionUserByPage(ReceptionUsersQuery usersQuery,
                                              Integer pageSize, Integer pageNum);
 
 /**

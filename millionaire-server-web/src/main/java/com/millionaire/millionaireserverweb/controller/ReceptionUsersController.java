@@ -14,12 +14,14 @@ import com.millionaire.millionaireuserservice.module.UserBank;
 import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
 import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
+import com.millionaire.millionaireuserservice.service.UserBankService;
 import com.millionaire.millionaireuserservice.transport.ReceptionUsersDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.xml.transform.ErrorListener;
 import java.util.List;
 
 /**
@@ -40,6 +42,9 @@ public class ReceptionUsersController {
     @Resource
     private InvestmentUserService investmentUserService;
 
+    @Resource
+    private UserBankService userBankService;
+
     /**
      * @param pageNum    页码
      * @param pageSize   每页大小
@@ -48,26 +53,22 @@ public class ReceptionUsersController {
      * @Description 根据条件查询投资用户
      **/
     @GetMapping("/list/user")
-    public ResultBean getListReceptionUsers(@RequestParam(value = "pageSize") Integer pageSize,
-                                            @RequestParam(value = "pageNum") Integer pageNum,
+    public ResultBean getListReceptionUsers(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                                            @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                             ReceptionUsersQuery usersQuery) {
-        if (pageNum == null || pageSize == null) {
-            logger.info("页码为空:{}或每页数为空:{}", pageNum, pageSize);
-            return new ResultBean(-1, "error pageSize or pageNum is null");
-        } else {
+
             PageInfo<ReceptionUsers> pageInfo =
-                    usersService.selectProductByPage(usersQuery, pageSize, pageNum);
+                    usersService.selectReceptionUserByPage(usersQuery, pageSize, pageNum);
             logger.info("查询投资用户参数：{}", usersQuery);
             return new ResultBean(0, "success", pageInfo);
-        }
     }
 
     /**
      * @Description 查看用户实名列表
      **/
     @GetMapping("/list/user-verification")
-    public ResultBean listUsersVerification(@RequestParam(value = "pageSize") Integer pageSize,
-                                            @RequestParam(value = "pageNum") Integer pageNum,
+    public ResultBean listUsersVerification(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                                            @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                             UsersVerificationQuery usersVerificationQuery) {
         if (pageNum == null || pageSize == null) {
             logger.info("页码为空:{}或每页数为空:{}", pageNum, pageSize);
@@ -124,6 +125,9 @@ public class ReceptionUsersController {
     @PutMapping("/user-status/{uid}")
     public ResultBean updateUserStatus(@PathVariable("uid") Long uid,
                                        @RequestParam("status") Byte status) {
+        if(status != 10 && status !=20){
+            return new ResultBean(-1, "error status", status);
+        }
         ReceptionUsers users = usersService.selectByPrimaryKey(uid);
         if (users == null) {
             return new ResultBean(-1, "error no such uid", uid);
@@ -131,7 +135,7 @@ public class ReceptionUsersController {
             users.setStatus(status);
             usersService.updateByPrimaryKeySelective(users);
             logger.info("更新用户id{},账户冻结状态:{}", uid, status);
-            return new ResultBean(0, "success");
+            return new ResultBean(0, "success change status",status);
         }
     }
 
@@ -151,85 +155,83 @@ public class ReceptionUsersController {
         if (users == null) {
             return new ResultBean(-1, "error no such uid", uid);
         }
-        //手机号正则式判断
-        String pattern = "1[0-9]{10}";
-        if (phone != null && phone.matches(pattern)) {
-            users.setPhone(Long.valueOf(phone));
+        if(phone == null && managerNum == null){
+            return new ResultBean(0,"success no change");
         }
         if (managerNum != null) {
             users.setManagerNumber(managerNum);
         }
+        //手机号正则式判断
+        String pattern = "1[0-9]{10}";
+        System.out.println("pattern = " + pattern);
+        if (phone.matches(pattern)) {
+            users.setPhone(Long.valueOf(phone));
+        } else {
+            return new ResultBean(-1, "error phonenum", phone);
+        }
         usersService.updateByPrimaryKeySelective(users);
         logger.info("修改用户信息 用户id:{},手机号:{},经理工号:{}", uid, phone, managerNum);
         return new ResultBean(0, "success", users.getId());
+
     }
 
-//    /**
-//     * @Description 取消用户实名状态
-//     **/
-//    @PutMapping("/user-verification-cancel/{uid}")
-//    public  ResultBean cancelUserVerification()  {
-//        return new ResultBean(0,"success");
-//    }
-
-
-/**
- * @Description 修改用户实名状态 审核用户实名接口 未完成
- **/
-//@PutMapping("/user-verification/{uid}")
-//public ResultBean updateAuthentication(@PathVariable("uid") Long uid,
-//                                       @RequestParam("code") Byte code,
-//                                       @RequestParam("refusal") String refusal) {
-//    ReceptionUsers users = usersService.selectByPrimaryKey(uid);
-//    if (users == null) {
-//        return new ResultBean(-1, "error no such id", uid);
-//    }
-//
-//    //code=0 表示审核通过
-//    if (code == 0) {
-//        usersService.deleteBankCardByUID(uid);
-//        users.setIdName("");
-//        users.setIdNumber("");
-//        logger.info("删除用户银行卡绑定 id:{}", uid);
-//    }
-//    users.setIdAuthentication(idAuthentication);
-//    users.setRefusal(refusal);
-//    usersService.updateByPrimaryKeySelective(users);
-//    logger.info("修改用户实名信息id：{}，认证状态：{}，理由：{}", uid, idAuthentication, refusal);
-//    return new ResultBean(0, "success", users);
-//}
+    /**
+     * @Description 取消用户实名状态 删除用户真实姓名 用户身份证号及银行卡
+     **/
+    @PutMapping("/user-verification-cancel/{uid}")
+    public ResultBean cancelUserVerification(@PathVariable("uid") Long id) {
+        ReceptionUsers users = usersService.selectByPrimaryKey(id);
+        if (users == null) {
+            return new ResultBean(-1, "error id");
+        }
+        // 用户实名状态改为已取消
+        users.setIdAuthentication((byte) 60);
+        // 删除用户真实姓名及身份证 默认银行id设为0
+        users.setIdName("");
+        users.setIdNumber("");
+        users.setBankId(0L);
+        // 删除用户绑定的银行卡
+        userBankService.deleteByUID(id);
+        logger.info("删除用户银行卡绑定 用户id:{}", id);
+        usersService.updateByPrimaryKeySelective(users);
+        logger.info("取消用户实名状态 用户id:{}", id);
+        return new ResultBean(0, "success", users.getIdAuthentication());
+    }
 
 
     /**
+     * @param code 0审核不通过 1审核通过
      * @return 成功0 失败-1
      * @Description 修改用户实名状态 修改实名认证状态接口
      **/
     @PutMapping("/user-verification/{uid}")
     public ResultBean updateAuthentication(@PathVariable("uid") Long uid,
-                                           @RequestParam("idAuthentication") Byte idAuthentication,
-                                           @RequestParam("refusal") String refusal) {
+                                           @RequestParam("code") byte code,
+                                           @RequestParam(value = "refusal", required = false) String refusal) {
         ReceptionUsers users = usersService.selectByPrimaryKey(uid);
         if (users == null) {
             return new ResultBean(-1, "error no such id", uid);
         }
-        // 取消实名 删除银行卡绑定信息  删除拒绝理由
-        //取消实名 用户姓名 身份证号设为""
-        if (idAuthentication == 60) {
-            usersService.deleteBankCardByUID(uid);
-            users.setIdName("");
-            users.setIdNumber("");
-            logger.info("删除用户银行卡绑定 id:{}", uid);
+        // code= 0 审核不通过
+        if (code == 0) {
+            // 用户实名认证状态修改为已拒绝
+            users.setIdAuthentication((byte) 30);
+            users.setRefusal(refusal);
+            usersService.updateByPrimaryKeySelective(users);
+            logger.info("拒绝用户实名申请 用户id：{} 实名状态:{}", uid,users.getIdAuthentication());
+            return new ResultBean(0, "success ", users.getIdAuthentication());
         }
-        users.setIdAuthentication(idAuthentication);
-        users.setRefusal(refusal);
-        usersService.updateByPrimaryKeySelective(users);
-        logger.info("修改用户实名信息id：{}，认证状态：{}，理由：{}", uid, idAuthentication, refusal);
-        return new ResultBean(0, "success", users);
+        //code =1 审核通过
+        if (code == 1) {
+            //用户实名状态为已认证
+            users.setIdAuthentication((byte) 20);
+            usersService.updateByPrimaryKeySelective(users);
+            logger.info("通过用户实名认证 id：{}", uid);
+            return new ResultBean(0, "success", users.getIdAuthentication());
+        } else {
+            return new ResultBean(-1, "error code should be 0 or 1", code);
+        }
     }
-
-
-
-
 
     /**
      * @param uid        用户id
@@ -240,17 +242,25 @@ public class ReceptionUsersController {
     @DeleteMapping("/user-bank/{uid}")
     public ResultBean deleteUserBankCard(@PathVariable("uid") Long uid,
                                          @RequestParam("cardNumber") String cardNumber) {
+        //根据uid查询投资用户
         ReceptionUsers users = usersService.selectByPrimaryKey(uid);
         if (users == null) {
             return new ResultBean(-1, "error no such id", uid);
         }
-        UserBank userBank = usersService.selectByCardNum(cardNumber);
-        if (userBank == null) {
-            return new ResultBean(-1, "error no such cardNumber", cardNumber);
+        //根据投资用户id查询用户绑定银行卡信息
+        List<UserBank> userBankList = userBankService.selectByUID(uid);
+        // 循环去除list中的cardNum和传入的cardNum进行比对
+        for (UserBank userBank : userBankList) {
+            String cardNumCheck = userBank.getCardNumber();
+            //存在相同的银行卡号码，删除
+            if (cardNumber.equals(cardNumCheck)) {
+                usersService.deleteByCardNum(cardNumber);
+                logger.info("id:{} 删除绑定银行卡:{} ", uid, cardNumber);
+                return new ResultBean(0, "success", uid);
+            }
         }
-        usersService.deleteByCardNum(cardNumber);
-        logger.info("id:{} 删除绑定银行卡:{} ", uid, cardNumber);
-        return new ResultBean(0, "success", uid);
+        logger.info("删除绑定银行卡错误id:{},cardNum:{}",uid,cardNumber);
+        return new ResultBean(-1, "error no such cardNumber", cardNumber);
     }
 
 
@@ -259,13 +269,14 @@ public class ReceptionUsersController {
      **/
     @GetMapping("/list/trading-flow/{uid}")
     public ResultBean listUserTradingFlow(@PathVariable("uid") Long uid,
-                                          @RequestParam(value = "pageSize") Integer pageSize,
-                                          @RequestParam(value = "pageNum") Integer pageNum,
+                                          @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                           TradingFlowQuery query) {
+
         query.setUid(uid);
-        PageInfo<TradingFlow> pageInfo =flowService.selectTradingFlowBypage(pageNum,pageSize,query);
-        logger.info("查询交易流水uid:{}",uid);
-        return new ResultBean(0, "success",pageInfo);
+        PageInfo<TradingFlow> pageInfo = flowService.selectTradingFlowBypage(pageNum, pageSize, query);
+        logger.info("查询交易流水uid:{}", uid);
+        return new ResultBean(0, "success", pageInfo);
     }
 
     /**
@@ -273,13 +284,13 @@ public class ReceptionUsersController {
      **/
     @GetMapping("/list/investment-user/{uid}")
     public ResultBean listUserInvestment(@PathVariable("uid") Long uid,
-                                         @RequestParam(value = "pageSize") Integer pageSize,
-                                         @RequestParam(value = "pageNum") Integer pageNum,
+                                         @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                                         @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                          InvestmentUserQuery query) {
         query.setUid(uid);
         PageHelper.startPage(pageNum, pageSize);
-        List<InvestmentUserDTO> investmentUserDTOList=investmentUserService.listInvestmentUserByQuery(query);
-        PageInfo<InvestmentUserDTO> pageInfo=new PageInfo<>(investmentUserDTOList);
-        return new ResultBean(0, "success",pageInfo);
+        List<InvestmentUserDTO> investmentUserDTOList = investmentUserService.listInvestmentUserByQuery(query);
+        PageInfo<InvestmentUserDTO> pageInfo = new PageInfo<>(investmentUserDTOList);
+        return new ResultBean(0, "success", pageInfo);
     }
 }

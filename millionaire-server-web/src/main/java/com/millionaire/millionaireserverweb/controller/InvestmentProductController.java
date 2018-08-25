@@ -132,18 +132,15 @@ public class InvestmentProductController {
      * @Description 分页查看所有产品信息
      **/
     @GetMapping("/list/investment-product")
-    public ResultBean getListInvestmentProduct(@RequestParam(value = "pageSize") Integer pageSize,
-                                               @RequestParam(value = "pageNum") Integer pageNum,
+    public ResultBean getListInvestmentProduct(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                                               @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                                ProductQuery productQuery) {
-        if (pageNum == null || pageSize == null) {
-            logger.info("页码为空:{}或每页数为空:{}", pageNum, pageSize);
-            return new ResultBean(-1, "error pageSize or pageNum is null");
-        } else {
+
             PageInfo<InvestmentProduct> pageInfo =
                     investmentProductService.selectProductByPage(productQuery, pageSize, pageNum);
             logger.info("查询产品参数：{}", productQuery);
             return new ResultBean(0, "success", pageInfo);
-        }
+
     }
 
 

@@ -48,4 +48,14 @@ public class UserBankServiceImpl implements UserBankService {
     public List<UserBank> selectByUID(Long uid) {
         return userBankMapper.selectByUID(uid);
     }
+
+
+    /**
+     * @param uid
+     * @Description 根据uid 删除银行卡
+     */
+    @Override
+    public void deleteByUID(Long uid) {
+        userBankMapper.deleteByUID(uid);
+    }
 }

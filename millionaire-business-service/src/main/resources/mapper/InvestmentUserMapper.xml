@@ -94,7 +94,6 @@
                 and investment_user.value_date_end <![CDATA[ <= ]]> #{valueEndupperDate,jdbcType=BIGINT}
             </if>
         </where>
-
     </select>
 
     <!--查询最新记录id-->

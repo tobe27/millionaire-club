@@ -14,16 +14,16 @@ import com.millionaire.millionairemanagerservice.transport.UserProposalDTO;
 public interface ProposalService {
 
     int deleteByPrimaryKey(Long id);
-
-    int insert(Proposal record);
-
-    int insertSelective(Proposal record);
-
-    Proposal selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Proposal record);
-
-    int updateByPrimaryKey(Proposal record);
+//
+//    int insert(Proposal record);
+//
+//    int insertSelective(Proposal record);
+//
+//    Proposal selectByPrimaryKey(Long id);
+//
+//    int updateByPrimaryKeySelective(Proposal record);
+//
+//    int updateByPrimaryKey(Proposal record);
 
     PageInfo<UserProposalDTO> listProposalByPage(Integer pageNum, Integer pageSize, ProposalQuery query);
 

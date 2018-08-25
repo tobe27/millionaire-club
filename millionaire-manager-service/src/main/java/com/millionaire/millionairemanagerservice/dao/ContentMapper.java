@@ -21,4 +21,6 @@ public interface ContentMapper {
     int updateByPrimaryKey(Content record);
 
     List<Content> listContentByQuery(ContentQuery query);
+
+    
 }
