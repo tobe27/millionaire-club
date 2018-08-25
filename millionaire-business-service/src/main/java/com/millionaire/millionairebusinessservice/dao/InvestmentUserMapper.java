@@ -36,23 +36,10 @@ public interface InvestmentUserMapper {
     //    查询最新的用户id
     Long selectTimeLimit();
 
-
-
-
-
-
-
-
-
     /**
      *壮壮接口
      * @param user
      * @return
      */
     List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user);
-
-
-
-
-
 }
