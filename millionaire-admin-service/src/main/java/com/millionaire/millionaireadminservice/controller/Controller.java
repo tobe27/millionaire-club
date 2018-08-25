@@ -115,7 +115,7 @@ public class Controller {
      * 删除用户
      * @param id
      */
-    @DeleteMapping("/a/user/{id}")
+    @DeleteMapping("/a/backstageUser/{id}")
     public void deleteById(@PathVariable Long id){
         backstageUsersService.deleteByPrimaryKey(id);
     }
@@ -124,7 +124,7 @@ public class Controller {
      * 增加用户
      * @param
      */
-    @PostMapping("/a/users")
+    @PostMapping("/a/backstageUsers")
     public String insertUser(String name,
                            String password,
                            String rePassword,
@@ -161,7 +161,7 @@ public class Controller {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/a/user/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/a/backstageUser/{id}", method = RequestMethod.PUT)
     public String updateById(String name,
                              String password,
                              String rePassword,
@@ -195,7 +195,7 @@ public class Controller {
      * @param rePassword
      * @return
      */
-    @PutMapping("/a/user/password")
+    @PutMapping("/a/backstageUser/password")
     public String updatePassword(String oldPassword,
                                  String password,
                                  String rePassword){
