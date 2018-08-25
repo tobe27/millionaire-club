@@ -20,11 +20,11 @@ public interface BankService {
      **/
     Long insert(Bank record);
 
-    int insertSelective(Bank record);
+//    int insertSelective(Bank record);
 
     Bank selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(Bank record);
+//    int updateByPrimaryKeySelective(Bank record);
 
     int updateByPrimaryKey(Bank record);
 

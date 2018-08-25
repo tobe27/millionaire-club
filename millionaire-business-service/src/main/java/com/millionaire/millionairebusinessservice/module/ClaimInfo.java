@@ -1,36 +1,50 @@
 package com.millionaire.millionairebusinessservice.module;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
 public class ClaimInfo {
+    @Null
     private Long id;
 
 //    债权代号（原型图为给定生成规则：待定义）
+
     private String claimCode;
 
 //    债权姓名
+    @NotBlank
     private String creditorName;
 
 //    债权人手机号
+    @NotBlank
     private String creditorPhone;
 
 //    债权人身份证号码
+    @NotBlank
     private String creditorIdNumber;
 
 //    出借日期
+    @NotNull
     private Long lendingDate;
 
 //    出借期限
+    @NotNull
     private Integer lendingPeriod;
 
 //    到期日期（=lendingDate+lendingPeriod）
     private Long expirationDate;
 
 //    出借金额
+    @NotNull
     private Integer lendingAmount;
 
 //    债权性质
+    @NotBlank
     private String property;
 
 //    出借利率
+    @NotNull
     private Double interestRate;
 
 //    未匹配金额

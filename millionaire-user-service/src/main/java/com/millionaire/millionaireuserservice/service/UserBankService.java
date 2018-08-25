@@ -18,4 +18,9 @@ public interface UserBankService {
     Long updateByPrimaryKey(UserBank record);
 
     List<UserBank> selectByUID(Long uid);
+
+    /**
+     * @Description 根据uid 删除银行卡
+     **/
+    void deleteByUID(Long uid);
 }

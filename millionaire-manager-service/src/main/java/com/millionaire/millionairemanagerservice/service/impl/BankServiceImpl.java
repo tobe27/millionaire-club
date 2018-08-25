@@ -48,10 +48,10 @@ private  Logger logger = LoggerFactory.getLogger(BankServiceImpl.class);
         return record.getId();
     }
 
-    @Override
-    public int insertSelective(Bank record) {
-        return 0;
-    }
+//    @Override
+//    public int insertSelective(Bank record) {
+//        return 0;
+//    }
 
     @Override
     public Bank selectByPrimaryKey(Long id) {
@@ -59,10 +59,10 @@ private  Logger logger = LoggerFactory.getLogger(BankServiceImpl.class);
         return bankMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public int updateByPrimaryKeySelective(Bank record) {
-        return 0;
-    }
+//    @Override
+//    public int updateByPrimaryKeySelective(Bank record) {
+//        return 0;
+//    }
 
     @Override
     public int updateByPrimaryKey(Bank record) {

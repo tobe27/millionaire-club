@@ -32,11 +32,11 @@ public interface ClaimInfoService {
 
     int deleteByPrimaryKey(Long id);
 
-    int insertSelective(ClaimInfo record);
+//    int insertSelective(ClaimInfo record);
 
     ClaimInfo selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(ClaimInfo record);
+//    int updateByPrimaryKeySelective(ClaimInfo record);
 
-    int updateByPrimaryKey(ClaimInfo record);
+//    int updateByPrimaryKey(ClaimInfo record);
 }

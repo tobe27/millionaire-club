@@ -30,8 +30,8 @@ public class MessagePlatformController {
      * @Description 查看消息列表
      **/
     @GetMapping("/list/message-platform")
-    public ResultBean listMessagePlatform(@RequestParam(value = "pageSize") Integer pageSize,
-                                          @RequestParam(value = "pageNum") Integer pageNum,
+    public ResultBean listMessagePlatform(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                           MessagePlatformQuery query) {
         PageInfo<MessagePlatform> pageInfo = messagePlatformService.listMessageByPage(pageNum, pageSize, query);
         logger.info("查询消息列表:{}",query);

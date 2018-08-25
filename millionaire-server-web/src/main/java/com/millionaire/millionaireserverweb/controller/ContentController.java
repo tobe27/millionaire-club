@@ -29,8 +29,8 @@ public class ContentController {
      * @Description 查看内容列表
      **/
     @GetMapping("/list/content")
-    public ResultBean listContent(@RequestParam("pageSize") Integer pageSize,
-                                  @RequestParam("pageNum") Integer pageNum,
+    public ResultBean listContent(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                                  @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                   ContentQuery query) {
         PageInfo<Content> pageInfo = contentService.selectContentByPage(pageNum, pageSize, query);
         logger.info("查询运营内容列表:{}", query);

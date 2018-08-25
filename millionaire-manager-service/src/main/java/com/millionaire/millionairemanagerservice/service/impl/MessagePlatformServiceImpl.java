@@ -20,25 +20,25 @@ import java.util.List;
 public class MessagePlatformServiceImpl implements MessagePlatformService {
     @Resource
     private MessagePlatformMapper messagePlatformMapper;
-
-    @Override
-    public int deleteByPrimaryKey(Long id) {
-        return 0;
-    }
-
-    @Override
-    public int insert(MessagePlatform record) {
-        return 0;
-    }
-
-    @Override
-    public int insertSelective(MessagePlatform record) {
-        return 0;
-    }
-
+//
+//    @Override
+//    public int deleteByPrimaryKey(Long id) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public int insert(MessagePlatform record) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public int insertSelective(MessagePlatform record) {
+//        return 0;
+//    }
+//
     @Override
     public MessagePlatform selectByPrimaryKey(Long id) {
-        return null;
+        return messagePlatformMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -47,10 +47,10 @@ public class MessagePlatformServiceImpl implements MessagePlatformService {
         return messagePlatformMapper.updateByPrimaryKeySelective(record);
     }
 
-    @Override
-    public int updateByPrimaryKey(MessagePlatform record) {
-        return 0;
-    }
+//    @Override
+//    public int updateByPrimaryKey(MessagePlatform record) {
+//        return 0;
+//    }
 
     @Override
     public PageInfo<MessagePlatform> listMessageByPage(Integer pageNum, Integer pageSize, MessagePlatformQuery query) {
