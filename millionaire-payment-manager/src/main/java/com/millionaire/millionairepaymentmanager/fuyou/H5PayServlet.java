@@ -33,16 +33,15 @@ public class H5PayServlet
     private Logger logger =  LoggerFactory.getLogger(H5PayServlet.class);
 
 
-	public String sentPost(long userId,long amt,String bankCard,String name) throws  IOException
+	public String sentPost(long userId,long amt,String idNo,String orderId,String bankCard,String name) throws  IOException
 	{
 		String respMsg = "";
 		try
 		{
 			String idType = "0";
-			String idNo = "";
 			String type="11";
 			StringBuffer orderPlain = new StringBuffer();
-			String orderId = "FY"+ DateTimeUtil.getCurrentDate("yyyyMMddHHmmssSSS");
+//			String orderId = "FY"+ DateTimeUtil.getCurrentDate("yyyyMMddHHmmssSSS");
 			String signPlain = type+"|"+"2.0"+"|"+Constants.H5_MCHNT_CD+"|"+orderId+"|"+userId
 					+"|"+amt+"|"+bankCard+"|"+BACK_URL+"|"+name+"|"+idNo+"|"+idType+"|"+"0"+"|"
 					+ HOME_URL+"|"+RETURN_URL+"|"+Constants.H5_MCHNT_KEY;

@@ -36,10 +36,4 @@ List<TradingFlowStatisticDTO> statisticInvestmentProductByQuery(TradingFlowStati
 List<TradingFlowDetailDTO> statisticProductDetailByQuery(TradingFlowDetailQuery query);
 
 
-
-
-
-
-
-
 }
