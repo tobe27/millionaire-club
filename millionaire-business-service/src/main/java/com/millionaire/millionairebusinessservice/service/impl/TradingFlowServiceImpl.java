@@ -29,8 +29,11 @@ public class TradingFlowServiceImpl  implements TradingFlowService {
     }
 
     @Override
-    public int insert(TradingFlow record) {
-        return 0;
+    public Long insert(TradingFlow record) {
+        record.setGmtCreate(System.currentTimeMillis());
+        record.setGmtUpdate(System.currentTimeMillis());
+        flowMapper.insert(record);
+        return record.getId();
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface TradingFlowService {
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(TradingFlow record);
+    Long insert(TradingFlow record);
 
     int insertSelective(TradingFlow record);
 

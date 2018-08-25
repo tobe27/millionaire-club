@@ -33,7 +33,7 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
         long time = System.currentTimeMillis();
         record.setGmtCreate(time);
         record.setGmtUpdate(time);
-        return record.getUid();
+        return record.getId();
     }
 
     @Override
