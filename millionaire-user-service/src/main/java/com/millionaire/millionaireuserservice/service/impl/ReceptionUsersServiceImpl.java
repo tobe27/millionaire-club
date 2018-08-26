@@ -151,4 +151,25 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
         return userBankMapper.selectByCardNum(cardNum);
     }
 
+    @Override
+    public int updateUserAssets(Long uid, int amount,int type) {
+        int assets = usersMapper.selectUserAssets(uid);
+        int nowAssets = 0;
+        if (type == 1) {
+           nowAssets = assets + amount;
+        }else {
+            nowAssets=assets-amount;
+        }
+        usersMapper.updateUserAssets(uid, nowAssets, System.currentTimeMillis());
+        return nowAssets;
+    }
+
+    @Override
+    public int updateUserProfit(Long uid, int profit) {
+        int profit1 = usersMapper.selectUserProfit(uid);
+        int nowProfit = profit1+profit;
+        usersMapper.updateUserProfit(uid, nowProfit, System.currentTimeMillis());
+        return nowProfit;
+    }
+
 }

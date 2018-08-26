@@ -47,5 +47,10 @@ public interface TradingFlowService {
      **/
     List<TradingFlowDetailDTO> statisticProductDetailByQuery(TradingFlowDetailQuery query);
 
+    /**
+     * 修改交易记录为成功
+     */
+    int updateTradingFlowStatus(Long investmentUserId, Byte status);
+
 
 }

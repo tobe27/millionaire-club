@@ -116,7 +116,7 @@
                 and product_name = #{productName,jdbcType=VARCHAR}
             </if>
         </where>
-         group  by
+        group  by
         FROM_UNIXTIME(gmt_create/1000, '%Y%m%d')
     </select>
 
@@ -226,7 +226,7 @@
                 uid = #{uid,jdbcType=BIGINT},
             </if>
             <if test="investmentUserId != null">
-                #{investmentUserId,jdbcType=BIGINT},
+                investment_user_id=#{investmentUserId,jdbcType=BIGINT},
             </if>
             <if test="productName != null">
                 product_name = #{productName,jdbcType=VARCHAR},
@@ -265,7 +265,7 @@
     update trading_flow
     set
       uid = #{uid,jdbcType=BIGINT},
-      investmentUserId = #{investment_user_id,jdbcType=BIGINT},
+      investment_user_id = #{investmentUserId,jdbcType=BIGINT},
       product_name = #{productName,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
@@ -278,4 +278,13 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!--修改交易记录状态-->
+    <update id="updateTradingFlowStatus">
+    update trading_flow
+    set
+      status = #{status,jdbcType=TINYINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where investment_user_id = #{investmentUserId,jdbcType=BIGINT} and TYPE = -1
+    </update>
 </mapper>

@@ -90,5 +90,9 @@ public class TradingFlowMapperTest {
     }
 
 
-
+    @Test
+    public void updateTradingFlowStatus() {
+        int a = mapper.updateTradingFlowStatus(2L, (byte) 20, System.currentTimeMillis());
+        System.out.println(a);
+    }
 }
