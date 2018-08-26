@@ -1,4 +1,4 @@
-package com.millionaire.millionaireuserservice.util;
+package com.millionaire.millionaireclientweb.util;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

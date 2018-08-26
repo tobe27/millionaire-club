@@ -1,6 +1,8 @@
 package com.millionaire.millionaireuserservice.module;
 
-public class ReceptionUsers {
+import java.io.Serializable;
+
+public class ReceptionUsers implements Serializable {
     private Long id;
 
     private String userNumber;

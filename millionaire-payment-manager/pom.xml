@@ -47,11 +47,18 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>com.millionaire</groupId>-->
+            <!--<artifactId>millionaire-common-api</artifactId>-->
+            <!--<version>${project.version}</version>-->
+        <!--</dependency>-->
+
         <dependency>
             <groupId>com.millionaire</groupId>
-            <artifactId>millionaire-common-api</artifactId>
+            <artifactId>millionaire-user-service</artifactId>
             <version>${project.version}</version>
         </dependency>
+
 
         <!--创建resultbean添加lombok-->
         <dependency>

@@ -22,13 +22,13 @@ public class H5PayBackServlet extends HttpServlet
 	private static final long	serialVersionUID	= 1419376384387536955L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
 		doPost(req, resp);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
 		String version = req.getParameter("VERSION");
 		String type = req.getParameter("TYPE");

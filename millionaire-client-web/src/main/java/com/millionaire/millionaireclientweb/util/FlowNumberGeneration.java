@@ -1,4 +1,4 @@
-package com.millionaire.millionaireuserservice.module;
+package com.millionaire.millionaireclientweb.util;
 
 import java.time.LocalDate;
 
