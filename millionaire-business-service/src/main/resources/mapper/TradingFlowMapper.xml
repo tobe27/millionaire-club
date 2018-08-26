@@ -17,6 +17,7 @@
             <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
         </constructor>
     </resultMap>
+
     <sql id="Base_Column_List">
     id, uid,product_name, phone, name, amount, type, bank_card_id, pay_type, status, gmt_create,
     gmt_update
@@ -28,8 +29,20 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
+    <resultMap id="UserTradingFlowMap" type="com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO">
+        <id column="id" property="tradingFlowNumber" />
+        <result column="phone" property="phone"/>
+        <result column="name" property="name"/>
+        <result column="product_name" property="productName"/>
+        <result column="amount" property="amount"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="pay_type" property="bankName"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
 
-    <select id="selectByUIDandQuery" resultMap="BaseResultMap">
+
+    <select id="selectByUIDandQuery" resultMap="UserTradingFlowMap">
         select
         <include refid="Base_Column_List"/>
         from trading_flow

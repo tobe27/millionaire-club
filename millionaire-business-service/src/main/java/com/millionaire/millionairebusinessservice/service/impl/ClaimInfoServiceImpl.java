@@ -36,7 +36,7 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
      * ClaimContract ="" 债券协议
      **/
     @Override
-    public int insert(ClaimInfo claim) {
+    public Long insert(ClaimInfo claim) {
         long time = System.currentTimeMillis();
         claim.setGmtCreate(time);
         claim.setGmtUpdate(time);
@@ -47,7 +47,8 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
         claim.setUnMatchAmount(claim.getLendingAmount());
         claim.setMatchRate(0.0);
         claim.setStatus(0);
-        return claimInfoMapper.insert(claim);
+        claimInfoMapper.insert(claim);
+        return claim.getId();
     }
 
 
@@ -79,10 +80,25 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
         return claimInfoMapper.deleteByPrimaryKey(id);
     }
 
-//    @Override
-//    public int insertSelective(ClaimInfo record) {
-//        return claimInfoMapper.insertSelective(record);
-//    }
+    @Override
+    public Long insertSelective(ClaimInfo claim) {
+        long time = System.currentTimeMillis();
+        claim.setGmtCreate(time);
+        claim.setGmtUpdate(time);
+
+//        过期时间计算（=lendingDate+lendingPeriod）转存
+        Long expirationDate = claim.getLendingDate() + claim.getLendingPeriod() * (24 * 60 * 60 * 1000);
+       //封装过期时间
+        claim.setExpirationDate(expirationDate);
+        //封装未匹配金额
+        claim.setUnMatchAmount(claim.getLendingAmount());
+        //封装匹配利率
+        claim.setMatchRate(0.0);
+        //封装匹配状态
+        claim.setStatus(0);
+        claimInfoMapper.insertSelective(claim);
+        return claim.getId();
+    }
 
     @Override
     public ClaimInfo selectByPrimaryKey(Long id) {

@@ -11,11 +11,11 @@ import com.millionaire.millionairemanagerservice.request.ContentQuery;
  */
 public interface ContentService {
 
-//    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Long id);
 //
 //    int insert(Content record);
 
-    int insertSelective(Content record);
+    Long insertSelective(Content record);
 
     Content selectByPrimaryKey(Long id);
 

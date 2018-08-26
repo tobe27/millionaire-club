@@ -45,7 +45,7 @@ private InvestmentProductService productService;
         PageHelper.startPage(pageNum,pageSize);
         PageInfo<TradingFlowStatisticDTO> pageInfo=new PageInfo<>(tradingFlowStatisticDTOS);
         logger.info("查看投资产品销量统计:{}",query);
-        return new ResultBean(0, "success",pageInfo);
+        return new ResultBean(1, "success",pageInfo);
     }
 
 
@@ -70,6 +70,6 @@ private InvestmentProductService productService;
         PageHelper.startPage(pageNum,pageSize);
         PageInfo<TradingFlowDetailDTO> pageInfo=new PageInfo<>(tradingFlowDetailDTOS);
         logger.info("查询产品销量统计明细 产品名称:{}",query.getProductName());
-        return new ResultBean(0,"success",pageInfo);
+        return new ResultBean(1,"success",pageInfo);
     }
 }

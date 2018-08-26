@@ -7,6 +7,7 @@ import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
 import com.millionaire.millionairebusinessservice.request.TradingFlowStatisticQuery;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowDetailDTO;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowStatisticDTO;
+import com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public interface TradingFlowService {
     Long insert(TradingFlow record);
 
 
-    PageInfo<TradingFlow> selectTradingFlowBypage(Integer pageNum, Integer PageSize, TradingFlowQuery query);
+    PageInfo<UserTradingFlowDTO> selectTradingFlowBypage(Integer pageNum, Integer PageSize, TradingFlowQuery query);
 
     /**
      * @Description 通过交易流水表动态查询投资产品销量统计

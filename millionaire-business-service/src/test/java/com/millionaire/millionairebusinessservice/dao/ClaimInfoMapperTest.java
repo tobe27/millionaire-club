@@ -41,6 +41,7 @@ ClaimInfoMapper claimInfoMapper;
     @Test
     public void updateByPrimaryKeySelective() {
         ClaimInfo claimInfo=claimInfoMapper.selectByPrimaryKey(1L);
+        System.out.println("claimInfo = " + claimInfo);
 //        claimInfo.setExpirationDate();
     }
 

@@ -21,20 +21,24 @@ public class MessagePlatformServiceImpl implements MessagePlatformService {
     @Resource
     private MessagePlatformMapper messagePlatformMapper;
 //
-//    @Override
-//    public int deleteByPrimaryKey(Long id) {
-//        return 0;
-//    }
+    @Override
+    public int deleteByPrimaryKey(Long id) {
+        return messagePlatformMapper.deleteByPrimaryKey(id);
+    }
 //
 //    @Override
 //    public int insert(MessagePlatform record) {
 //        return 0;
 //    }
 //
-//    @Override
-//    public int insertSelective(MessagePlatform record) {
-//        return 0;
-//    }
+    @Override
+    public Long insertSelective(MessagePlatform record) {
+        long time= System.currentTimeMillis();
+        record.setGmtUpdate(time);
+        record.setGmtCreate(time);
+        messagePlatformMapper.insertSelective(record);
+        return record.getId();
+    }
 //
     @Override
     public MessagePlatform selectByPrimaryKey(Long id) {

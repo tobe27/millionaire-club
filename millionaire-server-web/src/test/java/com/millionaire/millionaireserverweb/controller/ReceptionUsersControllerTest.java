@@ -3,8 +3,12 @@ package com.millionaire.millionaireserverweb.controller;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
+import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
+import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.service.TradingFlowService;
+import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
+import com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO;
 import com.millionaire.millionaireuserservice.dao.ReceptionUsersMapper;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
@@ -17,6 +21,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -28,6 +34,8 @@ public class ReceptionUsersControllerTest {
     @Autowired
     ReceptionUsersService usersService;
 
+    @Resource
+    private InvestmentUserService investmentUserService;
 
     @Resource
     private TradingFlowService flowService;
@@ -70,7 +78,16 @@ public class ReceptionUsersControllerTest {
 
         TradingFlowQuery query=new TradingFlowQuery();
         query.setUid(8L);
-        PageInfo<TradingFlow> pageInfo = flowService.selectTradingFlowBypage(1, 1, query);
+        PageInfo<UserTradingFlowDTO> pageInfo = flowService.selectTradingFlowBypage(1, 1, query);
         System.out.println("pageInfo = " + pageInfo);
+    }
+
+    @Test
+    public void listUserInvestment() {
+        InvestmentUserQuery query=new InvestmentUserQuery();
+        query.setUid(8L);
+        query.setProductName("mmm1");
+        List<InvestmentUserDTO> investmentUserDTOList = investmentUserService.listInvestmentUserByQuery(query);
+        System.out.println("investmentUserDTOList = " + investmentUserDTOList);
     }
 }

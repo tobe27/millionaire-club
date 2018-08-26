@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 
@@ -13,6 +14,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
+@Validated
 public class ClaimInfoControllerTest {
 
     @Resource
@@ -21,8 +23,8 @@ public class ClaimInfoControllerTest {
     @Test
     public void insertClaimInfo() {
         ClaimInfo claimInfo = new ClaimInfo();
-        claimInfo.setClaimCode("fsdc2");
-        claimInfo.setCreditorName("adfsdfas2");
+        claimInfo.setClaimCode("fsdc3");
+        claimInfo.setCreditorName("adfsdfas3");
         claimInfo.setCreditorPhone("dfasadfs2");
         claimInfo.setCreditorIdNumber("adfsdafsadsf2");
         claimInfo.setLendingDate(System.currentTimeMillis());
@@ -34,7 +36,6 @@ public class ClaimInfoControllerTest {
         System.out.println("===========================================佛主保佑===========================================");
         System.out.println(claimInfoService.insert(claimInfo));
         System.out.println("===========================================邪魔退散===========================================");
-
 
     }
 }
