@@ -11,9 +11,9 @@ import com.millionaire.millionairemanagerservice.request.ContentQuery;
  */
 public interface ContentService {
 
-    int deleteByPrimaryKey(Long id);
-
-    int insert(Content record);
+//    int deleteByPrimaryKey(Long id);
+//
+//    int insert(Content record);
 
     int insertSelective(Content record);
 
@@ -21,7 +21,7 @@ public interface ContentService {
 
     int updateByPrimaryKeySelective(Content record);
 
-    int updateByPrimaryKey(Content record);
+//    int updateByPrimaryKey(Content record);
 
     PageInfo<Content> selectContentByPage(Integer pageNum, Integer pageSize, ContentQuery query);
 

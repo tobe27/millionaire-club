@@ -63,7 +63,7 @@ public class BankController {
         bank.setModifier(modifier);
         bankService.updateByPrimaryKey(bank);
         logger.info("修改银行信息 id:{},单笔限额:{},每日限额:{},修改人:{}", id, singleLimit, dailyLimit, modifier);
-        return new ResultBean(0, "success");
+        return new ResultBean(0, "success",bank);
     }
 
 
@@ -73,16 +73,13 @@ public class BankController {
      * @Description 查询银行信息
      **/
     @GetMapping("/list/bank")
-    public ResultBean selectBankByPage(@RequestParam("pageSize") Integer pageSize,
-                                       @RequestParam("pageNum") Integer pageNum,
+    public ResultBean selectBankByPage(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                                       @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                        BankQuery query) {
-        if (pageNum == null || pageSize == null) {
-            logger.info("页码为空:{}或每页数为空:{}", pageNum, pageSize);
-            return new ResultBean(-1, "error pageSize or pageNum is null");
-        } else {
+
             PageInfo<Bank> pageInfo = bankService.selectBankByPage(pageNum, pageSize, query);
             logger.info("查询银行信息:{}", query);
             return new ResultBean(0, "success", pageInfo);
-        }
+
     }
 }
