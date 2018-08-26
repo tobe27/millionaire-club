@@ -8,6 +8,7 @@ import com.millionaire.millionairebusinessservice.service.ClaimInfoService;
 import com.millionaire.millionaireserverweb.result.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -30,7 +31,7 @@ public class ClaimInfoController {
      * @Description 新增债券信息
      **/
     @PostMapping("/claim_info")
-    public ResultBean insertClaimInfo(ClaimInfo claimInfo) {
+    public ResultBean insertClaimInfo(@Validated ClaimInfo claimInfo) {
         String code = claimInfo.getClaimCode();
         ClaimInfo claimInfoCheck = claimInfoService.selectByCode(code);
         if (claimInfoCheck != null) {
@@ -65,18 +66,15 @@ public class ClaimInfoController {
      * @return  成功0 失败-1
      **/
         @GetMapping("/list/claim-info")
-        public ResultBean selectClaimByPage (@RequestParam(value = "pageSize") Integer pageSize,
-                                             @RequestParam(value = "pageNum") Integer pageNum,
+        public ResultBean selectClaimByPage (@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                                             @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                              ClaimInfoQuery claimInfoQuery) {
-            if (pageNum == null || pageSize == null) {
-                logger.info("页码为空:{}或每页数为空:{}", pageNum, pageSize);
-                return new ResultBean(-1, "error pageSize or pageNum is null");
-            } else {
+
                 PageInfo<ClaimInfo> pageInfo =
                         claimInfoService.selectClaimBypage(pageSize, pageNum, claimInfoQuery);
                 logger.info("查询债权信息：{}", claimInfoQuery);
                 return new ResultBean(0, "success", pageInfo);
-            }
+
         }
 
 }

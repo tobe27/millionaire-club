@@ -10,17 +10,17 @@ import com.millionaire.millionairemanagerservice.request.MessagePlatformQuery;
  * @date 2018/8/23 13:07
  */
 public interface MessagePlatformService {
-    int deleteByPrimaryKey(Long id);
-
-    int insert(MessagePlatform record);
-
-    int insertSelective(MessagePlatform record);
-
+//    int deleteByPrimaryKey(Long id);
+//
+//    int insert(MessagePlatform record);
+//
+//    int insertSelective(MessagePlatform record);
+//
     MessagePlatform selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(MessagePlatform record);
 
-    int updateByPrimaryKey(MessagePlatform record);
+//    int updateByPrimaryKey(MessagePlatform record);
 
     PageInfo<MessagePlatform> listMessageByPage(Integer pageNum, Integer pageSize, MessagePlatformQuery query);
 

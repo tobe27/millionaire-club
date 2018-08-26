@@ -21,15 +21,15 @@ public class ContentServiceImpl implements ContentService {
 
     @Resource
     private ContentMapper contentMapper;
-    @Override
-    public int deleteByPrimaryKey(Long id) {
-        return 0;
-    }
-
-    @Override
-    public int insert(Content record) {
-        return 0;
-    }
+//    @Override
+//    public int deleteByPrimaryKey(Long id) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public int insert(Content record) {
+//        return 0;
+//    }
 /**
  * @Description 封装创建时间 更新时间
  **/
@@ -55,10 +55,10 @@ public class ContentServiceImpl implements ContentService {
         return contentMapper.updateByPrimaryKeySelective(record);
     }
 
-    @Override
-    public int updateByPrimaryKey(Content record) {
-        return 0;
-    }
+//    @Override
+//    public int updateByPrimaryKey(Content record) {
+//        return 0;
+//    }
 
     @Override
     public PageInfo<Content> selectContentByPage(Integer pageNum, Integer pageSize, ContentQuery query) {
