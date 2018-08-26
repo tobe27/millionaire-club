@@ -1,31 +1,34 @@
 package com.millionaire.millionairemanagerservice.module;
 
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 public class MessagePlatform {
+    @Null
     private Long id;
-
+    @NotBlank
     private String title;
-
+    @NotNull
     private Byte sendingCrowd;
-
+    @NotBlank
     private String brief;
-
+    @NotBlank
     private String content;
-
+    @NotNull
     private Byte type;
 
-    private Date timingTime;
-
+    private Long timingTime;
+    @NotNull
     private Byte status;
-
+    @NotNull
     private String editors;
-
+    @Null
     private Long gmtCreate;
-
+    @Null
     private Long gmtUpdate;
 
-    public MessagePlatform(Long id, String title, Byte sendingCrowd, String brief, String content, Byte type, Date timingTime, Byte status, String editors, Long gmtCreate, Long gmtUpdate) {
+    public MessagePlatform(Long id, String title, Byte sendingCrowd, String brief, String content, Byte type, Long timingTime, Byte status, String editors, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
         this.title = title;
         this.sendingCrowd = sendingCrowd;
@@ -63,7 +66,7 @@ public class MessagePlatform {
         return type;
     }
 
-    public Date getTimingTime() {
+    public Long getTimingTime() {
         return timingTime;
     }
 
@@ -124,7 +127,7 @@ public class MessagePlatform {
         this.type = type;
     }
 
-    public void setTimingTime(Date timingTime) {
+    public void setTimingTime(Long timingTime) {
         this.timingTime = timingTime;
     }
 

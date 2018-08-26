@@ -21,11 +21,11 @@ public class ContentServiceImpl implements ContentService {
 
     @Resource
     private ContentMapper contentMapper;
-//    @Override
-//    public int deleteByPrimaryKey(Long id) {
-//        return 0;
-//    }
-//
+    @Override
+    public int deleteByPrimaryKey(Long id) {
+        return contentMapper.deleteByPrimaryKey(id);
+    }
+
 //    @Override
 //    public int insert(Content record) {
 //        return 0;
@@ -34,11 +34,12 @@ public class ContentServiceImpl implements ContentService {
  * @Description 封装创建时间 更新时间
  **/
     @Override
-    public int insertSelective(Content record) {
+    public Long insertSelective(Content record) {
         long time=System.currentTimeMillis();
         record.setGmtCreate(time);
         record.setGmtUpdate(time);
-        return contentMapper.insertSelective(record);
+        contentMapper.insertSelective(record);
+        return record.getId();
     }
 
     @Override

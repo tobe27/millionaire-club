@@ -18,7 +18,7 @@ public interface ClaimInfoService {
      * @return 成功0 失败-1
      * @Description 新增债券信息 动态插入 封装 create update time
      **/
-    int insert(ClaimInfo record);
+    Long insert(ClaimInfo record);
 
     /**
      * @param code 债权代码
@@ -32,7 +32,7 @@ public interface ClaimInfoService {
 
     int deleteByPrimaryKey(Long id);
 
-//    int insertSelective(ClaimInfo record);
+    Long insertSelective(ClaimInfo record);
 
     ClaimInfo selectByPrimaryKey(Long id);
 

@@ -35,7 +35,7 @@ public class ProposalController {
                                          ProposalQuery query) {
         PageInfo<UserProposalDTO> pageInfo=proposalService.listProposalByPage(pageNum,pageSize,query);
        logger.info("查询用户意见反馈列表:{}",query);
-        return new ResultBean(0, "success",pageInfo);
+        return new ResultBean(1, "success",pageInfo);
     }
 
     /**
@@ -45,7 +45,7 @@ public class ProposalController {
     public ResultBean selectProposal(@PathVariable("proposalId") Long id) {
         UserProposalDTO proposal = proposalService.selectUserProposalById(id);
         logger.info("查询反馈意见详细id：{}",id);
-        return new ResultBean(0, "success", proposal);
+        return new ResultBean(1, "success", proposal);
     }
 
 
@@ -56,7 +56,7 @@ public class ProposalController {
     public ResultBean deleteProposal(@PathVariable("proposalId") Long id) {
         proposalService.deleteByPrimaryKey(id);
         logger.info("删除用户意见id:{}",id);
-        return new ResultBean(0, "success", id);
+        return new ResultBean(1, "success", id);
     }
 
 }

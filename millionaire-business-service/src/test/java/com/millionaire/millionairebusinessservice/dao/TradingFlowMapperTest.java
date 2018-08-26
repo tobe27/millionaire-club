@@ -6,6 +6,7 @@ import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
 import com.millionaire.millionairebusinessservice.request.TradingFlowStatisticQuery;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowDetailDTO;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowStatisticDTO;
+import com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -55,6 +56,8 @@ public class TradingFlowMapperTest {
 
     @Test
     public void selectByPrimaryKey() {
+        TradingFlow tradingFlow=mapper.selectByPrimaryKey(47L);
+        System.out.println("tradingFlow = " + tradingFlow);
     }
 
     @Test
@@ -69,9 +72,9 @@ public class TradingFlowMapperTest {
     @Test
     public void selectByUIDandQuery() {
         TradingFlowQuery query = new TradingFlowQuery();
-         query.setProductName("productname");
-        query.setUid(1L);
-        List<TradingFlow> list = mapper.selectByUIDandQuery(query);
+//         query.setProductName("productname");
+        query.setUid(8L);
+        List<UserTradingFlowDTO> list = mapper.selectByUIDandQuery(query);
         System.out.println("list = " + list);
     }
 

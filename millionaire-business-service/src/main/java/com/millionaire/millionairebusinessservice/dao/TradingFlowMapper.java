@@ -5,6 +5,7 @@ import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
 import com.millionaire.millionairebusinessservice.request.TradingFlowStatisticQuery;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowDetailDTO;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowStatisticDTO;
+import com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,7 +23,7 @@ public interface TradingFlowMapper {
 
     int updateByPrimaryKey(TradingFlow record);
 
-    List<TradingFlow> selectByUIDandQuery(TradingFlowQuery query);
+    List<UserTradingFlowDTO> selectByUIDandQuery(TradingFlowQuery query);
 
     //    根据用户id查询交易流水
     List<TradingFlow> fingByUid(Long uid);
