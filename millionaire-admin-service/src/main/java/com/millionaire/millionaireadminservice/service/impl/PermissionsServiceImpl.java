@@ -7,6 +7,7 @@ import com.millionaire.millionaireadminservice.service.PermissionsService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class PermissionsServiceImpl implements PermissionsService {
@@ -45,5 +46,10 @@ public class PermissionsServiceImpl implements PermissionsService {
     @Override
     public long updateByPrimaryKey(Permissions record) {
         return 0;
+    }
+
+    @Override
+    public List<Permissions> findAll() {
+        return permissionsMapper.findAll();
     }
 }

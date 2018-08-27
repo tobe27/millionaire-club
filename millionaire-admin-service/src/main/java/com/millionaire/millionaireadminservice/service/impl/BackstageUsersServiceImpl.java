@@ -1,6 +1,7 @@
 package com.millionaire.millionaireadminservice.service.impl;
 
 import com.millionaire.millionaireadminservice.dao.BackstageUsersMapper;
+import com.millionaire.millionaireadminservice.module.BackstageUserDTO;
 import com.millionaire.millionaireadminservice.module.BackstageUsers;
 import com.millionaire.millionaireadminservice.service.BackstageUsersService;
 import org.springframework.stereotype.Service;
@@ -66,12 +67,17 @@ public class BackstageUsersServiceImpl implements BackstageUsersService {
     }
 
     @Override
-    public List<BackstageUsers> findByNameOrRole(BackstageUsers backstageUsers) {
+    public List<BackstageUserDTO> findByNameOrRole(BackstageUsers backstageUsers) {
         return backstageUsersMapper.findByNameOrRole(backstageUsers);
     }
 
     @Override
     public BackstageUsers findByName(String name) {
         return backstageUsersMapper.findByName(name);
+    }
+
+    @Override
+    public BackstageUserDTO findById(Long id) {
+        return backstageUsersMapper.findById(id);
     }
 }

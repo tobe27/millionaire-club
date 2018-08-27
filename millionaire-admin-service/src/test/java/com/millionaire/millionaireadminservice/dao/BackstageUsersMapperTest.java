@@ -1,5 +1,6 @@
 package com.millionaire.millionaireadminservice.dao;
 
+import com.millionaire.millionaireadminservice.module.BackstageUserDTO;
 import com.millionaire.millionaireadminservice.module.BackstageUsers;
 
 import com.millionaire.millionaireadminservice.module.Roles;
@@ -54,15 +55,6 @@ public class BackstageUsersMapperTest {
     }
     @Resource
     private BackstageUsersMapper backstageUsersMapper;
-    @Test
-    public void testI(){
-        BackstageUsers backstageUsers = new BackstageUsers();
-        backstageUsers.setName("孙");
-        List<BackstageUsers> list = backstageUsersService.findByNameOrRole(backstageUsers);
-        for (BackstageUsers backstageUsers1:list) {
-            System.out.println(backstageUsers1);
-        }
-    }
 
     @Test
     public void TestS(){

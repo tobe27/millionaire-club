@@ -13,6 +13,11 @@
   <sql id="Base_Column_List">
     id, permission, gmt_create, gmt_update, visible
   </sql>
+  <select id="findAll" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM permissions
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
