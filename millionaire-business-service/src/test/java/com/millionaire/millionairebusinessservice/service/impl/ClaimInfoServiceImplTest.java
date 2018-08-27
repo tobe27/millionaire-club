@@ -17,22 +17,23 @@ public class ClaimInfoServiceImplTest {
     private ClaimInfoService claimInfoService;
     @Test
     public void insert() {
-        ClaimInfo claimInfo = new ClaimInfo();
-        claimInfo.setClaimCode("fsdc1");
-        claimInfo.setCreditorName("adfsdfas1");
-        claimInfo.setCreditorPhone("dfasadfs1");
-        claimInfo.setCreditorIdNumber("adfsdafsadsf1");
-        claimInfo.setLendingDate(System.currentTimeMillis());
-        claimInfo.setLendingPeriod(30);
-        claimInfo.setLendingAmount(100000);
-        claimInfo.setProperty("adsdas");
-        claimInfo.setInterestRate(0.25D);
-        claimInfo.setRemarks("sdds");
-        System.out.println("===========================================佛主保佑===========================================");
-        System.out.println(claimInfoService.insert(claimInfo));
-        System.out.println("===========================================邪魔退散===========================================");
+        for (int i = 0; i < 5; i++) {
+            ClaimInfo claimInfo = new ClaimInfo();
+            claimInfo.setClaimCode("债权匹配code"+i);
+            claimInfo.setCreditorName("债权人姓名"+i);
+            claimInfo.setCreditorPhone("手机号");
+            claimInfo.setCreditorIdNumber("身份证号");
+            claimInfo.setLendingDate(System.currentTimeMillis());
+            claimInfo.setLendingPeriod(30);
+            claimInfo.setLendingAmount(100000);
+            claimInfo.setProperty("性质");
+            claimInfo.setInterestRate(0.25D);
+            claimInfo.setRemarks("详细");
+            System.out.println("===========================================佛主保佑===========================================");
+            System.out.println(claimInfoService.insert(claimInfo));
+            System.out.println("===========================================邪魔退散===========================================");
+        }
     }
-
     @Test
     public void selectByCode() {
         System.out.println("===========================================佛主保佑===========================================");

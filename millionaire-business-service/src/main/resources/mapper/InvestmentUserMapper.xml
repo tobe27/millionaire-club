@@ -96,6 +96,25 @@
         </where>
     </select>
 
+
+    
+    <select id="selectUsableInvestment" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where
+        claim_id = 0
+        or
+        claim_id is null
+    </select>
+    
+    <select id="selectMatchedUID" resultType="java.lang.Long">
+        select uid
+        from investment_user
+        where claim_id = #{claimID}
+    </select>
+    
+
     <!--查询最新记录id-->
     <select id="selectTimeLimit" resultType="java.lang.Long">
         SELECT id FROM investment_user ORDER by gmt_create desc LIMIT 1

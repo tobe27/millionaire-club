@@ -20,6 +20,57 @@
     from claim_match
     where id = #{id,jdbcType=BIGINT}
   </select>
+    <select id="listClaimMatchByClaimID"
+            parameterType="com.millionaire.millionairebusinessservice.request.ClaimMatchQuery"
+            resultType="com.millionaire.millionairebusinessservice.transport.ClaimMatchDTO">
+        select
+        claim_match.credit_contract_number as creditContractNumber,
+
+        investment_user.lending_contract_number as lendingContractNumber,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+
+        investment_product.name as productName,
+
+        reception_users.id_name as userName
+
+        from claim_match
+        left join investment_user
+        on claim_match.claim_id = investment_user.claim_id
+        left join investment_product
+        on investment_user.product_id = investment_product.id
+        left join reception_users
+        on investment_user.uid = reception_users.id
+        <where>
+            <if test="claimID != null">
+                claim_match.claim_id = #{claimID}
+            </if>
+            <if test="status != null">
+                and claim_match.status = #{status}
+            </if>
+            <if test="productName != null">
+                and investment_product.name like "%"#{productName}"%"
+            </if>
+            <if test="lendingContractNumber != null">
+                and investment_user.lending_contract_number like "%"#{lendingContractNumber}"%"
+            </if>
+            <if test="userName != null">
+                and reception_users.id_name like "%"#{userName}"%"
+            </if>
+            <if test="valueStartlowerDate != null">
+                and  investment_user.value_date_start <![CDATA[ >= ]]> #{valueStartlowerDate}
+            </if>
+            <if test="valueStartupperDate != null">
+                and investment_user.value_date_start <![CDATA[ <= ]]> #{valueStartupperDate}
+            </if>
+            <if test="valueEndlowerDate != null">
+                and investment_user.value_date_end <![CDATA[ >= ]]> #{valueEndlowerDate}
+            </if>
+            <if test="valueEndupperDate != null">
+                and investment_user.value_date_end <![CDATA[ <= ]]> #{valueEndupperDate}
+            </if>
+        </where>
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from claim_match
     where id = #{id,jdbcType=BIGINT}

@@ -1,12 +1,15 @@
 package com.millionaire.millionairebusinessservice.dao;
 
 import com.millionaire.millionairebusinessservice.module.ClaimMatch;
+import com.millionaire.millionairebusinessservice.request.ClaimMatchQuery;
+import com.millionaire.millionairebusinessservice.transport.ClaimMatchDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -57,4 +60,11 @@ public class ClaimMatchMapperTest {
 
     }
 
+
+    @Test
+    public void listClaimMatchByClaimID() {
+        ClaimMatchQuery query=new ClaimMatchQuery();
+        List<ClaimMatchDTO> claimMatchDTOS=claimMatchMapper.listClaimMatchByClaimID(query);
+        System.out.println("claimMatchDTOS = " + claimMatchDTOS);
+    }
 }
