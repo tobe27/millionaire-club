@@ -42,4 +42,11 @@ public interface InvestmentUserMapper {
      * @return
      */
     List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user);
+
+    /**
+     * @Description  查询可用的用户投资，claimId = 0 或 claimId is null
+    **/
+    List<InvestmentUser> selectUsableInvestment();
+
+    List<Long> selectMatchedUID(long claimID);
 }

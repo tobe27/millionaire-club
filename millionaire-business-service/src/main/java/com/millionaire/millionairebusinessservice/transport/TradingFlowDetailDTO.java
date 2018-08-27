@@ -9,8 +9,10 @@ import lombok.Data;
  */
 @Data
 public class TradingFlowDetailDTO {
+    
 
     private  String purchaseDate;
+
 
    /** 购买人数*/
     private Integer purchaseNumber;

@@ -27,7 +27,6 @@ ClaimInfoMapper claimInfoMapper;
     @Test
     public void insertSelective() {
 
-
     }
 
     @Test

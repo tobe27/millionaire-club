@@ -105,7 +105,7 @@
             parameterType="com.millionaire.millionairebusinessservice.request.TradingFlowDetailQuery"
             resultType="com.millionaire.millionairebusinessservice.transport.TradingFlowDetailDTO">
         select
-        FROM_UNIXTIME(gmt_create/1000, '%Y%m%d') as purchaseDate,
+        FROM_UNIXTIME(gmt_create/1000, '%Y-%m-%d') as purchaseDate,
         count(uid) as purchaseNumber,
         count(id) as purchase,
         sum(amount) as totalPurchases
@@ -129,7 +129,7 @@
             </if>
         </where>
          group  by
-        FROM_UNIXTIME(gmt_create/1000, '%Y%m%d')
+        FROM_UNIXTIME(gmt_create/1000, '%Y-%m-%d')
     </select>
 
 
