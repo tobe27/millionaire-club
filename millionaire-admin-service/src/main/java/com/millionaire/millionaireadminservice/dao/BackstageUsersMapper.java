@@ -1,5 +1,6 @@
 package com.millionaire.millionaireadminservice.dao;
 
+import com.millionaire.millionaireadminservice.module.BackstageUserDTO;
 import com.millionaire.millionaireadminservice.module.BackstageUsers;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -23,9 +24,10 @@ public interface BackstageUsersMapper {
 
     List<BackstageUsers> findAll();
 
-    List<BackstageUsers> findByNameOrRole(BackstageUsers backstageUsers);
+    List<BackstageUserDTO> findByNameOrRole(BackstageUsers backstageUsers);
 
     BackstageUsers findByName(String name);
 
+    BackstageUserDTO findById(Long id);
 
 }
