@@ -107,4 +107,9 @@ public class TradingFlowServiceImpl  implements TradingFlowService {
     public List<TradingFlowDetailDTO> statisticProductDetailByQuery(TradingFlowDetailQuery query) {
         return flowMapper.statisticProductDetailByQuery(query);
     }
+
+    @Override
+    public int updateTradingFlowStatus(Long investmentUserId, Byte status) {
+        return flowMapper.updateTradingFlowStatus(investmentUserId,status,System.currentTimeMillis());
+    }
 }

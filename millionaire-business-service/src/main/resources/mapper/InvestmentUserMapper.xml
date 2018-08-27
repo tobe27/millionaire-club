@@ -285,4 +285,22 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!--根据主键修改用户投资状态-->
+    <update id="updateInvestmentUserIdStatus" >
+    update investment_user
+    set
+      investment_status = #{investmentStatus,jdbcType=TINYINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--合同编号的插入-->
+    <update id="updateLendingContractNumber" >
+    update investment_user
+    set
+        lending_contract_number = #{lendingContractNumber,jdbcType=VARCHAR},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

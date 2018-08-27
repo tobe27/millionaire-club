@@ -82,4 +82,16 @@ private InvestmentUserMapper userMapper;
         System.out.println("a = " + a);
         
     }
+
+    @Test
+    public void updateInvestmentUserIdStatus() {
+        int a = userMapper.updateInvestmentUserIdStatus(6L, (byte) 10, System.currentTimeMillis());
+        System.out.println(a);
+    }
+
+    @Test
+    public void updateLendingContractNumber() {
+        int a = userMapper.updateLendingContractNumber(6L, "kdfksgfddgfs", System.currentTimeMillis());
+        System.out.println(a);
+    }
 }

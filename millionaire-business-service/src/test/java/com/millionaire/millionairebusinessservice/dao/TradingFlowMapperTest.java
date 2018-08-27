@@ -30,9 +30,10 @@ public class TradingFlowMapperTest {
 
     @Test
     public void insert() {
-        for (int i = 1; i < 5; i++) {
+
             TradingFlow flow = new TradingFlow();
             flow.setUid(8L);
+            flow.setInvestmentUserId(2L);
             flow.setName("username");
             flow.setPhone("123456");
             flow.setProductName("mmm1");
@@ -47,7 +48,7 @@ public class TradingFlowMapperTest {
             flow.setGmtCreate(calendar.getTimeInMillis());
             flow.setGmtUpdate(calendar.getTimeInMillis());
             mapper.insert(flow);
-        }
+
     }
     @Test
     public void insertSelective() {
@@ -92,5 +93,9 @@ public class TradingFlowMapperTest {
     }
 
 
-
+    @Test
+    public void updateTradingFlowStatus() {
+        int a = mapper.updateTradingFlowStatus(2L, (byte) 20, System.currentTimeMillis());
+        System.out.println(a);
+    }
 }

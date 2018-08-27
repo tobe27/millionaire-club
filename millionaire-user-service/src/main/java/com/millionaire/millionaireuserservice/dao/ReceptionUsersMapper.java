@@ -4,6 +4,7 @@ import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
 import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -47,5 +48,26 @@ public interface ReceptionUsersMapper {
      * @Description  查询实名认证列表
      **/
     List<ReceptionUsers> selectUserVerificationByPage(UsersVerificationQuery verificationQuery);
+
+
+    /**
+     * 用户的总资产修改
+     */
+    int updateUserAssets(@Param("id") Long uid, @Param("assets") int assets, @Param("gmtUpdate") Long gmtUpdate);
+
+    /**
+     * 用户总资产查询
+     */
+    int selectUserAssets(Long id);
+
+    /**
+     * 用户收益修改
+     */
+    int updateUserProfit(@Param("id") Long uid, @Param("profit") int profit, @Param("gmtUpdate") Long gmtUpdate);
+
+    /**
+     * 用户收益查询
+     */
+    int selectUserProfit(Long id);
 
 }
