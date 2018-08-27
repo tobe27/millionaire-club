@@ -33,7 +33,7 @@ public class H5PayServlet
     private Logger logger =  LoggerFactory.getLogger(H5PayServlet.class);
 
 
-	public String sentPost(long userId,long amt,String idNo,String orderId,String bankCard,String name) throws  IOException
+	public String sentPost(long userId,long amt,String idNo,Long orderId,String bankCard,String name) throws  IOException
 	{
 		String respMsg = "";
 		try

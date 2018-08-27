@@ -25,4 +25,9 @@ public class MessageUserImpl implements MessageUserService {
         return record.getId();
     }
 
+    @Override
+    public int updateMessageUserCode(Long investmentUserId, Byte code) {
+        return messageUserMapper.updateMessageUserCode(investmentUserId,code,System.currentTimeMillis());
+    }
+
 }

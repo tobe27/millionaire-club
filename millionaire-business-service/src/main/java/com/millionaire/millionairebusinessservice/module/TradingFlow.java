@@ -5,6 +5,8 @@ public class TradingFlow {
 
     private Long uid;
 
+    private Long investmentUserId;
+
 //    产品名称
     private String productName;
 
@@ -48,11 +50,20 @@ public class TradingFlow {
         this.gmtUpdate = gmtUpdate;
     }
 
+    public Long getInvestmentUserId() {
+        return investmentUserId;
+    }
+
+    public void setInvestmentUserId(Long investmentUserId) {
+        this.investmentUserId = investmentUserId;
+    }
+
     @Override
     public String toString() {
         return "TradingFlow{" +
                 "id=" + id +
                 ", uid=" + uid +
+                ", investmentUserId=" + investmentUserId +
                 ", productName='" + productName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", name='" + name + '\'' +

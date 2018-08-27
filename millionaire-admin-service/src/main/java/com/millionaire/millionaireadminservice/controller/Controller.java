@@ -2,6 +2,8 @@ package com.millionaire.millionaireadminservice.controller;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionaireadminservice.module.*;
 import com.millionaire.millionaireadminservice.service.BackstageUsersService;
 import com.millionaire.millionaireadminservice.service.PermissionsService;
@@ -10,12 +12,14 @@ import com.millionaire.millionaireadminservice.service.RolesService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Md5Hash;
-import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.*;
+
 
 @RestController
 public class Controller {
@@ -28,6 +32,7 @@ public class Controller {
     @Resource
     private RolesPermissionsService rolesPermissionsService;
 
+    private Logger logger = LoggerFactory.getLogger(Controller.class);
     @GetMapping("backstageLoginPage")
     public String backstageLogin(){
         return "登陆页";
@@ -107,8 +112,46 @@ public class Controller {
      * @return
      */
     @GetMapping("/a/list/backstageUsers")
-    public List<BackstageUsers> getAll(String pageSize,String pageNum,String name,String role){
-        return backstageUsersService.findAll();
+    public ResultBean getUsers(Integer pageNum,String name,String roleName){
+        String regex = "\\S\\{1}";
+        boolean a = name.matches(regex);
+        System.out.println(a);
+        if(name.matches(regex)){
+            System.out.println("不为空且不是空格");
+        }
+
+        if(pageNum==null){
+            return new ResultBean(-1,"页数不能为空");
+        }
+        if(roleName.length()!=0){
+            logger.info("角色不为空");
+            Roles roles = rolesService.findByName(roleName);
+            if(roles==null){
+                return new ResultBean(-1,"查询结果不能为空");
+            }
+            BackstageUsers backstageUsers = new BackstageUsers();
+            backstageUsers.setName(name);
+            backstageUsers.setRoleId(roles.getId());
+            PageHelper.startPage(pageNum,10);
+            List<BackstageUsers> list = backstageUsersService.findByNameOrRole(backstageUsers);
+            PageInfo pageInfo = new PageInfo(list);
+            return new ResultBean(1,"请求成功",pageInfo);
+        }
+        if(name.length()!=0){
+            logger.info("用户不为空");
+            BackstageUsers backstageUsers = new BackstageUsers();
+            backstageUsers.setName(name);
+            PageHelper.startPage(pageNum,10);
+            List<BackstageUsers> list = backstageUsersService.findByNameOrRole(backstageUsers);
+            PageInfo pageInfo = new PageInfo(list);
+            return new ResultBean(1,"请求成功",pageInfo);
+        }
+        logger.info("角色和用户都为空");
+        BackstageUsers backstageUsers = new BackstageUsers();
+        PageHelper.startPage(pageNum,10);
+        List<BackstageUsers> list = backstageUsersService.findByNameOrRole(backstageUsers);
+        PageInfo pageInfo = new PageInfo(list);
+        return new ResultBean(1,"请求成功",pageInfo);
     }
 
     /**
@@ -116,8 +159,9 @@ public class Controller {
      * @param id
      */
     @DeleteMapping("/a/backstageUser/{id}")
-    public void deleteById(@PathVariable Long id){
+    public ResultBean deleteById(@PathVariable Long id){
         backstageUsersService.deleteByPrimaryKey(id);
+        return new ResultBean(1,"删除用户成功");
     }
 
     /**
@@ -125,15 +169,26 @@ public class Controller {
      * @param
      */
     @PostMapping("/a/backstageUsers")
-    public String insertUser(String name,
-                           String password,
-                           String rePassword,
-                           String phone,
-                           String role){
-        if(!password.equals(rePassword)){
-            return "两次密码不相同！";
+    public ResultBean insertUser(String name, String password, String rePassword, String phone, String roleName){
+        if(name.length()==0){
+            return new ResultBean(-1,"用户名不能为空");
         }
-        Roles roles = rolesService.findByName(role);
+        if(password.length()==0){
+            return new ResultBean(-1,"密码不能为空");
+        }
+        if(rePassword.length()==0){
+            return new ResultBean(-1,"重复密码不能为空");
+        }
+        if(phone.length()==0){
+            return new ResultBean(-1,"电话不能为空");
+        }
+        if(roleName.length()==0){
+            return new ResultBean(-1,"角色不能为空");
+        }
+        if(!password.equals(rePassword)){
+            return new ResultBean(-1,"两次密码不相同");
+        }
+        Roles roles = rolesService.findByName(roleName);
         BackstageUsers backstageUsers = new BackstageUsers();
         String userName=(String)SecurityUtils.getSubject().getPrincipal();
         String salt = String.valueOf(new Random().nextInt(899999)+100000);
@@ -148,35 +203,41 @@ public class Controller {
         backstageUsers.setFounder(userName);
         backstageUsers.setModifier(userName);
         backstageUsersService.insert(backstageUsers);
-        return "添加成功"+backstageUsers.getId();
+        return new ResultBean(-1,"添加成功");
     }
 
     /**
      * 修改用户
-     * @param name
      * @param password
      * @param rePassword
      * @param phone
-     * @param role
+     * @param roleName
      * @param id
      * @return
      */
     @RequestMapping(value = "/a/backstageUser/{id}", method = RequestMethod.PUT)
-    public String updateById(String name,
-                             String password,
-                             String rePassword,
-                             String phone,
-                             String role,
+    public ResultBean updateById(String password,String rePassword,String phone,String roleName,
                              @PathVariable("id") Long id) {
-        if(!password.equals(rePassword)){
-            return "两次密码不相同！";
+        if(phone.length()==0){
+            return new ResultBean(-1,"电话不能位空");
         }
-        Roles roles = rolesService.findByName(role);
+        if(password.length()==0){
+            return new ResultBean(-1,"密码不能为空");
+        }
+        if(password.length()==0){
+            return new ResultBean(-1,"重复密码不呢为空");
+        }
+        if(!password.equals(rePassword)){
+            return new ResultBean(-1,"两次密码不相同");
+        }
+        Roles roles = rolesService.findByName(roleName);
+        if(roleName==null){
+            return new ResultBean(-1,"角色为空");
+        }
         BackstageUsers backstageUsers = new BackstageUsers();
         String userName=(String)SecurityUtils.getSubject().getPrincipal();
         String salt = String.valueOf(new Random().nextInt(899999)+100000);
         String md5HashPassword = new Md5Hash(password,salt,2).toString();
-        backstageUsers.setName(name);
         backstageUsers.setPassword(md5HashPassword);
         backstageUsers.setSalt(salt);
         backstageUsers.setPhone(phone);
@@ -185,7 +246,7 @@ public class Controller {
         backstageUsers.setModifier(userName);
         backstageUsers.setId(id);
         backstageUsersService.updateByPrimaryKey(backstageUsers);
-        return "修改成功";
+        return new ResultBean(1,"修改成功");
     }
 
     /**
@@ -196,9 +257,21 @@ public class Controller {
      * @return
      */
     @PutMapping("/a/backstageUser/password")
-    public String updatePassword(String oldPassword,
+    public ResultBean updatePassword(String oldPassword,
                                  String password,
                                  String rePassword){
+        if (oldPassword==null){
+            return new ResultBean(-1,"旧密码不能为空");
+        }
+        if(password.length()==0){
+            return new ResultBean(-1,"密码不能为空");
+        }
+        if(rePassword.length()==0){
+            return new ResultBean(-1,"重复密码不能为空");
+        }
+        if(!password.equals(rePassword)){
+            return new ResultBean(-1,"两次密码输入不一致");
+        }
         String userName=(String)SecurityUtils.getSubject().getPrincipal();
         BackstageUsers backstageUsers = backstageUsersService.findByName(userName);
         Long id = backstageUsers.getId();
@@ -206,10 +279,7 @@ public class Controller {
         String old = backstageUsers.getPassword();
         String md5HashOldPassword = new Md5Hash(oldPassword,salt,2).toString();
         if(!md5HashOldPassword.equals(old)){
-            return "旧密码错误";
-        }
-        if(!password.equals(rePassword)){
-            return "两次密码输入不一致";
+            return new ResultBean(-1,"旧密码错误");
         }
         String newSalt = String.valueOf(new Random().nextInt(899999)+100000);
         String md5HashPassword = new Md5Hash(password,newSalt,2).toString();
@@ -220,16 +290,28 @@ public class Controller {
         users.setGmtUpdate(System.currentTimeMillis());
         users.setModifier(userName);
         backstageUsersService.updatePassword(users);
-        return "修改成功";
+        return new ResultBean(1,"修改成功");
     }
 
     /**
-     * 获取角色
+     * 获取角色分页
+     * @return
+     */
+    @GetMapping("/a/list/roles")
+    public ResultBean getRoles(Integer pageNum){
+        PageHelper.startPage(pageNum,10);
+        List<Roles> list = rolesService.findAll();
+        PageInfo pageInfo = new PageInfo(list);
+        return new ResultBean(1,"查询成功",pageInfo);
+    }
+
+    /**
+     * 获得所有
      * @return
      */
     @GetMapping("/a/roles")
-    public List<Roles> getRoles(){
-        return rolesService.findAll();
+    public ResultBean getRolesAll(){
+        return new ResultBean(1,"查询成功",rolesService.findAll());
     }
 
     /**
@@ -238,15 +320,27 @@ public class Controller {
      * @return
      */
     @DeleteMapping("/a/role/{id}")
-    public String deleteRole(@PathVariable Long id){
+    public ResultBean deleteRole(@PathVariable Long id){
         rolesService.deleteByPrimaryKey(id);
-        return "删除成功";
+        return new ResultBean(1,"删除成功");
     }
 
+    /**
+     * 添加角色，还能赋予权限。
+     * @param name
+     * @param permissions
+     * @return
+     */
     @PostMapping("/a/roles")
-    public String insertRole(String name,
+    public ResultBean insertRole(String name,
                              String permissions){
-        List<Long> list = JSON.parseArray(permissions,Long.class);
+        if(name.length()==0){
+            return new ResultBean(-1,"角色不能为空");
+        }
+        Roles role = rolesService.findByName(name);
+        if(role.getRoleName()!=null){
+            return new ResultBean(-1,"用户名已经存在");
+        }
         String userName=(String)SecurityUtils.getSubject().getPrincipal();
         Roles roles = new Roles();
         roles.setRoleName(name);
@@ -255,6 +349,14 @@ public class Controller {
         roles.setFounder(userName);
         roles.setModifier(userName);
         Long roleId = rolesService.insert(roles);
+        if(permissions.length()==0){
+            return new ResultBean(1,"添加成功");
+        }
+        List<Long> list = JSON.parseArray(permissions,Long.class);
+        logger.info("角色id:"+roleId);
+        if(roleId==null){
+            return new ResultBean(-1,"角色id不能为空");
+        }
         for (Long permission:list) {
             RolesPermissions rolesPermissions = new RolesPermissions();
             rolesPermissions.setRoleId(roleId);
@@ -263,7 +365,7 @@ public class Controller {
             rolesPermissions.setGmtUpdate(System.currentTimeMillis());
             rolesPermissionsService.insert(rolesPermissions);
         }
-        return "添加成功";
+        return new ResultBean(1,"添加成功");
     }
 
     /**
@@ -274,10 +376,16 @@ public class Controller {
      * @return
      */
     @PutMapping("/a/roles/{id}")
-    public String updateRole(@PathVariable Long id,
+    public ResultBean updateRole(@PathVariable Long id,
                              String name,
                              String permissions){
-        List<Long> list = JSON.parseArray(permissions,Long.class);
+        if(name.length()==0){
+            return new ResultBean(-1,"角色名不能为空");
+        }
+        Roles role = rolesService.findByName(name);
+        if(role!=null && role.getId() != id){
+            return new ResultBean(-1,"用户名已经存在");
+        }
         String userName=(String)SecurityUtils.getSubject().getPrincipal();
         Roles roles = new Roles();
         roles.setRoleName(name);
@@ -290,6 +398,10 @@ public class Controller {
             Long rolePermissionId = rolesPermission.getId();
             rolesPermissionsService.deleteByPrimaryKey(rolePermissionId);
         }
+        if(permissions.length()==0){
+            return new ResultBean(1,"更新成功");
+        }
+        List<Long> list = JSON.parseArray(permissions,Long.class);
         for (Long permission:list) {
             RolesPermissions rolesPermissions = new RolesPermissions();
             rolesPermissions.setRoleId(id);
@@ -298,7 +410,7 @@ public class Controller {
             rolesPermissions.setGmtUpdate(System.currentTimeMillis());
             rolesPermissionsService.insert(rolesPermissions);
         }
-        return "更新成功";
+        return new ResultBean(1,"更新成功");
     }
 
     /**

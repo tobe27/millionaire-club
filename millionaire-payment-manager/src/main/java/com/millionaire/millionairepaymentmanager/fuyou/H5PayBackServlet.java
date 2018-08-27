@@ -2,6 +2,8 @@ package com.millionaire.millionairepaymentmanager.fuyou;
 
 
 import com.millionaire.millionairepaymentmanager.fuyou.until.MD5;
+import com.millionaire.millionairepaymentmanager.manager.PayBackManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +22,9 @@ import java.util.Map;
 public class H5PayBackServlet extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1419376384387536955L;
+
+	@Autowired
+    private PayBackManager payBackManager;
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -54,7 +59,8 @@ public class H5PayBackServlet extends HttpServlet
 		{
 			if (Constants.RESP_CODE_SUCCESS.equals(responseCode))
 			{
-				
+
+				payBackManager.backManage(Long.valueOf(mchntOrderId));
 				System.out.println(mchntOrderId +"支付成功~");
 				resp.getWriter().write("支付成功~");
 			}

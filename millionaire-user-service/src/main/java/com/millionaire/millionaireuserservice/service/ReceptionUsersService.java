@@ -90,4 +90,23 @@ Long updateByPrimaryKeySelective(ReceptionUsers record);
 
     UserBank selectByCardNum(String cardNum);
 
+    /**
+     *      * 用户的总资产修改,
+     * 需要先查询用户的总资产，
+     * 如果是用户投资成功：总资产+投资金额
+     * 用户回款成功：总投资-回款金额
+     * @param uid
+     * @param amount
+     * @param type -1表示回款，1表示用户投资
+     * @return
+     */
+    int updateUserAssets(Long uid, int amount,int type);
+
+    /**
+     * 用户收益修改
+     * 在回款成功后更新将用户收益：
+     * 注意：这里的收益存储的是int类型，以分为单位
+     */
+    int updateUserProfit(Long uid, int profit);
+
 }
