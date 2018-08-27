@@ -57,6 +57,7 @@ public class BankController {
 
         Bank bank = bankService.selectByPrimaryKey(id);
         if (bank == null) {
+
             return new ResultBean(-1, "error no such id", id);
         }
         if (modifier == null) {

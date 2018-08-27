@@ -169,10 +169,17 @@
     modifier = #{modifier,jdbcType=VARCHAR}
     WHERE id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="findByNameOrRole" parameterType="com.millionaire.millionaireadminservice.module.Roles" resultMap="BackstageUsers">
+  <select id="findByNameOrRole" parameterType="com.millionaire.millionaireadminservice.module.BackstageUsers"  resultType="com.millionaire.millionaireadminservice.module.BackstageUserDTO">
     SELECT
-    <include refid="Base_Column_List"/>
-    FROM backstage_users
+    backstage_users.id as id,
+    backstage_users.name as name,
+    backstage_users.founder as founder,
+    backstage_users.modifier as modifier,
+    backstage_users.gmt_create as gmtCreate,
+    backstage_users.gmt_update as gmtUpdate,
+    roles.role_name as roleName
+    FROM backstage_users INNER JOIN roles
+    ON backstage_users.role_id=roles.id
     <where>
       <if test="name != null ">
         name LIKE '%${name}%'
@@ -188,4 +195,17 @@
         FROM backstage_users
         WHERE name=#{name}
     </select>
+  <select id="findById" resultType="com.millionaire.millionaireadminservice.module.BackstageUserDTO">
+    SELECT
+    backstage_users.id as id,
+    backstage_users.name as name,
+    backstage_users.founder as founder,
+    backstage_users.modifier as modifier,
+    backstage_users.gmt_create as gmtCreate,
+    backstage_users.gmt_update as gmtUpdate,
+    roles.role_name as roleName
+    FROM backstage_users INNER JOIN roles
+    ON backstage_users.role_id=roles.id
+    WHERE backstage_users.id=#{id}
+  </select>
 </mapper>

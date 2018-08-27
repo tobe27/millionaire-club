@@ -1,8 +1,6 @@
 package com.millionaire.millionairebusinessservice.module;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.*;
 
 public class InvestmentProduct {
 
@@ -11,14 +9,17 @@ public class InvestmentProduct {
 
     // 产品代号
     @NotBlank
+    @Pattern(regexp = "^\\S*\\S$")
     private String productCode;
 
     // 产品名称
     @NotBlank
+    @Pattern(regexp = "^\\S*\\S$")
     private String name;
 
     // 产品收益率
     @NotNull
+    @Min(0)
     private Double annualizedIncome;
 
     //    还款方式
@@ -41,7 +42,8 @@ public class InvestmentProduct {
     private String describe;
 
     //    产品详情
-    @NotNull
+    @NotBlank
+    @Pattern(regexp = "^\\S*\\S$")
     private String moreDetails;
 
     //    类型
