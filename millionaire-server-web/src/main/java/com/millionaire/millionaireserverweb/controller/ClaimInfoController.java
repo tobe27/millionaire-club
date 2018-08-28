@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author Liu Kai
@@ -49,7 +50,6 @@ public class ClaimInfoController {
      * @return 成功1 失败-1
      * @Description 产看债权详细
      **/
-
     @GetMapping("/claim-info/{claimId}")
     public ResultBean selectClaimInfo(@PathVariable("claimId") Long id) {
         ClaimInfo claimInfo = claimInfoService.selectByPrimaryKey(id);
@@ -60,6 +60,7 @@ public class ClaimInfoController {
             return new ResultBean(1, "success", claimInfo);
         }
     }
+
     /**
      * @Description 分页查询债权信息
      * @param claimInfoQuery 查询参数
@@ -69,7 +70,6 @@ public class ClaimInfoController {
         public ResultBean selectClaimByPage (@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                              @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                              ClaimInfoQuery claimInfoQuery) {
-
                 PageInfo<ClaimInfo> pageInfo =
                         claimInfoService.selectClaimBypage(pageSize, pageNum, claimInfoQuery);
                 logger.info("查询债权信息：{}", claimInfoQuery);

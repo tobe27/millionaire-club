@@ -2,8 +2,10 @@ package com.millionaire.millionairebusinessservice.service.impl;
 
 import com.millionaire.millionairebusinessservice.dao.ClaimInfoMapper;
 import com.millionaire.millionairebusinessservice.dao.ClaimMatchMapper;
+import com.millionaire.millionairebusinessservice.dao.InvestmentProductMapper;
 import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
 import com.millionaire.millionairebusinessservice.module.ClaimInfo;
+import com.millionaire.millionairebusinessservice.module.ClaimMatch;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.ClaimMatchQuery;
 import com.millionaire.millionairebusinessservice.service.ClaimMatchService;
@@ -11,6 +13,7 @@ import com.millionaire.millionairebusinessservice.transport.ClaimMatchDTO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -27,7 +30,8 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
     private InvestmentUserMapper investmentUserMapper;
     @Resource
     private ClaimInfoMapper claimInfoMapper;
-
+    @Resource
+    private InvestmentProductMapper investmentProductMapper;
 
     /**
      * @param query
@@ -47,7 +51,7 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
     public List<InvestmentUser> listRecommendInvestmentUser(long claimID) {
         ClaimInfo claimInfo = claimInfoMapper.selectByPrimaryKey(claimID);
         System.out.println("-------债权信息-----------");
-        System.err.println(claimID);
+        System.out.println(claimID);
         System.out.println("-------债权信息-----------");
         if (claimInfo == null) {
             return null;
@@ -55,8 +59,8 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
         //查询出可以使用的用户投资表
         List<InvestmentUser> usableInvestmentUserList = investmentUserMapper.selectUsableInvestment();
         System.out.println("-------初始可用用户投资表-----------");
-        for(InvestmentUser investmentUser : usableInvestmentUserList){
-            System.err.println(investmentUser);
+        for (InvestmentUser investmentUser : usableInvestmentUserList) {
+            System.out.println(investmentUser);
         }
         System.out.println("-------初始可用用户投资表-----------");
         //同一用户同一时间多笔投资不能匹配相同债权
@@ -71,42 +75,112 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
                 //与可用的用户投资中的uid进行比对
                 //如果相等 则从可使用的用户投资表中移除该用户投资信息
                 if (id == investmentUser.getUid()) {
+                    System.out.println("---------剔除重复id用户投资---------");
                     System.out.println("id = " + id);
                     System.out.println("investmentUser.getUid() = " + investmentUser.getUid());
+                    System.out.println("---------剔除重复id用户投资---------");
+                    investmentUserIterator.remove();
+                }
+                //循环剔除用户投资大于未匹配投资金额的用户投资
+                if (investmentUser.getInvestmentAmount() > claimInfo.getUnMatchAmount()) {
+                    System.out.println("---------剔除过大用户投资---------");
+                    System.out.println("investmentUser.getInvestmentAmount() = " + investmentUser.getInvestmentAmount());
+                    System.out.println("claimInfo.getUnMatchAmount() = " + claimInfo.getUnMatchAmount());
+                    System.out.println("---------剔除过大用户投资---------");
                     investmentUserIterator.remove();
                 }
             }
         }
-        System.out.println("usableInvestmentUserList = " + usableInvestmentUserList);
+        System.out.println("-------剔除后可用用户投资表-----------");
+        for (InvestmentUser investmentUser : usableInvestmentUserList) {
+            System.out.println(investmentUser);
+        }
+        System.out.println("-------剔除后可用用户投资表-----------");
+
+        //设置时间格式用于后续对比
+        SimpleDateFormat sd = new SimpleDateFormat("yyyyMMdd");
+
         // 对用户投资进行排序
-        //根据金额排序
+        //根据金额时间排序
         Collections.sort(usableInvestmentUserList, new Comparator<InvestmentUser>() {
             @Override
             public int compare(InvestmentUser o1, InvestmentUser o2) {
+                //金额相等优先级最高
                 if (o1.getInvestmentAmount() == claimInfo.getLendingAmount()) {
-                    return 1;
+                    //随后时间相等排序优先
+                    // 用户投资结束时间转化为年月日的string类型
+                    String investUserEndDate=sd.format(new Date(o1.getValueDateEnd()));
+                    // 债权信息结束时间转化为年月日的string类型
+                    String claimEndDate = sd.format(new Date(claimInfo.getExpirationDate()));
+                    //对比两个string格式的时间 一致
+                    if (investUserEndDate.equals(claimEndDate)) {
+                       //获取该笔用户投资对应的投资产品的投资期限 天转化为月
+                        int userPeriod = investmentProductMapper.selectByPrimaryKey(o1.getProductId()).getDeadline() / 30;
+                        //如果债权出借时间小于6个月 优先匹配6个月内的投资产品
+                        if (claimInfo.getLendingPeriod() <= 6) {
+                            if (userPeriod <= 6) {
+                                return -60;
+                            }
+                            return -59;
+                        }
+                        //如果债权出借时间大于6个月 优先匹配6个月以上的投资产品
+                        if (claimInfo.getLendingPeriod() > 6) {
+                            if (userPeriod > 6) {
+                                return -58;
+                            }
+                            return -57;
+                        }
+                        return -50;
+                    }
+                    //用户投资时间大于过期时间 排序次之
+                    if (o1.getValueDateEnd() > claimInfo.getExpirationDate()) {
+                        return -40;
+                    }
+                    //用户投资时间小于过期时间 排序再次之
+                    if (o1.getValueDateEnd() < claimInfo.getExpirationDate()) {
+                        return -30;
+                    }
                 }
-                if (o1.getInvestmentAmount() > claimInfo.getLendingAmount()) {
-                    return -1;
+                //剔除后余下的用户投资金额小于未匹配金额 按照时间排序
+                //用户投资时间大于过期时间 排序次之
+                if (o1.getValueDateEnd() > claimInfo.getExpirationDate()) {
+                    return -20;
+                }
+                //用户投资时间小于过期时间 排序再次之
+                if (o1.getValueDateEnd() < claimInfo.getExpirationDate()) {
+                    return -10;
                 }
                 return 0;
             }
         });
-        System.out.println("usableInvestmentUserList = " + usableInvestmentUserList);
-        //根据投资时间排序
-        Collections.sort(usableInvestmentUserList, new Comparator<InvestmentUser>() {
-            @Override
-            public int compare(InvestmentUser o1, InvestmentUser o2) {
-                if (o1.getValueDateEnd() == claimInfo.getExpirationDate()) {
-                    return 1;
-                }
-                if (o1.getInvestmentAmount() > claimInfo.getLendingAmount()) {
-                    return -1;
-                }
-                return 0;
-            }
-        });
-        System.out.println("matchableInvestmentUser = " + usableInvestmentUserList);
+        System.out.println("-------根据金额时间排序后可用用户投资表-----------");
+        for (InvestmentUser investmentUser : usableInvestmentUserList) {
+            System.out.println(investmentUser);
+        }
+        System.out.println("-------根据金额时间排序后可用用户投资表-----------");
         return usableInvestmentUserList;
+    }
+
+    /**
+     * @param claimMatch
+     * @Description 新增债权匹配信息
+     */
+    @Override
+    public Long insertClaimMatch(ClaimMatch claimMatch) {
+        long time = System.currentTimeMillis();
+        claimMatch.setGmtCreate(time);
+        claimMatch.setGmtUpdate(time);
+        // status =1 表示该债权匹配信息有效
+        claimMatch.setStatus((byte) 1);
+        claimMatchMapper.insert(claimMatch);
+        return claimMatch.getId();
+    }
+
+    /**
+     * @Description 获取当前存储的债权协议编号总数
+     **/
+    @Override
+    public long countClaimMatch() {
+        return claimMatchMapper.countClaimMatch();
     }
 }

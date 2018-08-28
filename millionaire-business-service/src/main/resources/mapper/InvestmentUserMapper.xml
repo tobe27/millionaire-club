@@ -96,8 +96,6 @@
         </where>
     </select>
 
-
-    
     <select id="selectUsableInvestment" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -106,13 +104,26 @@
         claim_id = 0
         or
         claim_id is null
+        and investment_status =10
+
     </select>
-    
+
     <select id="selectMatchedUID" resultType="java.lang.Long">
         select uid
         from investment_user
         where claim_id = #{claimID}
     </select>
+
+
+    <select id="selectByLendingContractNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where lending_contract_number = #{lendingContractNumber}
+    </select>
+    
+
+
     
 
     <!--查询最新记录id-->

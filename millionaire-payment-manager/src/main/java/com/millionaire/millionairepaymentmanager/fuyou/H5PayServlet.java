@@ -1,7 +1,7 @@
 package com.millionaire.millionairepaymentmanager.fuyou;
 
+import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.until.DESCoderFUIOU;
-import com.millionaire.millionairepaymentmanager.fuyou.until.DateTimeUtil;
 import com.millionaire.millionairepaymentmanager.fuyou.until.HttpFormUtil;
 import com.millionaire.millionairepaymentmanager.fuyou.until.MD5;
 import org.slf4j.Logger;
@@ -33,8 +33,7 @@ public class H5PayServlet
     private Logger logger =  LoggerFactory.getLogger(H5PayServlet.class);
 
 
-	public String sentPost(long userId,long amt,String idNo,Long orderId,String bankCard,String name) throws  IOException
-	{
+	public String sentPost(long userId,long amt,String idNo,Long orderId,String bankCard,String name) throws IOException, FuYouException {
 		String respMsg = "";
 		try
 		{
@@ -90,7 +89,8 @@ public class H5PayServlet
 		catch (Exception e)
 		{
 		    logger.info("支付系统异常");
-			respMsg="系统异常！";
+            throw new FuYouException("H5支付系统异常");
+
 		}
 		return respMsg;
 	}

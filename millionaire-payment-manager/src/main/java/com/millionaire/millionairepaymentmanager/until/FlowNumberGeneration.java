@@ -18,7 +18,7 @@ public class FlowNumberGeneration {
 
     /**
      * 用户编号：UK+年份后两位+10+000001（6位递增数字）
-     * @param currentNumber
+
      * @return
      */
     public static String userProtocol(int currentNumber){
@@ -54,6 +54,11 @@ public class FlowNumberGeneration {
         no = String.format("%06d",currentNumber);
 
         return new String(CLAIM_HEAD+currentYear+CONSTANTS_NUM+no);
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println(claimProtocol(10L));
     }
 
 }

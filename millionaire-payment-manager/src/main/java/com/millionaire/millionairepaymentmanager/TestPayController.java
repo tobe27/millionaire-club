@@ -1,5 +1,6 @@
 package com.millionaire.millionairepaymentmanager;
 
+import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.manager.PayManager;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class TestPayController {
     private PayManager payManager;
 
     @GetMapping("/api/test")
-    public String test(UserInvestmentRequestBean requestBean,Long uid) throws IOException {
+    public String test(UserInvestmentRequestBean requestBean,Long uid) throws IOException, FuYouException {
         System.out.println(requestBean);
         return payManager.payment(requestBean,uid);
     }
