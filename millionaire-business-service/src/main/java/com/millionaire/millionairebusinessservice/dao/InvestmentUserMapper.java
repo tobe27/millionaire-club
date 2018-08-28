@@ -4,6 +4,7 @@ import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,6 +21,28 @@ public interface InvestmentUserMapper {
     int updateByPrimaryKeySelective(InvestmentUser record);
 
     int updateByPrimaryKey(InvestmentUser record);
+
+    /**
+     * 支付成功修改用户投资状态
+     * @param investmentUserId
+     * @return
+     */
+    int updateInvestmentUserIdStatus(@Param("id") Long investmentUserId,
+                                     @Param("investmentStatus") Byte investmentStatus,
+                                     @Param("gmtUpdate") Long gmtUpdate) ;
+
+
+    /**
+     * 合同编号的插入
+     * @param investmentUserId
+     * @param lendingContractNumber
+     * @param gmtUpdate
+     * @return
+     */
+    int updateLendingContractNumber(@Param("id") Long investmentUserId,
+                                    @Param("lendingContractNumber") String lendingContractNumber,
+                                    @Param("gmtUpdate") Long gmtUpdate);
+
 
     /**
      * @Description 通过用户id查询用户投资记录
@@ -50,15 +73,6 @@ public interface InvestmentUserMapper {
 
     List<Long> selectMatchedUID(long claimID);
 
-    /**
-     * 修改用户投资状态
-     */
-    int updateInvestmentUserIdStatus(Long investmentUserId,Byte status,Long gmtUpdate);
-
-    /**
-     * 插入出借合同编号
-     */
-    int updateLendingContractNumber(Long investmentUserId, String lendingContractNumber,Long gmtUpdate);
 
 
 }
