@@ -19,5 +19,7 @@ public class InvestmentUserInsertTest {
         requestBean.setAmount(1000);
         requestBean.setContractSign("dgfsgfdsdgsf");
 
+
+
     }
 }

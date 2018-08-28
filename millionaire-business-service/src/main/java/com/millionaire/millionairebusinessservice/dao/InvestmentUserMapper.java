@@ -49,4 +49,16 @@ public interface InvestmentUserMapper {
     List<InvestmentUser> selectUsableInvestment();
 
     List<Long> selectMatchedUID(long claimID);
+
+    /**
+     * 修改用户投资状态
+     */
+    int updateInvestmentUserIdStatus(Long investmentUserId,Byte status,Long gmtUpdate);
+
+    /**
+     * 插入出借合同编号
+     */
+    int updateLendingContractNumber(Long investmentUserId, String lendingContractNumber,Long gmtUpdate);
+
+
 }
