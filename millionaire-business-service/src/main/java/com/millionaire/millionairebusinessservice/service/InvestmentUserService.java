@@ -43,4 +43,12 @@ public interface InvestmentUserService {
     int updateLendingContractNumber(Long investmentUserId, String lendingContractNumber);
 
     InvestmentUser selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(InvestmentUser record);
+
+
+    /**
+     * @Description 根据出借合同号查询用户投资
+     **/
+    InvestmentUser selectByLendingContractNumber(String lendingContractNumber);
 }
