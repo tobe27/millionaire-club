@@ -1,5 +1,6 @@
 package com.millionaire.millionaireadminservice.service;
 
+import com.millionaire.millionaireadminservice.module.BackstageUserDTO;
 import com.millionaire.millionaireadminservice.module.BackstageUsers;
 
 import java.util.List;
@@ -21,8 +22,10 @@ public interface BackstageUsersService {
 
     List<BackstageUsers> findAll();
 
-    List<BackstageUsers> findByNameOrRole(BackstageUsers backstageUsers);
+    List<BackstageUserDTO> findByNameOrRole(BackstageUsers backstageUsers);
 
     BackstageUsers findByName(String name);
+
+    BackstageUserDTO findById(Long id);
 
 }

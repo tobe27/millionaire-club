@@ -156,7 +156,6 @@ public class PayManager {
     }
 
 
-
     /**
      * 用户收益的计算公式
      * @param amount
@@ -181,6 +180,6 @@ public class PayManager {
         BigDecimal incomeCalculation = count.multiply(annualizedIncomeDay);
         logger.info("投资收益："+incomeCalculation);
 
-        return  incomeCalculation.setScale(6,RoundingMode.HALF_UP).doubleValue();
+        return  incomeCalculation.setScale(2,RoundingMode.HALF_UP).doubleValue();
     }
 }
