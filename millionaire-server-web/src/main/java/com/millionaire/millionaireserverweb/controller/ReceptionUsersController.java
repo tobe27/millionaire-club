@@ -8,6 +8,7 @@ import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.service.TradingFlowService;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
+import com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO;
 import com.millionaire.millionaireserverweb.result.ResultBean;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
@@ -70,15 +71,12 @@ public class ReceptionUsersController {
     public ResultBean listUsersVerification(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                             @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                             UsersVerificationQuery usersVerificationQuery) {
-        if (pageNum == null || pageSize == null) {
-            logger.info("页码为空:{}或每页数为空:{}", pageNum, pageSize);
-            return new ResultBean(-1, "error pageSize or pageNum is null");
-        } else {
+
             PageInfo<ReceptionUsers> pageInfo =
                     usersService.selectUserVerificationByPage(pageSize, pageNum, usersVerificationQuery);
             logger.info("查询投资用户参数：{}", usersVerificationQuery);
             return new ResultBean(0, "success", pageInfo);
-        }
+
     }
 
     /**
@@ -272,11 +270,10 @@ public class ReceptionUsersController {
                                           @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                           @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                           TradingFlowQuery query) {
-
+        logger.info("查询交易流水uid:{},请求参数:{}", uid,query);
         query.setUid(uid);
-        PageInfo<TradingFlow> pageInfo = flowService.selectTradingFlowBypage(pageNum, pageSize, query);
-        logger.info("查询交易流水uid:{}", uid);
-        return new ResultBean(0, "success", pageInfo);
+        PageInfo<UserTradingFlowDTO> pageInfo = flowService.selectTradingFlowBypage(pageNum, pageSize, query);
+        return new ResultBean(1, "success", pageInfo);
     }
 
     /**
@@ -288,9 +285,11 @@ public class ReceptionUsersController {
                                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                          InvestmentUserQuery query) {
         query.setUid(uid);
+        logger.info("查询参数:{}",query);
         PageHelper.startPage(pageNum, pageSize);
         List<InvestmentUserDTO> investmentUserDTOList = investmentUserService.listInvestmentUserByQuery(query);
         PageInfo<InvestmentUserDTO> pageInfo = new PageInfo<>(investmentUserDTOList);
-        return new ResultBean(0, "success", pageInfo);
+        logger.info("查询用户投资信息列表 id：{}",uid);
+        return new ResultBean(1, "success", pageInfo);
     }
 }

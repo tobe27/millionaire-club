@@ -21,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @Component("payManager")
 public class PayManager {
     @Autowired
@@ -41,11 +44,9 @@ public class PayManager {
     @Autowired
     private MessageUserService messageUserService;
 
-
     private Logger logger = LoggerFactory.getLogger(PayManager.class);
 
     private static final int TIME_DAY = 24 * 60 * 60 * 1000;
-
 
 
     /**
@@ -78,17 +79,17 @@ public class PayManager {
         investmentUser.setInvestmentAmount(requestBean.getAmount());
         investmentUser.setInvestmentStatus((byte) 0);
 
-//        计算用户收益（=产品收益率*投资金额*到期时间）
-        double income = investmentProduct.getAnnualizedIncome() * requestBean.getAmount() * investmentProduct.getDeadline();
+//        调用工具类，计算用户收益（=本金*利率/360*期限）
+        double income = incomeCalulate(requestBean.getAmount(),investmentProduct.getAnnualizedIncome(),investmentProduct.getDeadline());
+
         logger.info("计算用户收益:"+income);
         investmentUser.setExpectedIncome(income);
 //        未分配收益
         investmentUser.setDistributedIncome(income);
-//        当前用户投资id
-        Long num = investmentUserService.selectTimeLimit() + 1;
-        logger.info("当前用户id："+num);
-        //        出借合同编号
-        investmentUser.setLendingContractNumber(FlowNumberGeneration.lendProtocol(investmentProduct.getProductCode(), num));
+////        当前用户投资id
+//        Long num = investmentUserService.selectTimeLimit() + 1;
+//        logger.info("当前用户id："+num);
+
 
 //        用户投资的到期时间计算
         Long valueDateStart = 0L;
@@ -108,6 +109,11 @@ public class PayManager {
         investmentUser.setValueDateEnd(valueDateEnd);
 //        插入用户投资记录
         Long investmentUserId = investmentUserService.insert(investmentUser);
+        //        出借合同编号
+        String num = FlowNumberGeneration.lendProtocol(investmentProduct.getProductCode(), investmentUserId);
+//        将出借合同编号更新至数据库中
+        investmentUserService.updateLendingContractNumber(investmentUserId, num);
+
         logger.info("操作成功用户投资记录id"+investmentUserId);
 
 
@@ -138,12 +144,42 @@ public class PayManager {
         messageUserService.insert(messageUser);
         logger.info("操作成功用户消息记录id"+messageUser.getId());
 
-
 //        调用支付接口
         H5PayServlet h5PayServlet = new H5PayServlet();
 
-//        返回支付页面
-        return h5PayServlet.sentPost(uid,requestBean.getAmount(),receptionUsers.getIdNumber(),
-                investmentUser.getLendingContractNumber(), userBank.getCardNumber(),receptionUsers.getIdName());
+//        付款金额,富友支付以分为单位计算
+        int paymentAmount= requestBean.getAmount()*100;
+
+//        返回支付页面,传入用户投资表的id作为订单号
+        return h5PayServlet.sentPost(uid,paymentAmount,receptionUsers.getIdNumber(),
+                investmentUser.getId(), userBank.getCardNumber(),receptionUsers.getIdName());
+    }
+
+
+    /**
+     * 用户收益的计算公式
+     * @param amount
+     * @param annualizedIncome
+     * @param deadLine
+     * @return
+     */
+    private double incomeCalulate(int amount,double annualizedIncome,int deadLine) {
+
+        BigDecimal amountD = new BigDecimal(Double.toString(amount));
+        BigDecimal deadLineD = new BigDecimal(Double.toString(deadLine));
+        BigDecimal count = amountD.multiply(deadLineD);
+
+        BigDecimal annualizedIncomeD = new BigDecimal(Double.toString(annualizedIncome));
+//         利率的常量
+        BigDecimal day = new BigDecimal(Double.toString(360));
+//        每日利率计算,采用银行家舍入法，保留10为小数
+        BigDecimal annualizedIncomeDay = annualizedIncomeD.divide(day,10,BigDecimal.ROUND_HALF_EVEN);
+        logger.info("计算的每日利率"+annualizedIncomeDay);
+
+//        计算投资收益,同时保留两位小数（因为富友支付的金额是以分为单位的，不传小数）
+        BigDecimal incomeCalculation = count.multiply(annualizedIncomeDay);
+        logger.info("投资收益："+incomeCalculation);
+
+        return  incomeCalculation.setScale(2,RoundingMode.HALF_UP).doubleValue();
     }
 }

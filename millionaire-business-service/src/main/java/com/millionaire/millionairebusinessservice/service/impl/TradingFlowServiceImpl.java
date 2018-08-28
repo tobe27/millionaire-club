@@ -10,6 +10,7 @@ import com.millionaire.millionairebusinessservice.request.TradingFlowStatisticQu
 import com.millionaire.millionairebusinessservice.service.TradingFlowService;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowDetailDTO;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowStatisticDTO;
+import com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -82,9 +83,9 @@ public class TradingFlowServiceImpl  implements TradingFlowService {
 
 
     @Override
-    public PageInfo<TradingFlow> selectTradingFlowBypage(Integer pageNum, Integer PageSize, TradingFlowQuery query) {
+    public PageInfo<UserTradingFlowDTO> selectTradingFlowBypage(Integer pageNum, Integer PageSize, TradingFlowQuery query) {
         PageHelper.startPage(pageNum,PageSize);
-        List<TradingFlow> list=flowMapper.selectByUIDandQuery(query);
+        List<UserTradingFlowDTO> list=flowMapper.selectByUIDandQuery(query);
         return new PageInfo<>(list);
     }
 
@@ -105,5 +106,10 @@ public class TradingFlowServiceImpl  implements TradingFlowService {
     @Override
     public List<TradingFlowDetailDTO> statisticProductDetailByQuery(TradingFlowDetailQuery query) {
         return flowMapper.statisticProductDetailByQuery(query);
+    }
+
+    @Override
+    public int updateTradingFlowStatus(Long investmentUserId, Byte status) {
+        return flowMapper.updateTradingFlowStatus(investmentUserId,status,System.currentTimeMillis());
     }
 }

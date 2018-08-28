@@ -12,7 +12,7 @@ public class MessagePlatformQuery {
 
     private String title;
 
-    private Byte type;
+    private Byte sendingCrowd;
 
     private Byte status;
 
@@ -29,7 +29,7 @@ public class MessagePlatformQuery {
     public String toString() {
         return "MessagePlatformQuery{" +
                 "title='" + title + '\'' +
-                ", type=" + type +
+                ", sendingCrowd=" + sendingCrowd +
                 ", status=" + status +
                 ", editors='" + editors + '\'' +
                 ", lowerDate=" + lowerDate +
@@ -46,12 +46,12 @@ public class MessagePlatformQuery {
         return this;
     }
 
-    public Byte getType() {
-        return type;
+    public Byte getSendingCrowd() {
+        return sendingCrowd;
     }
 
-    public MessagePlatformQuery setType(Byte type) {
-        this.type = type;
+    public MessagePlatformQuery setSendingCrowd(Byte sendingCrowd) {
+        this.sendingCrowd = sendingCrowd;
         return this;
     }
 

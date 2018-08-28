@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Liu Kai
@@ -45,7 +47,7 @@ private InvestmentProductService productService;
         PageHelper.startPage(pageNum,pageSize);
         PageInfo<TradingFlowStatisticDTO> pageInfo=new PageInfo<>(tradingFlowStatisticDTOS);
         logger.info("查看投资产品销量统计:{}",query);
-        return new ResultBean(0, "success",pageInfo);
+        return new ResultBean(1, "success",pageInfo);
     }
 
 
@@ -69,7 +71,10 @@ private InvestmentProductService productService;
                 tradingFlowService.statisticProductDetailByQuery(query);
         PageHelper.startPage(pageNum,pageSize);
         PageInfo<TradingFlowDetailDTO> pageInfo=new PageInfo<>(tradingFlowDetailDTOS);
+        Map map=new HashMap();
+        map.put("productName",product.getName());
+        map.put("pageInfo",pageInfo);
         logger.info("查询产品销量统计明细 产品名称:{}",query.getProductName());
-        return new ResultBean(0,"success",pageInfo);
+        return new ResultBean(1,"success",map);
     }
 }

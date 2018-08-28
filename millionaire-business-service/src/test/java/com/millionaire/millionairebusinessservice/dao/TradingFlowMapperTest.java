@@ -6,6 +6,7 @@ import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
 import com.millionaire.millionairebusinessservice.request.TradingFlowStatisticQuery;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowDetailDTO;
 import com.millionaire.millionairebusinessservice.transport.TradingFlowStatisticDTO;
+import com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,9 +30,10 @@ public class TradingFlowMapperTest {
 
     @Test
     public void insert() {
-        for (int i = 1; i < 5; i++) {
+
             TradingFlow flow = new TradingFlow();
             flow.setUid(8L);
+            flow.setInvestmentUserId(2L);
             flow.setName("username");
             flow.setPhone("123456");
             flow.setProductName("mmm1");
@@ -46,7 +48,7 @@ public class TradingFlowMapperTest {
             flow.setGmtCreate(calendar.getTimeInMillis());
             flow.setGmtUpdate(calendar.getTimeInMillis());
             mapper.insert(flow);
-        }
+
     }
     @Test
     public void insertSelective() {
@@ -54,6 +56,8 @@ public class TradingFlowMapperTest {
 
     @Test
     public void selectByPrimaryKey() {
+        TradingFlow tradingFlow=mapper.selectByPrimaryKey(47L);
+        System.out.println("tradingFlow = " + tradingFlow);
     }
 
     @Test
@@ -68,9 +72,9 @@ public class TradingFlowMapperTest {
     @Test
     public void selectByUIDandQuery() {
         TradingFlowQuery query = new TradingFlowQuery();
-         query.setProductName("productname");
-        query.setUid(1L);
-        List<TradingFlow> list = mapper.selectByUIDandQuery(query);
+//         query.setProductName("productname");
+        query.setUid(8L);
+        List<UserTradingFlowDTO> list = mapper.selectByUIDandQuery(query);
         System.out.println("list = " + list);
     }
 
@@ -89,5 +93,9 @@ public class TradingFlowMapperTest {
     }
 
 
-
+    @Test
+    public void updateTradingFlowStatus() {
+        int a = mapper.updateTradingFlowStatus(2L, (byte) 20, System.currentTimeMillis());
+        System.out.println(a);
+    }
 }

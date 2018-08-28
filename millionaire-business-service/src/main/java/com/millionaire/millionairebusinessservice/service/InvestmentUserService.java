@@ -26,21 +26,21 @@ public interface InvestmentUserService {
      */
     Long selectTimeLimit();
 
-
-
-
-
-
-
-
-
-
-
-
     /**
      * @Description 通过查询参数查询用户投资记录
      * @author Liu Kai
      **/
     List<InvestmentUserDTO> listInvestmentUserByQuery(InvestmentUserQuery query);
 
+    /**
+     * 修改用户投资状态
+     */
+    int updateInvestmentUserIdStatus(Long investmentUserId,Byte status);
+
+    /**
+     * 插入出借合同编号
+     */
+    int updateLendingContractNumber(Long investmentUserId, String lendingContractNumber);
+
+    InvestmentUser selectByPrimaryKey(Long id);
 }

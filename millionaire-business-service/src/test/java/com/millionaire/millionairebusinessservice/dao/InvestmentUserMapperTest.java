@@ -67,6 +67,31 @@ private InvestmentUserMapper userMapper;
         query.setProductName("mmm");
         List<InvestmentUserDTO> list=userMapper.listInvestmentUserByQuery(query);
         System.out.println("list = " + list);
+    }
 
+    @Test
+    public void selectUsableInvestment() {
+        List<InvestmentUser> list=userMapper.selectUsableInvestment();
+        System.out.println("list = " + list);
+    }
+
+
+    @Test
+    public void selectMatchedUID() {
+        List a= userMapper.selectMatchedUID(1);
+        System.out.println("a = " + a);
+        
+    }
+
+    @Test
+    public void updateInvestmentUserIdStatus() {
+        int a = userMapper.updateInvestmentUserIdStatus(6L, (byte) 10, System.currentTimeMillis());
+        System.out.println(a);
+    }
+
+    @Test
+    public void updateLendingContractNumber() {
+        int a = userMapper.updateLendingContractNumber(6L, "kdfksgfddgfs", System.currentTimeMillis());
+        System.out.println(a);
     }
 }

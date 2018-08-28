@@ -21,8 +21,8 @@ public class InvestmentProductImplTest {
     @Test
     public void insertProductSelective() {
             InvestmentProduct investmentProduct = new InvestmentProduct();
-            investmentProduct.setProductCode("mm1");
-            investmentProduct.setName("mmm1");
+            investmentProduct.setProductCode("mm2");
+            investmentProduct.setName("mmm3");
             investmentProduct.setAnnualizedIncome(0.15D);
             investmentProduct.setRepaymentMode((byte) 1);
             investmentProduct.setStartingAmount(100000);

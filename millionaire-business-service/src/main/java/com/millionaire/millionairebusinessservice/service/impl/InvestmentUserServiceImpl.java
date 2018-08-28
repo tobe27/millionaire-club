@@ -68,8 +68,21 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
         return investmentUserMapper.listInvestmentUserByQuery(query);
     }
 
+    @Override
+    public int updateInvestmentUserIdStatus(Long investmentUserId,Byte status) {
 
+        return investmentUserMapper.updateInvestmentUserIdStatus(investmentUserId,status,System.currentTimeMillis());
+    }
 
+    @Override
+    public int updateLendingContractNumber(Long investmentUserId, String lendingContractNumber) {
+        return investmentUserMapper.updateLendingContractNumber(investmentUserId,lendingContractNumber,System.currentTimeMillis());
+    }
+
+    @Override
+    public InvestmentUser selectByPrimaryKey(Long id) {
+        return investmentUserMapper.selectByPrimaryKey(id);
+    }
 
 
 }
