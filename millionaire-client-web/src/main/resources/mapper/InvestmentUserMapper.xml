@@ -6,6 +6,7 @@
             <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="product_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="claim_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="value_date_start" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="value_date_end" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="lending_contract_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -19,23 +20,48 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-    id, product_id, uid, value_date_start, value_date_end, lending_contract_number, contract_sign, 
+    id,product_id, uid,claim_id, value_date_start, value_date_end, lending_contract_number, contract_sign,
     investment_amount, investment_status, expected_income, distributed_income, gmt_create, 
     gmt_update
   </sql>
-    <select id="findByUidInvestmentStatus" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM investment_user
-        WHERE uid=#{uid} AND investment_status=#{investmentStatus}
-    </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from investment_user
         where id = #{id,jdbcType=BIGINT}
     </select>
+    <select id="findByUidInvestmentStatus" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser" resultType="com.millionaire.millionaireclientweb.pojo.InvestmentUsersDTO">
+        SELECT
+        investment_user.id as id,
+        investment_product.name as name,
+        investment_product.annualized_income as annualizedIncome,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.investment_status as investmentStatus,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd
+        FROM investment_user INNER JOIN investment_product
+        ON investment_user.product_id=investment_product.id
+        WHERE uid=#{uid} AND investment_status=#{investmentStatus}
+    </select>
+    <select id="findById" resultType="com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO">
+        SELECT
+        investment_user.id as id,
+        investment_product.name as name,
+        investment_product.annualized_income as annualizedIncome,
+        investment_user.expected_income as expectedIncome,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+        investment_product.repayment_mode as repaymentMode,
+        investment_product.starting_amount as startingAmount,
+        investment_user.investment_status as investmentStatus,
+        investment_user.distributed_income as distributed_income,
+        investment_user.uid as uid
+        FROM investment_user INNER JOIN investment_product
+        ON investment_user.product_id=investment_product.id
+        WHERE investment_user.id=#{id}
 
+    </select>
     <select id="listInvestmentUserByUID" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -86,10 +112,39 @@
             <if test="investmentStatus != null">
                 and  investment_user.investment_status =  #{investmentStatus,jdbcType=TINYINT}
             </if>
-            <!--<if test=""-->
+            <if test="valueStartlowerDate != null">
+                and  investment_user.value_date_start <![CDATA[ >= ]]> #{valueStartlowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="valueStartupperDate != null">
+                and investment_user.value_date_start <![CDATA[ <= ]]> #{valueStartupperDate,jdbcType=BIGINT}
+            </if>
+            <if test="valueEndlowerDate != null">
+                and investment_user.value_date_end <![CDATA[ >= ]]> #{valueEndlowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="valueEndupperDate != null">
+                and investment_user.value_date_end <![CDATA[ <= ]]> #{valueEndupperDate,jdbcType=BIGINT}
+            </if>
         </where>
-
     </select>
+
+
+    
+    <select id="selectUsableInvestment" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where
+        claim_id = 0
+        or
+        claim_id is null
+    </select>
+    
+    <select id="selectMatchedUID" resultType="java.lang.Long">
+        select uid
+        from investment_user
+        where claim_id = #{claimID}
+    </select>
+    
 
     <!--查询最新记录id-->
     <select id="selectTimeLimit" resultType="java.lang.Long">
@@ -102,12 +157,12 @@
   </delete>
     <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser"
             useGeneratedKeys="true" keyProperty="id">
-    insert into investment_user (product_id, uid,
+    insert into investment_user (product_id, uid,claim_id,
       value_date_start, value_date_end, lending_contract_number, 
       contract_sign, investment_amount, investment_status, 
       expected_income, distributed_income, gmt_create, 
       gmt_update)
-    values (#{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},
+    values (#{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},#{claimId,jdbcType=BIGINT},
       #{valueDateStart,jdbcType=BIGINT}, #{valueDateEnd,jdbcType=BIGINT}, #{lendingContractNumber,jdbcType=VARCHAR}, 
       #{contractSign,jdbcType=VARCHAR}, #{investmentAmount,jdbcType=INTEGER}, #{investmentStatus,jdbcType=TINYINT}, 
       #{expectedIncome,jdbcType=DOUBLE}, #{distributedIncome,jdbcType=DOUBLE}, #{gmtCreate,jdbcType=BIGINT}, 
@@ -121,6 +176,9 @@
             </if>
             <if test="uid != null">
                 uid,
+            </if>
+            <if test="claimId != null">
+                claim_id,
             </if>
             <if test="valueDateStart != null">
                 value_date_start,
@@ -159,6 +217,9 @@
             </if>
             <if test="uid != null">
                 #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="claimId != null">
+                #{claimId,jdbcType=BIGINT},
             </if>
             <if test="valueDateStart != null">
                 #{valueDateStart,jdbcType=BIGINT},
@@ -202,6 +263,9 @@
             <if test="uid != null">
                 uid = #{uid,jdbcType=BIGINT},
             </if>
+            <if test="claimId != null">
+                claim_id = #{claimId,jdbcType=BIGINT},
+            </if>
             <if test="valueDateStart != null">
                 value_date_start = #{valueDateStart,jdbcType=BIGINT},
             </if>
@@ -239,6 +303,7 @@
     update investment_user
     set product_id = #{productId,jdbcType=BIGINT},
       uid = #{uid,jdbcType=BIGINT},
+       claim_id = #{claimId,jdbcType=BIGINT},
       value_date_start = #{valueDateStart,jdbcType=BIGINT},
       value_date_end = #{valueDateEnd,jdbcType=BIGINT},
       lending_contract_number = #{lendingContractNumber,jdbcType=VARCHAR},
@@ -251,4 +316,22 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!--根据主键修改用户投资状态-->
+    <update id="updateInvestmentUserIdStatus" >
+    update investment_user
+    set
+      investment_status = #{investmentStatus,jdbcType=TINYINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--合同编号的插入-->
+    <update id="updateLendingContractNumber" >
+    update investment_user
+    set
+        lending_contract_number = #{lendingContractNumber,jdbcType=VARCHAR},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

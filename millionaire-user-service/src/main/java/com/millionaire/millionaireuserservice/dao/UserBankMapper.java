@@ -1,6 +1,5 @@
 package com.millionaire.millionaireuserservice.dao;
 
-import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -40,6 +39,8 @@ public interface UserBankMapper {
     void deleteByCardNum(String cardNum);
 
     UserBank selectByCardNum(String cardNum);
+
+    List<UserBank> findById(Long id);
 
 
 
