@@ -27,4 +27,9 @@ public interface ClaimMatchMapper {
      **/
     List<ClaimMatchDTO> listClaimMatchByClaimID(ClaimMatchQuery query);
 
+
+    /**
+     * @Description 获取当前存储的债权协议编号总数
+     **/
+    long countClaimMatch();
 }

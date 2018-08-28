@@ -54,7 +54,8 @@ public class BankController {
                                  @RequestParam(value = "dailyLimit", required = false) Double dailyLimit,
                                   String modifier) {
         // modifier 校验未做
-
+        // 此处可以通过modifier查找后台用户信息，如果为空，返回错误
+        //因此时adminservice依赖未通 未进行校验
         Bank bank = bankService.selectByPrimaryKey(id);
         if (bank == null) {
 

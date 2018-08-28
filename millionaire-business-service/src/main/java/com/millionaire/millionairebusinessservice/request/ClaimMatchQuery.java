@@ -11,7 +11,7 @@ import lombok.Data;
 public class ClaimMatchQuery {
 
     private Long claimID;
-     // 债权匹配状态 1=
+     // 债权匹配状态 1=有效
     private Byte status = 1;
 
     private String productName;

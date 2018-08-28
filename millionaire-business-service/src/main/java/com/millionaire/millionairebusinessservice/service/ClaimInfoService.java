@@ -36,7 +36,7 @@ public interface ClaimInfoService {
 
     ClaimInfo selectByPrimaryKey(Long id);
 
-//    int updateByPrimaryKeySelective(ClaimInfo record);
+    int updateByPrimaryKeySelective(ClaimInfo record);
 
 //    int updateByPrimaryKey(ClaimInfo record);
 }

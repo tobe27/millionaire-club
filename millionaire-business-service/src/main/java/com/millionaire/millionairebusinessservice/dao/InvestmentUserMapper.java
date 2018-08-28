@@ -68,6 +68,7 @@ public interface InvestmentUserMapper {
 
     /**
      * @Description  查询可用的用户投资，claimId = 0 或 claimId is null
+     * 用户投资状态 investment_status =10
     **/
     List<InvestmentUser> selectUsableInvestment();
 
