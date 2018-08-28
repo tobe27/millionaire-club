@@ -44,8 +44,12 @@ private InvestmentUserMapper userMapper;
 
     @Test
     public void selectByPrimaryKey() {
-        InvestmentUser user=userMapper.selectByPrimaryKey(1L);
+        InvestmentUser user=userMapper.selectByPrimaryKey(12L);
         System.out.println("user = " + user);
+        System.out.println(user.getClaimId());
+        if(user.getClaimId() == null){
+            System.out.println("null"+user.getClaimId());
+        }
     }
 
     @Test
@@ -93,5 +97,11 @@ private InvestmentUserMapper userMapper;
     public void updateLendingContractNumber() {
         int a = userMapper.updateLendingContractNumber(6L, "kdfksgfddgfs", System.currentTimeMillis());
         System.out.println(a);
+    }
+
+    @Test
+    public void selectByLendingContractNumber() {
+        InvestmentUser investmentUser=userMapper.selectByLendingContractNumber("1");
+        System.out.println("investmentUser = " + investmentUser);
     }
 }

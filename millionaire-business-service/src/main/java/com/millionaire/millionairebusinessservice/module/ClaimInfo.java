@@ -33,6 +33,7 @@ public class ClaimInfo {
 
     //    出借日期
     @NotNull
+
     private Long lendingDate;
 
     //    出借期限
@@ -40,7 +41,8 @@ public class ClaimInfo {
     @Min(0)
     private Integer lendingPeriod;
 
-    //    到期日期（=lendingDate+lendingPeriod）
+    // 到期日期（=lendingDate+lendingPeriod）
+    //新增时封装
     private Long expirationDate;
 
     //    出借金额
@@ -50,6 +52,7 @@ public class ClaimInfo {
 
     //    债权性质
     @NotBlank
+    @Pattern(regexp = "^\\S*\\S$")
     private String property;
 
     //    出借利率
@@ -73,8 +76,11 @@ public class ClaimInfo {
     private Integer status;
 
     @Null
+    // 新增时封装
     private Long gmtCreate;
+
     @Null
+    // 新增时封装
     private Long gmtUpdate;
 
     public ClaimInfo(Long id, String claimCode, String creditorName, String creditorPhone, String creditorIdNumber, Long lendingDate, Integer lendingPeriod, Long expirationDate, Integer lendingAmount, String property, Double interestRate, Integer unMatchAmount, Double matchRate, String remarks, Integer status, Long gmtCreate, Long gmtUpdate) {

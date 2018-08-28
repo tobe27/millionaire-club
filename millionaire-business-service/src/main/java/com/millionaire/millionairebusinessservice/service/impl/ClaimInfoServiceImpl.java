@@ -105,10 +105,11 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
         return claimInfoMapper.selectByPrimaryKey(id);
     }
 
-//    @Override
-//    public int updateByPrimaryKeySelective(ClaimInfo record) {
-//        return claimInfoMapper.updateByPrimaryKeySelective(record);
-//    }
+    @Override
+    public int updateByPrimaryKeySelective(ClaimInfo record) {
+        record.setGmtUpdate(System.currentTimeMillis());
+        return claimInfoMapper.updateByPrimaryKeySelective(record);
+    }
 
 //    @Override
 //    public int updateByPrimaryKey(ClaimInfo record) {

@@ -67,4 +67,10 @@ public class ClaimMatchMapperTest {
         List<ClaimMatchDTO> claimMatchDTOS=claimMatchMapper.listClaimMatchByClaimID(query);
         System.out.println("claimMatchDTOS = " + claimMatchDTOS);
     }
+
+    @Test
+    public void countClaimMatch() {
+        long count = claimMatchMapper.countClaimMatch();
+        System.out.println("count = " + count);
+    }
 }

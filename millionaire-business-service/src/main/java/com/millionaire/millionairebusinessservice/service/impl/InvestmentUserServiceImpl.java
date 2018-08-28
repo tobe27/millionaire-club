@@ -85,4 +85,18 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     }
 
 
+    @Override
+    public int updateByPrimaryKeySelective(InvestmentUser record) {
+        record.setGmtUpdate(System.currentTimeMillis());
+        return investmentUserMapper.updateByPrimaryKeySelective(record);
+    }
+
+    /**
+     * @param lendingContractNumber
+     * @Description 根据出借合同号查询用户投资
+     */
+    @Override
+    public InvestmentUser selectByLendingContractNumber(String lendingContractNumber) {
+        return investmentUserMapper.selectByLendingContractNumber(lendingContractNumber);
+    }
 }
