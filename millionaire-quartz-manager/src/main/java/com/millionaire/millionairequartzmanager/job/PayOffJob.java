@@ -2,6 +2,7 @@ package com.millionaire.millionairequartzmanager.job;
 
 
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
+import com.millionaire.millionairepaymentmanager.fuyou.CompanyPayServlet;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -15,6 +16,9 @@ public class PayOffJob implements Job {
     @Autowired
     private InvestmentUserService investmentUserService;
 
+    @Autowired
+    private CompanyPayServlet companyPayServlet;
+
     /**
      * 调度任务执行方法
      * 1。时间触发调用后台给用户转账的方法
@@ -24,6 +28,7 @@ public class PayOffJob implements Job {
      */
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+//        if (companyPayServlet.httpURLConnectionPOST())
 
 
 

@@ -4,6 +4,7 @@ import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.until.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,6 +22,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Component("companyPayServlet")
 public class CompanyPayServlet {
 
     //    public static final String GET_URL = "http://112.4.27.9/mall-back/if_user/store_list?storeId=32";
@@ -57,7 +59,7 @@ public class CompanyPayServlet {
     /**
      * 接口调用  POST
      */
-    public  boolean  httpURLConnectionPOST(Long investmentUserId) throws FuYouException {
+    public  boolean  httpURLConnectionPOST(Long investmentUserId,int amount) throws FuYouException {
         try {
             URL url = new URL(POST_URL);
 
@@ -100,7 +102,7 @@ public class CompanyPayServlet {
                     "<branchnm>中国银行股份有限公司北京西单支行</branchnm>"+
                     "<accntno>6212261904006115311</accntno>"+
                     "<accntnm>似曾相识</accntnm>"+
-                    "<amt>10000</amt>"+
+                    "<amt>"+amount+"</amt>"+
                     "<entseq>"+investmentUserId+"</entseq>"+
                     "<memo>测试</memo>"+
                     "<mobile>13275869228</mobile>"+

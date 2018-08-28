@@ -73,6 +73,4 @@ public interface InvestmentUserMapper {
 
     List<Long> selectMatchedUID(long claimID);
 
-
-
 }
