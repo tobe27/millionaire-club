@@ -262,7 +262,7 @@ public class Controller {
         if (password.length() == 0) {
             return new ResultBean(-1, "密码不能为空");
         }
-        if (password.length() == 0) {
+        if (rePassword.length() == 0) {
             return new ResultBean(-1, "重复密码不呢为空");
         }
         if (phone.length() == 0) {
@@ -295,7 +295,6 @@ public class Controller {
 
     /**
      * 修改密码
-     *
      * @param oldPassword
      * @param password
      * @param rePassword
@@ -314,7 +313,7 @@ public class Controller {
         if (rePassword == null) {
             return new ResultBean(-1, "重复密码没有传");
         }
-        if (oldPassword == null) {
+        if (oldPassword.length()==0) {
             return new ResultBean(-1, "旧密码不能为空");
         }
         if (password.length() == 0) {

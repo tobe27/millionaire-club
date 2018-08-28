@@ -23,4 +23,6 @@ public interface UserBankService {
      * @Description 根据uid 删除银行卡
      **/
     void deleteByUID(Long uid);
+
+    List<UserBank> findById(Long id);
 }

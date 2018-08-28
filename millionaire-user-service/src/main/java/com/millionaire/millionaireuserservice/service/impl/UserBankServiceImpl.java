@@ -78,4 +78,9 @@ public class UserBankServiceImpl implements UserBankService {
     public void deleteByUID(Long uid) {
         userBankMapper.deleteByUID(uid);
     }
+
+    @Override
+    public List<UserBank> findById(Long id) {
+        return userBankMapper.findById(id);
+    }
 }

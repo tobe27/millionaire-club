@@ -9,6 +9,7 @@ import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.MessageUser;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
+import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.FlowNumberGeneration;
@@ -18,7 +19,6 @@ import com.millionaire.millionairemanagerservice.dao.ContentMapper;
 import com.millionaire.millionairemanagerservice.dao.MessagePlatformMapper;
 import com.millionaire.millionairemanagerservice.dao.ProposalMapper;
 import com.millionaire.millionairemanagerservice.module.Bank;
-import com.millionaire.millionairemanagerservice.module.Content;
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionairemanagerservice.module.Proposal;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
@@ -82,28 +82,31 @@ public class SunController {
         @PostMapping("/login/0")
         public ResultBean login0(Long phone, String password,HttpServletResponse request) {
 
-            if (phone == null) {
-                return new ResultBean(1,"手机号不能为空");
+            if(password ==null){
+                return new ResultBean(-1,"密码没有传");
             }
-            if (password == null) {
-                return new ResultBean(1,"密码不能为空");
+            if (phone == null) {
+                return new ResultBean(-1,"手机号不能为空");
+            }
+            if (password.length()==0) {
+                return new ResultBean(-1,"密码不能为空");
             }
             ReceptionUsers receptionUsers = receptionUsersService.findByPhone(phone);
             if (receptionUsers == null) {
-                return new ResultBean(1,"用户不存在");
+                return new ResultBean(-1,"用户名错误");
             }
             String salt = receptionUsers.getSalt();
             String passwordOne = receptionUsers.getPassword();
             String passwordTwo = new Md5Hash(password, salt, 2).toString();
             if (!passwordOne.equals(passwordTwo)) {
-                return new ResultBean(1,"密码输入错误");
+                return new ResultBean(-1,"密码输入错误");
             }
             receptionUsers.setLoginTime(System.currentTimeMillis());
             receptionUsers.setGmtUpdate(System.currentTimeMillis());
             receptionUsers.setId(receptionUsers.getId());
             receptionUsersService.updateByPrimaryKey(receptionUsers);
             CookieUtil.createCookie("cookie",receptionUsers.getId().toString(),request);
-            return new ResultBean(0,"登陆成功");
+            return new ResultBean(1,"登陆成功");
         }
 
         /**
@@ -118,23 +121,35 @@ public class SunController {
         @PostMapping("/login/1")
         public ResultBean login1(Long phone, String code, String password, String rePassword, String managerNumber) {
             if (phone == null) {
-                return new ResultBean(1,"手机号不能为空");
+                return new ResultBean(-1,"请输入手机号");
+            }
+            if(code==null){
+                return new ResultBean(-1,"验证码没传");
+            }
+            if(password==null){
+                return new ResultBean(-1,"密码没传");
+            }
+            if(rePassword==null){
+                return new ResultBean(-1,"重复密码没传");
+            }
+            if(managerNumber==null){
+                return new ResultBean(-1,"理财经理工号没传");
             }
             if (code.length() == 0) {
-                return new ResultBean(1,"验证码不能为空");
+                return new ResultBean(-1,"请输入验证码");
             }
             if (password.length() == 0) {
-                return new ResultBean(1,"密码不能为空");
+                return new ResultBean(-1,"请输入密码");
             }
             if (rePassword.length() == 0) {
-                return new ResultBean(1,"重复密码不能为空");
+                return new ResultBean(-1,"请再次输入密码");
             }
             if (!password.equals(rePassword)) {
-                return new ResultBean(1,"两次密码输入不一致");
+                return new ResultBean(-1,"两次密码输入不一致");
             }
             ReceptionUsers receptionUser = receptionUsersService.findByPhone(phone);
             if (receptionUser != null) {
-                return new ResultBean(1,"用户名存在");
+                return new ResultBean(-1,"用户名已存在");
             }
             String salt = String.valueOf(new Random().nextInt(899999) + 100000);
             String Md5HashPassword = new Md5Hash(password, salt, 2).toString();
@@ -153,19 +168,35 @@ public class SunController {
             receptionUsers.setGmtUpdate(System.currentTimeMillis());
             receptionUsers.setId(receptionUsers.getId());
             receptionUsersService.updateByPrimaryKey(receptionUsers);
-            return new ResultBean(0,"注册成功");
+            return new ResultBean(1,"注册成功");
         }
 
+    /**
+     * 发送验证码到手机
+     * @param phone
+     * @return
+     * @throws ClientException
+     */
         @PostMapping("/code")
         public ResultBean getCode(Long phone) throws ClientException {
             if (phone == null) {
-                return new ResultBean(1,"手机号不能为空");
+                return new ResultBean(-1,"请输入手机号");
             }
             Integer random = new Random().nextInt(899999) + 100000;
             System.out.println(random);
             MessageVerification.setSendSmsResponse(phone.toString(), random);
             redisTemplate.opsForValue().set(phone.toString(),random.toString(),1000 * 60 * 5, TimeUnit.MILLISECONDS);
-            return new ResultBean(0,"验证码发送到手机");
+            return new ResultBean(1,"验证码发送到手机");
+        }
+
+    /**
+     * 用户协议图片地址
+     * @return
+     */
+    @GetMapping("/agreement")
+        public ResultBean getAgreement(){
+            String agreement = (String) redisTemplate.opsForValue().get("userAgreement");
+            return new ResultBean(1,"用户协议",agreement);
         }
 
         /**
@@ -178,16 +209,31 @@ public class SunController {
          */
         @PutMapping("/forgetPassword")
         public ResultBean forgetPassword(Long phone, String code, String password, String rePassword) {
+            if(phone==null){
+                return new ResultBean(-1,"请输入手机号");
+            }
+            if(code==null){
+                return new ResultBean(-1,"验证码没传");
+            }
+            if(password==null){
+                return new ResultBean(-1,"密码没传");
+            }
+            if(rePassword==null){
+                return new ResultBean(-1,"重复密码没传");
+            }
             if (code.length() == 0) {
-                return new ResultBean(1,"验证码不能为空");
+                return new ResultBean(1,"请输入验证码");
             }
             if (password.length() == 0) {
-                return new ResultBean(1,"密码不能为空");
+                return new ResultBean(1,"请输入密码");
             }
             if (rePassword.length() == 0) {
-                return new ResultBean(1,"重复密码不能为空）");
+                return new ResultBean(1,"请再次确认密码）");
             }
             String salt = (String) redisTemplate.opsForValue().get(phone.toString());
+            if(salt==null){
+                return new ResultBean(-1,"验证码错误");
+            }
             if (!salt.equals(code)) {
                 return new ResultBean(1,"验证码错误");
             }
@@ -215,14 +261,13 @@ public class SunController {
     @GetMapping("/u")
         public ResultBean getUser(HttpServletRequest request){
             Cookie cookie = CookieUtil.getCookie("cookie",request);
-            String id = cookie.getValue();
-            Long uid = Long.valueOf(id);
-            ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
+            Long id = Long.valueOf(cookie.getValue());
+            ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(id);
             return new ResultBean(0,"返回个人信息",receptionUsers);
         }
 
         /**
-         * 用户绑定银行
+         * 用户添加银行
          * @param city
          * @param bankName
          * @param bankPhone
@@ -232,21 +277,32 @@ public class SunController {
          */
         @PostMapping("/u/banks")
         public ResultBean insertUserBank(String city,String bankName,String bankPhone,String cardNumber,HttpServletRequest request){
+            if(city==null){
+                return new ResultBean(-1,"城市没传");
+            }
+            if(bankName==null){
+                return new ResultBean(-1,"银行名称没传");
+            }
+            if(bankPhone==null){
+                return new ResultBean(-1,"银行预留手机没传");
+            }
+            if(cardNumber==null){
+                return new ResultBean(-1,"银行卡号没传");
+            }
             if(city.length()==0){
-                return new ResultBean(1,"城市不能为空");
+                return new ResultBean(-1,"城市不能为空");
             }
             if(bankName.length()==0){
-                return new ResultBean(1,"银行名称不能为空");
+                return new ResultBean(-1,"银行名称不能为空");
             }
             if(bankPhone.length()==0){
-                return new ResultBean(1,"银行预留手机号不能为空");
+                return new ResultBean(-1,"银行预留手机号不能为空");
             }
             if(cardNumber.length()==0){
-                return new ResultBean(1,"银行卡号不能为空");
+                return new ResultBean(-1,"银行卡号不能为空");
             }
             Cookie cookie = CookieUtil.getCookie("cookie",request);
-            String id = cookie.getValue();
-            Long uid = Long.valueOf(id);
+            Long uid = Long.valueOf(cookie.getValue());
             UserBank userBank = new UserBank();
             userBank.setCity(city);
             userBank.setBankName(bankName);
@@ -257,7 +313,7 @@ public class SunController {
             userBank.setGmtCreate(System.currentTimeMillis());
             userBank.setGmtUpdate(System.currentTimeMillis());
             userBankService.insert(userBank);
-            return new ResultBean(0,"添加成功");
+            return new ResultBean(1,"添加成功");
         }
 
         /**
@@ -268,14 +324,9 @@ public class SunController {
         @GetMapping("/u/bank")
         public ResultBean getBank(HttpServletRequest request){
             Cookie cookie = CookieUtil.getCookie("cookie",request);
-            String id = cookie.getValue();
-            Long uid = Long.valueOf(id);
-            List<UserBank> userBanks = userBankService.selectByUID(uid);
-            Bank bank = bankMapper.selectByPrimaryKey(1L);
-            Map map = new HashMap();
-            map.put("userBank",userBanks);
-            map.put("bank",bank);
-            return new ResultBean(0,"返回用户的银行卡信息",map);
+            Long id = Long.valueOf(cookie.getValue());
+            List<UserBank> userBanks = userBankService.findById(id);
+            return new ResultBean(1,"返回用户的银行卡信息",userBanks);
         }
 
         /**
@@ -285,7 +336,7 @@ public class SunController {
         @GetMapping("/u/banks")
         public ResultBean getBanks(){
             List<Bank> banks = bankMapper.selectAll();
-            return new ResultBean(0,"返回所有银行信息",banks);
+            return new ResultBean(1,"返回所有银行信息",banks);
         }
 
     /**
@@ -296,10 +347,9 @@ public class SunController {
     @GetMapping("/u/transaction")
     public ResultBean findAll(HttpServletRequest request){
         Cookie cookie = CookieUtil.getCookie("cookie",request);
-        String id = cookie.getValue();
-        Long uid = Long.valueOf(id);
+        Long uid = Long.valueOf(cookie.getValue());
         List<TradingFlow> tradingFlows = tradingFlowMapper.findByUid(uid);
-        return new ResultBean(0,"用户交易的流水",tradingFlows);
+        return new ResultBean(-1,"用户交易的流水",tradingFlows);
     }
 
     /**
@@ -310,7 +360,7 @@ public class SunController {
     @GetMapping("/u/transaction/{id}")
     public ResultBean findById(@PathVariable Long id){
         TradingFlow tradingFlow = tradingFlowMapper.selectByPrimaryKey(id);
-        return new ResultBean(0,"交易流水详情",tradingFlow);
+        return new ResultBean(1,"交易流水详情",tradingFlow);
     }
 
 
@@ -321,13 +371,15 @@ public class SunController {
      * @return
      */
     @GetMapping("/u/investments")
-    public ResultBean getUserInvestments(byte investmentStatus,HttpServletRequest request){
+    public ResultBean getUserInvestments(Byte investmentStatus,HttpServletRequest request){
+        if(investmentStatus == null){
+            return new ResultBean(-1,"投资状态不能为空");
+        }
         Cookie cookie = CookieUtil.getCookie("cookie",request);
-        String id = cookie.getValue();
-        Long uid = Long.valueOf(id);
+        Long uid = Long.valueOf(cookie.getValue());
         InvestmentUser investmentUser = new InvestmentUser();
         investmentUser.setUid(uid);
-        investmentUser.setInvestmentStatus((byte) 10);
+        investmentUser.setInvestmentStatus(investmentStatus);
         List<InvestmentUser> investmentUsers = investmentUserMapper.findByUidInvestmentStatus(investmentUser);
         return new ResultBean(0,"通过用户传来的投资状态查询",investmentUsers);
     }
@@ -340,13 +392,40 @@ public class SunController {
         @GetMapping("/u/investment/{id}")
         public ResultBean getById(@PathVariable Long id){
             Map map = new HashMap();
-            InvestmentUser investmentUser = investmentUserMapper.selectByPrimaryKey(id);
-            Long productId = investmentUser.getProductId();
-            InvestmentProduct investmentProduct = investmentProductMapper.selectByPrimaryKey(productId);
-            map.put("investmentProduct",investmentProduct);
-            map.put("investmentUser",investmentUser);
-            return new ResultBean(0,"获取用户投资详情",map);
+            UserInvestmentDTO userInvestmentDTO = investmentUserMapper.findById(id);
+            if(userInvestmentDTO==null){
+                return new ResultBean(-1,"用户投资为空");
+            }
+            Long uid = userInvestmentDTO.getUid();
+            ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
+            if(receptionUsers==null){
+                return new ResultBean(-1,"用户为空");
+            }
+            Long bankId = receptionUsers.getBankId();
+            UserBank userBank = userBankService.selectByPrimaryKey(bankId);
+            map.put("receptionUser",userInvestmentDTO);
+            map.put("userBank",userBank);
+            return new ResultBean(1,"获取用户投资详情",map);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /**
          * 通过用户id 查询多条信息for循环用户投资关联id连表查询获得名称。未完成！

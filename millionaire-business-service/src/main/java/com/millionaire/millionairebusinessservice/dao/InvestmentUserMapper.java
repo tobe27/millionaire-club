@@ -3,6 +3,7 @@ package com.millionaire.millionairebusinessservice.dao;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
+import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -72,6 +73,8 @@ public interface InvestmentUserMapper {
     List<InvestmentUser> selectUsableInvestment();
 
     List<Long> selectMatchedUID(long claimID);
+
+    UserInvestmentDTO findById(Long id);
 
 
 

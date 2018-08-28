@@ -1,6 +1,8 @@
 package com.millionaire.millionaireclientweb;
 
+import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
 import com.millionaire.millionairebusinessservice.dao.TradingFlowMapper;
+import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
 import com.millionaire.millionairemanagerservice.dao.ContentMapper;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
@@ -8,6 +10,7 @@ import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -39,4 +42,31 @@ private ContentMapper contentMapper;
 				System.out.println(tradingFlow);
 		}
 	}
+
+	@Resource
+	private InvestmentUserMapper investmentUserMapper;
+
+	@Test
+	public void investment() {
+		InvestmentUser investmentUser = new InvestmentUser();
+		investmentUser.setUid(8L);
+		investmentUser.setInvestmentStatus((byte) 10);
+		List<InvestmentUser> investmentUsers = investmentUserMapper.findByUidInvestmentStatus(investmentUser);
+		System.out.println(investmentUsers);
+
+
+	}
+
+	@Resource
+	private RedisTemplate redisTemplate;
+	@Test
+	public void agreement() {
+		redisTemplate.opsForValue().set("userAgreement","目前还没有图片");
+	}
+
+//	@Test
+//	public void sdfsdf() {
+//		InvestmentUser investmentUser = investmentUserMapper.findById(5L);
+//		System.out.println(investmentUser);
+//	}
 }
