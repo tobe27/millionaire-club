@@ -402,6 +402,9 @@ public class SunController {
                 return new ResultBean(-1,"用户为空");
             }
             Long bankId = receptionUsers.getBankId();
+            if(bankId==null){
+                return new ResultBean(-1,"请绑定默认银行卡");
+            }
             UserBank userBank = userBankService.selectByPrimaryKey(bankId);
             map.put("receptionUser",userInvestmentDTO);
             map.put("userBank",userBank);
