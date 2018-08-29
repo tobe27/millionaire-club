@@ -74,6 +74,10 @@ public class PayManager {
         logger.info("用户银行卡信息："+userBank);
 
         InvestmentUser investmentUser = new InvestmentUser();
+//        插入交易银行信息
+        investmentUser.setBankCardNumber(userBank.getCardNumber());
+        investmentUser.setBankName(userBank.getBankName());
+
         investmentUser.setProductId(requestBean.getProductId());
         investmentUser.setUid(uid);
         investmentUser.setContractSign(requestBean.getContractSign());

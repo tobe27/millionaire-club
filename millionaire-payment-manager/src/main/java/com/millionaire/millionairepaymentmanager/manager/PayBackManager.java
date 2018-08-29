@@ -6,6 +6,8 @@ import com.millionaire.millionairebusinessservice.service.InvestmentProductServi
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.service.MessageUserService;
 import com.millionaire.millionairebusinessservice.service.TradingFlowService;
+import com.millionaire.millionairequartzmanager.module.TimerTaskInvestment;
+import com.millionaire.millionairequartzmanager.service.TimerTaskInvestmentService;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,9 @@ public class PayBackManager {
     @Autowired
     private ReceptionUsersService receptionUsersService;
 
+    @Autowired
+    private TimerTaskInvestmentService timerTaskInvestmentService;
+
 
     public void backManage(Long investmentUserId) {
 //        查询用户投资信息
@@ -53,33 +58,39 @@ public class PayBackManager {
 //        修改用户消息记录
         messageUserService.updateMessageUserCode(investmentUserId, (byte) 10);
         logger.info("用户消息记录修改成功："+investmentUserId+"修改参数：10");
-
 //        用户总资产更新
         int nowAssets=receptionUsersService.updateUserAssets(investmentUser.getUid(), investmentUser.getInvestmentAmount(), 1);
         logger.info(investmentUser.getUid() + "用户资产总额" + nowAssets);
 
-
-//        定时任务的调用
-        /**
-         * 关于定时任务分类的思考：
-         * 有哪几种定时任务：
-         * 1.用户投资到期
-         * 用户投资到期分为两种：
-         * 到期本息一次付清---------分期付息，到期还本
-         * 给用户还款，这里就不能再调用手机支付的接口，而是商户转账的接口，同时涉及到用户信息、用户投资、消息和记录表的改动
-         * 2.债权到期
-         * 债权到期主要是在插入债权信息的时候调用，这的操作就是债权到期以后的债权匹配表格状态的取消
-         * 3.平台消息定时推送
-         * ...较为简单这里的比较困难的就是怎么动态控制定时任务
-         */
+//        写入定时任务
+        TimerTaskInvestment timerTaskInvestment = new TimerTaskInvestment();
 
 
+        if (investmentProduct.getType() == 10) {//本息一次付款的任务写入
+            timerTaskInvestment.setInvestmentUserId(investmentUserId);
+//            付款金额，以分为单位
+            int backAmount = (int) ((investmentUser.getInvestmentAmount() + investmentUser.getExpectedIncome())*100);
+            timerTaskInvestment.setPaybackAmount(backAmount);
+//            表示本息一次付清
+            timerTaskInvestment.setExecuteType((byte) 10);
+            timerTaskInvestment.setTimes((byte)1);
+//            待执行状态
+            timerTaskInvestment.setStatus((byte) 0);
+//            定时任务执行时间
+            timerTaskInvestment.setExecuteTime(investmentUser.getValueDateEnd());
+            timerTaskInvestmentService.insert(timerTaskInvestment);
+            return;
+        }
+
+        if (investmentProduct.getType() == 20) {//分期还息，最后一个还本和息
+//            每月还息固定每月20号，最后一次的本息还款以实际到期日期为准
 
 
 
+        }
 
 
-        
+
 
     }
 

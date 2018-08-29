@@ -2,7 +2,10 @@ package com.millionaire.millionairequartzmanager.job;
 
 
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
+import com.millionaire.millionairebusinessservice.service.MessageUserService;
+import com.millionaire.millionairebusinessservice.service.TradingFlowService;
 import com.millionaire.millionairepaymentmanager.fuyou.CompanyPayServlet;
+import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -19,10 +22,20 @@ public class PayOffJob implements Job {
     @Autowired
     private CompanyPayServlet companyPayServlet;
 
+    @Autowired
+    private TradingFlowService tradingFlowService;
+
+    @Autowired
+    private MessageUserService messageUserService;
+
+    @Autowired
+    private ReceptionUsersService receptionUsersService;
+
+    @Autowired
+    private InvestmentUserService investmentUser;
+
     /**
-     * 调度任务执行方法
-     * 1。时间触发调用后台给用户转账的方法
-     * 调用成功后修改用户投资状态
+     * 扫描用户投资表，筛选出正在理财中
      * @param jobExecutionContext
      * @throws JobExecutionException
      */

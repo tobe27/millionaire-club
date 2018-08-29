@@ -26,6 +26,9 @@ public class H5PayBackServlet extends HttpServlet
 	@Autowired
     private PayBackManager payBackManager;
 
+    @Autowired
+    private PayBackManager payBackManage;
+
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
@@ -59,10 +62,10 @@ public class H5PayBackServlet extends HttpServlet
 		{
 			if (Constants.RESP_CODE_SUCCESS.equals(responseCode))
 			{
-
 				payBackManager.backManage(Long.valueOf(mchntOrderId));
 				System.out.println(mchntOrderId +"支付成功~");
 				resp.getWriter().write("支付成功~");
+				payBackManage.backManage(Long.valueOf(mchntOrderId));
 			}
 			else
 			{
