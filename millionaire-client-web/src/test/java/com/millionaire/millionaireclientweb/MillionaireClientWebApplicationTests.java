@@ -64,9 +64,9 @@ private ContentMapper contentMapper;
 		redisTemplate.opsForValue().set("userAgreement","目前还没有图片");
 	}
 
-//	@Test
-//	public void sdfsdf() {
-//		InvestmentUser investmentUser = investmentUserMapper.findById(5L);
-//		System.out.println(investmentUser);
-//	}
+	@Test
+	public void sdfsdf() {
+		InvestmentUser investmentUser = investmentUserMapper.selectByPrimaryKey(5L);
+		System.out.println(investmentUser);
+	}
 }

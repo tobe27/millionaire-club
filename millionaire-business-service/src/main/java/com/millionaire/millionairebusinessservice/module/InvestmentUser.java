@@ -3,7 +3,6 @@ package com.millionaire.millionairebusinessservice.module;
 public class InvestmentUser {
     private Long id;
 
-
 //    产品编号
     private Long productId;
 
@@ -22,7 +21,7 @@ public class InvestmentUser {
 //    产品协议编号
     private String lendingContractNumber;
 
-//    用户合同签名
+    //    用户合同签名
     private String contractSign;
 
 //    投资金额
@@ -41,7 +40,14 @@ public class InvestmentUser {
 
     private Long gmtUpdate;
 
-    public InvestmentUser(Long id, Long productId, Long uid, Long claimId, Long valueDateStart, Long valueDateEnd, String lendingContractNumber, String contractSign, Integer investmentAmount, Byte investmentStatus, Double expectedIncome, Double distributedIncome, Long gmtCreate, Long gmtUpdate) {
+    private String bankCardNumber;
+
+    private String bankName;
+
+    public InvestmentUser() {
+    }
+
+    public InvestmentUser(Long id, Long productId, Long uid, Long claimId, Long valueDateStart, Long valueDateEnd, String lendingContractNumber, String contractSign, Integer investmentAmount, Byte investmentStatus, Double expectedIncome, Double distributedIncome, Long gmtCreate, Long gmtUpdate, String bankCardNumber, String bankName) {
         this.id = id;
         this.productId = productId;
         this.uid = uid;
@@ -56,19 +62,23 @@ public class InvestmentUser {
         this.distributedIncome = distributedIncome;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
+        this.bankCardNumber = bankCardNumber;
+        this.bankName = bankName;
     }
 
     @Override
     public String toString() {
         return "InvestmentUser{" +
                 "id=" + id +
-                ", claimId=" + claimId +
                 ", productId=" + productId +
                 ", uid=" + uid +
+                ", claimId=" + claimId +
                 ", valueDateStart=" + valueDateStart +
                 ", valueDateEnd=" + valueDateEnd +
                 ", lendingContractNumber='" + lendingContractNumber + '\'' +
                 ", contractSign='" + contractSign + '\'' +
+                ", bankName='" + bankName + '\'' +
+                ", bankCardNumber='" + bankCardNumber + '\'' +
                 ", investmentAmount=" + investmentAmount +
                 ", investmentStatus=" + investmentStatus +
                 ", expectedIncome=" + expectedIncome +
@@ -78,120 +88,131 @@ public class InvestmentUser {
                 '}';
     }
 
-    public Long getClaimId() {
-        return claimId;
-    }
-
-    public InvestmentUser setClaimId(Long claimId) {
-        this.claimId = claimId;
-        return this;
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public void setUid(Long uid) {
-        this.uid = uid;
-    }
-
-    public void setValueDateStart(Long valueDateStart) {
-        this.valueDateStart = valueDateStart;
-    }
-
-    public void setValueDateEnd(Long valueDateEnd) {
-        this.valueDateEnd = valueDateEnd;
-    }
-
-    public void setLendingContractNumber(String lendingContractNumber) {
-        this.lendingContractNumber = lendingContractNumber;
-    }
-
-    public void setContractSign(String contractSign) {
-        this.contractSign = contractSign;
-    }
-
-    public void setInvestmentAmount(Integer investmentAmount) {
-        this.investmentAmount = investmentAmount;
-    }
-
-    public void setInvestmentStatus(Byte investmentStatus) {
-        this.investmentStatus = investmentStatus;
-    }
-
-    public void setExpectedIncome(Double expectedIncome) {
-        this.expectedIncome = expectedIncome;
-    }
-
-    public void setDistributedIncome(Double distributedIncome) {
-        this.distributedIncome = distributedIncome;
-    }
-
-    public void setGmtCreate(Long gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public void setGmtUpdate(Long gmtUpdate) {
-        this.gmtUpdate = gmtUpdate;
-    }
-
-    public InvestmentUser() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
     public Long getProductId() {
         return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Long getUid() {
         return uid;
     }
 
+    public void setUid(Long uid) {
+        this.uid = uid;
+    }
+
+    public Long getClaimId() {
+        return claimId;
+    }
+
+    public void setClaimId(Long claimId) {
+        this.claimId = claimId;
+    }
+
     public Long getValueDateStart() {
         return valueDateStart;
+    }
+
+    public void setValueDateStart(Long valueDateStart) {
+        this.valueDateStart = valueDateStart;
     }
 
     public Long getValueDateEnd() {
         return valueDateEnd;
     }
 
+    public void setValueDateEnd(Long valueDateEnd) {
+        this.valueDateEnd = valueDateEnd;
+    }
+
     public String getLendingContractNumber() {
         return lendingContractNumber;
+    }
+
+    public void setLendingContractNumber(String lendingContractNumber) {
+        this.lendingContractNumber = lendingContractNumber;
     }
 
     public String getContractSign() {
         return contractSign;
     }
 
+    public void setContractSign(String contractSign) {
+        this.contractSign = contractSign;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
     public Integer getInvestmentAmount() {
         return investmentAmount;
+    }
+
+    public void setInvestmentAmount(Integer investmentAmount) {
+        this.investmentAmount = investmentAmount;
     }
 
     public Byte getInvestmentStatus() {
         return investmentStatus;
     }
 
+    public void setInvestmentStatus(Byte investmentStatus) {
+        this.investmentStatus = investmentStatus;
+    }
+
     public Double getExpectedIncome() {
         return expectedIncome;
+    }
+
+    public void setExpectedIncome(Double expectedIncome) {
+        this.expectedIncome = expectedIncome;
     }
 
     public Double getDistributedIncome() {
         return distributedIncome;
     }
 
+    public void setDistributedIncome(Double distributedIncome) {
+        this.distributedIncome = distributedIncome;
+    }
+
     public Long getGmtCreate() {
         return gmtCreate;
     }
 
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
     public Long getGmtUpdate() {
         return gmtUpdate;
+    }
+
+    public void setGmtUpdate(Long gmtUpdate) {
+        this.gmtUpdate = gmtUpdate;
     }
 }

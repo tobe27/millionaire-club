@@ -10,6 +10,8 @@
             <arg column="value_date_start" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="value_date_end" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="lending_contract_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="bank_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="bank_card_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="contract_sign" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="investment_amount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="investment_status" javaType="java.lang.Byte" jdbcType="TINYINT"/>
@@ -19,19 +21,37 @@
             <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
         </constructor>
     </resultMap>
+    <resultMap id="InvestmentUser" type="com.millionaire.millionairebusinessservice.module.InvestmentUser">
+        <id property="id" column="id"/>
+        <result property="productId" column="product_id"/>
+        <result property="uid" column="uid"/>
+        <result property="claimId" column="claim_id"/>
+        <result property="valueDateStart" column="value_date_start"/>
+        <result property="valueDateEnd" column="value_date_end"/>
+        <result property="lendingContractNumber" column="lending_contract_number"/>
+        <result property="contractSign" column="contract_sign"/>
+        <result property="investmentAmount" column="investment_amount"/>
+        <result property="investmentStatus" column="investment_status"/>
+        <result property="expectedIncome" column="expected_income"/>
+        <result property="distributedIncome" column="distributed_income"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtUpdate" column="gmt-update"/>
+        <result property="bankCardNumber" column="bank_card_number"/>
+        <result property="bankName" column="bank_name"/>
+    </resultMap>
     <sql id="Base_Column_List">
-    id,product_id, uid,claim_id, value_date_start, value_date_end, lending_contract_number, contract_sign,
+    id,product_id, uid,claim_id, value_date_start, value_date_end, lending_contract_number, bank_name, bank_card_number, contract_sign,
     investment_amount, investment_status, expected_income, distributed_income, gmt_create, 
     gmt_update
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="InvestmentUser">
         select
         <include refid="Base_Column_List"/>
         from investment_user
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="listInvestmentUserByUID" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="listInvestmentUserByUID" parameterType="java.lang.Long" resultMap="InvestmentUser">
         select
         <include refid="Base_Column_List"/>
         from investment_user
@@ -96,7 +116,7 @@
         </where>
     </select>
 
-    <select id="selectUsableInvestment" resultMap="BaseResultMap">
+    <select id="selectUsableInvestment" resultMap="InvestmentUser">
         select
         <include refid="Base_Column_List"/>
         from investment_user
@@ -115,7 +135,7 @@
     </select>
 
 
-    <select id="selectByLendingContractNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectByLendingContractNumber" parameterType="java.lang.String" resultMap="InvestmentUser">
         select
         <include refid="Base_Column_List"/>
         from investment_user
