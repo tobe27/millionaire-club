@@ -23,4 +23,6 @@ public interface MessagePlatformMapper {
     int updateByPrimaryKey(MessagePlatform record);
 
     List<MessagePlatform> selectByQuery(MessagePlatformQuery query);
+
+    List<MessagePlatform> findBySendingCrowd(Byte sendingCrowd);
 }

@@ -1,8 +1,11 @@
 package com.millionaire.millionairebusinessservice.dao;
 
 import com.millionaire.millionairebusinessservice.module.MessageUser;
+import com.millionaire.millionairebusinessservice.transport.UserMessageDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface MessageUserMapper {
@@ -24,4 +27,5 @@ public interface MessageUserMapper {
     int updateMessageUserCode(@Param("investmentUserId") Long investmentUserId,
                               @Param("code") Byte code,
                               @Param("gmtUpdate") Long gmtUpdate);
+    List<UserMessageDTO> findByUid(Long id);
 }

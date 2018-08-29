@@ -12,11 +12,12 @@ public class UserInvestmentDTO {
     private Integer startingAmount;  //起投金额
     private Byte investmentStatus;   //投资状态
     private Double distributedIncome;  //已分配收益
-    private Long uid; //用户id
+    private String bankName; //银行卡名
+    private String bankCardNumber;  //银行卡号
 
     @Override
     public String toString() {
-        return "InvestmentUserDTO{" +
+        return "UserInvestmentDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", annualizedIncome=" + annualizedIncome +
@@ -28,7 +29,8 @@ public class UserInvestmentDTO {
                 ", startingAmount=" + startingAmount +
                 ", investmentStatus=" + investmentStatus +
                 ", distributedIncome=" + distributedIncome +
-                ", uid=" + uid +
+                ", bankName='" + bankName + '\'' +
+                ", bankCardNumber='" + bankCardNumber + '\'' +
                 '}';
     }
 
@@ -120,11 +122,19 @@ public class UserInvestmentDTO {
         this.distributedIncome = distributedIncome;
     }
 
-    public Long getUid() {
-        return uid;
+    public String getBankName() {
+        return bankName;
     }
 
-    public void setUid(Long uid) {
-        this.uid = uid;
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
     }
 }
