@@ -29,6 +29,20 @@
     id, city, bank_name, card_number, card_type, bank_phone, uid, gmt_create,
     gmt_update
   </sql>
+  <select id="findById" resultType="com.millionaire.millionaireclientweb.pojo.UserBanksDTO">
+    SELECT
+    user_bank.id as id,
+    user_bank.bank_name as bankName,
+    user_bank.card_number as cardNumber,
+    user_bank.card_type as cardType,
+    bank.bank_logo as bankLogo,
+    bank.single_limit as singleLimit,
+    bank.daily_limit as dailyLimit
+    FROM user_bank INNER JOIN bank
+    ON user_bank.bank_name=bank.bank_name
+    WHERE uid=#{id}
+
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

@@ -1,31 +1,36 @@
 
-
-
 package com.millionaire.millionairepaymentmanager.fuyou;
-
+import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.until.MD5Util;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Component("companyPayServlet")
 public class CompanyPayServlet {
 
-//    public static final String GET_URL = "http://112.4.27.9/mall-back/if_user/store_list?storeId=32";
+    //    public static final String GET_URL = "http://112.4.27.9/mall-back/if_user/store_list?storeId=32";
     //    public static final String POST_URL = "http://112.4.27.9/mall-back/if_user/store_list";
     // 富友测试接口
-    public static final String POST_URL = "https://fht-test.fuiou.com/fuMer/req.do";
+    private static final String POST_URL = "https://fht-test.fuiou.com/fuMer/req.do";
 
-    //商户号
-    public static String merid = "0002900F0345178";
-
-    //    请求类型,表示代付接口
-    public static String reqtype = "payforreq";
+    private Logger logger = LoggerFactory.getLogger(CompanyPayServlet.class);
 
     /**
      * 接口调用 GET
@@ -54,7 +59,7 @@ public class CompanyPayServlet {
     /**
      * 接口调用  POST
      */
-    public static void  httpURLConnectionPOST() {
+    public  boolean  httpURLConnectionPOST(Long investmentUserId,int amount) throws FuYouException {
         try {
             URL url = new URL(POST_URL);
 
@@ -97,27 +102,35 @@ public class CompanyPayServlet {
                     "<branchnm>中国银行股份有限公司北京西单支行</branchnm>"+
                     "<accntno>6212261904006115311</accntno>"+
                     "<accntnm>似曾相识</accntnm>"+
-                    "<amt>10000</amt>"+
-                    "<entseq>05</entseq>"+
+                    "<amt>"+amount+"</amt>"+
+                    "<entseq>"+investmentUserId+"</entseq>"+
                     "<memo>测试</memo>"+
                     "<mobile>13275869228</mobile>"+
                     "<addDesc>1</addDesc>"+
                     "</payforreq>";
 
             String macSource = "0002900F0345178|123456|"+"payforreq"+"|"+xml;
+            logger.info("企业代付请求参数："+macSource);
+
             String mac = MD5Util.encode(macSource, "UTF-8").toUpperCase();
 
+            String merid = "merid="+ URLEncoder.encode("0002900F0345178", "utf-8");		// 商户号
+            String reqtype = "&reqtype="+ URLEncoder.encode("payforreq", "utf-8");			//请求类型,表示代付接口
+            String xmlParam = "&xml="+ URLEncoder.encode(xml, "utf-8");				// 请求参数
+            String macParam = "&mac="+ URLEncoder.encode(mac, "utf-8");           //检较值
+
+            String param = merid+ reqtype+ xmlParam+ macParam;
+            logger.info("post表单数据："+param);
+
             // 将参数输出到连接
-            dataout.writeBytes(merid);
-            dataout.writeBytes(reqtype);
-            dataout.writeBytes(xml);
-            dataout.writeBytes(mac);
+            dataout.writeBytes(param);
 
             // 输出完成后刷新并关闭流
             dataout.flush();
             dataout.close(); // 重要且易忽略步骤 (关闭流,切记!)
 
 //            System.out.println(connection.getResponseCode());
+            logger.info("响应参数："+connection.getResponseCode());
 
             // 连接发起请求,处理服务器响应  (从连接获取到输入流并包装为bufferedReader)
             BufferedReader bf = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
@@ -127,14 +140,25 @@ public class CompanyPayServlet {
             // 循环读取流,若不到结尾处
             while ((line = bf.readLine()) != null) {
 //                sb.append(bf.readLine());
+//                这也是换行符,功能和"\n"是一致的,但是此种写法屏蔽了 Windows和Linux的区别 ，更保险一些.
                 sb.append(line).append(System.getProperty("line.separator"));
             }
             bf.close();    // 重要且易忽略步骤 (关闭流,切记!)
             connection.disconnect(); // 销毁连接
-            System.out.println(sb.toString());
+            logger.info("响应数据"+sb.toString());
+
+            //根据响应参数判断代付是否成功
+            if (parse(sb.toString()).equals("000000")) {
+                logger.info("代付成功"+investmentUserId);
+                return true;
+            }else {
+                logger.info("代付失败"+investmentUserId);
+                return false;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
+            throw new FuYouException("代付系统异常");
         }
     }
 
@@ -145,31 +169,34 @@ public class CompanyPayServlet {
         return date1;
     }
 
-    public static void main(String[] args) {
-//        httpURLConectionGET();
-//        httpURLConnectionPOST();
-        String xml = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>"+
-                "<payforreq>"+
-                "<ver>1.00</ver>"+
-                "<merdt>"+getDate()+"</merdt>"+
-                "<orderno>"+System.currentTimeMillis()+"</orderno>"+
-                "<bankno>0102</bankno>"+
-                "<cityno>2900</cityno>"+
-                "<branchnm>中国银行股份有限公司北京西单支行</branchnm>"+
-                "<accntno>6212261904006115311</accntno>"+
-                "<accntnm>似曾相识</accntnm>"+
-                "<amt>10000</amt>"+
-                "<entseq>05</entseq>"+
-                "<memo>测试</memo>"+
-                "<mobile>13275869228</mobile>"+
-                "<addDesc>1</addDesc>"+
-                "</payforreq>";
+    /**
+     * xml文件解析工具类
+     * @param protocolXML
+     * @return
+     */
+    public static String parse(String protocolXML) {
 
-        String macSource = "0002900F0345178|123456|"+"payforreq"+"|"+xml;
-        String mac = MD5Util.encode(macSource, "UTF-8").toUpperCase();
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory
+                    .newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder
+                    .parse(new InputSource(new StringReader(protocolXML)));
 
-        System.out.println("=============================================");
-        System.out.println(xml);
-        System.out.println(mac);
+            Element root = doc.getDocumentElement();
+            NodeList books = root.getChildNodes();
+            if (books != null) {
+                for (int i = 0; i < books.getLength(); i++) {
+                    Node book = books.item(i);
+                    if (book.getNodeName().equals("ret")) {
+                        return book.getFirstChild().getNodeValue();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return protocolXML;
     }
+
 }

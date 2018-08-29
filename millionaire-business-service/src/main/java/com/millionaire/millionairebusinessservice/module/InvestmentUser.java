@@ -10,7 +10,7 @@ public class InvestmentUser {
 //    用户id
     private Long uid;
 
-    /** 匹配的债权id */
+//     匹配的债权id
     private Long claimId;
 
 //    起息时间

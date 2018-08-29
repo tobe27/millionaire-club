@@ -26,7 +26,7 @@ public interface TradingFlowMapper {
     List<UserTradingFlowDTO> selectByUIDandQuery(TradingFlowQuery query);
 
     //    根据用户id查询交易流水
-    List<TradingFlow> fingByUid(Long uid);
+    List<TradingFlow> findByUid(Long uid);
 
     /**
      * @Description 通过交易流水表动态查询投资产品销量统计

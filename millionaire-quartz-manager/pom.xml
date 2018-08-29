@@ -46,10 +46,16 @@
             <artifactId>millionaire-business-service</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--添加business-service依赖-->
+        <!--添加user-service依赖-->
         <dependency>
             <groupId>com.millionaire</groupId>
             <artifactId>millionaire-user-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--添加user-service依赖-->
+        <dependency>
+            <groupId>com.millionaire</groupId>
+            <artifactId>millionaire-payment-manager</artifactId>
             <version>${project.version}</version>
         </dependency>
 

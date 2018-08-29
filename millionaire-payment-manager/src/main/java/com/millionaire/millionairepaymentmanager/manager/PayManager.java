@@ -8,6 +8,7 @@ import com.millionaire.millionairebusinessservice.service.InvestmentProductServi
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.service.MessageUserService;
 import com.millionaire.millionairebusinessservice.service.TradingFlowService;
+import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.H5PayServlet;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
 import com.millionaire.millionairepaymentmanager.until.FlowNumberGeneration;
@@ -57,7 +58,7 @@ public class PayManager {
      * if1.支付成功调用定时任务接口、用户消息推送、交易流水表数据插入
      * else 2.支付失败用户消息推送、交易流水表数据插入
      */
-    public String payment(UserInvestmentRequestBean requestBean, long uid) throws IOException {
+    public String payment(UserInvestmentRequestBean requestBean, long uid) throws IOException, FuYouException {
 
 //        查询购买的产品信息
         InvestmentProduct investmentProduct = investmentProductService.selectByPrimaryKey(requestBean.getProductId());
