@@ -6,6 +6,7 @@ import com.millionaire.millionairebusinessservice.service.TimerTaskInvestmentSer
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class TimerTaskInvestmentServiceImpl implements TimerTaskInvestmentService {
@@ -19,5 +20,11 @@ public class TimerTaskInvestmentServiceImpl implements TimerTaskInvestmentServic
         timerTaskInvestmentMapper.insert(record);
         return record.getId();
     }
+
+    @Override
+    public List<TimerTaskInvestment> listTimerTaskForExecute() {
+        return timerTaskInvestmentMapper.listTimerTaskForExecute();
+    }
+
 
 }

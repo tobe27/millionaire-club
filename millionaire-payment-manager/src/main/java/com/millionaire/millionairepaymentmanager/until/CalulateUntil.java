@@ -15,7 +15,7 @@ public class CalulateUntil {
      * @param deadLine
      * @return
      */
-    public   double incomeCalulate(int amount,double annualizedIncome,int deadLine) {
+    public double incomeCalulate(int amount,double annualizedIncome,int deadLine) {
 
         BigDecimal amountD = new BigDecimal(Double.toString(amount));
         BigDecimal deadLineD = new BigDecimal(Double.toString(deadLine));
