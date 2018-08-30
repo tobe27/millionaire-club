@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.millionaire.millionairequartzmanager.dao.TimerTaskInvestmentMapper">
-    <resultMap id="BaseResultMap" type="com.millionaire.millionairequartzmanager.module.TimerTaskInvestment">
+<mapper namespace="com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper">
+    <resultMap id="BaseResultMap" type="com.millionaire.millionairebusinessservice.module.TimerTaskInvestment">
         <constructor>
             <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="investment_user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
@@ -24,7 +24,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <insert id="insert" parameterType="com.millionaire.millionairequartzmanager.module.TimerTaskInvestment" useGeneratedKeys="true"
+    <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.TimerTaskInvestment" useGeneratedKeys="true"
             keyProperty="id">
     insert into timed_task_investment (investment_user_id, payback_amount,
       execute_type, times, status,

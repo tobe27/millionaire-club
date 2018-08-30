@@ -59,13 +59,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.millionaire</groupId>
-            <artifactId>millionaire-quartz-manager</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-
         <!--创建resultbean添加lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>

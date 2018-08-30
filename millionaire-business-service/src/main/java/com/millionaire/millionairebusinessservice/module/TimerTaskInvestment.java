@@ -1,4 +1,4 @@
-package com.millionaire.millionairequartzmanager.module;
+package com.millionaire.millionairebusinessservice.module;
 
 import lombok.Data;
 

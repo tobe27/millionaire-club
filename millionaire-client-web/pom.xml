@@ -24,11 +24,7 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.millionaire</groupId>
-			<artifactId>millionaire-common-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+
 		<dependency>
 			<groupId>com.millionaire</groupId>
 			<artifactId>millionaire-manager-service</artifactId>
@@ -39,6 +35,12 @@
 			<artifactId>millionaire-business-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+        <!--添加business-service依赖-->
+        <dependency>
+            <groupId>com.millionaire</groupId>
+            <artifactId>millionaire-common-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.millionaire</groupId>
             <artifactId>millionaire-user-service</artifactId>
@@ -64,18 +66,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-
-        <!--添加business-service依赖-->
-        <dependency>
-            <groupId>com.millionaire</groupId>
-            <artifactId>millionaire-common-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.millionaire</groupId>
-            <artifactId>millionaire-payment-manager</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
     </dependencies>

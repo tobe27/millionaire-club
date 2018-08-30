@@ -11,6 +11,7 @@ import com.millionaire.millionairebusinessservice.service.TradingFlowService;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.H5PayServlet;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
+import com.millionaire.millionairepaymentmanager.until.CalulateUntil;
 import com.millionaire.millionairepaymentmanager.until.FlowNumberGeneration;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
@@ -45,9 +46,11 @@ public class PayManager {
     @Autowired
     private MessageUserService messageUserService;
 
+    private CalulateUntil calulateUntil;
+
     private Logger logger = LoggerFactory.getLogger(PayManager.class);
 
-    private static final int TIME_DAY = 24 * 60 * 60 * 1000;
+    private static final Long TIME_DAY = 24 * 60 * 60 * 1000L;
 
 
     /**
@@ -85,7 +88,7 @@ public class PayManager {
         investmentUser.setInvestmentStatus((byte) 0);
 
 //        调用工具类，计算用户收益（=本金*利率/360*期限）
-        double income = incomeCalulate(requestBean.getAmount(),investmentProduct.getAnnualizedIncome(),investmentProduct.getDeadline());
+        double income = calulateUntil.incomeCalulate(requestBean.getAmount(),investmentProduct.getAnnualizedIncome(),investmentProduct.getDeadline());
 
         logger.info("计算用户收益:"+income);
         investmentUser.setExpectedIncome(income);
@@ -160,31 +163,4 @@ public class PayManager {
                 investmentUser.getId(), userBank.getCardNumber(),receptionUsers.getIdName());
     }
 
-
-    /**
-     * 用户收益的计算公式
-     * @param amount
-     * @param annualizedIncome
-     * @param deadLine
-     * @return
-     */
-    private double incomeCalulate(int amount,double annualizedIncome,int deadLine) {
-
-        BigDecimal amountD = new BigDecimal(Double.toString(amount));
-        BigDecimal deadLineD = new BigDecimal(Double.toString(deadLine));
-        BigDecimal count = amountD.multiply(deadLineD);
-
-        BigDecimal annualizedIncomeD = new BigDecimal(Double.toString(annualizedIncome));
-//         利率的常量
-        BigDecimal day = new BigDecimal(Double.toString(360));
-//        每日利率计算,采用银行家舍入法，保留10为小数
-        BigDecimal annualizedIncomeDay = annualizedIncomeD.divide(day,10,BigDecimal.ROUND_HALF_EVEN);
-        logger.info("计算的每日利率"+annualizedIncomeDay);
-
-//        计算投资收益,同时保留两位小数（因为富友支付的金额是以分为单位的，不传小数）
-        BigDecimal incomeCalculation = count.multiply(annualizedIncomeDay);
-        logger.info("投资收益："+incomeCalculation);
-
-        return  incomeCalculation.setScale(2,RoundingMode.HALF_UP).doubleValue();
-    }
 }

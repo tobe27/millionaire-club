@@ -1,6 +1,6 @@
-package com.millionaire.millionairequartzmanager.dao;
+package com.millionaire.millionairebusinessservice.dao;
 
-import com.millionaire.millionairequartzmanager.module.TimerTaskInvestment;
+import com.millionaire.millionairebusinessservice.module.TimerTaskInvestment;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
