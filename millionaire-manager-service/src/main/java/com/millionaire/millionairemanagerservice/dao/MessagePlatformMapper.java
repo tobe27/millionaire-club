@@ -23,8 +23,11 @@ public interface MessagePlatformMapper {
     int updateByPrimaryKey(MessagePlatform record);
 
     List<MessagePlatform> selectByQuery(MessagePlatformQuery query);
+
+    List<MessagePlatform> findBySendingCrowd(Byte sendingCrowd);
 /**
  * @Description  查询未发送的平台消息 status = 20
  **/
     List<MessagePlatform>  listUnsendMessage();
+
 }

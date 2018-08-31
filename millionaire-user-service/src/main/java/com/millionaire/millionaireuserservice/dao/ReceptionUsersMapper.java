@@ -3,6 +3,7 @@ package com.millionaire.millionaireuserservice.dao;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
 import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
+import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,6 +24,8 @@ public interface ReceptionUsersMapper {
     Long updateByPrimaryKey(ReceptionUsers record);
 
     ReceptionUsers findByPhone(Long phone);
+
+    UserReceptionDTO findById(Long id);
 
     /**
      * 通过手机，邮箱，姓名
