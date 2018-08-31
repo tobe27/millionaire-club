@@ -1,6 +1,7 @@
 package com.millionaire.millionaireserverweb.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.request.ProductQuery;
@@ -36,7 +37,7 @@ public class InvestmentProductController {
      * @Description 新增投资产品
      **/
     @PostMapping("/investment-product")
-    public ResultBean insertInvestmentProduct(@RequestBody @Validated InvestmentProduct investmentProduct) {
+    public ResultBean insertInvestmentProduct( @RequestBody @Validated InvestmentProduct investmentProduct) {
         //产品名检验
         String name = investmentProduct.getName();
         InvestmentProduct product1 = investmentProductService.selectByProductName(name);
@@ -64,13 +65,16 @@ public class InvestmentProductController {
 
     /**
      * @param productId 产品id
-     * @param isShelf   上下架状态 0/1
+     *        @RequestParam("isShelf") byte isShelf
      * @return 1=成功  -1=失败
      * @Description 编辑产品上下架状态
+     *
      **/
     @PutMapping("/product-shelf/{productId}")
     public ResultBean updateProductIsShelf(@PathVariable("productId") Long productId,
-                                           @RequestParam("isShelf") byte isShelf) {
+                                         @RequestBody JSONObject jsonObject) {
+
+        byte isShelf = jsonObject.getByte("isShelf");
 
 //        if (isShelf == null) {
 //            logger.info("上下架状态为空：{}",isShelf);
@@ -94,17 +98,23 @@ public class InvestmentProductController {
 
     /**
      * @param productId 产品id
-     * @param type 产品类型
-     * @param isRecommend 推荐
-     * @param isPurchaseLimit 限购
      * @return 成功1 失败-1
      * @Description 更新产品 角标 推荐 限购状态
+     *  @RequestParam("type") Byte type,
+     *  @RequestParam("isRecommend") Byte isRecommend,
+     *   @RequestParam("isPurchaseLimit") Byte isPurchaseLimit
+     *
+     *
      **/
     @PutMapping("/product-info/{productId}")
     public ResultBean updateProductShelfCommendLimit(@PathVariable("productId") Long productId,
-                                                     @RequestParam("type") Byte type,
-                                                     @RequestParam("isRecommend") Byte isRecommend,
-                                                     @RequestParam("isPurchaseLimit") Byte isPurchaseLimit) {
+                                                     @RequestBody JSONObject jsonObject) {
+
+        Byte type = jsonObject.getByte("type");
+        Byte isRecommend = jsonObject.getByte("isRecommend");
+        Byte isPurchaseLimit = jsonObject.getByte("isPurchaseLimit");
+
+
         //非空判断
         if(type == null || isRecommend == null || isPurchaseLimit == null){
             return new ResultBean(-1, "error type/recommend/limit can not be null");
@@ -145,7 +155,7 @@ public class InvestmentProductController {
     @GetMapping("/list/investment-product")
     public ResultBean getListInvestmentProduct(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                                @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                               @RequestBody ProductQuery productQuery) {
+                                               ProductQuery productQuery) {
 
             PageInfo<InvestmentProduct> pageInfo =
                     investmentProductService.selectProductByPage(productQuery, pageSize, pageNum);

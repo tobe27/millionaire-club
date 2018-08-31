@@ -6,7 +6,7 @@
 	<groupId>com.millionaire</groupId>
 	<artifactId>millionaire-admin-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<!--<packaging>jar</packaging>-->
 
 	<name>millionaire-admin-service</name>
 	<description>Demo project for Spring Boot</description>

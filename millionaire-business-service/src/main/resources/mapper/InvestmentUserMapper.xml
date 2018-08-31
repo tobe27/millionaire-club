@@ -332,7 +332,7 @@
     </update>
 
     <!--查询可续投用户投资信息，详情-->
-    <select id="selectRenewalInvestmentById" parameterType="java.lang.Long" resultType="java.lang.Long"
+    <select id="selectRenewalInvestmentById" parameterType="java.lang.Long" resultType="java.lang.Long"></select>
 
 
 

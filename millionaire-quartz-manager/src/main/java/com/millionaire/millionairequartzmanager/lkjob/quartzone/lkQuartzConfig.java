@@ -31,18 +31,18 @@ public class lkQuartzConfig {
 
 
     //定义一个job
-    @Bean("jobDetailFactoryBean")
-    public MethodInvokingJobDetailFactoryBean jobDetailFactoryBean(TestJob job) {
-        MethodInvokingJobDetailFactoryBean jobDetailFactoryBean =
-                new MethodInvokingJobDetailFactoryBean();
-        //不允许并发
-        jobDetailFactoryBean.setConcurrent(false);
-        jobDetailFactoryBean.setName("myName");
-        jobDetailFactoryBean.setGroup("myGroup");
-        jobDetailFactoryBean.setTargetObject(job);
-        jobDetailFactoryBean.setTargetMethod("testOne");
-        return jobDetailFactoryBean;
-    }
+//    @Bean("jobDetailFactoryBean")
+//    public MethodInvokingJobDetailFactoryBean jobDetailFactoryBean(TestJob job) {
+//        MethodInvokingJobDetailFactoryBean jobDetailFactoryBean =
+//                new MethodInvokingJobDetailFactoryBean();
+//        //不允许并发
+//        jobDetailFactoryBean.setConcurrent(false);
+//        jobDetailFactoryBean.setName("myName");
+//        jobDetailFactoryBean.setGroup("myGroup");
+//        jobDetailFactoryBean.setTargetObject(job);
+//        jobDetailFactoryBean.setTargetMethod("testOne");
+//        return jobDetailFactoryBean;
+//    }
 
     /**
      * @Description 使用JobDetailFactoryBean创建多任务，会报bean重复
@@ -67,15 +67,15 @@ public class lkQuartzConfig {
 
 
     // 定义一个trigger
-    @Bean("triggerFactoryBean")
-    public CronTriggerFactoryBean cronTriggerFactoryBean(MethodInvokingJobDetailFactoryBean jobDetailFactoryBean) {
-        CronTriggerFactoryBean triggerFactoryBean = new CronTriggerFactoryBean();
-        triggerFactoryBean.setName("myTrigger");
-        triggerFactoryBean.setGroup("myGroup");
-        triggerFactoryBean.setJobDetail(jobDetailFactoryBean.getObject());
-        triggerFactoryBean.setCronExpression("0/1 * * * * ?");
-        return triggerFactoryBean;
-    }
+//    @Bean("triggerFactoryBean")
+//    public CronTriggerFactoryBean cronTriggerFactoryBean(MethodInvokingJobDetailFactoryBean jobDetailFactoryBean) {
+//        CronTriggerFactoryBean triggerFactoryBean = new CronTriggerFactoryBean();
+//        triggerFactoryBean.setName("myTrigger");
+//        triggerFactoryBean.setGroup("myGroup");
+//        triggerFactoryBean.setJobDetail(jobDetailFactoryBean.getObject());
+//        triggerFactoryBean.setCronExpression("0/1 * * * * ?");
+//        return triggerFactoryBean;
+//    }
 
 //    @Bean("triggerFactoryBean")
 //    public CronTriggerFactoryBean cronTriggerFactoryBean(JobDetailFactoryBean jobdetaitwo) {

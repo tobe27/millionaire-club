@@ -58,7 +58,7 @@ public class StatisticsController {
     public ResultBean detailInvestmentProduct(@PathVariable("productId") Long id,
                                               @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                               @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                              @RequestBody TradingFlowDetailQuery query) {
+                                               TradingFlowDetailQuery query) {
         // 通过产品id查询产品
         InvestmentProduct product = productService.selectByPrimaryKey(id);
         if (product == null) {

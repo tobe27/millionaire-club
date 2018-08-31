@@ -32,7 +32,7 @@ public class ProposalController {
     @GetMapping("/list/proposal")
     public ResultBean listProposalByPage(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                         @RequestBody ProposalQuery query) {
+                                          ProposalQuery query) {
         PageInfo<UserProposalDTO> pageInfo=proposalService.listProposalByPage(pageNum,pageSize,query);
        logger.info("查询用户意见反馈列表:{}",query);
         return new ResultBean(1, "success",pageInfo);

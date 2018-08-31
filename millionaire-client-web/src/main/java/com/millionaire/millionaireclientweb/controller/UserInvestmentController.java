@@ -3,9 +3,7 @@ package com.millionaire.millionaireclientweb.controller;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
 import com.millionaire.millionaireclientweb.result.ResultBean;
-<<<<<<< HEAD
-//import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
-=======
+
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.Constants;
@@ -13,7 +11,6 @@ import com.millionaire.millionairepaymentmanager.fuyou.until.MD5;
 import com.millionaire.millionairepaymentmanager.manager.PayBackManager;
 import com.millionaire.millionairepaymentmanager.manager.PayManager;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
->>>>>>> 34382d2fe2749ac24087ecc6e2f592ccaad254ff
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,13 +50,8 @@ public class UserInvestmentController {
      * @param requestBean
      * @return
      */
-<<<<<<< HEAD
-//    @PostMapping("/u/user-investment")
-//    public ResultBean userInvestment(@RequestBody UserInvestmentRequestBean requestBean) {
-//
-//        return null;
-//    }
-=======
+
+
     @PostMapping("/u/user-investment")
     public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean, HttpServletRequest servletRequest) throws IOException, FuYouException {
         Cookie cookie = CookieUtil.getCookie("cookie",servletRequest);
@@ -159,7 +151,7 @@ public class UserInvestmentController {
 
         return null;
     }
->>>>>>> 34382d2fe2749ac24087ecc6e2f592ccaad254ff
+
 
 
 

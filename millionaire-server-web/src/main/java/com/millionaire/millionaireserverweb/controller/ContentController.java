@@ -1,5 +1,6 @@
 package com.millionaire.millionaireserverweb.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.Content;
 import com.millionaire.millionairemanagerservice.request.ContentQuery;
@@ -31,7 +32,7 @@ public class ContentController {
     @GetMapping("/list/content")
     public ResultBean listContent(@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                  @RequestBody ContentQuery query) {
+                                  ContentQuery query) {
         PageInfo<Content> pageInfo = contentService.selectContentByPage(pageNum, pageSize, query);
         logger.info("查询运营内容列表:{}", query);
         return new ResultBean(1, "success", pageInfo);
@@ -52,7 +53,7 @@ public class ContentController {
      * @Description 新增运营内容
      **/
     @PostMapping("/content")
-    public ResultBean insertContent(@Validated Content content) {
+    public ResultBean insertContent(@RequestBody @Validated Content content) {
         //轮播图封面不允许为空
         if (content.getType() == 20 && content.getCover() == null) {
             return new ResultBean(-1, "error banner cover is null", content);
@@ -68,7 +69,7 @@ public class ContentController {
      **/
     @PutMapping("/content/{contentId}")
     public ResultBean updateContent(@PathVariable("contentId") Long id,
-                                    @Validated Content content) {
+                                   @RequestBody @Validated Content content) {
         Content contentCheck = contentService.selectByPrimaryKey(id);
         if (contentCheck == null) {
             return new ResultBean(-1, "error no such id", id);
@@ -93,10 +94,13 @@ public class ContentController {
 
     /**
      * @Description 修改运营内容状态
+     * @RequestParam("status") byte status
      **/
     @PutMapping("/content-status/{contentId}")
     public ResultBean updateStatus(@PathVariable("contentId") Long id,
-                                   @RequestParam("status") byte status) {
+                                   @RequestBody JSONObject jsonObject) {
+
+        byte status = jsonObject.getByte("status");
         Content content = contentService.selectByPrimaryKey(id);
         if (content == null) {
             return new ResultBean(-1, "error id", id);

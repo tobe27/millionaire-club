@@ -1,5 +1,6 @@
 package com.millionaire.millionairepaymentmanager.manager;
 
+
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.MessageUser;

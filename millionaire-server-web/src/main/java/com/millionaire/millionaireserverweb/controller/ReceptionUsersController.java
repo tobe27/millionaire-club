@@ -1,5 +1,6 @@
 package com.millionaire.millionaireserverweb.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
@@ -56,7 +57,7 @@ public class ReceptionUsersController {
     @GetMapping("/list/user")
     public ResultBean getListReceptionUsers(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                             @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                            @RequestBody ReceptionUsersQuery usersQuery) {
+                                             ReceptionUsersQuery usersQuery) {
 
             PageInfo<ReceptionUsers> pageInfo =
                     usersService.selectReceptionUserByPage(usersQuery, pageSize, pageNum);
@@ -70,7 +71,7 @@ public class ReceptionUsersController {
     @GetMapping("/list/user-verification")
     public ResultBean listUsersVerification(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                             @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                            @RequestBody UsersVerificationQuery usersVerificationQuery) {
+                                             UsersVerificationQuery usersVerificationQuery) {
 
             PageInfo<ReceptionUsers> pageInfo =
                     usersService.selectUserVerificationByPage(pageSize, pageNum, usersVerificationQuery);
@@ -116,13 +117,15 @@ public class ReceptionUsersController {
 
     /**
      * @param uid    用户id
-     * @param status 账户冻结状态 10正常 20冻结
+     @RequestParam("status") Byte status
      * @return 成功0 失败-1
      * @Description 用户账户状态修改
      **/
     @PutMapping("/user-status/{uid}")
     public ResultBean updateUserStatus(@PathVariable("uid") Long uid,
-                                       @RequestParam("status") Byte status) {
+                                      @RequestBody JSONObject jsonObject) {
+        Byte status = jsonObject.getByte("status");
+
         if(status != 10 && status !=20){
             return new ResultBean(-1, "error status", status);
         }
@@ -140,15 +143,19 @@ public class ReceptionUsersController {
 
     /**
      * @param uid        用户id
-     * @param managerNum 经理工号
-     * @param phone      用户手机号
+     @RequestParam(value = "phone", required = false) String phone,
+     @RequestParam(value = "managerNumber", required = false) String managerNum
      * @return 成功0 失败-1
      * @Description 修改用户信息 手机号 产品经理工号
      **/
     @PutMapping("/user/{uid}")
     public ResultBean updateUserPhoneMangerNum(@PathVariable("uid") Long uid,
-                                               @RequestParam(value = "phone", required = false) String phone,
-                                               @RequestParam(value = "managerNumber", required = false) String managerNum) {
+                                              @RequestBody JSONObject jsonObject) {
+
+        String phone = jsonObject.getString("phone");
+        String managerNum = jsonObject.getString("managerNum");
+
+
         ReceptionUsers users = usersService.selectByPrimaryKey(uid);
         if (users == null) {
             return new ResultBean(-1, "error no such uid", uid);
@@ -198,14 +205,20 @@ public class ReceptionUsersController {
 
 
     /**
-     * @param code 0审核不通过 1审核通过
+
      * @return 成功0 失败-1
      * @Description 修改用户实名状态 修改实名认证状态接口
+     *   @RequestParam("code") byte code,
+     *     @RequestParam(value = "refusal", required = false) String refusal
      **/
     @PutMapping("/user-verification/{uid}")
     public ResultBean updateAuthentication(@PathVariable("uid") Long uid,
-                                           @RequestParam("code") byte code,
-                                           @RequestParam(value = "refusal", required = false) String refusal) {
+                                           @RequestBody JSONObject jsonObject) {
+
+        byte code = jsonObject.getByte("code");
+        String refusal = jsonObject.getString("refusal");
+
+
         ReceptionUsers users = usersService.selectByPrimaryKey(uid);
         if (users == null) {
             return new ResultBean(-1, "error no such id", uid);
@@ -269,7 +282,7 @@ public class ReceptionUsersController {
     public ResultBean listUserTradingFlow(@PathVariable("uid") Long uid,
                                           @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                           @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                          @RequestBody TradingFlowQuery query) {
+                                           TradingFlowQuery query) {
         logger.info("查询交易流水uid:{},请求参数:{}", uid,query);
         query.setUid(uid);
         PageInfo<UserTradingFlowDTO> pageInfo = flowService.selectTradingFlowBypage(pageNum, pageSize, query);
@@ -283,7 +296,7 @@ public class ReceptionUsersController {
     public ResultBean listUserInvestment(@PathVariable("uid") Long uid,
                                          @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                         @RequestBody InvestmentUserQuery query) {
+                                          InvestmentUserQuery query) {
         query.setUid(uid);
         logger.info("查询参数:{}",query);
         PageHelper.startPage(pageNum, pageSize);

@@ -1,5 +1,6 @@
 package com.millionaire.millionaireserverweb.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionairemanagerservice.request.MessagePlatformQuery;
@@ -61,7 +62,7 @@ public class MessagePlatformController {
     @GetMapping("/list/message-platform")
     public ResultBean listMessagePlatform(@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                          @RequestBody MessagePlatformQuery query) {
+                                           MessagePlatformQuery query) {
         PageInfo<MessagePlatform> pageInfo = messagePlatformService.listMessageByPage(pageNum, pageSize, query);
         logger.info("查询消息列表:{}", query);
         return new ResultBean(1, "success", pageInfo);
@@ -82,7 +83,10 @@ public class MessagePlatformController {
      **/
     @PutMapping("/message-platform-status/{platformId}")
     public ResultBean updateMessageStatus(@PathVariable("platformId") Long id,
-                                          @RequestParam("status") byte status) {
+                                          @RequestBody JSONObject jsonObject) {
+
+
+        byte status = jsonObject.getByte("status");
         MessagePlatform messagePlatform = messagePlatformService.selectByPrimaryKey(id);
         if (messagePlatform == null) {
             return new ResultBean(-1, "error no such id", id);
