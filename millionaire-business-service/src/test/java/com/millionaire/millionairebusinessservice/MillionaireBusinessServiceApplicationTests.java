@@ -15,6 +15,7 @@ public class MillionaireBusinessServiceApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 }

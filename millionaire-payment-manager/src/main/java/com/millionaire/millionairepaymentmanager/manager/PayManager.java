@@ -46,7 +46,7 @@ public class PayManager {
     @Autowired
     private MessageUserService messageUserService;
 
-    private CalulateUntil calulateUntil;
+    private CalulateUntil calulateUntil = new CalulateUntil();
 
     private Logger logger = LoggerFactory.getLogger(PayManager.class);
 
@@ -115,6 +115,11 @@ public class PayManager {
         Long valueDateEnd = valueDateStart + investmentProduct.getDeadline() * TIME_DAY;
         investmentUser.setValueDateStart(valueDateStart);
         investmentUser.setValueDateEnd(valueDateEnd);
+
+//      bug修改
+        investmentUser.setBankName(userBank.getBankName());
+        investmentUser.setBankCardNumber(userBank.getCardNumber());
+
 //        插入用户投资记录
         Long investmentUserId = investmentUserService.insert(investmentUser);
         //        出借合同编号
@@ -127,6 +132,7 @@ public class PayManager {
 
 //        交易流水生成
         TradingFlow tradingFlow = new TradingFlow();
+        tradingFlow.setInvestmentUserId(investmentUserId);
         tradingFlow.setUid(uid);
         tradingFlow.setProductName(investmentProduct.getName());
         tradingFlow.setPhone(receptionUsers.getPhone().toString());
