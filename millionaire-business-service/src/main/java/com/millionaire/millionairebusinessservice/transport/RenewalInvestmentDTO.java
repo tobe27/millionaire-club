@@ -8,7 +8,7 @@ public class RenewalInvestmentDTO {
     private String name;     //产品名称
     private Double annualizedIncome;      //年化收益率
     private Integer investmentAmount;    //投资金额
-    private Integer deadLine;//理财天数
+    private Integer deadline;//理财天数
     private Byte type; //角标分类
     private Integer startingAmount;  //起投金额
     private Long valueDateStart;    //起息时间

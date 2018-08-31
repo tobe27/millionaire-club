@@ -2,6 +2,7 @@ package com.millionaire.millionairebusinessservice.dao;
 
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
+import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
 import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
@@ -94,7 +95,14 @@ public interface InvestmentUserMapper {
     /**
      * 查询可续投产品列表
      */
-    List<RenewalInvestmentDTO> listRenewalInvestments(Long end, Long now);
+    List<RenewalInvestmentDTO> listRenewalInvestments(@Param("end") Long end, @Param("now") Long now);
+
+    /**
+     * 查询投资合同信息
+     * @param id
+     * @return
+     */
+    ContractResponse selectContractResponse(Long id);
 
 
 }
