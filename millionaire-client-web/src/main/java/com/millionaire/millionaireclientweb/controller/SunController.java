@@ -10,6 +10,7 @@ import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.MessageUser;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
 import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.UserMessageDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.FlowNumberGeneration;
@@ -19,12 +20,14 @@ import com.millionaire.millionairemanagerservice.dao.ContentMapper;
 import com.millionaire.millionairemanagerservice.dao.MessagePlatformMapper;
 import com.millionaire.millionairemanagerservice.dao.ProposalMapper;
 import com.millionaire.millionairemanagerservice.module.Bank;
+import com.millionaire.millionairemanagerservice.module.Content;
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionairemanagerservice.module.Proposal;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import com.millionaire.millionaireuserservice.service.UserBankService;
+import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +38,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -151,6 +151,13 @@ public class SunController {
             if (receptionUser != null) {
                 return new ResultBean(-1,"用户名已存在");
             }
+            String redisCode = (String) redisTemplate.opsForValue().get(phone.toString());
+            if(redisCode==null){
+                return new ResultBean(-1,"请获得验证码");
+            }
+            if(!code.equals(redisCode)){
+                return new ResultBean(-1,"验证码错误");
+            }
             String salt = String.valueOf(new Random().nextInt(899999) + 100000);
             String Md5HashPassword = new Md5Hash(password, salt, 2).toString();
             ReceptionUsers receptionUsers = new ReceptionUsers();
@@ -185,7 +192,7 @@ public class SunController {
             Integer random = new Random().nextInt(899999) + 100000;
             System.out.println(random);
             MessageVerification.setSendSmsResponse(phone.toString(), random);
-            redisTemplate.opsForValue().set(phone.toString(),random.toString(),1000 * 60 * 5, TimeUnit.MILLISECONDS);
+            redisTemplate.opsForValue().set(phone.toString(),"123456",1000 * 60 * 5, TimeUnit.MILLISECONDS);
             return new ResultBean(1,"验证码发送到手机");
         }
 
@@ -222,27 +229,27 @@ public class SunController {
                 return new ResultBean(-1,"重复密码没传");
             }
             if (code.length() == 0) {
-                return new ResultBean(1,"请输入验证码");
+                return new ResultBean(-1,"请输入验证码");
             }
             if (password.length() == 0) {
-                return new ResultBean(1,"请输入密码");
+                return new ResultBean(-1,"请输入密码");
             }
             if (rePassword.length() == 0) {
-                return new ResultBean(1,"请再次确认密码）");
+                return new ResultBean(-1,"请再次确认密码）");
             }
             String salt = (String) redisTemplate.opsForValue().get(phone.toString());
             if(salt==null){
-                return new ResultBean(-1,"验证码错误");
+                return new ResultBean(-1,"请获得验证码");
             }
             if (!salt.equals(code)) {
-                return new ResultBean(1,"验证码错误");
+                return new ResultBean(-1,"验证码错误");
             }
             if (!password.equals(rePassword)) {
-                return new ResultBean(1,"两次密码输入不一致");
+                return new ResultBean(-1,"两次密码输入不一致");
             }
             ReceptionUsers receptionUsers = receptionUsersService.findByPhone(phone);
             if(receptionUsers==null){
-                return new ResultBean(1,"用户名不存在");
+                return new ResultBean(-1,"用户名不存在");
             }
             String Md5HashPassword = new Md5Hash(password, salt, 2).toString();
             receptionUsers.setPassword(Md5HashPassword);
@@ -250,7 +257,7 @@ public class SunController {
             receptionUsers.setGmtUpdate(System.currentTimeMillis());
             receptionUsers.setId(receptionUsers.getId());
             receptionUsersService.updateByPrimaryKey(receptionUsers);
-            return new ResultBean(0,"更新成功");
+            return new ResultBean(1,"更新成功");
         }
 
     /**
@@ -263,7 +270,7 @@ public class SunController {
             Cookie cookie = CookieUtil.getCookie("cookie",request);
             Long id = Long.valueOf(cookie.getValue());
             ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(id);
-            return new ResultBean(0,"返回个人信息",receptionUsers);
+            return new ResultBean(1,"返回个人信息",receptionUsers);
         }
 
         /**
@@ -349,7 +356,7 @@ public class SunController {
         Cookie cookie = CookieUtil.getCookie("cookie",request);
         Long uid = Long.valueOf(cookie.getValue());
         List<TradingFlow> tradingFlows = tradingFlowMapper.findByUid(uid);
-        return new ResultBean(-1,"用户交易的流水",tradingFlows);
+        return new ResultBean(1,"用户交易的流水",tradingFlows);
     }
 
     /**
@@ -381,7 +388,7 @@ public class SunController {
         investmentUser.setUid(uid);
         investmentUser.setInvestmentStatus(investmentStatus);
         List<InvestmentUser> investmentUsers = investmentUserMapper.findByUidInvestmentStatus(investmentUser);
-        return new ResultBean(0,"通过用户传来的投资状态查询",investmentUsers);
+        return new ResultBean(1,"通过用户传来的投资状态查询",investmentUsers);
     }
 
         /**
@@ -391,72 +398,37 @@ public class SunController {
          */
         @GetMapping("/u/investment/{id}")
         public ResultBean getById(@PathVariable Long id){
-            Map map = new HashMap();
             UserInvestmentDTO userInvestmentDTO = investmentUserMapper.findById(id);
-            if(userInvestmentDTO==null){
-                return new ResultBean(-1,"用户投资为空");
-            }
-            Long uid = userInvestmentDTO.getUid();
-            ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
-            if(receptionUsers==null){
-                return new ResultBean(-1,"用户为空");
-            }
-            Long bankId = receptionUsers.getBankId();
-            if(bankId==null){
-                return new ResultBean(-1,"请绑定默认银行卡");
-            }
-            UserBank userBank = userBankService.selectByPrimaryKey(bankId);
-            map.put("receptionUser",userInvestmentDTO);
-            map.put("userBank",userBank);
-            return new ResultBean(1,"获取用户投资详情",map);
+            return new ResultBean(1,"获取用户投资详情",userInvestmentDTO);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /**
-         * 通过用户id 查询多条信息for循环用户投资关联id连表查询获得名称。未完成！
+    /**
+         * 消息中心
          * @param request
          * @return
          */
         @GetMapping("/u/message")
         public ResultBean getMessage(HttpServletRequest request){
             Cookie cookie = CookieUtil.getCookie("cookie",request);
-            String id = cookie.getValue();
-            Long uid = Long.valueOf(id);
+            Long uid = Long.valueOf(cookie.getValue());
             Map map = new HashMap();
             logger.info("查询个人消息!");
-            MessageUser messageUsers = messageUserMapper.selectByPrimaryKey(1L);
+            List<UserMessageDTO> messageUsers = messageUserMapper.findByUid(uid);
+            map.put("messageUsers",messageUsers);
             ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
             byte authentication =  receptionUsers.getIdAuthentication();
             if(authentication == 20 ){
                 logger.info("查询实名认证后的平台消息!");
-                MessagePlatform messagePlatform = messagePlatformMapper.selectByPrimaryKey(1L);
-                map.put("messageUsers",messageUsers);
-                map.put("messagePlatform",messagePlatform);
-                return new ResultBean(0,"用户投资详情",map);
+                List<MessagePlatform> messagePlatformOne = messagePlatformMapper.findBySendingCrowd((byte) 20);
+                List<MessagePlatform> messagePlatformTwo = messagePlatformMapper.findBySendingCrowd((byte) 10);
+                map.put("messagePlatformOne",messagePlatformOne);
+                map.put("messagePlatformTwo",messagePlatformTwo);
+                return new ResultBean(1,"用户投资详情",map);
             }
             logger.info("查询未实名认证后的平台消息");
-            MessagePlatform messagePlatforms = messagePlatformMapper.selectByPrimaryKey(1L);
-            map.put("messageUsers",messageUsers);
-            map.put("messagePlatforms",messagePlatforms);
-            return new ResultBean(0,"用户投资详情",map);
+            List<MessagePlatform> messagePlatform = messagePlatformMapper.findBySendingCrowd((byte) 20);
+            map.put("messagePlatforms",messagePlatform);
+            return new ResultBean(1,"用户投资详情",map);
         }
 
         /**
@@ -464,14 +436,26 @@ public class SunController {
          * @param id
          * @return
          */
-        @GetMapping("/u/detailed/{id}")
+        @GetMapping("/u/message/{id}")
         public ResultBean getMessagePlatform(@PathVariable Long id){
-            return new ResultBean(0,"获取消息中心",messagePlatformMapper.selectByPrimaryKey(id));
+            return new ResultBean(1,"获取消息中心",messagePlatformMapper.selectByPrimaryKey(id));
         }
 
+    /**
+     * 用户设置
+     * @param request
+     * @return
+     */
+    @GetMapping("/u/setting")
+        public ResultBean getSetting(HttpServletRequest request){
+            Cookie cookie = CookieUtil.getCookie("cookie",request);
+            Long uid = Long.valueOf(cookie.getValue());
+            UserReceptionDTO userReceptionDTO = receptionUsersService.findById(uid);
+            return new ResultBean(1,"请求成功",userReceptionDTO);
+        }
 
         /**
-         * 更新银行卡
+         * 更换默认银行卡
          * @param id
          * @param request
          * @return
@@ -485,7 +469,30 @@ public class SunController {
             receptionUsers.setGmtUpdate(System.currentTimeMillis());
             receptionUsers.setId(uid);
             receptionUsersService.updateByPrimaryKey(receptionUsers);
-            return new ResultBean(0,"更新银行卡成功");
+            return new ResultBean(1,"更新银行卡成功");
+        }
+
+        @PutMapping("/u/email")
+        public ResultBean updateEmail(String email,HttpServletRequest request){
+            Cookie cookie = CookieUtil.getCookie("cookie",request);
+            Long uid = Long.valueOf(cookie.getValue());
+            ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
+            receptionUsers.setEmail(email);
+            receptionUsers.setGmtUpdate(System.currentTimeMillis());
+            receptionUsers.setId(uid);
+            receptionUsersService.updateByPrimaryKey(receptionUsers);
+            return new ResultBean(1,"更新邮箱成功");
+        }
+        @PutMapping("/u/address")
+        public ResultBean updateAddress(String address,HttpServletRequest request){
+            Cookie cookie = CookieUtil.getCookie("cookie",request);
+            Long uid = Long.valueOf(cookie.getValue());
+            ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
+            receptionUsers.setAddress(address);
+            receptionUsers.setGmtUpdate(System.currentTimeMillis());
+            receptionUsers.setId(uid);
+            receptionUsersService.updateByPrimaryKey(receptionUsers);
+            return new ResultBean(1,"更新地址成功");
         }
 
         /**
@@ -500,16 +507,16 @@ public class SunController {
         @PutMapping("/u/authentication")
         public ResultBean updateAuthentication(String idName,String idNumber,String idFront,String idBank,HttpServletRequest request){
             if(idName.length()==0){
-                return new ResultBean(1,"真实姓名不能为空");
+                return new ResultBean(-1,"真实姓名不能为空");
             }
             if(idNumber.length()==0){
-                return new ResultBean(1,"身份证号不能为空");
+                return new ResultBean(-1,"身份证号不能为空");
             }
             if(idFront.length()==0){
-                return new ResultBean(1,"身份证正面照片不能为空");
+                return new ResultBean(-1,"身份证正面照片不能为空");
             }
             if(idBank.length()==0){
-                return new ResultBean(1,"身份证反面照片不能为空");
+                return new ResultBean(-1,"身份证反面照片不能为空");
             }
             Cookie cookie = CookieUtil.getCookie("cookie",request);
             Long uid = Long.valueOf(cookie.getValue());
@@ -537,7 +544,7 @@ public class SunController {
                 receptionUsersService.updateByPrimaryKey(receptionUsers);
                 logger.info("多次提交实名认证");
             }
-            return new ResultBean(0,"提交实名成功");
+            return new ResultBean(1,"提交实名成功");
         }
 
         /**
@@ -551,16 +558,16 @@ public class SunController {
         @PutMapping("/u/password")
         public ResultBean updatePassword(String oldPassword,String password,String rePassword,HttpServletRequest request){
             if(oldPassword.length()==0){
-                return new ResultBean(1,"旧密码不能为空");
+                return new ResultBean(-1,"旧密码不能为空");
             }
             if(password.length()==0){
-                return new ResultBean(1,"密码不能为空");
+                return new ResultBean(-1,"密码不能为空");
             }
             if(rePassword.length()==0){
-                return new ResultBean(1,"重复密码不能为空");
+                return new ResultBean(-1,"重复密码不能为空");
             }
             if(!password.equals(rePassword)){
-                return new ResultBean(1,"两次密码输入不一致");
+                return new ResultBean(-1,"两次密码输入不一致");
             }
             Cookie cookie = CookieUtil.getCookie("cookie",request);
             Long uid = Long.valueOf(cookie.getValue());
@@ -569,7 +576,7 @@ public class SunController {
             String passwordOld = receptionUsers.getPassword();
             String Md5HashPassword = new Md5Hash(oldPassword, saltOld, 2).toString();
             if(!Md5HashPassword.equals(passwordOld)){
-                return new ResultBean(1,"旧密码错误");
+                return new ResultBean(-1,"旧密码错误");
             }
             String salt = String.valueOf(new Random().nextInt(899999) + 100000);
             String newPassword = new Md5Hash(password,salt,2).toString();
@@ -578,15 +585,15 @@ public class SunController {
             receptionUsers.setGmtUpdate(System.currentTimeMillis());
             receptionUsersService.updateByPrimaryKey(receptionUsers);
             logger.info("用户修改密码");
-            return new ResultBean(0,"修改密码成功");
+            return new ResultBean(1,"修改密码成功");
         }
         /**
          * 查询帮助需要判断类型和是否上线
          */
     @GetMapping("/u/help")
     public ResultBean getHelp(){
-        String content = contentMapper.findByType((byte) 20).getContent();
-        return new ResultBean(0,"内容中的帮助",content);
+        Content content = contentMapper.findByType((byte) 20);
+        return new ResultBean(1,"请求成功",content);
     }
 
     /**
@@ -595,8 +602,8 @@ public class SunController {
      */
       @GetMapping("/u/company")
     public ResultBean getCompany(){
-          String content = contentMapper.findByType((byte) 30).getContent();
-          return new ResultBean(0,"内容中的关于我们",content);
+          Content content = contentMapper.findByType((byte) 30);
+          return new ResultBean(1,"内容中的关于我们",content);
     }
 
     /**
@@ -607,8 +614,11 @@ public class SunController {
      */
     @PostMapping("/u/proposal")
     public ResultBean insertProposal(String proposal,HttpServletRequest request){
+        if(proposal==null){
+            return new ResultBean(-1,"意见没有传");
+        }
         if(proposal.length()==0){
-            return new ResultBean(1,"内容不能为空");
+            return new ResultBean(-1,"内容不能为空");
         }
         Cookie cookie = CookieUtil.getCookie("cookie",request);
         Long uid = Long.valueOf(cookie.getValue());
@@ -618,9 +628,7 @@ public class SunController {
         proposals.setGmtCreate(System.currentTimeMillis());
         proposals.setGmtUpdate(System.currentTimeMillis());
         proposalMapper.insert(proposals);
-        return new ResultBean(0,"提交建议成功");
+        return new ResultBean(1,"提交成功");
     }
-
-
 
 }

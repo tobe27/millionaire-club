@@ -1,4 +1,4 @@
-package com.millionaire.millionaireadminservice.shiro;
+package com.millionaire.millionaireserverweb.shiro;
 
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
