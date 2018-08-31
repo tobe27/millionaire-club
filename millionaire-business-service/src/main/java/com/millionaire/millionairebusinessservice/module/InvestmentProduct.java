@@ -28,6 +28,7 @@ public class InvestmentProduct {
 
     //    起投金额
     @NotNull
+    @Min(0)
     private Integer startingAmount;
 
     //    起息日期
@@ -36,6 +37,7 @@ public class InvestmentProduct {
 
     //    期限
     @NotNull
+    @Min(0)
     private Integer deadline;
 
     //    备注

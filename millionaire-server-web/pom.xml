@@ -71,12 +71,22 @@
         <!--<artifactId>millionaire-admin-service</artifactId>-->
         <!--<version>${project.version}</version>-->
         <!--</dependency>-->
+
         <!--对payment-manager模块依赖-->
         <dependency>
             <groupId>com.millionaire</groupId>
             <artifactId>millionaire-payment-manager</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!--对quartz-service模块依赖-->
+        <dependency>
+            <groupId>com.millionaire</groupId>
+            <artifactId>millionaire-quartz-manager</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
 
 
         <!--创建resultbean添加lombok-->
