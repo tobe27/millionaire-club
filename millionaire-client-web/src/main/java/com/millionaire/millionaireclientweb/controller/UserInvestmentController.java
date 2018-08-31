@@ -13,13 +13,17 @@ import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBea
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +40,9 @@ public class UserInvestmentController {
 
     @Autowired
     private InvestmentProductService productService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 用户支付接口,跳转第三方支付页面
@@ -127,9 +134,21 @@ public class UserInvestmentController {
     @GetMapping("/u/list/renewal-products")
     public ResultBean listRenewalProducts(@RequestParam("pageNum")int pageNum, @RequestParam("pageSize")int pageSize) {
 //        从redis中获取到续投参数
+        int investmentEnd = (int) redisTemplate.opsForValue().get("investmentEnd");
+//        查询到期日期小于续投参数的用户投资，当天的不包括在内
+        LocalDate now = LocalDate.now();
+//        续投产品的戒指日期
+        LocalDate end = now.minusDays(investmentEnd);
+
+//        转成时间戳
+        long nowTime = now.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endTime = end.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+
 
         return null;
     }
+
 
 
 
