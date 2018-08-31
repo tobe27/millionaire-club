@@ -1,4 +1,4 @@
-package com.millionaire.millionaireadminservice.shiro;
+package com.millionaire.millionaireserverweb.shiro;
 
 import com.millionaire.millionaireadminservice.module.BackstageUsers;
 import com.millionaire.millionaireadminservice.module.Roles;

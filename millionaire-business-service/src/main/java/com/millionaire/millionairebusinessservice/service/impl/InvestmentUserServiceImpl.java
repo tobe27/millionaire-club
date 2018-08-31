@@ -1,14 +1,15 @@
 package com.millionaire.millionairebusinessservice.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
-import org.apache.commons.logging.LogFactory;
+import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -98,5 +99,17 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     @Override
     public InvestmentUser selectByLendingContractNumber(String lendingContractNumber) {
         return investmentUserMapper.selectByLendingContractNumber(lendingContractNumber);
+    }
+
+    @Override
+    public RenewalInvestmentDTO selectRenewalInvestmentById(Long id) {
+        return investmentUserMapper.selectRenewalInvestmentById(id);
+    }
+
+    @Override
+    public PageInfo listRenewalInvestments(Long end, Long now,int pageSize,int pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<RenewalInvestmentDTO> list = investmentUserMapper.listRenewalInvestments(end, now);
+        return new PageInfo(list);
     }
 }

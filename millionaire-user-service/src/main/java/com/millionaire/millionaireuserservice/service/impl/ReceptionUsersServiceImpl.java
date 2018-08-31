@@ -10,6 +10,7 @@ import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
 import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import com.millionaire.millionaireuserservice.transport.ReceptionUsersDTO;
+import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -47,6 +48,11 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
     @Override
     public Long updateByPrimaryKey(ReceptionUsers record) {
         return usersMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public UserReceptionDTO findById(Long id) {
+        return usersMapper.findById(id);
     }
 
     @Override

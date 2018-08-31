@@ -1,4 +1,4 @@
-package com.millionaire.millionaireadminservice.controller;
+package com.millionaire.millionaireserverweb.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.*;
 
-
 @RestController
-public class Controller {
+public class SunController {
+
     @Resource
     private RolesService rolesService;
     @Resource
@@ -30,7 +30,7 @@ public class Controller {
     private PermissionsService permissionsService;
     @Resource
     private RolesPermissionsService rolesPermissionsService;
-    private Logger logger = LoggerFactory.getLogger(Controller.class);
+    private Logger logger = LoggerFactory.getLogger(SunController.class);
 
     @GetMapping("backstageLoginPage")
     public String backstageLogin() {
@@ -295,6 +295,7 @@ public class Controller {
 
     /**
      * 修改密码
+     *
      * @param oldPassword
      * @param password
      * @param rePassword
@@ -313,7 +314,7 @@ public class Controller {
         if (rePassword == null) {
             return new ResultBean(-1, "重复密码没有传");
         }
-        if (oldPassword.length()==0) {
+        if (oldPassword.length() == 0) {
             return new ResultBean(-1, "旧密码不能为空");
         }
         if (password.length() == 0) {
@@ -565,3 +566,4 @@ public class Controller {
         return new ResultBean(1, "请求成功", modulars);
     }
 }
+

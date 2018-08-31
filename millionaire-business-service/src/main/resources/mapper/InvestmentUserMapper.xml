@@ -141,10 +141,6 @@
         from investment_user
         where lending_contract_number = #{lendingContractNumber}
     </select>
-    
-
-
-    
 
     <!--查询最新记录id-->
     <select id="selectTimeLimit" resultType="java.lang.Long">
@@ -158,12 +154,12 @@
     <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser"
             useGeneratedKeys="true" keyProperty="id">
     insert into investment_user (product_id, uid,claim_id,
-      value_date_start, value_date_end, lending_contract_number, 
+      value_date_start, value_date_end, lending_contract_number,bank_name, bank_card_number,
       contract_sign, investment_amount, investment_status, 
       expected_income, distributed_income, gmt_create, 
       gmt_update)
     values (#{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},#{claimId,jdbcType=BIGINT},
-      #{valueDateStart,jdbcType=BIGINT}, #{valueDateEnd,jdbcType=BIGINT}, #{lendingContractNumber,jdbcType=VARCHAR}, 
+      #{valueDateStart,jdbcType=BIGINT}, #{valueDateEnd,jdbcType=BIGINT}, #{lendingContractNumber,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankCardNumber,jdbcType=VARCHAR},
       #{contractSign,jdbcType=VARCHAR}, #{investmentAmount,jdbcType=INTEGER}, #{investmentStatus,jdbcType=TINYINT}, 
       #{expectedIncome,jdbcType=DOUBLE}, #{distributedIncome,jdbcType=DOUBLE}, #{gmtCreate,jdbcType=BIGINT}, 
       #{gmtUpdate,jdbcType=BIGINT})
@@ -334,4 +330,11 @@
         gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
     </update>
+
+    <!--查询可续投用户投资信息，详情-->
+    <select id="selectRenewalInvestmentById" parameterType="java.lang.Long" resultType="java.lang.Long"
+
+
+
+
 </mapper>
