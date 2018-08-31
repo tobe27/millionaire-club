@@ -1,6 +1,7 @@
 package com.millionaire.millionaireserverweb.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionaireadminservice.module.*;
@@ -40,20 +41,37 @@ public class SunController {
     /**
      * 用户登陆
      *
-     * @param name
-     * @param password
+     * @param jsonObject
      * @return
      */
     @PostMapping("backstageLogin")
-    public List<Modular> subLogin(String name, String password) {
+    public ResultBean subLogin(@RequestBody JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        String password = jsonObject.getString("password");
+        if(name==null){
+            return new ResultBean(-1,"账号没传");
+        }
+        if(password==null){
+            return new ResultBean(-1,"密码没传");
+        }
+        if(name.length()==0){
+            return new ResultBean(-1,"请输入账号");
+        }
+        if(password.length()==0){
+            return new ResultBean(-1,"请输入密码");
+        }
+        BackstageUsers backstageUsers = backstageUsersService.findByName(name);
+        if(backstageUsers==null){
+            return new ResultBean(-1,"用户名不存在");
+        }
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(name, password);
         try {
             subject.login(token);
         } catch (Exception e) {
-            return null;
+            return new ResultBean(-1,"密码错误");
         }
-        BackstageUsers backstageUsers = backstageUsersService.findByName(name);
+
         Roles roles = rolesService.selectByPrimaryKey(backstageUsers.getRoleId());
         //通过角色id来查询权限id
         Modular modular1 = new Modular();
@@ -104,7 +122,7 @@ public class SunController {
             modular4.setPermissionsList(list4);
             modulars.add(modular4);
         }
-        return modulars;
+        return new ResultBean(1,"登陆成功",modulars);
     }
 
     /**
@@ -165,10 +183,15 @@ public class SunController {
     /**
      * 增加用户
      *
-     * @param
+     * @param jsonObject
      */
     @PostMapping("/a/backstageUsers")
-    public ResultBean insertUser(String name, String password, String rePassword, String phone, String roleName) {
+    public ResultBean insertUser(@RequestBody JSONObject jsonObject ) {
+        String name = jsonObject.getString("name");
+        String password = jsonObject.getString("password");
+        String rePassword = jsonObject.getString("rePassword");
+        String phone = jsonObject.getString("phone");
+        String roleName = jsonObject.getString("roleName");
         if (name == null) {
             return new ResultBean(-1, "用户名没有传");
         }
@@ -237,16 +260,17 @@ public class SunController {
     /**
      * 修改用户
      *
-     * @param password
-     * @param rePassword
-     * @param phone
-     * @param roleName
+     * @param jsonObject
      * @param id
      * @return
      */
     @RequestMapping(value = "/a/backstageUser/{id}", method = RequestMethod.PUT)
-    public ResultBean updateById(String password, String rePassword, String phone, String roleName,
+    public ResultBean updateById(@RequestBody JSONObject jsonObject,
                                  @PathVariable("id") Long id) {
+        String password = jsonObject.getString("password");
+        String rePassword = jsonObject.getString("rePassword");
+        String phone = jsonObject.getString("phone");
+        String roleName = jsonObject.getString("roleName");
         if (password == null) {
             return new ResultBean(-1, "密码没有传");
         }
@@ -296,15 +320,14 @@ public class SunController {
     /**
      * 修改密码
      *
-     * @param oldPassword
-     * @param password
-     * @param rePassword
+     * @param jsonObject
      * @return
      */
     @PutMapping("/a/backstageUser/password")
-    public ResultBean updatePassword(String oldPassword,
-                                     String password,
-                                     String rePassword) {
+    public ResultBean updatePassword(@RequestBody JSONObject jsonObject) {
+        String oldPassword = jsonObject.getString("oldPassword");
+        String password = jsonObject.getString("password");
+        String rePassword = jsonObject.getString("rePassword");
         if (oldPassword == null) {
             return new ResultBean(-1, "旧密码没有传");
         }
@@ -388,13 +411,13 @@ public class SunController {
     /**
      * 添加角色，还能赋予权限。
      *
-     * @param roleName
-     * @param permissions
+     * @param jsonObject
      * @return
      */
     @PostMapping("/a/roles")
-    public ResultBean insertRole(String roleName,
-                                 String permissions) {
+    public ResultBean insertRole(@RequestBody JSONObject jsonObject) {
+        String roleName = jsonObject.getString("roleName");
+        String permissions = jsonObject.getString("permissions");
         if (roleName == null) {
             return new ResultBean(-1, "角色名称没有传");
         }
@@ -439,19 +462,19 @@ public class SunController {
      * 更新角色的权限
      *
      * @param id
-     * @param roleName
-     * @param permissions
+     * @param jsonObject
      * @return
      */
     @PutMapping("/a/roles/{id}")
     public ResultBean updateRole(@PathVariable Long id,
-                                 String roleName,
-                                 String permissions) {
+                                 @RequestBody JSONObject jsonObject) {
+        String roleName = jsonObject.getString("roleName");
+        String permissions = jsonObject.getString("permissions");
         if (roleName == null) {
             return new ResultBean(-1, "角色名称没有传");
         }
         if (permissions == null) {
-            return new ResultBean(-1, "权限id的集合");
+            return new ResultBean(-1, "权限id的集合没传");
         }
         if (roleName.length() == 0) {
             return new ResultBean(-1, "角色名不能为空");
