@@ -2,11 +2,14 @@ package com.millionaire.millionaireserverweb.result;
 
 import lombok.Data;
 
+import java.util.Map;
+
 @Data
 public class ResultBean<T> {
     private int code;
     private String message;
     private T data;
+
 
     public ResultBean(T data) {
         this.data = data;
@@ -22,4 +25,6 @@ public class ResultBean<T> {
         this.code = code;
         this.message = message;
     }
+
+
 }

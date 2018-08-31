@@ -62,4 +62,10 @@ public class MessagePlatformServiceImpl implements MessagePlatformService {
         List<MessagePlatform> messagePlatformList=messagePlatformMapper.selectByQuery(query);
         return new PageInfo<>(messagePlatformList);
     }
+
+
+    @Override
+    public List<MessagePlatform> listUnsendMessage() {
+        return messagePlatformMapper.listUnsendMessage();
+    }
 }

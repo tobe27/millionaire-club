@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionairemanagerservice.request.MessagePlatformQuery;
 
+import java.util.List;
+
 /**
  * @author Liu Kai
  * @Description: TODO 平台消息 新增 编辑 删除 查看
@@ -24,4 +26,6 @@ public interface MessagePlatformService {
 
     PageInfo<MessagePlatform> listMessageByPage(Integer pageNum, Integer pageSize, MessagePlatformQuery query);
 
+
+    List<MessagePlatform> listUnsendMessage();
 }

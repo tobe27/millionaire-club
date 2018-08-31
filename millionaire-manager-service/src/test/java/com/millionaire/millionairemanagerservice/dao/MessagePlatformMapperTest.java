@@ -8,6 +8,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @SpringBootTest
@@ -58,5 +60,12 @@ public class MessagePlatformMapperTest {
 
     @Test
     public void selectByQuery() {
+    }
+
+
+    @Test
+    public void listUnsendMessage() {
+        List<MessagePlatform> unsendMessage = messagePlatformMapper.listUnsendMessage();
+        System.out.println("unsendMessage = " + unsendMessage);
     }
 }
