@@ -332,6 +332,7 @@
     </update>
 
     <!--查询可续投用户投资信息，详情-->
+
     <select id="selectRenewalInvestmentById" parameterType="java.lang.Long"
             resultType="com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO">
         select
@@ -357,6 +358,7 @@
         WHERE investment_user.id = #{id,jdbcType=BIGINT}
 
     </select>
+
 
     <!--查询可续投产品列表-->
     <select id="listRenewalInvestments" resultType="com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO">

@@ -1,5 +1,6 @@
 package com.millionaire.millionaireserverweb.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.ClaimInfo;
@@ -50,7 +51,7 @@ public class ClaimMatchController {
     public ResultBean listClaimMatch(@PathVariable("claimid") long claimid,
                                      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                      @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                     ClaimMatchQuery query) {
+                                      ClaimMatchQuery query) {
         ClaimInfo claimInfo = claimInfoService.selectByPrimaryKey(claimid);
         if (claimInfo == null) {
             return new ResultBean(-1, "error no such id", claimid);
@@ -85,10 +86,16 @@ public class ClaimMatchController {
 
     /**
      * @Description 更新接口，修改用户投资匹配情况
+     *
+     * @RequestParam("claimId") long claimId,
+     *  @RequestParam("lending_contract_number") String lendingContractNumber
+     *
      **/
     @PutMapping("/investment-credit")
-    public ResultBean updateInvestmentCredit(@RequestParam("claimId") long claimId,
-                                             @RequestParam("lending_contract_number") String lendingContractNumber) {
+    public ResultBean updateInvestmentCredit(@RequestBody JSONObject jsonObject) {
+       long claimId = jsonObject.getLong("claimId");
+       String lendingContractNumber = jsonObject.getString("lendingContractNumber");
+
         ClaimInfo claimInfo = claimInfoService.selectByPrimaryKey(claimId);
         if (claimInfo == null) {
             logger.error("传入错误债权id:{}",claimId);

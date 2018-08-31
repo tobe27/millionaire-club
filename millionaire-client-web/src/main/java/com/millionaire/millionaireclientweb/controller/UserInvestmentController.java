@@ -6,6 +6,7 @@ import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
+
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.Constants;
@@ -64,6 +65,8 @@ public class UserInvestmentController {
      * @param requestBean
      * @return
      */
+
+
     @PostMapping("/u/user-investment")
     public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean, HttpServletRequest servletRequest) throws IOException, FuYouException {
         Cookie cookie = CookieUtil.getCookie("cookie",servletRequest);
@@ -201,6 +204,7 @@ public class UserInvestmentController {
         contractResponse.setCompanySeal(companySeal);
         return new ResultBean(1,"success",companySeal);
     }
+
 
 
 

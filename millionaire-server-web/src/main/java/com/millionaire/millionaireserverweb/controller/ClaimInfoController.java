@@ -32,7 +32,7 @@ public class ClaimInfoController {
      * @Description 新增债券信息
      **/
     @PostMapping("/claim-info")
-    public ResultBean insertClaimInfo(@Validated ClaimInfo claimInfo) {
+    public ResultBean insertClaimInfo(@RequestBody @Validated ClaimInfo claimInfo) {
         String code = claimInfo.getClaimCode();
         ClaimInfo claimInfoCheck = claimInfoService.selectByCode(code);
         if (claimInfoCheck != null) {
@@ -69,7 +69,7 @@ public class ClaimInfoController {
         @GetMapping("/list/claim-info")
         public ResultBean selectClaimByPage (@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                              @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                             ClaimInfoQuery claimInfoQuery) {
+                                              ClaimInfoQuery claimInfoQuery) {
                 PageInfo<ClaimInfo> pageInfo =
                         claimInfoService.selectClaimBypage(pageSize, pageNum, claimInfoQuery);
                 logger.info("查询债权信息：{}", claimInfoQuery);

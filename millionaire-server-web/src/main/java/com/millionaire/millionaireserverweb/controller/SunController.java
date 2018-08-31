@@ -45,13 +45,13 @@ public class SunController {
      * @return
      */
     @PostMapping("backstageLogin")
-    public List<Modular> subLogin(String name, String password) {
+    public ResultBean subLogin(@RequestParam String name, @RequestParam String password) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(name, password);
         try {
             subject.login(token);
         } catch (Exception e) {
-            return null;
+            return new ResultBean(-1,"error");
         }
         BackstageUsers backstageUsers = backstageUsersService.findByName(name);
         Roles roles = rolesService.selectByPrimaryKey(backstageUsers.getRoleId());
@@ -104,7 +104,7 @@ public class SunController {
             modular4.setPermissionsList(list4);
             modulars.add(modular4);
         }
-        return modulars;
+        return  new ResultBean(1,"success",modulars);
     }
 
     /**
