@@ -68,6 +68,7 @@ public class ShiroRealm extends AuthorizingRealm {
         System.out.println(userName);
 //
         BackstageUsers backstageUsers= backstageUsersService.findByName(userName);
+
         String password = backstageUsers.getPassword();
         if (password == null) {
             //这里返回后会报出对应异常

@@ -10,6 +10,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -103,5 +105,29 @@ private InvestmentUserMapper userMapper;
     public void selectByLendingContractNumber() {
         InvestmentUser investmentUser=userMapper.selectByLendingContractNumber("1");
         System.out.println("investmentUser = " + investmentUser);
+    }
+
+    @Test
+    public void selectRenewalInvestmentById() {
+        System.out.println(userMapper.selectRenewalInvestmentById(19L));
+    }
+
+    @Test
+    public void listRenewalInvestments() {
+        int investmentEnd = 4;
+//        查询到期日期小于续投参数的用户投资，当天的不包括在内
+        LocalDate now = LocalDate.now();
+//        续投产品的戒指日期
+        LocalDate end = now.minusDays(investmentEnd);
+
+//        转成时间戳
+        long nowTime = now.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endTime = end.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        System.out.println(userMapper.listRenewalInvestments(endTime,nowTime));
+    }
+
+    @Test
+    public void selectContractResponse() {
+        System.out.println(userMapper.selectContractResponse(19L));
     }
 }

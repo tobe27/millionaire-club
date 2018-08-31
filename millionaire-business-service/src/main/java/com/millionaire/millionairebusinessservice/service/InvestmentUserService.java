@@ -1,8 +1,11 @@
 package com.millionaire.millionairebusinessservice.service;
 
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
+import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
+import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
 
 import java.util.List;
 
@@ -51,4 +54,21 @@ public interface InvestmentUserService {
      * @Description 根据出借合同号查询用户投资
      **/
     InvestmentUser selectByLendingContractNumber(String lendingContractNumber);
+
+    /**
+     * 查询可续投用户投资信息，详情
+     */
+    RenewalInvestmentDTO selectRenewalInvestmentById(Long id);
+
+    /**
+     * 查询可续投产品列表
+     */
+    PageInfo listRenewalInvestments(Long end, Long now,int pageSize,int pageNum);
+
+    /**
+     * 查询投资合同信息
+     * @param id
+     * @return
+     */
+    ContractResponse selectContractResponse(Long id);
 }

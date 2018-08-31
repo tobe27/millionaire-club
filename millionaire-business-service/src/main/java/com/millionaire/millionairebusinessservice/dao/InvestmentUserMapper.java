@@ -2,7 +2,9 @@ package com.millionaire.millionairebusinessservice.dao;
 
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
+import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
+import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
 import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -84,5 +86,23 @@ public interface InvestmentUserMapper {
      * @Description 根据出借合同号查询用户投资
      **/
     InvestmentUser selectByLendingContractNumber(String lendingContractNumber);
+
+    /**
+     * 查询可续投用户投资信息，详情
+     */
+    RenewalInvestmentDTO selectRenewalInvestmentById(Long id);
+
+    /**
+     * 查询可续投产品列表
+     */
+    List<RenewalInvestmentDTO> listRenewalInvestments(@Param("end") Long end, @Param("now") Long now);
+
+    /**
+     * 查询投资合同信息
+     * @param id
+     * @return
+     */
+    ContractResponse selectContractResponse(Long id);
+
 
 }
