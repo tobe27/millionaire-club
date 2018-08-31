@@ -1,12 +1,19 @@
 package com.millionaire.millionaireclientweb;
 
 import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
+import com.millionaire.millionairebusinessservice.dao.MessageUserMapper;
 import com.millionaire.millionairebusinessservice.dao.TradingFlowMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
+import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.UserMessageDTO;
+import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionairemanagerservice.dao.ContentMapper;
+import com.millionaire.millionairemanagerservice.dao.MessagePlatformMapper;
+import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
+import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,12 +68,39 @@ private ContentMapper contentMapper;
 	private RedisTemplate redisTemplate;
 	@Test
 	public void agreement() {
-		redisTemplate.opsForValue().set("userAgreement","目前还没有图片");
+		UserInvestmentDTO userInvestmentDTO = investmentUserMapper.findById(12L);
+		System.out.println(userInvestmentDTO);
+
 	}
 
 	@Test
 	public void sdfsdf() {
 		InvestmentUser investmentUser = investmentUserMapper.selectByPrimaryKey(5L);
 		System.out.println(investmentUser);
+	}
+	@Resource
+	private MessageUserMapper messageUserMapper;
+
+	@Test
+	public void message() {
+		List<UserMessageDTO> userMessageDTOS = messageUserMapper.findByUid(8L);
+		for (UserMessageDTO userMessageDTO:userMessageDTOS) {
+			System.out.println(userMessageDTO);
+		}
+	}
+@Resource
+private MessagePlatformMapper messagePlatformMapper;
+	@Test
+	public void dsfdf() {
+		List<MessagePlatform> messagePlatforms = messagePlatformMapper.findBySendingCrowd((byte) 20);
+		for (MessagePlatform messagePlatform:messagePlatforms) {
+			System.out.println(messagePlatform);
+		}
+	}
+
+	@Test
+	public void dsafsdg() {
+		UserReceptionDTO userReceptionDTO = receptionUsersService.findById(8L);
+		System.out.println(userReceptionDTO);
 	}
 }

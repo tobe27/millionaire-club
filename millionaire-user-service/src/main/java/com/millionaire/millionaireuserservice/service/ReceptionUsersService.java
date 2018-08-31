@@ -6,6 +6,7 @@ import com.millionaire.millionaireuserservice.module.UserBank;
 import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
 import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
 import com.millionaire.millionaireuserservice.transport.ReceptionUsersDTO;
+import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 
 import java.util.List;
 
@@ -24,6 +25,8 @@ public interface ReceptionUsersService {
     Long insertSelective(ReceptionUsers record);
 
     Long updateByPrimaryKey(ReceptionUsers record);
+
+    UserReceptionDTO findById(Long id);
 
     /**
      * 通过 手机 姓名 邮箱

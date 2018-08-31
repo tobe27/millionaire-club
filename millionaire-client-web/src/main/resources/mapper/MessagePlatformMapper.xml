@@ -16,19 +16,37 @@
       <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
+  <resultMap id="MessagePlatform" type="com.millionaire.millionairemanagerservice.module.MessagePlatform">
+    <id property="id" column="id"/>
+    <result property="title" column="title"/>
+    <result property="sendingCrowd" column="sending_crowd"/>
+    <result property="brief" column="brief"/>
+    <result property="content" column="content"/>
+    <result property="type" column="type"/>
+    <result property="timingTime" column="timing_time"/>
+    <result property="status" column="status"/>
+    <result property="editors" column="editors"/>
+    <result property="gmtCreate" column="gmt_create"/>
+    <result property="gmtUpdate" column="gmt_update"/>
+  </resultMap>
   <sql id="Base_Column_List">
     id, title, sending_crowd, brief, content, type, timing_time, status, editors, gmt_create, 
     gmt_update
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="MessagePlatform">
     select 
     <include refid="Base_Column_List" />
     from message_platform
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="findBySendingCrowd" resultMap="MessagePlatform">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM message_platform
+    WHERE status=10 and sending_crowd=#{sendingCrowd}
+  </select>
 
-
-    <select id="selectByQuery"  resultMap="BaseResultMap">
+    <select id="selectByQuery"  resultMap="MessagePlatform">
         select
         <include refid="Base_Column_List" />
         from message_platform
