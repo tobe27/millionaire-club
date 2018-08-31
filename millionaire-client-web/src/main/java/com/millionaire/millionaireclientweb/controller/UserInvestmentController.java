@@ -2,6 +2,9 @@ package com.millionaire.millionaireclientweb.controller;
 
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
+import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
+import com.millionaire.millionairebusinessservice.transport.ContractResponse;
+import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
@@ -10,6 +13,8 @@ import com.millionaire.millionairepaymentmanager.fuyou.until.MD5;
 import com.millionaire.millionairepaymentmanager.manager.PayBackManager;
 import com.millionaire.millionairepaymentmanager.manager.PayManager;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
+import com.millionaire.millionaireuserservice.module.ReceptionUsers;
+import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +47,17 @@ public class UserInvestmentController {
     private InvestmentProductService productService;
 
     @Autowired
+    private InvestmentUserService investmentUserService;
+
+    @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private ReceptionUsersService receptionUsersService;
+
+    ReceptionUsers receptionUsers = new ReceptionUsers();
+
+    ContractResponse contractResponse = new ContractResponse();
 
     /**
      * 用户支付接口,跳转第三方支付页面
@@ -53,7 +68,7 @@ public class UserInvestmentController {
     public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean, HttpServletRequest servletRequest) throws IOException, FuYouException {
         Cookie cookie = CookieUtil.getCookie("cookie",servletRequest);
         Long id = Long.valueOf(cookie.getValue());
-        return payManager.payment(requestBean,id) ;
+        return payManager.payment(requestBean,id);
     }
 
 
@@ -129,7 +144,7 @@ public class UserInvestmentController {
     }
 
     /**
-     * 续投产品列表数据
+     * 可续投投资列表数据
      */
     @GetMapping("/u/list/renewal-products")
     public ResultBean listRenewalProducts(@RequestParam("pageNum")int pageNum, @RequestParam("pageSize")int pageSize) {
@@ -144,12 +159,48 @@ public class UserInvestmentController {
         long nowTime = now.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endTime = end.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
-
-
-        return null;
+        return new ResultBean(1,"success",investmentUserService.listRenewalInvestments(endTime,nowTime,pageSize,pageNum));
     }
 
+    /**
+     * 可续投投资详情
+     */
+    @GetMapping("u/renewal/investment-user/{id}")
+    public ResultBean getRenewalProduct(@PathVariable("id")Long id) {
 
+        return new ResultBean(1,"success",investmentUserService.selectRenewalInvestmentById(id));
+    }
+
+    /**
+     * 获取签署合同所需信息
+     * @param servletRequest
+     * @return
+     */
+    @GetMapping("u/contract-userInfo")
+    public ResultBean getContractUserInfo(HttpServletRequest servletRequest) {
+        Cookie cookie = CookieUtil.getCookie("cookie",servletRequest);
+        Long id = Long.valueOf(cookie.getValue());
+        receptionUsers = receptionUsersService.selectByPrimaryKey(id);
+        ContractResponse contractResponse = new ContractResponse();
+        contractResponse.setIdName(receptionUsers.getIdName());
+        contractResponse.setIdNumber(receptionUsers.getIdNumber());
+        String companySeal = (String) redisTemplate.opsForValue().get("companySeal");
+        contractResponse.setCompanySeal(companySeal);
+        return new ResultBean(1,"success",contractResponse);
+    }
+
+    /**
+     * 合同详情
+     * @param id 用户投资表的id传过来
+     * @return
+     */
+    @GetMapping("u/investment-contract/{id}")
+    public ResultBean getContractUser(@PathVariable("id")Long id) {
+        contractResponse =investmentUserService.selectContractResponse(id);
+        String companySeal = (String) redisTemplate.opsForValue().get("companySeal");
+        contractResponse.setCompanySeal(companySeal);
+        return new ResultBean(1,"success",companySeal);
+    }
 
 
 

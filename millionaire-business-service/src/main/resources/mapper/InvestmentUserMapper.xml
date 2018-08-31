@@ -332,8 +332,74 @@
     </update>
 
     <!--查询可续投用户投资信息，详情-->
-    <select id="selectRenewalInvestmentById" parameterType="java.lang.Long" resultType="java.lang.Long"
+    <select id="selectRenewalInvestmentById" parameterType="java.lang.Long"
+            resultType="com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO">
+        select
+        investment_user.id as id,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.distributed_income as distributedIncome,
+        investment_user.expected_income as expectedIncome,
+        investment_user.investment_status as investmentStatus,
+        investment_user.bank_name as bankName,
+        investment_user.bank_card_number as bankCardNumber,
 
+        investment_product.name as name,
+        investment_product.annualized_income as annualizedIncome,
+        investment_product.deadline as deadline,
+        investment_product.type as type,
+        investment_product.starting_amount as startingAmount
+        from
+        investment_user
+        LEFT join investment_product
+        ON investment_user.product_id = investment_product.id
+        WHERE investment_user.id = #{id,jdbcType=BIGINT}
+
+    </select>
+
+    <!--查询可续投产品列表-->
+    <select id="listRenewalInvestments" resultType="com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO">
+        select
+        investment_user.id as id,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.distributed_income as distributedIncome,
+        investment_user.expected_income as expectedIncome,
+        investment_user.investment_status as investmentStatus,
+        investment_user.bank_name as bankName,
+        investment_user.bank_card_number as bankCardNumber,
+        investment_user.investment_status as investmentStatus,
+
+        investment_product.name as name,
+        investment_product.annualized_income as annualizedIncome,
+        investment_product.deadline as deadline,
+        investment_product.type as type,
+        investment_product.starting_amount as startingAmount
+        from
+        investment_user
+        LEFT join investment_product
+        ON investment_user.product_id = investment_product.id
+        WHERE investment_user.investment_status = 10
+        AND investment_user.value_date_end <![CDATA[ >= ]]> #{end,jdbcType=BIGINT}
+        AND investment_user.value_date_end <![CDATA[ <= ]]> #{now,jdbcType=BIGINT}
+    </select>
+
+    <!--查询投资合同信息-->
+    <select id="selectContractResponse" resultType="com.millionaire.millionairebusinessservice.transport.ContractResponse">
+        SELECT
+        investment_user.contract_sign as contractSign,
+        investment_user.gmt_create as gmtCreate,
+
+        reception_users.id_name as idName,
+        reception_users.id_number as idNumber
+        FROM
+         investment_user
+        left join reception_users
+        on investment_user.uid = reception_users.id
+        WHERE investment_user.id = #{id,jdbcType=BIGINT}
+    </select>
 
 
 

@@ -417,4 +417,5 @@
         SELECT profit FROM reception_users WHERE id = #{id,jdbcType=BIGINT}
     </select>
 
+
 </mapper>
