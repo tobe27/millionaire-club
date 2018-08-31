@@ -58,7 +58,7 @@ public class FlowNumberGeneration {
 
 
     public static void main(String[] args) {
-        System.out.println(claimProtocol(10L));
+        System.out.println(System.currentTimeMillis());
     }
 
 }

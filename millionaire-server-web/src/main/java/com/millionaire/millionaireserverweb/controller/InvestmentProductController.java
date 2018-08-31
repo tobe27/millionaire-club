@@ -40,7 +40,7 @@ public class InvestmentProductController {
         //产品名检验
         String name = investmentProduct.getName();
         InvestmentProduct product1 = investmentProductService.selectByProductName(name);
-        //产品代码校验
+        //产品代号校验
         String code = investmentProduct.getProductCode();
         InvestmentProduct product2 = investmentProductService.selectByProductCode(code);
         //起投金额

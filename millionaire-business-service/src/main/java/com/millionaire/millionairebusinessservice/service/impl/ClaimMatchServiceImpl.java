@@ -10,6 +10,8 @@ import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.ClaimMatchQuery;
 import com.millionaire.millionairebusinessservice.service.ClaimMatchService;
 import com.millionaire.millionairebusinessservice.transport.ClaimMatchDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,6 +25,7 @@ import java.util.*;
  */
 @Service
 public class ClaimMatchServiceImpl implements ClaimMatchService {
+ private   Logger logger =LoggerFactory.getLogger(ClaimMatchServiceImpl.class);
 
     @Resource
     private ClaimMatchMapper claimMatchMapper;
@@ -50,19 +53,19 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
     @Override
     public List<InvestmentUser> listRecommendInvestmentUser(long claimID) {
         ClaimInfo claimInfo = claimInfoMapper.selectByPrimaryKey(claimID);
-        System.out.println("-------债权信息-----------");
-        System.out.println(claimID);
-        System.out.println("-------债权信息-----------");
+        logger.info("-------债权信息-----------");
+        logger.info("债权信息:{}",claimInfo);
+        logger.info("-------债权信息-----------");
         if (claimInfo == null) {
             return null;
         }
         //查询出可以使用的用户投资表
         List<InvestmentUser> usableInvestmentUserList = investmentUserMapper.selectUsableInvestment();
-        System.out.println("-------初始可用用户投资表-----------");
+        logger.info("-------初始可用用户投资表-----------");
         for (InvestmentUser investmentUser : usableInvestmentUserList) {
-            System.out.println(investmentUser);
+            logger.info("初始可用用户投资表:{}",investmentUser);
         }
-        System.out.println("-------初始可用用户投资表-----------");
+        logger.info("-------初始可用用户投资表-----------");
         //同一用户同一时间多笔投资不能匹配相同债权
         //根据债权id查询用户投资列表
         List<Long> uidList = investmentUserMapper.selectMatchedUID(claimID);
@@ -75,27 +78,27 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
                 //与可用的用户投资中的uid进行比对
                 //如果相等 则从可使用的用户投资表中移除该用户投资信息
                 if (id == investmentUser.getUid()) {
-                    System.out.println("---------剔除重复id用户投资---------");
-                    System.out.println("id = " + id);
-                    System.out.println("investmentUser.getUid() = " + investmentUser.getUid());
-                    System.out.println("---------剔除重复id用户投资---------");
+                    logger.info("---------剔除重复id用户投资---------");
+                    logger.info("id = " + id);
+                    logger.info("investmentUser.getUid() = " + investmentUser.getUid());
+                    logger.info("---------剔除重复id用户投资---------");
                     investmentUserIterator.remove();
                 }
                 //循环剔除用户投资大于未匹配投资金额的用户投资
                 if (investmentUser.getInvestmentAmount() > claimInfo.getUnMatchAmount()) {
-                    System.out.println("---------剔除过大用户投资---------");
-                    System.out.println("investmentUser.getInvestmentAmount() = " + investmentUser.getInvestmentAmount());
-                    System.out.println("claimInfo.getUnMatchAmount() = " + claimInfo.getUnMatchAmount());
-                    System.out.println("---------剔除过大用户投资---------");
+                    logger.info("---------剔除过大用户投资---------");
+                    logger.info("investmentUser.getInvestmentAmount() = " + investmentUser.getInvestmentAmount());
+                    logger.info("claimInfo.getUnMatchAmount() = " + claimInfo.getUnMatchAmount());
+                    logger.info("---------剔除过大用户投资---------");
                     investmentUserIterator.remove();
                 }
             }
         }
-        System.out.println("-------剔除后可用用户投资表-----------");
+        logger.info("-------剔除后可用用户投资表-----------");
         for (InvestmentUser investmentUser : usableInvestmentUserList) {
-            System.out.println(investmentUser);
+            logger.info("剔除后可用用户投资表:{}",investmentUser);
         }
-        System.out.println("-------剔除后可用用户投资表-----------");
+        logger.info("-------剔除后可用用户投资表-----------");
 
         //设置时间格式用于后续对比
         SimpleDateFormat sd = new SimpleDateFormat("yyyyMMdd");
@@ -153,11 +156,11 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
                 return 0;
             }
         });
-        System.out.println("-------根据金额时间排序后可用用户投资表-----------");
+        logger.info("-------根据金额时间排序后可用用户投资表-----------");
         for (InvestmentUser investmentUser : usableInvestmentUserList) {
-            System.out.println(investmentUser);
+            logger.info("根据金额时间排序后可用用户投资表:{}",investmentUser);
         }
-        System.out.println("-------根据金额时间排序后可用用户投资表-----------");
+        logger.info("-------根据金额时间排序后可用用户投资表-----------");
         return usableInvestmentUserList;
     }
 

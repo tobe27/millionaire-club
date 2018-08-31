@@ -27,7 +27,7 @@ public class AliyunAPIController {
      * @throws IOException
      * @throws AliyunAPIException
      */
-    @RequestMapping(value = "u/image-upload",method = RequestMethod.POST)
+    @RequestMapping(value = "a/upload-picture",method = RequestMethod.POST)
     public String test(@RequestParam MultipartFile file) throws IOException, AliyunAPIException {
         String url = aliyunOSSUtil.imageUpload(file);
         logger.info("=========图片接口上传成功=========");

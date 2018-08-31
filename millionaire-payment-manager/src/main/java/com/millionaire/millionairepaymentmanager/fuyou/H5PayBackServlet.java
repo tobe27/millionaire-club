@@ -26,54 +26,57 @@ public class H5PayBackServlet extends HttpServlet
 	@Autowired
     private PayBackManager payBackManager;
 
+    @Autowired
+    private PayBackManager payBackManage;
+
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
 	{
 		doPost(req, resp);
 	}
 
-	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-	{
-		String version = req.getParameter("VERSION");
-		String type = req.getParameter("TYPE");
-		String responseCode = req.getParameter("RESPONSECODE");
-		String responseMsg = req.getParameter("RESPONSEMSG");
-		String mchntCd = req.getParameter("MCHNTCD");
-		String mchntOrderId = req.getParameter("MCHNTORDERID");
-		String orderId = req.getParameter("ORDERID");
-		String bankCard = req.getParameter("BANKCARD");
-		String amt = req.getParameter("AMT");
-		String sign = req.getParameter("SIGN");
-		String key = Constants.H5_MCHNT_KEY;
-		Map<String, String> keyMap = new HashMap<String, String>();
-		keyMap.put(Constants.H5_MCHNT_CD, Constants.H5_MCHNT_KEY);
-		key = keyMap.get(mchntCd);
-		// 校验签名
-		String signPain = new StringBuffer().append(type).append("|").append(version).append("|").append(responseCode)
-				.append("|").append(mchntCd).append("|").append(mchntOrderId).append("|").append(orderId).append("|")
-				.append(amt).append("|").append(bankCard).append("|").append(key).toString();
-		resp.setContentType("text/html");
-		resp.setCharacterEncoding("UTF-8");
-		if (MD5.MD5Encode(signPain).equals(sign))
-		{
-			if (Constants.RESP_CODE_SUCCESS.equals(responseCode))
-			{
-
-				payBackManager.backManage(Long.valueOf(mchntOrderId));
-				System.out.println(mchntOrderId +"支付成功~");
-				resp.getWriter().write("支付成功~");
-			}
-			else
-			{
-				System.out.println(mchntOrderId +"支付失败~"+responseMsg);
-				resp.getWriter().write("支付失败~");
-			}
-		}
-		else
-		{
-			System.out.println(mchntOrderId +"验签失败~");
-			resp.getWriter().write("验签失败~");
-		}
-	}
+//	@Override
+//	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+//	{
+//		String version = req.getParameter("VERSION");
+//		String type = req.getParameter("TYPE");
+//		String responseCode = req.getParameter("RESPONSECODE");
+//		String responseMsg = req.getParameter("RESPONSEMSG");
+//		String mchntCd = req.getParameter("MCHNTCD");
+//		String mchntOrderId = req.getParameter("MCHNTORDERID");
+//		String orderId = req.getParameter("ORDERID");
+//		String bankCard = req.getParameter("BANKCARD");
+//		String amt = req.getParameter("AMT");
+//		String sign = req.getParameter("SIGN");
+//		String key = Constants.H5_MCHNT_KEY;
+//		Map<String, String> keyMap = new HashMap<String, String>();
+//		keyMap.put(Constants.H5_MCHNT_CD, Constants.H5_MCHNT_KEY);
+//		key = keyMap.get(mchntCd);
+//		// 校验签名
+//		String signPain = new StringBuffer().append(type).append("|").append(version).append("|").append(responseCode)
+//				.append("|").append(mchntCd).append("|").append(mchntOrderId).append("|").append(orderId).append("|")
+//				.append(amt).append("|").append(bankCard).append("|").append(key).toString();
+//		resp.setContentType("text/html");
+//		resp.setCharacterEncoding("UTF-8");
+//		if (MD5.MD5Encode(signPain).equals(sign))
+//		{
+//			if (Constants.RESP_CODE_SUCCESS.equals(responseCode))
+//			{
+//				payBackManager.backManage(Long.valueOf(mchntOrderId));
+//				System.out.println(mchntOrderId +"支付成功~");
+//				resp.getWriter().write("支付成功~");
+//				payBackManage.backManage(Long.valueOf(mchntOrderId));
+//			}
+//			else
+//			{
+//				System.out.println(mchntOrderId +"支付失败~"+responseMsg);
+//				resp.getWriter().write("支付失败~");
+//			}
+//		}
+//		else
+//		{
+//			System.out.println(mchntOrderId +"验签失败~");
+//			resp.getWriter().write("验签失败~");
+//		}
+//	}
 }
