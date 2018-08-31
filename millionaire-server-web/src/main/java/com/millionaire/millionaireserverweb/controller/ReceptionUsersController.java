@@ -56,7 +56,7 @@ public class ReceptionUsersController {
     @GetMapping("/list/user")
     public ResultBean getListReceptionUsers(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                             @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                            ReceptionUsersQuery usersQuery) {
+                                            @RequestBody ReceptionUsersQuery usersQuery) {
 
             PageInfo<ReceptionUsers> pageInfo =
                     usersService.selectReceptionUserByPage(usersQuery, pageSize, pageNum);
@@ -70,7 +70,7 @@ public class ReceptionUsersController {
     @GetMapping("/list/user-verification")
     public ResultBean listUsersVerification(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                             @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                            UsersVerificationQuery usersVerificationQuery) {
+                                            @RequestBody UsersVerificationQuery usersVerificationQuery) {
 
             PageInfo<ReceptionUsers> pageInfo =
                     usersService.selectUserVerificationByPage(pageSize, pageNum, usersVerificationQuery);
@@ -269,7 +269,7 @@ public class ReceptionUsersController {
     public ResultBean listUserTradingFlow(@PathVariable("uid") Long uid,
                                           @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                           @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                          TradingFlowQuery query) {
+                                          @RequestBody TradingFlowQuery query) {
         logger.info("查询交易流水uid:{},请求参数:{}", uid,query);
         query.setUid(uid);
         PageInfo<UserTradingFlowDTO> pageInfo = flowService.selectTradingFlowBypage(pageNum, pageSize, query);
@@ -283,7 +283,7 @@ public class ReceptionUsersController {
     public ResultBean listUserInvestment(@PathVariable("uid") Long uid,
                                          @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                         InvestmentUserQuery query) {
+                                         @RequestBody InvestmentUserQuery query) {
         query.setUid(uid);
         logger.info("查询参数:{}",query);
         PageHelper.startPage(pageNum, pageSize);

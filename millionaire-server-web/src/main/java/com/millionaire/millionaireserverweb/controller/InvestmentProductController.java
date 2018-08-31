@@ -36,7 +36,7 @@ public class InvestmentProductController {
      * @Description 新增投资产品
      **/
     @PostMapping("/investment-product")
-    public ResultBean insertInvestmentProduct(@Validated InvestmentProduct investmentProduct) {
+    public ResultBean insertInvestmentProduct(@RequestBody @Validated InvestmentProduct investmentProduct) {
         //产品名检验
         String name = investmentProduct.getName();
         InvestmentProduct product1 = investmentProductService.selectByProductName(name);
@@ -145,7 +145,7 @@ public class InvestmentProductController {
     @GetMapping("/list/investment-product")
     public ResultBean getListInvestmentProduct(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                                @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                               ProductQuery productQuery) {
+                                               @RequestBody ProductQuery productQuery) {
 
             PageInfo<InvestmentProduct> pageInfo =
                     investmentProductService.selectProductByPage(productQuery, pageSize, pageNum);

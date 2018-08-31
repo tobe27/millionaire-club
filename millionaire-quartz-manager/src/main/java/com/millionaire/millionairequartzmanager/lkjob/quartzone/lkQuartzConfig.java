@@ -105,13 +105,13 @@ public class lkQuartzConfig {
 //
 
     //定义一个调度器
-    @Bean("schedulerFactoryBean")
-    public SchedulerFactoryBean schedulerFactoryBean(CronTriggerFactoryBean triggerFactoryBean) {
-        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
-        schedulerFactoryBean.setTriggers(triggerFactoryBean.getObject());
-        schedulerFactoryBean.setAutoStartup(true);
-        return schedulerFactoryBean;
-    }
+//    @Bean("schedulerFactoryBean")
+//    public SchedulerFactoryBean schedulerFactoryBean(CronTriggerFactoryBean triggerFactoryBean) {
+//        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
+//        schedulerFactoryBean.setTriggers(triggerFactoryBean.getObject());
+//        schedulerFactoryBean.setAutoStartup(true);
+//        return schedulerFactoryBean;
+//    }
 
     //定义一个调度器
 //    @Bean("schedulerFactoryBean")

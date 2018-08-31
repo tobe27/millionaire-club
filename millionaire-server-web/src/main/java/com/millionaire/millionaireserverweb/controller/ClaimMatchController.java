@@ -50,7 +50,7 @@ public class ClaimMatchController {
     public ResultBean listClaimMatch(@PathVariable("claimid") long claimid,
                                      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                      @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                     ClaimMatchQuery query) {
+                                     @RequestBody ClaimMatchQuery query) {
         ClaimInfo claimInfo = claimInfoService.selectByPrimaryKey(claimid);
         if (claimInfo == null) {
             return new ResultBean(-1, "error no such id", claimid);

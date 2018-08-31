@@ -36,7 +36,7 @@ public class BankController {
      * @Description 添加银行信息
      **/
     @PostMapping("/bank")
-    public ResultBean insertBank(@Validated Bank bank) {
+    public ResultBean insertBank(@RequestBody @Validated Bank bank) {
         Long id = bankService.insert(bank);
         logger.info("新增银行id：{}",id);
         logger.info("新增银行信息:{}",bank);
@@ -52,7 +52,7 @@ public class BankController {
     public ResultBean updateBank(@PathVariable("bankId") Long id,
                                  @RequestParam(value = "singleLimit", required = false) Double singleLimit,
                                  @RequestParam(value = "dailyLimit", required = false) Double dailyLimit,
-                                  String modifier) {
+                                 @RequestParam String modifier) {
         // modifier 校验未做
         // 此处可以通过modifier查找后台用户信息，如果为空，返回错误
         //因此时adminservice依赖未通 未进行校验
@@ -104,7 +104,7 @@ public class BankController {
     @GetMapping("/list/bank")
     public ResultBean selectBankByPage(@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                        @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                       BankQuery query) {
+                                       @RequestBody BankQuery query) {
             PageInfo<Bank> pageInfo = bankService.selectBankByPage(pageNum, pageSize, query);
             logger.info("查询银行信息:{}", query);
             return new ResultBean(1, "success", pageInfo);

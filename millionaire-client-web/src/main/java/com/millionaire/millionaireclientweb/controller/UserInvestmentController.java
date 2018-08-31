@@ -1,7 +1,7 @@
 package com.millionaire.millionaireclientweb.controller;
 
 import com.millionaire.millionaireclientweb.result.ResultBean;
-import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
+//import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,10 +18,10 @@ public class UserInvestmentController {
      * @param requestBean
      * @return
      */
-    @PostMapping("/u/user-investment")
-    public ResultBean userInvestment(@RequestBody UserInvestmentRequestBean requestBean) {
-
-        return null;
-    }
+//    @PostMapping("/u/user-investment")
+//    public ResultBean userInvestment(@RequestBody UserInvestmentRequestBean requestBean) {
+//
+//        return null;
+//    }
 
 }

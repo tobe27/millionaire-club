@@ -31,7 +31,7 @@ public class MessagePlatformController {
      * @Description 新增消息
      **/
     @PostMapping("/message-platform")
-    public ResultBean insertMessagePlatform(@Validated MessagePlatform message) {
+    public ResultBean insertMessagePlatform(@RequestBody @Validated MessagePlatform message) {
         //上线消息，选择定时发送时 定时发送时间需为未来时间
         //status=10 上线； type=20 定时发送
         System.out.println(message);
@@ -61,7 +61,7 @@ public class MessagePlatformController {
     @GetMapping("/list/message-platform")
     public ResultBean listMessagePlatform(@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                          MessagePlatformQuery query) {
+                                          @RequestBody MessagePlatformQuery query) {
         PageInfo<MessagePlatform> pageInfo = messagePlatformService.listMessageByPage(pageNum, pageSize, query);
         logger.info("查询消息列表:{}", query);
         return new ResultBean(1, "success", pageInfo);

@@ -69,7 +69,7 @@ public class ClaimInfoController {
         @GetMapping("/list/claim-info")
         public ResultBean selectClaimByPage (@RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                              @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                             ClaimInfoQuery claimInfoQuery) {
+                                             @RequestBody ClaimInfoQuery claimInfoQuery) {
                 PageInfo<ClaimInfo> pageInfo =
                         claimInfoService.selectClaimBypage(pageSize, pageNum, claimInfoQuery);
                 logger.info("查询债权信息：{}", claimInfoQuery);
