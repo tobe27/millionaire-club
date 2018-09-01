@@ -170,4 +170,22 @@ public class PayManager {
                 investmentUser.getId(), userBank.getCardNumber(),receptionUsers.getIdName());
     }
 
+    /**
+     * 产品续投交易逻辑
+     */
+    public void postRenewal(Long id ,String contactSign) {
+
+//        investmentUser = investmentUserService.selectByPrimaryKey(id);
+
+//        查询产品信息
+
+
+//        修改起息时间,到息时间即为起息时间
+//        investmentUser.setValueDateStart(investmentUser.getValueDateEnd());
+
+//        Long valueDateEnd = investmentUser.getValueDateStart() + investmentProduct.getDeadline() * TIME_DAY;
+
+    }
+
+
 }

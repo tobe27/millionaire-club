@@ -59,7 +59,7 @@ public class UserInvestmentController {
 
     ContractResponse contractResponse = new ContractResponse();
 
-    InvestmentUser investmentUser = new InvestmentUser();
+
 
 
     /**
@@ -213,8 +213,7 @@ public class UserInvestmentController {
         Long id = jsonObject.getLong("id");
         String contactSign = jsonObject.getString("contactSign");
 
-        investmentUser = investmentUserService.selectByPrimaryKey(id);
-//        修改起息时间
+        payManager.postRenewal(id,contactSign);
 
         return null;
     }
