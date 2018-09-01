@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,6 @@ import java.util.List;
 @EnableScheduling
 @Slf4j
 public class MessageSendJob {
-//    private Logger logger =LoggerFactory.getLogger(MessageSendJob.class);
     @Resource
     private MessagePlatformService messagePlatformService;
    /**
@@ -34,7 +34,7 @@ public class MessageSendJob {
     public void sendMessage(){
         // 查询所有未发送的平台消息
         List<MessagePlatform> unsendMessage = messagePlatformService.listUnsendMessage();
-        log.info("定时消息发送任务启动:{}",new Date());
+        log.info("定时消息发送任务启动");
         // 循环未发送消息队列
         for(MessagePlatform message:unsendMessage){
             // 如果定时发送时间小于当前时间

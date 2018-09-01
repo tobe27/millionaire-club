@@ -41,8 +41,10 @@ public class BankController {
     public ResultBean insertBank(@RequestBody @Validated Bank bank) {
         // founder 可以不用前台传递 初期开发的时候shiro未完成，由前端传递
         // 从shiro取出当前用户名和传入参数对比
+        logger.info("新增银行入参信息:{}",bank);
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
         if(!userName.equals(bank.getFounder())){
+            logger.info("传入创建人非当前登陆人员:{},{}",userName,bank);
             return new ResultBean(-1, "error no such founder",bank);
         }
         Long id = bankService.insert(bank);
