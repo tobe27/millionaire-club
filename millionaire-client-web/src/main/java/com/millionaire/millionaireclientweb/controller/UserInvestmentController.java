@@ -1,12 +1,12 @@
 package com.millionaire.millionaireclientweb.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
+import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
-import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
-
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.Constants;
@@ -16,13 +16,12 @@ import com.millionaire.millionairepaymentmanager.manager.PayManager;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -60,8 +59,12 @@ public class UserInvestmentController {
 
     ContractResponse contractResponse = new ContractResponse();
 
+
+
+
     /**
      * 用户支付接口,跳转第三方支付页面
+     *
      * @param requestBean
      * @return
      */
@@ -69,9 +72,9 @@ public class UserInvestmentController {
 
     @PostMapping("/u/user-investment")
     public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean, HttpServletRequest servletRequest) throws IOException, FuYouException {
-        Cookie cookie = CookieUtil.getCookie("cookie",servletRequest);
+        Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
         Long id = Long.valueOf(cookie.getValue());
-        return payManager.payment(requestBean,id);
+        return payManager.payment(requestBean, id);
     }
 
 
@@ -79,8 +82,7 @@ public class UserInvestmentController {
      * 支付成功回调接口
      */
     @PostMapping("/api/back_url")
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String version = req.getParameter("VERSION");
         String type = req.getParameter("TYPE");
         String responseCode = req.getParameter("RESPONSECODE");
@@ -101,56 +103,52 @@ public class UserInvestmentController {
                 .append(amt).append("|").append(bankCard).append("|").append(key).toString();
         resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
-        if (MD5.MD5Encode(signPain).equals(sign))
-        {
-            if (Constants.RESP_CODE_SUCCESS.equals(responseCode))
-            {
-                logger.info(mchntOrderId +"支付成功~");
+        if (MD5.MD5Encode(signPain).equals(sign)) {
+            if (Constants.RESP_CODE_SUCCESS.equals(responseCode)) {
+                logger.info(mchntOrderId + "支付成功~");
 //                调用任务执行方法
                 payBackManager.backManage(Long.valueOf(mchntOrderId));
                 resp.getWriter().write("支付成功~");
                 payBackManager.backManage(Long.valueOf(mchntOrderId));
-            }
-            else
-            {
-                logger.info(mchntOrderId +"支付失败~"+responseMsg);
+            } else {
+                logger.info(mchntOrderId + "支付失败~" + responseMsg);
                 resp.getWriter().write("支付失败~");
             }
-        }
-        else
-        {
-            logger.info(mchntOrderId +"验签失败~");
+        } else {
+            logger.info(mchntOrderId + "验签失败~");
             resp.getWriter().write("验签失败~");
         }
     }
 
     /**
-     *  理财产品列表
+     * 理财产品列表
+     *
      * @param pageNum
      * @param pageSize
      * @return
      */
     @GetMapping("/app/list/products")
-    public ResultBean listProducts(@RequestParam("pageNum")int pageNum, @RequestParam("pageSize")int pageSize) {
+    public ResultBean listProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
 
-        return new ResultBean(1,"success",productService.selectByPage(pageSize,pageNum));
+        return new ResultBean(1, "success", productService.selectByPage(pageSize, pageNum));
     }
 
     /**
      * 产品详情
+     *
      * @param id
      * @return
      */
     @GetMapping("/app/product/{id}")
-    public ResultBean getProduct(@PathVariable("id")long id ) {
-        return new ResultBean(1,"success",productService.selectByPrimaryKey(id));
+    public ResultBean getProduct(@PathVariable("id") long id) {
+        return new ResultBean(1, "success", productService.selectByPrimaryKey(id));
     }
 
     /**
      * 可续投投资列表数据
      */
     @GetMapping("/u/list/renewal-products")
-    public ResultBean listRenewalProducts(@RequestParam("pageNum")int pageNum, @RequestParam("pageSize")int pageSize) {
+    public ResultBean listRenewalProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
 //        从redis中获取到续投参数
         int investmentEnd = (int) redisTemplate.opsForValue().get("investmentEnd");
 //        查询到期日期小于续投参数的用户投资，当天的不包括在内
@@ -162,26 +160,27 @@ public class UserInvestmentController {
         long nowTime = now.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endTime = end.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
-        return new ResultBean(1,"success",investmentUserService.listRenewalInvestments(endTime,nowTime,pageSize,pageNum));
+        return new ResultBean(1, "success", investmentUserService.listRenewalInvestments(endTime, nowTime, pageSize, pageNum));
     }
 
     /**
      * 可续投投资详情
      */
     @GetMapping("u/renewal/investment-user/{id}")
-    public ResultBean getRenewalProduct(@PathVariable("id")Long id) {
+    public ResultBean getRenewalProduct(@PathVariable("id") Long id) {
 
-        return new ResultBean(1,"success",investmentUserService.selectRenewalInvestmentById(id));
+        return new ResultBean(1, "success", investmentUserService.selectRenewalInvestmentById(id));
     }
 
     /**
      * 获取签署合同所需信息
+     *
      * @param servletRequest
      * @return
      */
     @GetMapping("u/contract-userInfo")
     public ResultBean getContractUserInfo(HttpServletRequest servletRequest) {
-        Cookie cookie = CookieUtil.getCookie("cookie",servletRequest);
+        Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
         Long id = Long.valueOf(cookie.getValue());
         receptionUsers = receptionUsersService.selectByPrimaryKey(id);
         ContractResponse contractResponse = new ContractResponse();
@@ -189,25 +188,33 @@ public class UserInvestmentController {
         contractResponse.setIdNumber(receptionUsers.getIdNumber());
         String companySeal = (String) redisTemplate.opsForValue().get("companySeal");
         contractResponse.setCompanySeal(companySeal);
-        return new ResultBean(1,"success",contractResponse);
+        return new ResultBean(1, "success", contractResponse);
     }
 
     /**
      * 合同详情
+     *
      * @param id 用户投资表的id传过来
      * @return
      */
     @GetMapping("u/investment-contract/{id}")
-    public ResultBean getContractUser(@PathVariable("id")Long id) {
-        contractResponse =investmentUserService.selectContractResponse(id);
-        String companySeal = (String) redisTemplate.opsForValue().get("companySeal");
+    public ResultBean getContractUser(@PathVariable("id") Long id) {
+        contractResponse = investmentUserService.selectContractResponse(id);
+        String companySeal = (String) redisTemplate.opsForValue().get("seal");
         contractResponse.setCompanySeal(companySeal);
-        return new ResultBean(1,"success",companySeal);
+        return new ResultBean(1, "success", companySeal);
     }
 
+    /**
+     * 产品续投的
+     */
+    @PostMapping("u/renewal-investment-user")
+    public ResultBean postRenewal(@RequestBody JSONObject jsonObject) {
+        Long id = jsonObject.getLong("id");
+        String contactSign = jsonObject.getString("contactSign");
 
+        payManager.postRenewal(id,contactSign);
 
-
-
-
+        return null;
+    }
 }
