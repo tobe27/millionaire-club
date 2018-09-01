@@ -6,6 +6,7 @@ import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
+import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
 import org.slf4j.Logger;
@@ -111,5 +112,10 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
         PageHelper.startPage(pageNum, pageSize);
         List<RenewalInvestmentDTO> list = investmentUserMapper.listRenewalInvestments(end, now);
         return new PageInfo(list);
+    }
+
+    @Override
+    public ContractResponse selectContractResponse(Long id) {
+        return investmentUserMapper.selectContractResponse(id);
     }
 }
