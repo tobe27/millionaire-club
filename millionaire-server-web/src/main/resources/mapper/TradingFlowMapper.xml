@@ -5,6 +5,7 @@
         <constructor>
             <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="investmentUserId" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="product_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -17,15 +18,25 @@
             <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
         </constructor>
     </resultMap>
+
     <sql id="Base_Column_List">
-    id, uid,product_name, phone, name, amount, type, bank_card_id, pay_type, status, gmt_create,
+    id, uid,investment_user_id,product_name, phone, name, amount, type, bank_card_id, pay_type, status, gmt_create,
     gmt_update
   </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from trading_flow
         where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!--client-->
+    <select id="findByUid" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM trading_flow
+        WHERE uid=#{uid}
     </select>
 
     <resultMap id="UserTradingFlowMap" type="com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO">
@@ -39,7 +50,6 @@
         <result column="pay_type" property="bankName"/>
         <result column="gmt_create" property="gmtCreate"/>
     </resultMap>
-
 
     <select id="selectByUIDandQuery" resultMap="UserTradingFlowMap">
         select
@@ -127,27 +137,25 @@
                 and product_name = #{productName,jdbcType=VARCHAR}
             </if>
         </where>
+
         group  by
-        FROM_UNIXTIME(gmt_create/1000, '%Y-%m-%d')
+        FROM_UNIXTIME(gmt_create/1000, '%Y%m%d')
     </select>
-
-
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from trading_flow
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-
     <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.TradingFlow"
             useGeneratedKeys="true" keyProperty="id">
-    insert into trading_flow (uid,product_name, phone,
-      name, amount, type,
-      bank_card_id, pay_type, status,
+    insert into trading_flow (uid,investment_user_id,product_name, phone,
+      name, amount, type, 
+      bank_card_id, pay_type, status, 
       gmt_create, gmt_update)
-    values (#{uid,jdbcType=BIGINT},#{productName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
-      #{name,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
-      #{bankCardId,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
+    values (#{uid,jdbcType=BIGINT},#{investmentUserId,jdbcType=BIGINT},#{productName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
+      #{bankCardId,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
       #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT})
   </insert>
     <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.TradingFlow">
@@ -155,6 +163,9 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="uid != null">
                 uid,
+            </if>
+            <if test="investmentUserId != null">
+                investment_user_id,
             </if>
             <if test="productName != null">
                 product_name,
@@ -190,6 +201,9 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="uid != null">
                 #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="investmentUserId != null">
+                #{investmentUserId,jdbcType=BIGINT},
             </if>
             <if test="productName != null">
                 #{productName,jdbcType=VARCHAR},
@@ -230,6 +244,9 @@
             <if test="uid != null">
                 uid = #{uid,jdbcType=BIGINT},
             </if>
+            <if test="investmentUserId != null">
+                investment_user_id=#{investmentUserId,jdbcType=BIGINT},
+            </if>
             <if test="productName != null">
                 product_name = #{productName,jdbcType=VARCHAR},
             </if>
@@ -267,6 +284,7 @@
     update trading_flow
     set
       uid = #{uid,jdbcType=BIGINT},
+      investment_user_id = #{investmentUserId,jdbcType=BIGINT},
       product_name = #{productName,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
@@ -279,4 +297,13 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!--修改交易记录状态-->
+    <update id="updateTradingFlowStatus">
+    update trading_flow
+    set
+      status = #{status,jdbcType=TINYINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where investment_user_id = #{investmentUserId,jdbcType=BIGINT} and TYPE = -1
+    </update>
 </mapper>

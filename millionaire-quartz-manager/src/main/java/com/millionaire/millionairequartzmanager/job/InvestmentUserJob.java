@@ -1,16 +1,21 @@
 package com.millionaire.millionairequartzmanager.job;
 
 
+import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
+import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.TimerTaskInvestment;
-import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
-import com.millionaire.millionairebusinessservice.service.MessageUserService;
-import com.millionaire.millionairebusinessservice.service.TimerTaskInvestmentService;
-import com.millionaire.millionairebusinessservice.service.TradingFlowService;
+import com.millionaire.millionairebusinessservice.module.TradingFlow;
+import com.millionaire.millionairebusinessservice.service.*;
+import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.CompanyPayServlet;
+import com.millionaire.millionairepaymentmanager.manager.PayBackManager;
+import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +27,8 @@ import java.util.List;
  */
 @Component
 public class InvestmentUserJob implements Job {
+
+    private Logger logger = LoggerFactory.getLogger(InvestmentUserJob.class);
 
     @Autowired
     private InvestmentUserService investmentUserService;
@@ -44,6 +51,12 @@ public class InvestmentUserJob implements Job {
     @Autowired
     private TimerTaskInvestmentService taskInvestmentService;
 
+    @Autowired
+    private InvestmentProductService productService;
+
+    @Autowired
+    private CompanyPayServlet companyPay;
+
     /**
      * 扫描投资的定时任务表，筛选出符合条件的记录，执行任务
      * @param jobExecutionContext
@@ -57,8 +70,38 @@ public class InvestmentUserJob implements Job {
         //Output : C
         listTaskForExecute.forEach(taskInvestment->{
             if(taskInvestment.getExecuteType() == 10){//        10代表本息一次回款
+
 //                生成交易流水记录
+                TradingFlow tradingFlow = new TradingFlow();
+//                查询用户投资信息
+                InvestmentUser investmentUser = investmentUserService.selectByPrimaryKey(taskInvestment.getInvestmentUserId());
+//                查询产品信息
+                InvestmentProduct investmentProduct = productService.selectByPrimaryKey(investmentUser.getProductId());
+//                查询用户手机号
+                ReceptionUsers users = receptionUsersService.selectByPrimaryKey(investmentUser.getUid());
+
+                tradingFlow.setInvestmentUserId(taskInvestment.getInvestmentUserId());
+                tradingFlow.setUid(investmentUser.getUid());
+                tradingFlow.setId(0L);
+                tradingFlow.setProductName(investmentProduct.getName());
+                tradingFlow.setPhone(String.valueOf(users.getPhone()));
+                tradingFlow.setName(users.getIdName());
+                tradingFlow.setAmount(taskInvestment.getPaybackAmount());
+                tradingFlow.setType((byte)0);
+                tradingFlow.setBankCardId(investmentUser.getBankCardNumber());
+                tradingFlow.setPayType(investmentUser.getBankName());
+                tradingFlow.setStatus((byte)0);
+                tradingFlowService.insert(tradingFlow);
+                long tradingFlowId = tradingFlow.getId();
+                logger.info("交易信息插入："+tradingFlowId);
+
 //                调用支付接口转账
+                boolean result = companyPay.httpURLConnectionPOST(taskInvestment.getId(), taskInvestment.getPaybackAmount());
+                if (result){    //支付结果成功
+
+
+                }
+
 //                修改定时任务状态
 //                更新用户账户的余额和收益
 //                更新用户投资状态

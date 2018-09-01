@@ -198,6 +198,7 @@ public class UserInvestmentController {
     @GetMapping("u/investment-contract/{id}")
     public ResultBean getContractUser(@PathVariable("id") Long id) {
         contractResponse = investmentUserService.selectContractResponse(id);
+
         String companySeal = (String) redisTemplate.opsForValue().get("seal");
         contractResponse.setCompanySeal(companySeal);
         return new ResultBean(1, "success", companySeal);
