@@ -30,7 +30,7 @@
     gmt_update
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from user_bank
     where id = #{id,jdbcType=BIGINT}
@@ -68,11 +68,11 @@
   <insert id="insert" parameterType="com.millionaire.millionaireuserservice.module.UserBank" useGeneratedKeys="true" keyProperty="id">
     insert into user_bank (
     city, bank_name, card_number,
-      card_type, bank_phone, uid, 
+      card_type, bank_phone, uid,
       gmt_create, gmt_update)
     values (
-      #{city,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{cardNumber,jdbcType=VARCHAR}, 
-      #{cardType,jdbcType=VARCHAR}, #{bankPhone,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, 
+      #{city,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{cardNumber,jdbcType=VARCHAR},
+      #{cardType,jdbcType=VARCHAR}, #{bankPhone,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT},
       #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.millionaire.millionaireuserservice.module.UserBank" useGeneratedKeys="true" keyProperty="id">

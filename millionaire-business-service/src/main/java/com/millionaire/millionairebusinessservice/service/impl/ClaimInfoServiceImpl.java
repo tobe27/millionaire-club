@@ -21,7 +21,7 @@ import java.util.List;
 public class ClaimInfoServiceImpl implements ClaimInfoService {
 
     @Resource
-    ClaimInfoMapper claimInfoMapper;
+  private   ClaimInfoMapper claimInfoMapper;
 
     /**
      * TODO 这个实现类需要修改
@@ -117,4 +117,13 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
 //    }
 //}
 
+
+    /**
+     * @Description 选择未到期债权 用于定时任务排查债权到期时间 status != 2
+     * status =2 表示已经过期
+     **/
+    @Override
+    public List<ClaimInfo> selectClaimExpireCheck() {
+        return claimInfoMapper.selectClaimExpireCheck();
+    }
 }
