@@ -65,12 +65,6 @@
             <artifactId>millionaire-manager-service</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--对admin-service模块依赖-->
-        <!--<dependency>-->
-        <!--<groupId>com.millionaire</groupId>-->
-        <!--<artifactId>millionaire-admin-service</artifactId>-->
-        <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
 
         <!--对payment-manager模块依赖-->
         <dependency>

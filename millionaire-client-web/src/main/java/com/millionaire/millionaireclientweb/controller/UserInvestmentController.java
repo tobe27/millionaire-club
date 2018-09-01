@@ -1,12 +1,12 @@
 package com.millionaire.millionaireclientweb.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
+import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
-import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
-
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.Constants;
@@ -16,13 +16,12 @@ import com.millionaire.millionairepaymentmanager.manager.PayManager;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -59,6 +58,9 @@ public class UserInvestmentController {
     ReceptionUsers receptionUsers = new ReceptionUsers();
 
     ContractResponse contractResponse = new ContractResponse();
+
+    InvestmentUser investmentUser = new InvestmentUser();
+
 
     /**
      * 用户支付接口,跳转第三方支付页面
@@ -207,7 +209,12 @@ public class UserInvestmentController {
      * 产品续投的
      */
     @PostMapping("u/renewal-investment-user")
-    public ResultBean postRenewal() {
+    public ResultBean postRenewal(@RequestBody JSONObject jsonObject) {
+        Long id = jsonObject.getLong("id");
+        String contactSign = jsonObject.getString("contactSign");
+
+        investmentUser = investmentUserService.selectByPrimaryKey(id);
+//        修改起息时间
 
         return null;
     }
