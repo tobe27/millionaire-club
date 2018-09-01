@@ -32,4 +32,19 @@ public interface ClaimMatchMapper {
      * @Description 获取当前存储的债权协议编号总数
      **/
     long countClaimMatch();
+
+    /**
+     * @Description 根据债权id 查找有效的债权匹配信息
+     * status = 1 表示该债权可用
+     **/
+    List<ClaimMatch> listEffectClaimMatchByClaimID(Long claimId);
+
+    /**
+     * @Description 根据用户投资id查找当前有效的债权匹配信息
+     * 一份用户投资同一时间只有一份有效的债权匹配信息
+     * 查询条件
+     * investmentUserID
+     * status=1 该债权匹配信息有效
+     * **/
+      ClaimMatch selectEffectByInvestmentUID(long investmentUserID);
 }
