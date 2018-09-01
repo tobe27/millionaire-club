@@ -16,10 +16,12 @@ public class TimerTaskInvestment {
     private Byte status;
 //    任务执行时间
     private Long executeTime;
+//     续投后生成的用户投资id  ,默认值为o
+    private Long associationInvestment = 0L;
     private Long gmtCreate;
     private Long gmtUpdate;
 
-    public TimerTaskInvestment(Long id, Long investmentUserId, Integer paybackAmount, Byte executeType, Byte times, Byte status, Long executeTime, Long gmtCreate, Long gmtUpdate) {
+    public TimerTaskInvestment(Long id, Long investmentUserId, Integer paybackAmount, Byte executeType, Byte times, Byte status, Long executeTime, Long associationInvestment, Long gmtCreate, Long gmtUpdate) {
         this.id = id;
         this.investmentUserId = investmentUserId;
         this.paybackAmount = paybackAmount;
@@ -27,6 +29,7 @@ public class TimerTaskInvestment {
         this.times = times;
         this.status = status;
         this.executeTime = executeTime;
+        this.associationInvestment = associationInvestment;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
     }
