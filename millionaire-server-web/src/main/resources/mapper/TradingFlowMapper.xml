@@ -5,7 +5,9 @@
         <constructor>
             <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+
             <arg column="investment_use_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+
             <arg column="product_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -18,15 +20,25 @@
             <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
         </constructor>
     </resultMap>
+
     <sql id="Base_Column_List">
     id, uid,investment_user_id,product_name, phone, name, amount, type, bank_card_id, pay_type, status, gmt_create,
     gmt_update
   </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from trading_flow
         where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!--client-->
+    <select id="findByUid" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM trading_flow
+        WHERE uid=#{uid}
     </select>
 
     <resultMap id="UserTradingFlowMap" type="com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO">
@@ -40,7 +52,6 @@
         <result column="pay_type" property="bankName"/>
         <result column="gmt_create" property="gmtCreate"/>
     </resultMap>
-
 
     <select id="selectByUIDandQuery" resultMap="UserTradingFlowMap">
         select
@@ -128,26 +139,24 @@
                 and product_name = #{productName,jdbcType=VARCHAR}
             </if>
         </where>
+
         group  by
-        FROM_UNIXTIME(gmt_create/1000, '%Y-%m-%d')
+        FROM_UNIXTIME(gmt_create/1000, '%Y%m%d')
     </select>
-
-
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from trading_flow
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-
     <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.TradingFlow"
             useGeneratedKeys="true" keyProperty="id">
     insert into trading_flow (uid,investment_user_id,product_name, phone,
-      name, amount, type,
-      bank_card_id, pay_type, status,
+      name, amount, type, 
+      bank_card_id, pay_type, status, 
       gmt_create, gmt_update)
     values (#{uid,jdbcType=BIGINT},#{investmentUserId,jdbcType=BIGINT},#{productName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
-      #{name,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
+      #{name,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
       #{bankCardId,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
       #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT})
   </insert>
@@ -277,7 +286,9 @@
     update trading_flow
     set
       uid = #{uid,jdbcType=BIGINT},
+
        investment_user_id = #{investmentUserId,jdbcType=BIGINT},
+
       product_name = #{productName,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
