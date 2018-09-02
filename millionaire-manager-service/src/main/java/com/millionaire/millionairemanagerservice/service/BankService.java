@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.Bank;
 import com.millionaire.millionairemanagerservice.request.BankQuery;
 
+import java.util.List;
+
 /**
  * @author Liu Kai
  * @Description: TODO  后台银行信息管理
@@ -30,4 +32,6 @@ public interface BankService {
 
     PageInfo<Bank> selectBankByPage(Integer pageNum, Integer pageSize,
                                     BankQuery query);
+
+    List<Bank> selectAll();
 }

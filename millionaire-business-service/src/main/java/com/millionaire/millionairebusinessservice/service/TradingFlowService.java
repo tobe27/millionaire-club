@@ -53,5 +53,7 @@ public interface TradingFlowService {
      */
     int updateTradingFlowStatus(Long investmentUserId, Byte status);
 
+    List<TradingFlow> findByUid(Long uid);
 
+    TradingFlow selectByPrimaryKey(Long id);
 }

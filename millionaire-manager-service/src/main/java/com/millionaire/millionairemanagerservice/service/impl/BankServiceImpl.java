@@ -81,4 +81,9 @@ private  Logger logger = LoggerFactory.getLogger(BankServiceImpl.class);
         List<Bank> bankList=bankMapper.selectBankByPage(query);
         return new PageInfo<>(bankList);
     }
+
+    @Override
+    public List<Bank> selectAll() {
+        return bankMapper.selectAll();
+    }
 }

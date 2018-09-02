@@ -29,4 +29,6 @@ public interface ProposalService {
 
     UserProposalDTO selectUserProposalById(Long id);
 
+    int insert(Proposal record);
+
 }
