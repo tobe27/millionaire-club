@@ -13,7 +13,7 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-    id, claim_id,status, investment_user_id, credit_contract_number, gmt_create, gmt_update
+    id, claim_id, investment_user_id, credit_contract_number,status ，gmt_create, gmt_update
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
