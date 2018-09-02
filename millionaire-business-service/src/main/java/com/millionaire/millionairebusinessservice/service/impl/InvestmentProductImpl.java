@@ -148,4 +148,11 @@ public class InvestmentProductImpl implements InvestmentProductService {
         PageInfo<InvestmentProduct> pageInfo = new PageInfo<>(productList);
         return pageInfo;
     }
+
+    @Override
+    public List<InvestmentProduct> listProductsRecommend() {
+        return investmentProductMapper.listProductsRecommend();
+    }
+
+
 }

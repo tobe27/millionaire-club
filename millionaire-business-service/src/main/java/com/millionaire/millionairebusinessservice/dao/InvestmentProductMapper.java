@@ -54,4 +54,10 @@ public interface InvestmentProductMapper {
      */
     List<InvestmentProduct> listProductOnShelf(int pageSize, int pageNum);
 
+    /**
+     * Todo 推荐产品 is_recommend =1  and is_shelf = 1
+     * @return
+     */
+    List<InvestmentProduct> listProductsRecommend();
+
 }

@@ -285,4 +285,13 @@
         from investment_product
         WHERE is_shelf = 1
     </select>
+
+    <!-- 推荐产品listProductsRecommend-->
+    <select id="listProductsRecommend" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_product
+        WHERE is_shelf = 1
+        AND is_recommend = 1
+    </select>
 </mapper>

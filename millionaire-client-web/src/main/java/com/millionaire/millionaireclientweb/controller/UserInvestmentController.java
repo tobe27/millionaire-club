@@ -13,6 +13,7 @@ import com.millionaire.millionaireclientweb.pojo.InvestmentUsersDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.VerificationUntil;
+import com.millionaire.millionairemanagerservice.service.ContentService;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.Constants;
 import com.millionaire.millionairepaymentmanager.fuyou.until.MD5;
@@ -62,6 +63,9 @@ public class UserInvestmentController {
 
     @Autowired
     private ReceptionUsersService receptionUsersService;
+
+    @Autowired
+    private ContentService contentService;
 
     @Autowired
     private VerificationUntil verificationUntil;
@@ -171,25 +175,23 @@ public class UserInvestmentController {
     }
 
     /**
+     * TODO 轮播图展示（type = 10 and state = 10 ）
      * 轮播图展示
-     * @param pageNum
-     * @param pageSize
      * @return
      */
     @GetMapping("app/list/banners")
-    public ResultBean listBanners(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        return null;
+    public ResultBean listBanners() {
+        return new ResultBean(1,"success",contentService.listCoverShelf());
     }
 
     /**
+     * Todo 推荐产品 is_recommend =1  and is_shelf = 1
      * 推荐产品展示
-     * @param servletRequest
      * @return
      */
     @GetMapping("app/products/recommend")
-    public ResultBean getProductRecommend(HttpServletRequest servletRequest) {
-
-        return null;
+    public ResultBean getProductRecommend() {
+        return new ResultBean(1,"success",productService.listProductsRecommend());
     }
 
 

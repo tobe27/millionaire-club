@@ -161,4 +161,13 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!--展示banner图轮播-->
+    <select id="listCoverShelf" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from content
+        WHERE type = 10
+        AND state = 10
+    </select>
 </mapper>
