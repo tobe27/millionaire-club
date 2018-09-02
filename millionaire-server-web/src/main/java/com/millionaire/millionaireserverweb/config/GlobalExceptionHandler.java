@@ -42,4 +42,20 @@ public class GlobalExceptionHandler {
         return r;
     }
 
+    /**
+     * @Description copy师兄代码 处理 json字符串转数字产生的异常
+     **/
+    @ExceptionHandler(value = NumberFormatException.class)
+    @ResponseBody
+    public  ErrorInfo<String> numberFormatErrorHandler(HttpServletRequest req,NumberFormatException e){
+        ErrorInfo<String> r = new ErrorInfo<>();
+        r.setMessage(e.getMessage());
+        r.setCode(ErrorInfo.ERROR);
+        r.setData("数据格式转换发生错误");
+        r.setUrl(req.getRequestURL().toString());
+        return r;
+    }
+
+
+
 }

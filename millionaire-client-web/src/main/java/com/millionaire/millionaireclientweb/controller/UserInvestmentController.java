@@ -1,6 +1,7 @@
 package com.millionaire.millionaireclientweb.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.millionaire.millionairebusinessservice.exception.TimerTaskException;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
@@ -58,9 +59,6 @@ public class UserInvestmentController {
     ReceptionUsers receptionUsers = new ReceptionUsers();
 
     ContractResponse contractResponse = new ContractResponse();
-
-
-
 
     /**
      * 用户支付接口,跳转第三方支付页面
@@ -200,6 +198,7 @@ public class UserInvestmentController {
     @GetMapping("u/investment-contract/{id}")
     public ResultBean getContractUser(@PathVariable("id") Long id) {
         contractResponse = investmentUserService.selectContractResponse(id);
+
         String companySeal = (String) redisTemplate.opsForValue().get("seal");
         contractResponse.setCompanySeal(companySeal);
         return new ResultBean(1, "success", companySeal);
@@ -209,12 +208,14 @@ public class UserInvestmentController {
      * 产品续投的
      */
     @PostMapping("u/renewal-investment-user")
-    public ResultBean postRenewal(@RequestBody JSONObject jsonObject) {
+    public ResultBean postRenewal(@RequestBody JSONObject jsonObject) throws TimerTaskException {
         Long id = jsonObject.getLong("id");
         String contactSign = jsonObject.getString("contactSign");
-
-        payManager.postRenewal(id,contactSign);
-
-        return null;
+        if (payManager.postRenewal(id, contactSign)) {
+            return new ResultBean(1, "success");
+        } else {
+            return new ResultBean(-1, "application something error");
+        }
     }
+
 }

@@ -118,4 +118,25 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     public ContractResponse selectContractResponse(Long id) {
         return investmentUserMapper.selectContractResponse(id);
     }
+
+
+    /**
+     * @param claimID
+     * @Description 根据债权id查找与之匹配的用户投资
+     * 与 List<Long> selectMatchedUID(long claimID); 类似，
+     * 以后编写查询方法时能总体考虑最好
+     */
+    @Override
+    public List<InvestmentUser> selectMatchedInvestmentUser(long claimID) {
+        return investmentUserMapper.selectMatchedInvestmentUser(claimID);
+    }
+
+    /**
+     * @Description 查看所有理财中的用户投资 用于用户投资到期的定时任务
+     * 查询条件 investment_status = 10 理财中的用户投资
+     **/
+    @Override
+    public List<InvestmentUser> listEffectInvestmentUser() {
+        return investmentUserMapper.listEffectInvestmentUser();
+    }
 }

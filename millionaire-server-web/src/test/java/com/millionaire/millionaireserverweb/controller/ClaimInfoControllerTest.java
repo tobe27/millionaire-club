@@ -10,6 +10,8 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,5 +39,12 @@ public class ClaimInfoControllerTest {
         System.out.println(claimInfoService.insert(claimInfo));
         System.out.println("===========================================邪魔退散===========================================");
 
+    }
+
+    @Test
+    public void selectClaimExpireCheck() {
+
+        List<ClaimInfo> list =claimInfoService.selectClaimExpireCheck();
+        System.out.println("list = " + list);
     }
 }

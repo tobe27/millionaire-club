@@ -186,4 +186,40 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
     public long countClaimMatch() {
         return claimMatchMapper.countClaimMatch();
     }
+
+
+    /**
+     * @param claimID
+     * @Description 根据债权id 查找有效的债权匹配信息
+     * status = 1 表示该债权可用
+     */
+    @Override
+    public List<ClaimMatch> listEffectClaimMatchByClaimID(long claimID) {
+        return claimMatchMapper.listEffectClaimMatchByClaimID(claimID);
+    }
+
+
+    /**
+     * @param record
+     * @Description 动态更新债权匹配信息 返回债权信息id
+     */
+    @Override
+    public long updateByPrimaryKeySelective(ClaimMatch record) {
+        record.setGmtUpdate(System.currentTimeMillis());
+        claimMatchMapper.updateByPrimaryKeySelective(record);
+        return record.getId();
+    }
+
+    /**
+     * @param investmentUserID
+     * @Description 根据用户投资id查找当前有效的债权匹配信息
+     * 一份用户投资同一时间只有一份有效的债权匹配信息
+     * 查询条件
+     * investmentUserID
+     * status=1 该债权匹配信息有效
+     **/
+    @Override
+    public ClaimMatch selectEffectByInvestmentUID(long investmentUserID) {
+        return claimMatchMapper.selectEffectByInvestmentUID(investmentUserID);
+    }
 }

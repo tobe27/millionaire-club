@@ -54,24 +54,10 @@
         <result property="loginTime" column="login_time"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, user_number, phone, password, salt, manager_number, email, id_name, id_number,
+    id, user_number, phone, password, salt, manager_number, email, id_name, id_number, 
     id_front, id_back, address, bank_id, application_time, refusal, assets, profit, logo, 
     status, id_authentication, gmt_create, gmt_update, login_time
     </sql>
-    <select id="findById" resultType="com.millionaire.millionaireuserservice.transport.UserReceptionDTO">
-        SELECT
-        reception_users.id as id,
-        reception_users.id_name as idName,
-        reception_users.id_number as idNumber,
-        reception_users.phone as phone,
-        user_bank.bank_name as bankName,
-        user_bank.card_number as bankCardNumber,
-        reception_users.email as email,
-        reception_users.address as address
-        FROM reception_users INNER JOIN user_bank
-        ON reception_users.bank_id=user_bank.id
-        WHERE reception_users.id=#{id}
-    </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -79,12 +65,14 @@
         from reception_users
         where id = #{id,jdbcType=BIGINT}
     </select>
+
     <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from reception_users
         order by gmt_create desc;
     </select>
+
     <select id="selectUserByPage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -103,7 +91,7 @@
                 and status =  #{status,jdbcType=TINYINT}
             </if>
             <if test="lowerDate != null">
-               and gmt_create <![CDATA[ >= ]]>  #{lowerDate,jdbcType=BIGINT}
+                and gmt_create <![CDATA[ >= ]]>  #{lowerDate,jdbcType=BIGINT}
             </if>
             <if test="upperDate != null">
                 and gmt_create <![CDATA[ <= ]]>  #{upperDate,jdbcType=BIGINT}
@@ -115,6 +103,7 @@
     delete from reception_users
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
     <insert id="insert" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers"
             useGeneratedKeys="true" keyProperty="id">
     insert into reception_users (user_number, phone,
@@ -134,6 +123,7 @@
       #{status,jdbcType=TINYINT}, #{idAuthentication,jdbcType=TINYINT}, #{gmtCreate,jdbcType=BIGINT},
       #{gmtUpdate,jdbcType=BIGINT}, #{loginTime,jdbcType=BIGINT})
   </insert>
+
     <insert id="insertSelective" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers"
             useGeneratedKeys="true" keyProperty="id">
         insert into reception_users
@@ -274,6 +264,7 @@
             </if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective"
             parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers">
         update reception_users
@@ -347,6 +338,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.millionaire.millionaireuserservice.module.ReceptionUsers">
     update reception_users
     set user_number = #{userNumber,jdbcType=VARCHAR},
@@ -372,6 +364,7 @@
       login_time = #{loginTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
     <select id="findAll" resultMap="ReceptionUsers">
         SELECT
         <include refid="Base_Column_List"/>
@@ -391,14 +384,84 @@
         FROM reception_users
         <where>
             <if test="phone != null">
-               and phone like '${phone}%'
+                and phone like '${phone}%'
             </if>
             <if test="email!=null">
-               and email like '${email}%'
+                and email like '${email}%'
             </if>
             <if test="idName!=null">
-               and id_name like '${idName}%'
+                and id_name like '${idName}%'
             </if>
         </where>
     </select>
+
+    <!--更改用户总资产-->
+    <update id="updateUserAssets">
+        update reception_users
+        set
+        assets = #{assets,jdbcType=INTEGER},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <!--查询用户总资产-->
+    <select id="selectUserAssets" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT assets FROM reception_users WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <!--更改用户收益-->
+    <update id="updateUserProfit">
+        update reception_users
+        set
+        profit = #{profit,jdbcType=INTEGER},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <!--查询用户收益-->
+    <select id="selectUserProfit" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT profit FROM reception_users WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <!--server-->
+    <select id="selectUserVerificationByPage" resultMap="ReceptionUsers">
+        select
+        <include refid="Base_Column_List"/>
+        from reception_users
+        <where>
+            <if test="idName != null">
+                id_name like "%"#{idName,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="phone != null">
+                and phone like "%"#{phone,jdbcType=BIGINT}"%"
+            </if>
+            <if test="userNumber != null">
+                and  user_number = #{userNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="idAuthentication != null and idAuthentication != 0">
+                and  id_authentication = #{idAuthentication,jdbcType=TINYINT}
+            </if>
+            <if test="lowerDate != null">
+                and application_time <![CDATA[ >= ]]>  #{lowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="upperDate != null">
+                and application_time <![CDATA[ <= ]]>  #{upperDate,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+    <!--client-->
+    <select id="findById" resultType="com.millionaire.millionaireuserservice.transport.UserReceptionDTO">
+        SELECT
+        reception_users.id as id,
+        reception_users.id_name as idName,
+        reception_users.id_number as idNumber,
+        reception_users.phone as phone,
+        user_bank.bank_name as bankName,
+        user_bank.card_number as bankCardNumber,
+        reception_users.email as email,
+        reception_users.address as address
+        FROM reception_users INNER JOIN user_bank
+        ON reception_users.bank_id=user_bank.id
+        WHERE reception_users.id=#{id}
+    </select>
+
+
+
+
 </mapper>

@@ -36,4 +36,25 @@ public interface ClaimMatchService {
      **/
     long countClaimMatch();
 
+
+    /**
+     * @Description 根据债权id 查找有效的债权匹配信息
+     * status = 1 表示该债权可用
+     **/
+    List<ClaimMatch> listEffectClaimMatchByClaimID(long claimID);
+
+    /**
+     * @Description 动态更新债权匹配信息 返回债权信息id
+     **/
+    long updateByPrimaryKeySelective(ClaimMatch record);
+
+
+    /**
+     * @Description 根据用户投资id查找当前有效的债权匹配信息
+     * 一份用户投资同一时间只有一份有效的债权匹配信息
+     * 查询条件
+     * investmentUserID
+     * status=1 该债权匹配信息有效
+     * **/
+    ClaimMatch selectEffectByInvestmentUID(long investmentUserID);
 }

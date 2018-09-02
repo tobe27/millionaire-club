@@ -59,7 +59,7 @@ public class CompanyPayServlet {
     /**
      * 接口调用  POST
      */
-    public  boolean  httpURLConnectionPOST(Long investmentUserId,int amount) throws FuYouException {
+    public  boolean  httpURLConnectionPOST(Long taskId,int amount)  {
         try {
             URL url = new URL(POST_URL);
 
@@ -103,7 +103,7 @@ public class CompanyPayServlet {
                     "<accntno>6212261904006115311</accntno>"+
                     "<accntnm>似曾相识</accntnm>"+
                     "<amt>"+amount+"</amt>"+
-                    "<entseq>"+investmentUserId+"</entseq>"+
+                    "<entseq>"+taskId+"</entseq>"+
                     "<memo>测试</memo>"+
                     "<mobile>13275869228</mobile>"+
                     "<addDesc>1</addDesc>"+
@@ -149,16 +149,17 @@ public class CompanyPayServlet {
 
             //根据响应参数判断代付是否成功
             if (parse(sb.toString()).equals("000000")) {
-                logger.info("代付成功"+investmentUserId);
+                logger.info("代付成功"+taskId);
                 return true;
             }else {
-                logger.info("代付失败"+investmentUserId);
+                logger.info("代付失败"+taskId);
                 return false;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new FuYouException("代付系统异常");
+            logger.info("系统代付异常");
+            return false;
         }
     }
 

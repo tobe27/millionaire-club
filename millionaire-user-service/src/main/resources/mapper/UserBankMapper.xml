@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.millionaire.millionaireuserservice.dao.UserBankMapper">
-  <resultMap id="BaseResultMap" type="com.millionaire.millionaireuserservice.module.UserBank">
-    <constructor>
-      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="city" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="bank_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="card_number" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="card_type" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="bank_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
-    </constructor>
-  </resultMap>
-  <resultMap id="UserBank" type="com.millionaire.millionaireuserservice.module.UserBank">
-    <id property="id" column="id"/>
-    <result property="city" column="city"/>
-    <result property="bankName" column="bank_name"/>
-    <result property="cardNumber" column="card_number"/>
-    <result property="cardType" column="card_type"/>
-    <result property="bankPhone" column="bank_phone"/>
-    <result property="uid" column="uid"/>
-    <result property="gmtCreate" column="gmt_create"/>
-    <result property="gmtUpdate" column="gmt_update"/>
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.millionaire.millionaireuserservice.module.UserBank">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="city" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="bank_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="card_number" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="card_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="bank_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
+        </constructor>
+    </resultMap>
+    <resultMap id="UserBank" type="com.millionaire.millionaireuserservice.module.UserBank">
+        <id property="id" column="id"/>
+        <result property="city" column="city"/>
+        <result property="bankName" column="bank_name"/>
+        <result property="cardNumber" column="card_number"/>
+        <result property="cardType" column="card_type"/>
+        <result property="bankPhone" column="bank_phone"/>
+        <result property="uid" column="uid"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtUpdate" column="gmt_update"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, city, bank_name, card_number, card_type, bank_phone, uid, gmt_create,
     gmt_update
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from user_bank
-    where id = #{id,jdbcType=BIGINT}
-  </select>
 
-  <select id="selectByUID" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from user_bank
-    where uid = #{uid,jdbcType=BIGINT}
-  </select>
-  <select id="selectByCardNum" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from user_bank
-    where  card_number = #{cardNum,jdbcType=VARCHAR}
-  </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_bank
+        where id = #{id,jdbcType=BIGINT}
+    </select>
 
+    <select id="selectByUID" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_bank
+        where uid = #{uid,jdbcType=BIGINT}
+    </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectByCardNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_bank
+        where  card_number = #{cardNum,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user_bank
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-  <delete id="deleteByCardNum" parameterType="java.lang.String">
+    <delete id="deleteByCardNum" parameterType="java.lang.String">
     delete from user_bank
     where card_number = #{cardNum,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByUID" parameterType="java.lang.Long">
+
+    <delete id="deleteByUID" parameterType="java.lang.Long">
         delete from user_bank
     where uid = #{uid,jdbcType=BIGINT}
     </delete>
 
-
-
-  <insert id="insert" parameterType="com.millionaire.millionaireuserservice.module.UserBank" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.millionaire.millionaireuserservice.module.UserBank" useGeneratedKeys="true" keyProperty="id">
     insert into user_bank (
     city, bank_name, card_number,
       card_type, bank_phone, uid, 
@@ -76,92 +76,95 @@
       #{cardType,jdbcType=VARCHAR}, #{bankPhone,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, 
       #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.millionaire.millionaireuserservice.module.UserBank" useGeneratedKeys="true" keyProperty="id">
-    insert into user_bank
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="city != null">
-        city,
-      </if>
-      <if test="bankName != null">
-        bank_name,
-      </if>
-      <if test="cardNumber != null">
-        card_number,
-      </if>
-      <if test="cardType != null">
-        card_type,
-      </if>
-      <if test="bankPhone != null">
-        bank_phone,
-      </if>
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create,
-      </if>
-      <if test="gmtUpdate != null">
-        gmt_update,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="city != null">
-        #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="bankName != null">
-        #{bankName,jdbcType=VARCHAR},
-      </if>
-      <if test="cardNumber != null">
-        #{cardNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="cardType != null">
-        #{cardType,jdbcType=VARCHAR},
-      </if>
-      <if test="bankPhone != null">
-        #{bankPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null">
-        #{uid,jdbcType=BIGINT},
-      </if>
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=BIGINT},
-      </if>
-      <if test="gmtUpdate != null">
-        #{gmtUpdate,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionaireuserservice.module.UserBank">
-    update user_bank
-    <set>
-      <if test="city != null">
-        city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="bankName != null">
-        bank_name = #{bankName,jdbcType=VARCHAR},
-      </if>
-      <if test="cardNumber != null">
-        card_number = #{cardNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="cardType != null">
-        card_type = #{cardType,jdbcType=VARCHAR},
-      </if>
-      <if test="bankPhone != null">
-        bank_phone = #{bankPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null">
-        uid = #{uid,jdbcType=BIGINT},
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=BIGINT},
-      </if>
-      <if test="gmtUpdate != null">
-        gmt_update = #{gmtUpdate,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.millionaire.millionaireuserservice.module.UserBank">
+
+    <insert id="insertSelective" parameterType="com.millionaire.millionaireuserservice.module.UserBank" useGeneratedKeys="true" keyProperty="id">
+        insert into user_bank
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="city != null">
+                city,
+            </if>
+            <if test="bankName != null">
+                bank_name,
+            </if>
+            <if test="cardNumber != null">
+                card_number,
+            </if>
+            <if test="cardType != null">
+                card_type,
+            </if>
+            <if test="bankPhone != null">
+                bank_phone,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null">
+                #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="cardNumber != null">
+                #{cardNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="cardType != null">
+                #{cardType,jdbcType=VARCHAR},
+            </if>
+            <if test="bankPhone != null">
+                #{bankPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionaireuserservice.module.UserBank">
+        update user_bank
+        <set>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null">
+                bank_name = #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="cardNumber != null">
+                card_number = #{cardNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="cardType != null">
+                card_type = #{cardType,jdbcType=VARCHAR},
+            </if>
+            <if test="bankPhone != null">
+                bank_phone = #{bankPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.millionaire.millionaireuserservice.module.UserBank">
     update user_bank
     set
       city = #{city,jdbcType=VARCHAR},
@@ -174,4 +177,20 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <!--client-->
+    <select id="findById" resultType="com.millionaire.millionaireclientweb.pojo.UserBanksDTO">
+        SELECT
+        user_bank.id as id,
+        user_bank.bank_name as bankName,
+        user_bank.card_number as cardNumber,
+        user_bank.card_type as cardType,
+        bank.bank_logo as bankLogo,
+        bank.single_limit as singleLimit,
+        bank.daily_limit as dailyLimit
+        FROM user_bank INNER JOIN bank
+        ON user_bank.bank_name=bank.bank_name
+        WHERE uid=#{id}
+
+    </select>
+
 </mapper>
