@@ -146,8 +146,6 @@
         SELECT id FROM investment_user ORDER by gmt_create desc LIMIT 1
     </select>
 
-
-
     <select id="selectMatchedInvestmentUser"  parameterType="java.lang.Long" resultMap="InvestmentUser">
         select
         <include refid="Base_Column_List"/>
@@ -405,6 +403,7 @@
         WHERE investment_user.investment_status = 10
         AND investment_user.value_date_end <![CDATA[ >= ]]> #{end,jdbcType=BIGINT}
         AND investment_user.value_date_end <![CDATA[ <= ]]> #{now,jdbcType=BIGINT}
+        AND investment_user.uid = #{uid,jdbcType=BIGINT}
     </select>
 
     <!--查询投资合同信息-->

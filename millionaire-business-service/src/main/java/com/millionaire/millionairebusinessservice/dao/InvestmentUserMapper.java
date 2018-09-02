@@ -95,7 +95,7 @@ public interface InvestmentUserMapper {
     /**
      * 查询可续投产品列表
      */
-    List<RenewalInvestmentDTO> listRenewalInvestments(@Param("end") Long end, @Param("now") Long now);
+    List<RenewalInvestmentDTO> listRenewalInvestments(@Param("end") Long end, @Param("now") Long now,@Param("uid")Long uid);
 
     /**
      * 查询投资合同信息

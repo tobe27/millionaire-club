@@ -63,7 +63,7 @@ public interface InvestmentUserService {
     /**
      * 查询可续投产品列表
      */
-    PageInfo listRenewalInvestments(Long end, Long now,int pageSize,int pageNum);
+    PageInfo listRenewalInvestments(Long end, Long now,Long uid,int pageSize,int pageNum);
 
     /**
      * 查询投资合同信息

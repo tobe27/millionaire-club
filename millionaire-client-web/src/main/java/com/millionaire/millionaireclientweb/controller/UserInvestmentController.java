@@ -68,7 +68,15 @@ public class UserInvestmentController {
      */
 
 
-    @PostMapping("/u/user-investment")
+    /**
+     * TODO 测试需要暂时为get接口
+     * @param requestBean
+     * @param servletRequest
+     * @return
+     * @throws IOException
+     * @throws FuYouException
+     */
+    @GetMapping("/u/user-investment")
     public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean, HttpServletRequest servletRequest) throws IOException, FuYouException {
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
         Long id = Long.valueOf(cookie.getValue());
@@ -120,6 +128,22 @@ public class UserInvestmentController {
     }
 
     /**
+     * 商户接收支付结果的后台通知地址
+     * @return
+     */
+    @GetMapping("/api/home_url")
+    public String homeBack() {
+        return "success";
+    }
+
+    @GetMapping("/api/return_url")
+    public String returnBack() {
+        return "fail";
+    }
+
+
+
+    /**
      * 理财产品列表
      *
      * @param pageNum
@@ -148,7 +172,7 @@ public class UserInvestmentController {
      * 可续投投资列表数据
      */
     @GetMapping("/u/list/renewal-products")
-    public ResultBean listRenewalProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+    public ResultBean listRenewalProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize,HttpServletRequest servletRequest) {
 //        从redis中获取到续投参数
         int investmentEnd = (int) redisTemplate.opsForValue().get("investmentEnd");
 
@@ -161,7 +185,11 @@ public class UserInvestmentController {
         long nowTime = now.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endTime = end.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
-        return new ResultBean(1, "success", investmentUserService.listRenewalInvestments(endTime, nowTime, pageSize, pageNum));
+        Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
+        Long uid = Long.valueOf(cookie.getValue());
+        logger.info("查询用户可续投资,用户"+uid);
+
+        return new ResultBean(1, "success", investmentUserService.listRenewalInvestments(endTime, nowTime,uid, pageSize, pageNum));
     }
 
     /**
@@ -220,5 +248,6 @@ public class UserInvestmentController {
             return new ResultBean(-1, "application something error");
         }
     }
+
 
 }

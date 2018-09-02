@@ -108,9 +108,9 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     }
 
     @Override
-    public PageInfo listRenewalInvestments(Long end, Long now,int pageSize,int pageNum) {
+    public PageInfo listRenewalInvestments(Long end, Long now,Long uid,int pageSize,int pageNum) {
         PageHelper.startPage(pageNum, pageSize);
-        List<RenewalInvestmentDTO> list = investmentUserMapper.listRenewalInvestments(end, now);
+        List<RenewalInvestmentDTO> list = investmentUserMapper.listRenewalInvestments(end, now,uid);
         return new PageInfo(list);
     }
 

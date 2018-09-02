@@ -22,11 +22,11 @@ public class H5PayServlet
 	private static final long	serialVersionUID	= 1419376384387536955L;
 
 //  回调接口
-	private static final String BACK_URL = "/api/back_url";
+	private static final String BACK_URL = "http://47.98.219.40:8081/api/back_url";
 //	支付成功后的跳转页面
-	private static final String HOME_URL = "/api/home_url";
+	private static final String HOME_URL = "http://47.98.219.40:8081/api/home_url";
 //	支付失败后的跳转页面
-	private static final String RETURN_URL = "api/return_url";
+	private static final String RETURN_URL = "http://47.98.219.40:8081/api/return_url";
 //	测试的支付接口页面
 	private static final String PAY_URL ="http://www-1.fuiou.com:18670/mobile_pay/h5pay/payAction.pay";
 
