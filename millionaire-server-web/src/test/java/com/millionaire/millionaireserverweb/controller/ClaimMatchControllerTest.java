@@ -4,12 +4,10 @@ import com.millionaire.millionairebusinessservice.dao.ClaimMatchMapper;
 import com.millionaire.millionairebusinessservice.module.ClaimMatch;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.service.ClaimMatchService;
-import com.sun.org.apache.regexp.internal.RE;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import sun.java2d.cmm.CMMServiceProvider;
 
 import javax.annotation.Resource;
 import java.util.List;
