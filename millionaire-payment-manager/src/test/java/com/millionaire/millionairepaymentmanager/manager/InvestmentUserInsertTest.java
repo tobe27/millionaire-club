@@ -15,11 +15,8 @@ public class InvestmentUserInsertTest {
     public void investmentUserInsert() {
         UserInvestmentRequestBean requestBean = new UserInvestmentRequestBean();
         requestBean.setProductId(0L);
-        requestBean.setUserBankId(4l);
+        requestBean.setUserBankId(4L);
         requestBean.setAmount(1000);
         requestBean.setContractSign("dgfsgfdsdgsf");
-
-
-
     }
 }

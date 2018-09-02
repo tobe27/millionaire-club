@@ -1,5 +1,6 @@
 package com.millionaire.millionaireclientweb.exception;
 
+import com.millionaire.millionairebusinessservice.exception.TimerTaskException;
 import com.millionaire.millionaireclientweb.result.ErrorInfo;
 import com.millionaire.millionairecommonapi.excepion.AliyunAPIException;
 import org.slf4j.Logger;
@@ -30,4 +31,17 @@ public class GlobalExceptionHandler {
         r.setUrl(req.getRequestURL().toString());
         return r;
     }
+
+    @ExceptionHandler(value = TimerTaskException.class)
+    @ResponseBody
+    public ErrorInfo<String> timerHandler(HttpServletRequest req, TimerTaskException e) throws Exception {
+        ErrorInfo<String> r = new ErrorInfo<>();
+        logger.info("服务器数据错误");
+        r.setMessage(e.getMessage());
+        r.setCode(ErrorInfo.ERROR);
+        r.setData("new data");
+        r.setUrl(req.getRequestURL().toString());
+        return r;
+    }
+
 }

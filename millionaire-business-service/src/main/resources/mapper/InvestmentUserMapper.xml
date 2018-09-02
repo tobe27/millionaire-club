@@ -44,6 +44,7 @@
     investment_amount, investment_status, expected_income, distributed_income, gmt_create, 
     gmt_update
   </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="InvestmentUser">
         select
         <include refid="Base_Column_List"/>
@@ -57,7 +58,6 @@
         from investment_user
         where uid = #{uid,jdbcType=BIGINT}
     </select>
-
 
     <select id="listInvestmentUserByQuery"
             parameterType="com.millionaire.millionairebusinessservice.request.InvestmentUserQuery"
@@ -134,7 +134,6 @@
         where claim_id = #{claimID}
     </select>
 
-
     <select id="selectByLendingContractNumber" parameterType="java.lang.String" resultMap="InvestmentUser">
         select
         <include refid="Base_Column_List"/>
@@ -168,6 +167,7 @@
     delete from investment_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
     <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser"
             useGeneratedKeys="true" keyProperty="id">
     insert into investment_user (product_id, uid,claim_id,
@@ -181,6 +181,7 @@
       #{expectedIncome,jdbcType=DOUBLE}, #{distributedIncome,jdbcType=DOUBLE}, #{gmtCreate,jdbcType=BIGINT}, 
       #{gmtUpdate,jdbcType=BIGINT})
   </insert>
+
     <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
         insert into investment_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -266,6 +267,7 @@
             </if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective"
             parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
         update investment_user
@@ -312,6 +314,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
     update investment_user
     set product_id = #{productId,jdbcType=BIGINT},
@@ -376,7 +379,6 @@
 
     </select>
 
-
     <!--查询可续投产品列表-->
     <select id="listRenewalInvestments" resultType="com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO">
         select
@@ -418,6 +420,43 @@
         left join reception_users
         on investment_user.uid = reception_users.id
         WHERE investment_user.id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!--client-->
+    <select id="findByUidInvestmentStatus" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser"
+            resultType="com.millionaire.millionaireclientweb.pojo.InvestmentUsersDTO">
+        SELECT
+        investment_user.id as id,
+        investment_product.name as name,
+        investment_product.annualized_income as annualizedIncome,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.investment_status as investmentStatus,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd
+        FROM investment_user INNER JOIN investment_product
+        ON investment_user.product_id=investment_product.id
+        WHERE uid=#{uid} AND investment_status=#{investmentStatus}
+    </select>
+
+    <!--client-->
+    <select id="findById" resultType="com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO">
+        SELECT
+        investment_user.id as id,
+        investment_product.name as name,
+        investment_product.annualized_income as annualizedIncome,
+        investment_user.expected_income as expectedIncome,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+        investment_product.repayment_mode as repaymentMode,
+        investment_product.starting_amount as startingAmount,
+        investment_user.investment_status as investmentStatus,
+        investment_user.distributed_income as distributedIncome,
+        investment_user.bank_name as bankName,
+        investment_user.bank_card_number as bankCardNumber
+        FROM investment_user INNER JOIN investment_product
+        ON investment_user.product_id=investment_product.id
+        WHERE investment_user.id=#{id}
     </select>
 
 

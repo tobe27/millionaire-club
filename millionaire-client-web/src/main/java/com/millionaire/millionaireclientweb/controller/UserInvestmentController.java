@@ -1,12 +1,13 @@
 package com.millionaire.millionaireclientweb.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.millionaire.millionairebusinessservice.exception.TimerTaskException;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
+import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
-import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
-
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.Constants;
@@ -16,13 +17,12 @@ import com.millionaire.millionairepaymentmanager.manager.PayManager;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -198,6 +198,7 @@ public class UserInvestmentController {
     @GetMapping("u/investment-contract/{id}")
     public ResultBean getContractUser(@PathVariable("id") Long id) {
         contractResponse = investmentUserService.selectContractResponse(id);
+
         String companySeal = (String) redisTemplate.opsForValue().get("seal");
         contractResponse.setCompanySeal(companySeal);
         return new ResultBean(1, "success", companySeal);
@@ -207,8 +208,14 @@ public class UserInvestmentController {
      * 产品续投的
      */
     @PostMapping("u/renewal-investment-user")
-    public ResultBean postRenewal() {
-
-        return null;
+    public ResultBean postRenewal(@RequestBody JSONObject jsonObject) throws TimerTaskException {
+        Long id = jsonObject.getLong("id");
+        String contactSign = jsonObject.getString("contactSign");
+        if (payManager.postRenewal(id, contactSign)) {
+            return new ResultBean(1, "success");
+        } else {
+            return new ResultBean(-1, "application something error");
+        }
     }
+
 }
