@@ -5,7 +5,9 @@
         <constructor>
             <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+
             <arg column="investment_use_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+
             <arg column="product_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -155,7 +157,7 @@
       gmt_create, gmt_update)
     values (#{uid,jdbcType=BIGINT},#{investmentUserId,jdbcType=BIGINT},#{productName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
       #{name,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
-      #{bankCardId,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{bankCardId,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
       #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT})
   </insert>
     <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.TradingFlow">
@@ -284,7 +286,9 @@
     update trading_flow
     set
       uid = #{uid,jdbcType=BIGINT},
-      investment_user_id = #{investmentUserId,jdbcType=BIGINT},
+
+       investment_user_id = #{investmentUserId,jdbcType=BIGINT},
+
       product_name = #{productName,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
@@ -306,4 +310,5 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where investment_user_id = #{investmentUserId,jdbcType=BIGINT} and TYPE = -1
     </update>
+
 </mapper>

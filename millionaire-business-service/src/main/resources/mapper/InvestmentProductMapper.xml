@@ -218,6 +218,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+
     <select id="selectByProductCode" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
