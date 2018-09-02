@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.request.ProductQuery;
 
+import java.util.List;
+
 /**
         * @author Liu Kai
         * @Description: TODO 投资产品 新增 编辑 上下架
@@ -76,4 +78,11 @@ public interface InvestmentProductService {
      * @Description 根据产品代号查询产品
      **/
     InvestmentProduct selectByProductCode(String code);
+
+    /**
+     * Todo bug 修复
+     * 所有上架的产品查询（无参数）
+     * @return
+     */
+    PageInfo listProductOnShelf(int pageSize, int pageNum);
 }

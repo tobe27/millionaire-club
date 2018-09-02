@@ -140,4 +140,12 @@ public class InvestmentProductImpl implements InvestmentProductService {
     public InvestmentProduct selectByProductCode(String code) {
         return investmentProductMapper.selectByProductCode(code);
     }
+
+    @Override
+    public PageInfo<InvestmentProduct> listProductOnShelf(int pageSize, int pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<InvestmentProduct> productList = investmentProductMapper.listProductOnShelf( pageSize, pageNum);
+        PageInfo<InvestmentProduct> pageInfo = new PageInfo<>(productList);
+        return pageInfo;
+    }
 }
