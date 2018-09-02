@@ -1,6 +1,7 @@
 package com.millionaire.millionaireserverweb.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.millionaire.millionaireadminservice.service.BackstageUsersService;
 import com.millionaire.millionairemanagerservice.dao.BankMapper;
 import com.millionaire.millionairemanagerservice.module.Bank;
 import com.millionaire.millionairemanagerservice.request.BankQuery;
@@ -35,6 +36,13 @@ public class BankControllerTest {
         Bank bank1=service.selectByPrimaryKey(1L);
         System.out.println(bank1);
     }
+    @Resource
+    BackstageUsersService backstageUsersService;
+@Test
+public void testB(){
+   backstageUsersService.findAll();
+}
+
     @Test
     public void dummy() {
         mapper.deleteByPrimaryKey(1L);
