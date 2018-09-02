@@ -1,6 +1,9 @@
 package com.millionaire.millionairebusinessservice.service;
 
 import com.millionaire.millionairebusinessservice.module.MessageUser;
+import com.millionaire.millionairebusinessservice.transport.UserMessageDTO;
+
+import java.util.List;
 
 public interface MessageUserService {
 
@@ -10,4 +13,6 @@ public interface MessageUserService {
      * 修改用户消息推送状态
      */
     int updateMessageUserCode(Long investmentUserId, Byte code);
+
+    List<UserMessageDTO> findByUid(Long id);
 }

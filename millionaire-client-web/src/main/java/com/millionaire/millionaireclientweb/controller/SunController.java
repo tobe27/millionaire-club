@@ -2,19 +2,20 @@ package com.millionaire.millionaireclientweb.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.exceptions.ClientException;
-import com.millionaire.millionairebusinessservice.dao.InvestmentProductMapper;
 import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
 import com.millionaire.millionairebusinessservice.dao.MessageUserMapper;
 import com.millionaire.millionairebusinessservice.dao.TradingFlowMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
+import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
+import com.millionaire.millionairebusinessservice.service.MessageUserService;
+import com.millionaire.millionairebusinessservice.service.TradingFlowService;
 import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
 import com.millionaire.millionairebusinessservice.transport.UserMessageDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.FlowNumberGeneration;
 import com.millionaire.millionairecommonapi.aliyun.MessageVerification;
-import com.millionaire.millionairemanagerservice.dao.BankMapper;
 import com.millionaire.millionairemanagerservice.dao.ContentMapper;
 import com.millionaire.millionairemanagerservice.dao.MessagePlatformMapper;
 import com.millionaire.millionairemanagerservice.dao.ProposalMapper;
@@ -22,6 +23,10 @@ import com.millionaire.millionairemanagerservice.module.Bank;
 import com.millionaire.millionairemanagerservice.module.Content;
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionairemanagerservice.module.Proposal;
+import com.millionaire.millionairemanagerservice.service.BankService;
+import com.millionaire.millionairemanagerservice.service.ContentService;
+import com.millionaire.millionairemanagerservice.service.MessagePlatformService;
+import com.millionaire.millionairemanagerservice.service.ProposalService;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
@@ -53,21 +58,19 @@ public class SunController {
     @Resource
     private RedisTemplate redisTemplate;
     @Resource
-    private BankMapper bankMapper;
+    private BankService bankService;
     @Resource
-    private TradingFlowMapper tradingFlowMapper;
+    private TradingFlowService tradingFlowService;
     @Resource
-    private InvestmentUserMapper investmentUserMapper;
+    private InvestmentUserService investmentUserService;
     @Resource
-    private InvestmentProductMapper investmentProductMapper;
+    private MessageUserService messageUserService;
     @Resource
-    private MessageUserMapper messageUserMapper;
+    private MessagePlatformService messagePlatformService;
     @Resource
-    private MessagePlatformMapper messagePlatformMapper;
+    private ContentService contentService;
     @Resource
-    private ContentMapper contentMapper;
-    @Resource
-    private ProposalMapper proposalMapper;
+    private ProposalService proposalService;
     Logger logger = LoggerFactory.getLogger(SunController.class);
 
     @GetMapping("loginPage")
@@ -97,6 +100,10 @@ public class SunController {
         ReceptionUsers receptionUsers = receptionUsersService.findByPhone(phone);
         if (receptionUsers == null) {
             return new ResultBean(-1, "账号错误");
+        }
+        Byte status = receptionUsers.getStatus();
+        if(status==20){
+            return new ResultBean(-1,"该用户已被冻结");
         }
         String salt = receptionUsers.getSalt();
         String passwordOne = receptionUsers.getPassword();
@@ -171,7 +178,9 @@ public class SunController {
         receptionUsers.setSalt(salt);  //盐
         receptionUsers.setUserNumber(salt);  //用户编号
         receptionUsers.setManagerNumber(managerNumber);
-        receptionUsers.setStatus((byte) 0);  //用户状态
+        receptionUsers.setAssets(0);
+        receptionUsers.setProfit(0);
+        receptionUsers.setStatus((byte) 10);  //用户状态
         receptionUsers.setIdAuthentication((byte) 10); //实名状态
         receptionUsers.setGmtCreate(System.currentTimeMillis());
         receptionUsers.setGmtUpdate(System.currentTimeMillis());
@@ -323,6 +332,11 @@ public class SunController {
         }
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
+        ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
+        Byte authentication = receptionUsers.getIdAuthentication();
+        if(authentication!=20){
+            return new ResultBean(-1,"未实名认证");
+        }
         UserBank userBank = new UserBank();
         userBank.setCity(city);
         userBank.setBankName(bankName);
@@ -357,7 +371,7 @@ public class SunController {
      */
     @GetMapping("/u/banks")
     public ResultBean getBanks() {
-        List<Bank> banks = bankMapper.selectAll();
+        List<Bank> banks = bankService.selectAll();
         return new ResultBean(1, "返回所有银行信息", banks);
     }
 
@@ -371,7 +385,7 @@ public class SunController {
     public ResultBean findAll(HttpServletRequest request) {
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
-        List<TradingFlow> tradingFlows = tradingFlowMapper.findByUid(uid);
+        List<TradingFlow> tradingFlows = tradingFlowService.findByUid(uid);
         return new ResultBean(1, "用户交易的流水", tradingFlows);
     }
 
@@ -383,7 +397,7 @@ public class SunController {
      */
     @GetMapping("/u/transaction/{id}")
     public ResultBean findById(@PathVariable Long id) {
-        TradingFlow tradingFlow = tradingFlowMapper.selectByPrimaryKey(id);
+        TradingFlow tradingFlow = tradingFlowService.selectByPrimaryKey(id);
         return new ResultBean(1, "交易流水详情", tradingFlow);
     }
 
@@ -405,7 +419,7 @@ public class SunController {
         InvestmentUser investmentUser = new InvestmentUser();
         investmentUser.setUid(uid);
         investmentUser.setInvestmentStatus(investmentStatus);
-        List<InvestmentUser> investmentUsers = investmentUserMapper.findByUidInvestmentStatus(investmentUser);
+        List<InvestmentUser> investmentUsers = investmentUserService.findByUidInvestmentStatus(investmentUser);
         return new ResultBean(1, "通过用户传来的投资状态查询", investmentUsers);
     }
 
@@ -417,7 +431,7 @@ public class SunController {
      */
     @GetMapping("/u/investment/{id}")
     public ResultBean getById(@PathVariable Long id) {
-        UserInvestmentDTO userInvestmentDTO = investmentUserMapper.findById(id);
+        UserInvestmentDTO userInvestmentDTO = investmentUserService.findById(id);
         return new ResultBean(1, "获取用户投资详情", userInvestmentDTO);
     }
 
@@ -433,20 +447,20 @@ public class SunController {
         Long uid = Long.valueOf(cookie.getValue());
         Map map = new HashMap();
         logger.info("查询个人消息!");
-        List<UserMessageDTO> messageUsers = messageUserMapper.findByUid(uid);
+        List<UserMessageDTO> messageUsers = messageUserService.findByUid(uid);
         map.put("messageUsers", messageUsers);
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
         byte authentication = receptionUsers.getIdAuthentication();
         if (authentication == 20) {
             logger.info("查询实名认证后的平台消息!");
-            List<MessagePlatform> messagePlatformOne = messagePlatformMapper.findBySendingCrowd((byte) 20);
-            List<MessagePlatform> messagePlatformTwo = messagePlatformMapper.findBySendingCrowd((byte) 10);
+            List<MessagePlatform> messagePlatformOne = messagePlatformService.findBySendingCrowd((byte) 20);
+            List<MessagePlatform> messagePlatformTwo = messagePlatformService.findBySendingCrowd((byte) 10);
             map.put("messagePlatformOne", messagePlatformOne);
             map.put("messagePlatformTwo", messagePlatformTwo);
             return new ResultBean(1, "用户投资详情", map);
         }
         logger.info("查询未实名认证后的平台消息");
-        List<MessagePlatform> messagePlatform = messagePlatformMapper.findBySendingCrowd((byte) 20);
+        List<MessagePlatform> messagePlatform = messagePlatformService.findBySendingCrowd((byte) 20);
         map.put("messagePlatforms", messagePlatform);
         return new ResultBean(1, "用户投资详情", map);
     }
@@ -459,7 +473,7 @@ public class SunController {
      */
     @GetMapping("/u/message/{id}")
     public ResultBean getMessagePlatform(@PathVariable Long id) {
-        return new ResultBean(1, "获取消息中心", messagePlatformMapper.selectByPrimaryKey(id));
+        return new ResultBean(1, "获取消息中心", messagePlatformService.selectByPrimaryKey(id));
     }
 
     /**
@@ -638,7 +652,7 @@ public class SunController {
      */
     @GetMapping("/u/help")
     public ResultBean getHelp() {
-        Content content = contentMapper.findByType((byte) 20);
+        Content content = contentService.findByType((byte) 20);
         return new ResultBean(1, "请求成功", content);
     }
 
@@ -649,7 +663,7 @@ public class SunController {
      */
     @GetMapping("/u/company")
     public ResultBean getCompany() {
-        Content content = contentMapper.findByType((byte) 30);
+        Content content = contentService.findByType((byte) 30);
         return new ResultBean(1, "内容中的关于我们", content);
     }
 
@@ -676,7 +690,7 @@ public class SunController {
         proposals.setProposal(proposal);
         proposals.setGmtCreate(System.currentTimeMillis());
         proposals.setGmtUpdate(System.currentTimeMillis());
-        proposalMapper.insert(proposals);
+        proposalService.insert(proposals);
         return new ResultBean(1, "提交成功");
     }
 

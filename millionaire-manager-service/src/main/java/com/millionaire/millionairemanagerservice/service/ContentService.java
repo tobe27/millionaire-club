@@ -25,4 +25,5 @@ public interface ContentService {
 
     PageInfo<Content> selectContentByPage(Integer pageNum, Integer pageSize, ContentQuery query);
 
+    Content findByType(Byte type);
 }

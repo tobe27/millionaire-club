@@ -9,6 +9,7 @@ import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -138,5 +139,15 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     @Override
     public List<InvestmentUser> listEffectInvestmentUser() {
         return investmentUserMapper.listEffectInvestmentUser();
+    }
+
+    @Override
+    public List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user) {
+        return investmentUserMapper.findByUidInvestmentStatus(user);
+    }
+
+    @Override
+    public UserInvestmentDTO findById(Long id) {
+        return investmentUserMapper.findById(id);
     }
 }
