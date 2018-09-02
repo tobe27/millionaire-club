@@ -70,6 +70,9 @@ public class PayManager {
         InvestmentProduct investmentProduct = investmentProductService.selectByPrimaryKey(requestBean.getProductId());
         logger.info("产品信息：" + investmentProduct);
 
+        /**
+         * Todo bug
+         */
 //        查询用户信息
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
 
@@ -167,9 +170,12 @@ public class PayManager {
 //        付款金额,富友支付以分为单位计算
         int paymentAmount = requestBean.getAmount() * 100;
 
+        /**
+         * Todo bug
+         */
 //        返回支付页面,传入用户投资表的id作为订单号
         return h5PayServlet.sentPost(uid, paymentAmount, receptionUsers.getIdNumber(),
-                investmentUser.getId(), userBank.getCardNumber(), receptionUsers.getIdName());
+                investmentUserId, userBank.getCardNumber(), receptionUsers.getIdName());
     }
 
 

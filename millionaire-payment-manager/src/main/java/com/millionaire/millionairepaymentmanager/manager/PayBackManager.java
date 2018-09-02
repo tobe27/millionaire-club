@@ -62,7 +62,6 @@ public class PayBackManager {
 
         investmentTaskInsert.insert(investmentUserId);
 
-
     }
 }
 

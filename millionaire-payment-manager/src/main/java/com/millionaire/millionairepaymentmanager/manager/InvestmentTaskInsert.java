@@ -46,8 +46,11 @@ public class InvestmentTaskInsert {
 
         timerTaskInvestment.setInvestmentUserId(investmentUserId);
 
+        /**
+         * todo bug修复
+         */
         //本息一次付款的任务写入
-        if (investmentProduct.getType() == 10) {
+        if (investmentProduct.getRepaymentMode() == 10) {
 //            付款金额，以分为单位
             int backAmount = (int) ((investmentUser.getInvestmentAmount() + investmentUser.getExpectedIncome()) * 100);
             timerTaskInvestment.setPaybackAmount(backAmount);
@@ -67,7 +70,7 @@ public class InvestmentTaskInsert {
 
 
         //分期还息，最后一个还本和息，每月还息固定每月20号
-        if (investmentProduct.getType() == 20) {
+        if (investmentProduct.getRepaymentMode() == 20) {
 
 //          起息日期
             Long startTime = investmentUser.getValueDateStart();

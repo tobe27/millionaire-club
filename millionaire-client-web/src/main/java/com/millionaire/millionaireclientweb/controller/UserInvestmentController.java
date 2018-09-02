@@ -9,6 +9,7 @@ import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
+import com.millionaire.millionaireclientweb.util.VerificationUntil;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.Constants;
 import com.millionaire.millionairepaymentmanager.fuyou.until.MD5;
@@ -18,6 +19,7 @@ import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBea
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -56,30 +60,23 @@ public class UserInvestmentController {
     @Autowired
     private ReceptionUsersService receptionUsersService;
 
+    @Autowired
+    private VerificationUntil verificationUntil;
+
     ReceptionUsers receptionUsers = new ReceptionUsers();
 
     ContractResponse contractResponse = new ContractResponse();
 
-    /**
-     * 用户支付接口,跳转第三方支付页面
-     *
-     * @param requestBean
-     * @return
-     */
-
 
     /**
      * TODO 测试需要暂时为get接口
-     * @param requestBean
-     * @param servletRequest
      * @return
      * @throws IOException
      * @throws FuYouException
      */
     @GetMapping("/u/user-investment")
-    public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean, HttpServletRequest servletRequest) throws IOException, FuYouException {
-        Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
-        Long id = Long.valueOf(cookie.getValue());
+    public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean,
+                                 @RequestParam("id")Long id) throws IOException, FuYouException {
         logger.info("查询用户投资,用户"+id);
         return payManager.payment(requestBean, id);
     }
@@ -116,7 +113,6 @@ public class UserInvestmentController {
 //                调用任务执行方法
                 payBackManager.backManage(Long.valueOf(mchntOrderId));
                 resp.getWriter().write("支付成功~");
-                payBackManager.backManage(Long.valueOf(mchntOrderId));
             } else {
                 logger.info(mchntOrderId + "支付失败~" + responseMsg);
                 resp.getWriter().write("支付失败~");
@@ -145,7 +141,6 @@ public class UserInvestmentController {
 
     /**
      * 理财产品列表
-     *
      * @param pageNum
      * @param pageSize
      * @return
@@ -158,21 +153,50 @@ public class UserInvestmentController {
 
     /**
      * 产品详情
-     *
      * @param id
      * @return
      */
     @GetMapping("/app/product/{id}")
-    public ResultBean getProduct(@PathVariable("id") long id) {
+    public ResultBean getProduct(@PathVariable("id") long id,HttpServletRequest servletRequest) {
+        Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
+        Map map = verificationUntil.Verification(cookie);
+        InvestmentProduct investmentProduct = productService.selectByPrimaryKey(id);
         logger.info("投资产品详情，产品"+id);
-        return new ResultBean(1, "success", productService.selectByPrimaryKey(id));
+        List list = new ArrayList();
+        list.add(map);
+        list.add(investmentProduct);
+        return new ResultBean(1, "success", list);
     }
+
+    /**
+     * 轮播图展示
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("app/list/banners")
+    public ResultBean listBanners(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+        return null;
+    }
+
+    /**
+     * 推荐产品展示
+     * @param servletRequest
+     * @return
+     */
+    @GetMapping("app/products/recommend")
+    public ResultBean getProductRecommend(HttpServletRequest servletRequest) {
+
+        return null;
+    }
+
 
     /**
      * 可续投投资列表数据
      */
     @GetMapping("/u/list/renewal-products")
-    public ResultBean listRenewalProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize,HttpServletRequest servletRequest) {
+    public ResultBean listRenewalProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize, HttpServletRequest servletRequest) {
+
 //        从redis中获取到续投参数
         int investmentEnd = (int) redisTemplate.opsForValue().get("investmentEnd");
 
@@ -187,23 +211,24 @@ public class UserInvestmentController {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
         Long uid = Long.valueOf(cookie.getValue());
-        logger.info("查询用户可续投资,用户"+uid);
+        logger.info("查询用户可续投资,用户" + uid);
 
-        return new ResultBean(1, "success", investmentUserService.listRenewalInvestments(endTime, nowTime,uid, pageSize, pageNum));
+        return new ResultBean(1, "success", investmentUserService.listRenewalInvestments(endTime, nowTime, uid, pageSize, pageNum));
     }
 
     /**
-     * 可续投投资详情
+     * 可续投产品详情
+     * @param id 用户投资id
+     * @return
      */
     @GetMapping("u/renewal/investment-user/{id}")
-    public ResultBean getRenewalProduct(@PathVariable("id") Long id) {
+    public ResultBean getRenewalProduct(@PathVariable("id") Long id,HttpServletRequest servletRequest) {
 
         return new ResultBean(1, "success", investmentUserService.selectRenewalInvestmentById(id));
     }
 
     /**
      * 获取签署合同所需信息
-     *
      * @param servletRequest
      * @return
      */
