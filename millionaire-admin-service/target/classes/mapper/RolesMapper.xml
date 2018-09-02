@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.millionaire.millionaireadminservice.dao.RolesMapper">
+  <resultMap id="BaseResultMap" type="com.millionaire.millionaireadminservice.module.Roles">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="role_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="founder" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="modifier" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <resultMap id="Roles" type="com.millionaire.millionaireadminservice.module.Roles">
+    <id property="id" column="id"/>
+    <result property="roleName" column="role_name"/>
+    <result property="gmtCreate" column="gmt_create"/>
+    <result property="gmtUpdate" column="gmt_update"/>
+    <result property="founder" column="founder"/>
+    <result property="modifier" column="modifier"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_name, gmt_create, gmt_update, founder, modifier
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from roles
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from roles
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.millionaire.millionaireadminservice.module.Roles" useGeneratedKeys="true" keyProperty="id">
+    insert into roles (role_name, gmt_create,
+      gmt_update, founder, modifier
+      )
+    values (#{roleName,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT},
+      #{gmtUpdate,jdbcType=BIGINT}, #{founder,jdbcType=VARCHAR}, #{modifier,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.millionaire.millionaireadminservice.module.Roles" useGeneratedKeys="true" keyProperty="id">
+    insert into roles
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleName != null">
+        role_name,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+      <if test="founder != null">
+        founder,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=BIGINT},
+      </if>
+      <if test="founder != null">
+        #{founder,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionaireadminservice.module.Roles">
+    update roles
+    <set>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+      </if>
+      <if test="founder != null">
+        founder = #{founder,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.millionaire.millionaireadminservice.module.Roles">
+    update roles
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findAll" resultMap="Roles">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM roles
+  </select>
+  <select id="findByName" resultMap="Roles">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM roles
+    WHERE role_name=#{roleName}
+  </select>
+
+</mapper>
