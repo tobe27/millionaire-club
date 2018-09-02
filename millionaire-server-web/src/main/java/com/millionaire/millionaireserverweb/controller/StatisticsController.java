@@ -41,7 +41,7 @@ public class StatisticsController {
     @GetMapping("/investment-count")
     public ResultBean countInvestmentProduct(@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                              @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                             @RequestBody TradingFlowStatisticQuery query) {
+                                              TradingFlowStatisticQuery query) {
         List<TradingFlowStatisticDTO> tradingFlowStatisticDTOS =
                 tradingFlowService.statisticInvestmentProductByQuery(query);
         PageHelper.startPage(pageNum, pageSize);

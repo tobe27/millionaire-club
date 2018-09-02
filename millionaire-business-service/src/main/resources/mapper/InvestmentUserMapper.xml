@@ -422,43 +422,6 @@
         WHERE investment_user.id = #{id,jdbcType=BIGINT}
     </select>
 
-    <!--client-->
-    <select id="findByUidInvestmentStatus" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser"
-            resultType="com.millionaire.millionaireclientweb.pojo.InvestmentUsersDTO">
-        SELECT
-        investment_user.id as id,
-        investment_product.name as name,
-        investment_product.annualized_income as annualizedIncome,
-        investment_user.investment_amount as investmentAmount,
-        investment_user.investment_status as investmentStatus,
-        investment_user.value_date_start as valueDateStart,
-        investment_user.value_date_end as valueDateEnd
-        FROM investment_user INNER JOIN investment_product
-        ON investment_user.product_id=investment_product.id
-        WHERE uid=#{uid} AND investment_status=#{investmentStatus}
-    </select>
-
-    <!--client-->
-    <select id="findById" resultType="com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO">
-        SELECT
-        investment_user.id as id,
-        investment_product.name as name,
-        investment_product.annualized_income as annualizedIncome,
-        investment_user.expected_income as expectedIncome,
-        investment_user.investment_amount as investmentAmount,
-        investment_user.value_date_start as valueDateStart,
-        investment_user.value_date_end as valueDateEnd,
-        investment_product.repayment_mode as repaymentMode,
-        investment_product.starting_amount as startingAmount,
-        investment_user.investment_status as investmentStatus,
-        investment_user.distributed_income as distributedIncome,
-        investment_user.bank_name as bankName,
-        investment_user.bank_card_number as bankCardNumber
-        FROM investment_user INNER JOIN investment_product
-        ON investment_user.product_id=investment_product.id
-        WHERE investment_user.id=#{id}
-    </select>
-
 
 
 </mapper>
