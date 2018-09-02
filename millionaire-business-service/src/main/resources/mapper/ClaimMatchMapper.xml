@@ -12,10 +12,20 @@
             <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
         </constructor>
     </resultMap>
+
+    <resultMap id="ClaimMatchMap" type="com.millionaire.millionairebusinessservice.module.ClaimMatch">
+        <id property="id" column="id"/>
+        <result property="claimId" column="claim_id"/>
+        <result property="investmentUserId" column="investment_user_id"/>
+        <result property="creditContractNumber" column="credit_contract_number"/>
+        <result property="status" column="status"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtUpdate" column="gmt_update"/>
+    </resultMap>
     <sql id="Base_Column_List">
     id, claim_id, investment_user_id, credit_contract_number,status ，gmt_create, gmt_update
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ClaimMatchMap">
         select
         <include refid="Base_Column_List"/>
         from claim_match
@@ -60,7 +70,7 @@
                 and reception_users.id_name like "%"#{userName}"%"
             </if>
             <if test="valueStartlowerDate != null">
-                and  investment_user.value_date_start <![CDATA[ >= ]]> #{valueStartlowerDate}
+                and investment_user.value_date_start <![CDATA[ >= ]]> #{valueStartlowerDate}
             </if>
             <if test="valueStartupperDate != null">
                 and investment_user.value_date_start <![CDATA[ <= ]]> #{valueStartupperDate}
@@ -77,6 +87,7 @@
     <select id="countClaimMatch" resultType="java.lang.Long">
         select  count(*) from claim_match
     </select>
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from claim_match

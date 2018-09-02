@@ -8,6 +8,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -50,5 +52,12 @@ ClaimInfoMapper claimInfoMapper;
 
     @Test
     public void listClaimInfo() {
+    }
+
+    @Test
+    public void selectClaimExpireCheck() {
+
+        List<ClaimInfo> list = claimInfoMapper.selectClaimExpireCheck();
+        System.out.println("list = " + list);
     }
 }

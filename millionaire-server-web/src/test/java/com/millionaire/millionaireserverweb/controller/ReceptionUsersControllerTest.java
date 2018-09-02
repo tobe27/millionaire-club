@@ -2,6 +2,7 @@ package com.millionaire.millionaireserverweb.controller;
 
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
 import com.github.pagehelper.PageInfo;
+import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.request.TradingFlowQuery;
@@ -89,5 +90,12 @@ public class ReceptionUsersControllerTest {
         query.setProductName("mmm1");
         List<InvestmentUserDTO> investmentUserDTOList = investmentUserService.listInvestmentUserByQuery(query);
         System.out.println("investmentUserDTOList = " + investmentUserDTOList);
+    }
+
+
+    @Test
+    public void selectMatchedInvestmentUser() {
+        List<InvestmentUser> list =investmentUserService.selectMatchedInvestmentUser(1L);
+        System.out.println("list = " + list);
     }
 }

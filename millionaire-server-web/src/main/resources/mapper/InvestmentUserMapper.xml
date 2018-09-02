@@ -146,6 +146,23 @@
         SELECT id FROM investment_user ORDER by gmt_create desc LIMIT 1
     </select>
 
+
+
+    <select id="selectMatchedInvestmentUser"  parameterType="java.lang.Long" resultMap="InvestmentUser">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where claim_id = #{claimID}
+        and investment_status =10
+    </select>
+
+    <select id="listEffectInvestmentUser" resultMap="InvestmentUser">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where investment_status =10
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from investment_user
     where id = #{id,jdbcType=BIGINT}
