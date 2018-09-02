@@ -72,6 +72,7 @@ public class UserInvestmentController {
     public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean, HttpServletRequest servletRequest) throws IOException, FuYouException {
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
         Long id = Long.valueOf(cookie.getValue());
+        logger.info("查询用户投资,用户"+id);
         return payManager.payment(requestBean, id);
     }
 
@@ -139,6 +140,7 @@ public class UserInvestmentController {
      */
     @GetMapping("/app/product/{id}")
     public ResultBean getProduct(@PathVariable("id") long id) {
+        logger.info("投资产品详情，产品"+id);
         return new ResultBean(1, "success", productService.selectByPrimaryKey(id));
     }
 
@@ -149,6 +151,7 @@ public class UserInvestmentController {
     public ResultBean listRenewalProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
 //        从redis中获取到续投参数
         int investmentEnd = (int) redisTemplate.opsForValue().get("investmentEnd");
+
 //        查询到期日期小于续投参数的用户投资，当天的不包括在内
         LocalDate now = LocalDate.now();
 //        续投产品的戒指日期
