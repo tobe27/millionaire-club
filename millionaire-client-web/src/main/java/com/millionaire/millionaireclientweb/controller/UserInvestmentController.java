@@ -89,6 +89,7 @@ public class UserInvestmentController {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
         Map map = verificationUntil.Verification(cookie);
+        logger.info("入参信息"+map+requestBean);
 //        对cookie信息进行检验
         if (!map.get("verificationStatus").equals(50)) {
             return "用户验证未成功，请跳转页面";
@@ -97,7 +98,6 @@ public class UserInvestmentController {
         logger.info("查询用户投资,用户" + id);
         return payManager.payment(requestBean, id,isHavingNovicePlan);
     }
-
 
     /**
      * 支付成功回调接口
@@ -228,6 +228,9 @@ public class UserInvestmentController {
             return new ResultBean(-1, "用户未登录", map);
         }
 
+        /**
+         * TODO  从redis 中取值错误
+         */
 //        从redis中获取到续投参数
         int investmentEnd = (int) redisTemplate.opsForValue().get("investmentEnd");
 //        查询到期日期小于续投参数的用户投资，当天的不包括在内
@@ -295,6 +298,7 @@ public class UserInvestmentController {
     }
 
     /**
+     * TOdo 续投的时候需要对用户投资的状态进行判定，是否是合法的投资
      * 产品续投的
      */
     @PostMapping("u/renewal-investment-user")
@@ -304,6 +308,7 @@ public class UserInvestmentController {
         Map map = verificationUntil.Verification(cookie);
 //        对cookie信息进行检验
         if (!map.get("verificationStatus").equals(50)) {
+            logger.info("用户验证未成功,cookie值"+cookie);
             return new ResultBean(-1, "用户验证未成功，请跳转页面", map);
         }
 

@@ -40,8 +40,8 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
         long time = System.currentTimeMillis();
         record.setGmtCreate(time);
         record.setGmtUpdate(time);
-        logger.info("用户投资记录插入:"+record);
         investmentUserMapper.insert(record);
+        logger.info("用户投资记录插入:"+record);
         return record.getId();
     }
 
