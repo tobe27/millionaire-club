@@ -6,6 +6,7 @@ import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
 
 import java.util.List;
 
@@ -85,4 +86,8 @@ public interface InvestmentUserService {
      * 查询条件 investment_status = 10 理财中的用户投资
      **/
     List<InvestmentUser> listEffectInvestmentUser();
+
+    List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user);
+
+    UserInvestmentDTO findById(Long id);
 }

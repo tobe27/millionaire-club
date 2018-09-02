@@ -28,4 +28,8 @@ public interface MessagePlatformService {
 
 
     List<MessagePlatform> listUnsendMessage();
+
+    List<MessagePlatform> findBySendingCrowd(Byte sendingCrowd);
+
+
 }

@@ -68,4 +68,9 @@ public class MessagePlatformServiceImpl implements MessagePlatformService {
     public List<MessagePlatform> listUnsendMessage() {
         return messagePlatformMapper.listUnsendMessage();
     }
+
+    @Override
+    public List<MessagePlatform> findBySendingCrowd(Byte sendingCrowd) {
+        return messagePlatformMapper.findBySendingCrowd(sendingCrowd);
+    }
 }
