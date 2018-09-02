@@ -23,7 +23,7 @@
         <result property="gmtUpdate" column="gmt_update"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, claim_id,status, investment_user_id, credit_contract_number, status, gmt_create, gmt_update
+    id, claim_id, investment_user_id, credit_contract_number,status ，gmt_create, gmt_update
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ClaimMatchMap">
         select
@@ -86,22 +86,6 @@
 
     <select id="countClaimMatch" resultType="java.lang.Long">
         select  count(*) from claim_match
-    </select>
-
-    <select id="listEffectClaimMatchByClaimID" resultMap="ClaimMatchMap">
-        select
-        <include refid="Base_Column_List"/>
-        from claim_match
-        where claim_id = #{claimID}
-        and status = 1
-    </select>
-
-    <select id="selectEffectByInvestmentUID" resultMap="ClaimMatchMap">
-        select
-        <include refid="Base_Column_List"/>
-        from claim_match
-        where investment_user_id = #{investmentUserID}
-        and status = 1
     </select>
 
 

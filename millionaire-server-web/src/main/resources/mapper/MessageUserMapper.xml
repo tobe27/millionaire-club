@@ -110,4 +110,12 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!--修改用户消息推送状态-->
+    <update id="updateMessageUserCode">
+    update message_user
+    set code = #{code,jdbcType=TINYINT},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where  investment_user_id = #{investmentUserId,jdbcType=BIGINT}
+    </update>
 </mapper>
