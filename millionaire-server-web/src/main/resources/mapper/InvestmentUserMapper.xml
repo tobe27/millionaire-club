@@ -42,14 +42,14 @@
     investment_amount, investment_status, expected_income, distributed_income, gmt_create,
     gmt_update
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="InvestmentUser">
         select
         <include refid="Base_Column_List"/>
         from investment_user
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="listInvestmentUserByUID" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="listInvestmentUserByUID" parameterType="java.lang.Long" resultMap="InvestmentUser">
         select
         <include refid="Base_Column_List"/>
         from investment_user
@@ -114,7 +114,7 @@
         </where>
     </select>
 
-    <select id="selectUsableInvestment" resultMap="BaseResultMap">
+    <select id="selectUsableInvestment" resultMap="InvestmentUser">
         select
         <include refid="Base_Column_List"/>
         from investment_user
