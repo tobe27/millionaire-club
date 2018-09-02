@@ -443,6 +443,35 @@
         WHERE investment_user.id=#{id}
     </select>
 
+    <!--判断用户是否有购买过新手计划产品,统计-->
+    <select id="selectExistNovicePlan" resultType="com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO">
+        select
+        investment_user.id as id,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.distributed_income as distributedIncome,
+        investment_user.expected_income as expectedIncome,
+        investment_user.investment_status as investmentStatus,
+        investment_user.bank_name as bankName,
+        investment_user.bank_card_number as bankCardNumber,
+        investment_user.investment_status as investmentStatus,
+
+        investment_product.name as name,
+        investment_product.annualized_income as annualizedIncome,
+        investment_product.deadline as deadline,
+        investment_product.type as type,
+        investment_product.starting_amount as startingAmount
+        from
+        investment_user
+        LEFT join investment_product
+
+        ON investment_user.product_id = investment_product.id
+        WHERE investment_user.investment_status <![CDATA[ <> ]]> 10
+        AND investment_user.uid = #{uid,jdbcType=BIGINT}
+        AND investment_product.type = 10
+    </select>
+
 
 
 </mapper>

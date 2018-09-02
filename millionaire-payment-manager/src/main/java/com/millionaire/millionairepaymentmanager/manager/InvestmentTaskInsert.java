@@ -49,6 +49,7 @@ public class InvestmentTaskInsert {
         /**
          * todo bug修复
          */
+        logger.info("产品付款类型"+investmentProduct.getRepaymentMode());
         //本息一次付款的任务写入
         if (investmentProduct.getRepaymentMode() == 10) {
 //            付款金额，以分为单位
@@ -89,7 +90,6 @@ public class InvestmentTaskInsert {
 
             int endYear = endDate.getYear();
             int endMonth = endDate.getMonth().getValue();
-            int endDay = endDate.getDayOfMonth();
 
 //        分期付款次数
             int taskTimes = (endYear - startYear) * 12 + (endMonth - startMonth);

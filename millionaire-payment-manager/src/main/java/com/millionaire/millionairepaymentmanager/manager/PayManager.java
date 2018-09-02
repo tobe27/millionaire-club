@@ -64,11 +64,20 @@ public class PayManager {
      * if1.支付成功调用定时任务接口、用户消息推送、交易流水表数据插入
      * else 2.支付失败用户消息推送、交易流水表数据插入
      */
-    public String payment(UserInvestmentRequestBean requestBean, long uid) throws IOException, FuYouException {
+    public String payment(UserInvestmentRequestBean requestBean, long uid, int isHavingNovicePlan) throws IOException, FuYouException {
 
 //        查询购买的产品信息
         InvestmentProduct investmentProduct = investmentProductService.selectByPrimaryKey(requestBean.getProductId());
         logger.info("产品信息：" + investmentProduct);
+
+        if (isHavingNovicePlan == 1 && investmentProduct.getType() == 10) {
+            return "新手计划只能购买一次";
+        }
+
+        if (requestBean.getAmount() < investmentProduct.getStartingAmount()) {
+            return "投资金额小于起投金额";
+        }
+
 
         /**
          * Todo bug
@@ -183,7 +192,7 @@ public class PayManager {
     /**
      * 产品续投交易
      */
-    public boolean postRenewal(Long id, String contactSign) throws TimerTaskException {
+    public int postRenewal(Long id, String contactSign) throws TimerTaskException {
 //        定义所需要查询的定时任务
         TimerTaskInvestment taskInvestment ;
 
@@ -191,6 +200,12 @@ public class PayManager {
         investmentUser = investmentUserService.selectByPrimaryKey(id);
 //        查询产品信息
         investmentProduct = investmentProductService.selectByPrimaryKey(investmentUser.getProductId());
+//        新手计划只允许买一次
+        if (investmentProduct.getType() ==10 ){
+            return 10001;
+        }
+
+
 //        修改起息时间,到息时间即为起息时间
         investmentUser.setValueDateStart(investmentUser.getValueDateEnd());
 
@@ -219,13 +234,13 @@ public class PayManager {
         }
         if (taskInvestment == null) {
             logger.info("用户投资定时表格数据异常,未能查询数据");
-            return false;
+            return 10002;
         }
 //        查询到符合要求的最后一次还息回款的任务id，将回款金额减去本金，同时写入下一周期的还款任务
         int newPaybackAmount = taskInvestment.getPaybackAmount() - investmentUser.getInvestmentAmount() * 100;
 //        修改定时任务执行类型,将关联的新的用户投资写入记录
         taskInvestmentService.updateTimerTaskForRenewal(newPaybackAmount, (byte) 40L, newInvestmentUserId,taskInvestment.getId());
         logger.info("用户投资定时表格数据已更新"+taskInvestment.getId());
-        return true;
+        return 1;
     }
 }

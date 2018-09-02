@@ -121,4 +121,13 @@ public interface InvestmentUserMapper {
  **/
     List<InvestmentUser> listEffectInvestmentUser();
 
+    /**
+     * 判断用户是否有购买过新手计划产品
+     * @param uid
+     * @return
+     */
+    List<RenewalInvestmentDTO> selectExistNovicePlan(Long uid);
+
+
+
 }

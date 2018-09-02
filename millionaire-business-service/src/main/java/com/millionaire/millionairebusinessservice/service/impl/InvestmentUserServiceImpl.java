@@ -150,4 +150,13 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     public UserInvestmentDTO findById(Long id) {
         return investmentUserMapper.findById(id);
     }
+
+    @Override
+    public int selectExistNovicePlan(Long uid) {
+        if (null==investmentUserMapper.selectExistNovicePlan(uid)||investmentUserMapper.selectExistNovicePlan(uid).isEmpty()) {
+            return 0;
+        }else{
+            return 1;
+        }
+    }
 }

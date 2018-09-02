@@ -90,4 +90,13 @@ public interface InvestmentUserService {
     List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user);
 
     UserInvestmentDTO findById(Long id);
+
+    /**
+     * 判断用户是否有购买过新手计划产品
+     * @param uid
+     * @return
+     */
+    int selectExistNovicePlan(Long uid);
+
+
 }
