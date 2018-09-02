@@ -7,6 +7,9 @@ import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
+import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
+import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
+import com.millionaire.millionaireclientweb.pojo.InvestmentUsersDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.VerificationUntil;
@@ -69,7 +72,7 @@ public class UserInvestmentController {
 
 
     /**
-     * TODO 测试需要暂时为get接口
+     * TODO 测试需要暂时为get接口，需要添夹cookie验证
      * @return
      * @throws IOException
      * @throws FuYouException
@@ -138,8 +141,8 @@ public class UserInvestmentController {
     }
 
 
-
     /**
+     * Todo bug :产品上下架未做判断
      * 理财产品列表
      * @param pageNum
      * @param pageSize
@@ -147,7 +150,6 @@ public class UserInvestmentController {
      */
     @GetMapping("/app/list/products")
     public ResultBean listProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-
         return new ResultBean(1, "success", productService.selectByPage(pageSize, pageNum));
     }
 
@@ -192,24 +194,29 @@ public class UserInvestmentController {
 
 
     /**
+     * Todo bug cookie是否为空
      * 可续投投资列表数据
      */
     @GetMapping("/u/list/renewal-products")
     public ResultBean listRenewalProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize, HttpServletRequest servletRequest) {
+        Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
+
+        Map map = verificationUntil.Verification(cookie);
+
+//        对cookie信息进行检验
+        if (map.get("verificationStatus").equals(50)) {
+            return new ResultBean(-1, "用户验证未成功，请跳转页面",map);
+        }
 
 //        从redis中获取到续投参数
         int investmentEnd = (int) redisTemplate.opsForValue().get("investmentEnd");
-
 //        查询到期日期小于续投参数的用户投资，当天的不包括在内
         LocalDate now = LocalDate.now();
 //        续投产品的戒指日期
         LocalDate end = now.minusDays(investmentEnd);
-
 //        转成时间戳
         long nowTime = now.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endTime = end.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-
-        Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
         Long uid = Long.valueOf(cookie.getValue());
         logger.info("查询用户可续投资,用户" + uid);
 
@@ -223,8 +230,13 @@ public class UserInvestmentController {
      */
     @GetMapping("u/renewal/investment-user/{id}")
     public ResultBean getRenewalProduct(@PathVariable("id") Long id,HttpServletRequest servletRequest) {
-
-        return new ResultBean(1, "success", investmentUserService.selectRenewalInvestmentById(id));
+        Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
+        List list = new ArrayList();
+        Map map = verificationUntil.Verification(cookie);
+        RenewalInvestmentDTO renewalInvestmentDTO = investmentUserService.selectRenewalInvestmentById(id);
+        list.add(map);
+        list.add(renewalInvestmentDTO);
+        return new ResultBean(1, "success", list);
     }
 
     /**
@@ -264,7 +276,15 @@ public class UserInvestmentController {
      * 产品续投的
      */
     @PostMapping("u/renewal-investment-user")
-    public ResultBean postRenewal(@RequestBody JSONObject jsonObject) throws TimerTaskException {
+    public ResultBean postRenewal(@RequestBody JSONObject jsonObject,HttpServletRequest servletRequest) throws TimerTaskException {
+
+        Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
+        Map map = verificationUntil.Verification(cookie);
+//        对cookie信息进行检验
+        if (map.get("verificationStatus").equals(50)) {
+            return new ResultBean(-1, "用户验证未成功，请跳转页面",map);
+        }
+
         Long id = jsonObject.getLong("id");
         String contactSign = jsonObject.getString("contactSign");
         if (payManager.postRenewal(id, contactSign)) {

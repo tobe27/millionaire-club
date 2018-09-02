@@ -19,6 +19,7 @@ public class VerificationUntil {
     public Map Verification(Cookie cookie) {
 
         /**
+         * verificationStatus
          * 10.用户未登录
          * 20.未实名认证
          * 30.已提交实名申请
@@ -26,7 +27,7 @@ public class VerificationUntil {
          * 50.验证绑卡成功
          */
         Map map = new HashMap();
-        if (cookie.equals(null)) {
+        if (cookie==null) {
             map.put("verificationStatus", 10);
             return map;
         }
@@ -49,6 +50,5 @@ public class VerificationUntil {
         map.put("verificationStatus", 50);
         return map;
     }
-
 
 }
