@@ -67,4 +67,14 @@ public class ContentServiceImpl implements ContentService {
         List<Content> contentList=contentMapper.listContentByQuery(query);
         return new PageInfo<>(contentList);
     }
+
+    @Override
+    public Content findByType(Byte type) {
+        return contentMapper.findByType(type);
+    }
+
+    @Override
+    public List<Content> listCoverShelf() {
+        return contentMapper.listCoverShelf();
+    }
 }

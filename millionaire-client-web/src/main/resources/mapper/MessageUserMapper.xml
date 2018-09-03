@@ -12,6 +12,20 @@
       <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
+  <select id="findByUid" resultType="com.millionaire.millionairebusinessservice.transport.UserMessageDTO">
+    SELECT
+    message_user.id as id,
+    message_user.code as code,
+    investment_product.name as name,
+    message_user.gmt_create as gmtCreate,
+    message_user.is_look as look,
+    message_user.investment_user_id as investmentUserId
+     from  message_user
+     left join investment_user
+     on message_user.investment_user_id = investment_user.id
+     left join investment_product
+     on investment_product.id = investment_user.product_id
+  </select>
   <sql id="Base_Column_List">
     id, code, investment_user_id, uid, is_look, gmt_create, gmt_update
   </sql>

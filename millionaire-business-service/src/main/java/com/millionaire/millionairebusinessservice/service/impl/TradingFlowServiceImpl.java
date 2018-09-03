@@ -71,8 +71,9 @@ public class TradingFlowServiceImpl  implements TradingFlowService {
     public Long insert(TradingFlow record) {
         record.setGmtCreate(System.currentTimeMillis());
         record.setGmtUpdate(System.currentTimeMillis());
-        logger.info("交易信息插入："+record);
         flowMapper.insert(record);
+        logger.info("交易信息插入："+record+
+                "<=====================================================================================");
         return record.getId();
     }
 
@@ -111,5 +112,15 @@ public class TradingFlowServiceImpl  implements TradingFlowService {
     @Override
     public int updateTradingFlowStatus(Long investmentUserId, Byte status) {
         return flowMapper.updateTradingFlowStatus(investmentUserId,status,System.currentTimeMillis());
+    }
+
+    @Override
+    public List<TradingFlow> findByUid(Long uid) {
+        return flowMapper.findByUid(uid);
+    }
+
+    @Override
+    public TradingFlow selectByPrimaryKey(Long id) {
+        return flowMapper.selectByPrimaryKey(id);
     }
 }

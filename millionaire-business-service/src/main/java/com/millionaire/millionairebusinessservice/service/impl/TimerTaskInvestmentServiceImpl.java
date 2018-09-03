@@ -1,16 +1,20 @@
 package com.millionaire.millionairebusinessservice.service.impl;
 
 import com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper;
-import com.millionaire.millionairebusinessservice.exception.TimerTaskException;
 import com.millionaire.millionairebusinessservice.module.TimerTaskInvestment;
 import com.millionaire.millionairebusinessservice.service.TimerTaskInvestmentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
+import java.util.Comparator;
 import java.util.List;
+
 
 @Service
 public class TimerTaskInvestmentServiceImpl implements TimerTaskInvestmentService {
+
+    private Logger logger = LoggerFactory.getLogger(TradingFlowServiceImpl.class);
     @Resource
     private TimerTaskInvestmentMapper timerTaskInvestmentMapper;
 
@@ -29,7 +33,14 @@ public class TimerTaskInvestmentServiceImpl implements TimerTaskInvestmentServic
 
     @Override
     public TimerTaskInvestment selectIdForRenewalInvestment(Long investmentUserId) throws Exception {
-        return timerTaskInvestmentMapper.selectIdForRenewalInvestment(investmentUserId);
+        List<TimerTaskInvestment> list = timerTaskInvestmentMapper.selectIdForRenewalInvestment(investmentUserId);
+        logger.info("获得投资定时任务信息"+list);
+        logger.info("==============================================================");
+        Comparator<TimerTaskInvestment> comparator = Comparator.comparing(TimerTaskInvestment::getTimes);
+        TimerTaskInvestment taskInvestment = list.stream().max(comparator).get();
+        logger.info("筛选后的投资定时任务信息"+taskInvestment);
+        logger.info("==============================================================");
+        return taskInvestment ;
     }
 
     @Override

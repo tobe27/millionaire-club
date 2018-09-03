@@ -48,4 +48,16 @@ public interface InvestmentProductMapper {
      **/
     List<InvestmentProduct> selectProductByPage(ProductQuery productQuery);
 
+    /**
+     * 所有上架的产品查询（无参数）
+     * @return
+     */
+    List<InvestmentProduct> listProductOnShelf(int pageSize, int pageNum);
+
+    /**
+     * Todo 推荐产品 is_recommend =1  and is_shelf = 1
+     * @return
+     */
+    List<InvestmentProduct> listProductsRecommend();
+
 }

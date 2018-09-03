@@ -95,7 +95,7 @@ public interface InvestmentUserMapper {
     /**
      * 查询可续投产品列表
      */
-    List<RenewalInvestmentDTO> listRenewalInvestments(@Param("end") Long end, @Param("now") Long now);
+    List<RenewalInvestmentDTO> listRenewalInvestments(@Param("end") Long end, @Param("now") Long now,@Param("uid")Long uid);
 
     /**
      * 查询投资合同信息
@@ -120,5 +120,14 @@ public interface InvestmentUserMapper {
  * 查询条件 investment_status = 10 理财中的用户投资
  **/
     List<InvestmentUser> listEffectInvestmentUser();
+
+    /**
+     * 判断用户是否有购买过新手计划产品
+     * @param uid
+     * @return
+     */
+    List<RenewalInvestmentDTO> selectExistNovicePlan(Long uid);
+
+
 
 }

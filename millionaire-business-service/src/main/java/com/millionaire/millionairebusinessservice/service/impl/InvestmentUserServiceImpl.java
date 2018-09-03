@@ -9,6 +9,7 @@ import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -36,11 +37,12 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
      */
     @Override
     public Long insert(InvestmentUser record) {
-        long time = System.currentTimeMillis();
-        record.setGmtCreate(time);
-        record.setGmtUpdate(time);
-        logger.info("用户投资记录插入:"+record);
+        record.setLendingContractNumber("0");
+        record.setGmtCreate(System.currentTimeMillis());
+        record.setGmtUpdate(System.currentTimeMillis());
         investmentUserMapper.insert(record);
+        logger.info("用户投资记录插入:"+record+
+                "===================================================================>" );
         return record.getId();
     }
 
@@ -77,8 +79,10 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     }
 
     @Override
-    public int updateLendingContractNumber(Long investmentUserId, String lendingContractNumber) {
-        return investmentUserMapper.updateLendingContractNumber(investmentUserId,lendingContractNumber,System.currentTimeMillis());
+    public void updateLendingContractNumber(Long investmentUserId, String lendingContractNumber) {
+        investmentUserMapper.updateLendingContractNumber(investmentUserId,lendingContractNumber,System.currentTimeMillis());
+        logger.info("成功修改"+investmentUserId+"用户投资的债权协议编号"+lendingContractNumber+
+        "<===========================================================================");
     }
 
     @Override
@@ -108,9 +112,9 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     }
 
     @Override
-    public PageInfo listRenewalInvestments(Long end, Long now,int pageSize,int pageNum) {
+    public PageInfo listRenewalInvestments(Long end, Long now,Long uid,int pageSize,int pageNum) {
         PageHelper.startPage(pageNum, pageSize);
-        List<RenewalInvestmentDTO> list = investmentUserMapper.listRenewalInvestments(end, now);
+        List<RenewalInvestmentDTO> list = investmentUserMapper.listRenewalInvestments(end, now,uid);
         return new PageInfo(list);
     }
 
@@ -138,5 +142,24 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     @Override
     public List<InvestmentUser> listEffectInvestmentUser() {
         return investmentUserMapper.listEffectInvestmentUser();
+    }
+
+    @Override
+    public List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user) {
+        return investmentUserMapper.findByUidInvestmentStatus(user);
+    }
+
+    @Override
+    public UserInvestmentDTO findById(Long id) {
+        return investmentUserMapper.findById(id);
+    }
+
+    @Override
+    public int selectExistNovicePlan(Long uid) {
+        if (null==investmentUserMapper.selectExistNovicePlan(uid)||investmentUserMapper.selectExistNovicePlan(uid).isEmpty()) {
+            return 0;
+        }else{
+            return 1;
+        }
     }
 }

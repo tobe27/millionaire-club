@@ -97,13 +97,17 @@ public class InvestmentUserJob implements Job {
 
 //                调用支付接口转账
                 boolean result = companyPay.httpURLConnectionPOST(taskInvestment.getId(), taskInvestment.getPaybackAmount());
+                //                修改定时任务状态  status = 10 执行成功
+
                 if (result){    //支付结果成功
 
 
                 }
 
-//                修改定时任务状态
 //                更新用户账户的余额和收益
+
+
+
 //                更新用户投资状态
 //                取消债权匹配
 //                生成用户消息

@@ -66,4 +66,9 @@ public class ProposalServiceImpl implements ProposalService {
     public UserProposalDTO selectUserProposalById(Long id) {
         return proposalMapper.selectUserProposalById(id);
     }
+
+    @Override
+    public int insert(Proposal record) {
+        return proposalMapper.insert(record);
+    }
 }

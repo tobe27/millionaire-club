@@ -22,11 +22,11 @@ public class H5PayServlet
 	private static final long	serialVersionUID	= 1419376384387536955L;
 
 //  回调接口
-	private static final String BACK_URL = "/api/back_url";
+	private static final String BACK_URL = "http://47.98.219.40:8081/api/back_url";
 //	支付成功后的跳转页面
-	private static final String HOME_URL = "/api/home_url";
+	private static final String HOME_URL = "http://47.98.219.40:8081/api/home_url";
 //	支付失败后的跳转页面
-	private static final String RETURN_URL = "api/return_url";
+	private static final String RETURN_URL = "http://47.98.219.40:8081/api/return_url";
 //	测试的支付接口页面
 	private static final String PAY_URL ="http://www-1.fuiou.com:18670/mobile_pay/h5pay/payAction.pay";
 
@@ -34,6 +34,8 @@ public class H5PayServlet
 
 
 	public String sentPost(long userId,long amt,String idNo,Long orderId,String bankCard,String name) throws IOException, FuYouException {
+	    logger.info("调用支付接口"+
+	            "<===============================================================================");
 		String respMsg = "";
 		try
 		{
@@ -47,7 +49,8 @@ public class H5PayServlet
 
 			String sign= MD5.MD5Encode(signPlain);
 
-			logger.info("[签名明文:]"+signPlain);
+			logger.info("[签名明文:]"+signPlain+
+                    "<=======================================================================================");
 
 //			xml参数的生成
 			orderPlain.append("<ORDER>")
@@ -73,6 +76,7 @@ public class H5PayServlet
 			.append("</ORDER>");
 
 			logger.info("[订单信息:]"+orderPlain.toString());
+			logger.info("====================================================================================");
 
 			Map<String,String> param = new HashMap<String, String>();
 			param.put("VERSION", "2.0");
@@ -85,12 +89,13 @@ public class H5PayServlet
 			respMsg = HttpFormUtil.formForward(PAY_URL, param);
 
 			logger.info("[请求信息:]"+param);
+            logger.info("====================================================================================");
 		}
 		catch (Exception e)
 		{
 		    logger.info("支付系统异常");
+            logger.info("====================================================================================");
             throw new FuYouException("H5支付系统异常");
-
 		}
 		return respMsg;
 	}

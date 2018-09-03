@@ -461,7 +461,4 @@
         WHERE reception_users.id=#{id}
     </select>
 
-
-
-
 </mapper>

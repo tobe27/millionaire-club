@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.Content;
 import com.millionaire.millionairemanagerservice.request.ContentQuery;
 
+import java.util.List;
+
 /**
  * @author Liu Kai
  * @Description: TODO 运营内容 新增 修改 查询 删除
@@ -25,4 +27,11 @@ public interface ContentService {
 
     PageInfo<Content> selectContentByPage(Integer pageNum, Integer pageSize, ContentQuery query);
 
+    Content findByType(Byte type);
+
+    /**
+     * 展示banner图轮播
+     * @return
+     */
+    List<Content> listCoverShelf();
 }

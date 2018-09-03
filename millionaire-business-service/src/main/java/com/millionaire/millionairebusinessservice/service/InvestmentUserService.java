@@ -6,6 +6,7 @@ import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public interface InvestmentUserService {
     /**
      * 插入出借合同编号
      */
-    int updateLendingContractNumber(Long investmentUserId, String lendingContractNumber);
+    void updateLendingContractNumber(Long investmentUserId, String lendingContractNumber);
 
     InvestmentUser selectByPrimaryKey(Long id);
 
@@ -63,7 +64,7 @@ public interface InvestmentUserService {
     /**
      * 查询可续投产品列表
      */
-    PageInfo listRenewalInvestments(Long end, Long now,int pageSize,int pageNum);
+    PageInfo listRenewalInvestments(Long end, Long now,Long uid,int pageSize,int pageNum);
 
     /**
      * 查询投资合同信息
@@ -85,4 +86,17 @@ public interface InvestmentUserService {
      * 查询条件 investment_status = 10 理财中的用户投资
      **/
     List<InvestmentUser> listEffectInvestmentUser();
+
+    List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user);
+
+    UserInvestmentDTO findById(Long id);
+
+    /**
+     * 判断用户是否有购买过新手计划产品
+     * @param uid
+     * @return
+     */
+    int selectExistNovicePlan(Long uid);
+
+
 }
