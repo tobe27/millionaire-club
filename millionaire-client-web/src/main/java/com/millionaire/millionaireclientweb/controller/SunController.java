@@ -180,6 +180,7 @@ public class SunController {
         receptionUsers.setManagerNumber(managerNumber);
         receptionUsers.setAssets(0);
         receptionUsers.setProfit(0);
+        receptionUsers.setBankId(0L);
         receptionUsers.setStatus((byte) 10);  //用户状态
         receptionUsers.setIdAuthentication((byte) 10); //实名状态
         receptionUsers.setGmtCreate(System.currentTimeMillis());
@@ -349,6 +350,17 @@ public class SunController {
         userBankService.insert(userBank);
         return new ResultBean(1, "添加成功");
     }
+//    @GetMapping("/u/bankPage")
+//    public ResultBean getBankPage(HttpServletRequest request){
+//        Cookie cookie = CookieUtil.getCookie("cookie", request);
+//        Long uid = Long.valueOf(cookie.getValue());
+//        ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
+//        Byte authentication = receptionUsers.getIdAuthentication();
+//        if(authentication!=20){
+//            return new ResultBean(-1,"请先进行实名认证");
+//        }
+//        return new ResultBean(1,"跳转表单页面");
+//    }
 
     /**
      * 用户拥有的银行卡
@@ -612,7 +624,7 @@ public class SunController {
      * @return
      */
     @PutMapping("/u/password")
-    public ResultBean updatePassword(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
+    public ResultBean updatePassword(@RequestBody JSONObject jsonObject,HttpServletResponse response,HttpServletRequest request) {
         String oldPassword = jsonObject.getString("oldPassword");
         String password = jsonObject.getString("password");
         String rePassword = jsonObject.getString("rePassword");
@@ -644,6 +656,7 @@ public class SunController {
         receptionUsers.setGmtUpdate(System.currentTimeMillis());
         receptionUsersService.updateByPrimaryKey(receptionUsers);
         logger.info("用户修改密码");
+        CookieUtil.deleteCookie("cookie","delete",response);
         return new ResultBean(1, "修改密码成功");
     }
 
