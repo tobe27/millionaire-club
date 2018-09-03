@@ -72,4 +72,9 @@ public class ContentServiceImpl implements ContentService {
     public Content findByType(Byte type) {
         return contentMapper.findByType(type);
     }
+
+    @Override
+    public List<Content> listCoverShelf() {
+        return contentMapper.listCoverShelf();
+    }
 }

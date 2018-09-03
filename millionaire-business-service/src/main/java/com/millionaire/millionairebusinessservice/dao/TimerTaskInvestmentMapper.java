@@ -21,7 +21,7 @@ public interface TimerTaskInvestmentMapper {
     /**
      * 查询即将续投投资的任务
      */
-    TimerTaskInvestment selectIdForRenewalInvestment(Long investmentUserId);
+    List<TimerTaskInvestment> selectIdForRenewalInvestment(Long investmentUserId);
 
     /**
      * 用户投资续投后的，定时任务更新

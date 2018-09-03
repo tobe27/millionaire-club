@@ -36,6 +36,8 @@ public class InvestmentTaskInsert {
 
     public void insert(Long investmentUserId) {
 
+        logger.info(investmentUserId+"用户投资的写入定时任务----->");
+
         //        查询用户投资信息
         InvestmentUser investmentUser = investmentUserService.selectByPrimaryKey(investmentUserId);
 //        查询投资产品
@@ -46,8 +48,12 @@ public class InvestmentTaskInsert {
 
         timerTaskInvestment.setInvestmentUserId(investmentUserId);
 
+        /**
+         * todo bug修复
+         */
+        logger.info("产品付款类型"+investmentProduct.getRepaymentMode());
         //本息一次付款的任务写入
-        if (investmentProduct.getType() == 10) {
+        if (investmentProduct.getRepaymentMode() == 10) {
 //            付款金额，以分为单位
             int backAmount = (int) ((investmentUser.getInvestmentAmount() + investmentUser.getExpectedIncome()) * 100);
             timerTaskInvestment.setPaybackAmount(backAmount);
@@ -67,7 +73,7 @@ public class InvestmentTaskInsert {
 
 
         //分期还息，最后一个还本和息，每月还息固定每月20号
-        if (investmentProduct.getType() == 20) {
+        if (investmentProduct.getRepaymentMode() == 20) {
 
 //          起息日期
             Long startTime = investmentUser.getValueDateStart();
@@ -86,7 +92,6 @@ public class InvestmentTaskInsert {
 
             int endYear = endDate.getYear();
             int endMonth = endDate.getMonth().getValue();
-            int endDay = endDate.getDayOfMonth();
 
 //        分期付款次数
             int taskTimes = (endYear - startYear) * 12 + (endMonth - startMonth);

@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Random;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,24 +43,56 @@ public class InvestmentProductControllerTest {
     }
 
     @Test
-    public void name() {
+    public void insertProduct() {
         InvestmentProduct product = new InvestmentProduct();
-        // 产品代号
-        product.setProductCode("XSB1" );
-        //产品名称
-        product.setName("体验计划" );
-        //还款方式
-        product.setRepaymentMode((byte) 10);
-        product.setValueDate((byte)10);
-        product.setStartingAmount(50000);
-        product.setDeadline(7);
-        product.setMoreDetails("no details for now");
-        product.setType((byte)10);
-        product.setIsRecommend((byte)0);
-        product.setIsShelf((byte)0);
-        product.setIsPurchaseLimit((byte)0);
-        service.insertProductSelective(product);
-        Long id=product.getId();
-        System.out.println(id);
+        for(int i = 0;i<9;i++) {
+            if (i < 3) {
+                product.setProductCode("newProductCode" + i);
+                product.setName("newProductName" + i);
+                product.setAnnualizedIncome(i * 0.01);
+                product.setRepaymentMode((byte) 10);
+                product.setStartingAmount(i * 10000);
+                product.setValueDate((byte) 10);
+                product.setDeadline(i * 10);
+                product.setDescribe("备注" + i);
+                product.setMoreDetails("http://majorjoe.oss-cn-beijing.aliyuncs.com/780fb779-6972-422d-9d03-8d2f7dc62f35.png");
+                product.setType((byte) 10);
+                product.setIsRecommend((byte) 1);
+                product.setIsPurchaseLimit((byte) 1);
+                product.setIsShelf((byte) 1);
+                service.insertProductSelective(product);
+            } else if (i < 6) {
+                product.setProductCode("newProductCode" + i);
+                product.setName("newProductName" + i);
+                product.setAnnualizedIncome(i * 0.01);
+                product.setRepaymentMode((byte) 20);
+                product.setStartingAmount(i * 10000);
+                product.setValueDate((byte) 20);
+                product.setDeadline(i * 30);
+                product.setDescribe("备注" + i);
+                product.setMoreDetails("http://majorjoe.oss-cn-beijing.aliyuncs.com/780fb779-6972-422d-9d03-8d2f7dc62f35.png");
+                product.setType((byte) 20);
+                product.setIsRecommend((byte) 1);
+                product.setIsPurchaseLimit((byte) 1);
+                product.setIsShelf((byte) 1);
+                service.insertProductSelective(product);
+            } else {
+                product.setProductCode("newProductCode" + i);
+                product.setName("newProductName" + i);
+                product.setAnnualizedIncome(i * 0.01);
+                product.setRepaymentMode((byte) 20);
+                product.setStartingAmount(i * 10000);
+                product.setValueDate((byte) 30);
+                product.setDeadline(i * 30);
+                product.setDescribe("备注" + i);
+                product.setMoreDetails("http://majorjoe.oss-cn-beijing.aliyuncs.com/780fb779-6972-422d-9d03-8d2f7dc62f35.png");
+                product.setType((byte) 30);
+                product.setIsRecommend((byte) 1);
+                product.setIsPurchaseLimit((byte) 1);
+                product.setIsShelf((byte) 1);
+                service.insertProductSelective(product);
+            }
+
+        }
     }
 }

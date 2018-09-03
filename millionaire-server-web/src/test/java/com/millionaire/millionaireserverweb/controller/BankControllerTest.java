@@ -44,7 +44,18 @@ public void testB(){
 }
 
     @Test
-    public void dummy() {
-        mapper.deleteByPrimaryKey(1L);
+    public void insertBank() {
+        Bank bank =new Bank();
+        bank.setBankName("交通银行");
+        bank.setSingleLimit(200000.0D);
+        bank.setDailyLimit(200000.0D);
+        bank.setPaymentNumber("12345678");
+        bank.setPresentNumber("12345678");
+        bank.setBankLogo("http://majorjoe.oss-cn-beijing.aliyuncs.com/780fb779-6972-422d-9d03-8d2f7dc62f35.png");
+        bank.setFounder("admin");
+        bank.setModifier("admin");
+      service.insert(bank);
+
     }
+
 }

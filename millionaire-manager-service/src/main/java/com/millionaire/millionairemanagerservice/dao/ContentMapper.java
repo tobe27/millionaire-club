@@ -24,4 +24,10 @@ public interface ContentMapper {
 
     Content findByType(Byte type);
 
+    /**
+     * 展示banner图轮播
+     * @return
+     */
+    List<Content> listCoverShelf();
+
 }

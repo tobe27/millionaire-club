@@ -8,6 +8,8 @@ import java.math.RoundingMode;
 
 public class CalulateUntil {
     private Logger logger = LoggerFactory.getLogger(CalulateUntil.class);
+
+    private static final Long TIME_DAY = 24 * 60 * 60 * 1000L;
     /**
      * 用户收益的计算公式
      * @param amount
@@ -16,6 +18,9 @@ public class CalulateUntil {
      * @return
      */
     public double incomeCalulate(int amount,double annualizedIncome,int deadLine) {
+
+        logger.info("============================================================================>" +
+                     "用户收益的计算公式,投资金额"+amount+"年化收益"+annualizedIncome+"期限"+deadLine);
 
         BigDecimal amountD = new BigDecimal(Double.toString(amount));
         BigDecimal deadLineD = new BigDecimal(Double.toString(deadLine));
@@ -30,8 +35,34 @@ public class CalulateUntil {
 
 //        计算投资收益,同时保留两位小数（因为富友支付的金额是以分为单位的，不传小数）
         BigDecimal incomeCalculation = count.multiply(annualizedIncomeDay);
-        logger.info("投资收益："+incomeCalculation);
+        logger.info("没有四舍五入的投资收益："+incomeCalculation);
+        Double newIncomeCalculation = incomeCalculation.setScale(2, RoundingMode.HALF_UP).doubleValue();
+        logger.info("四舍五入后的投资收益"+newIncomeCalculation+
+                  "<============================================================================");
+        return newIncomeCalculation ;
+    }
 
-        return  incomeCalculation.setScale(2, RoundingMode.HALF_UP).doubleValue();
+    /**
+     * 投资起息时间计算
+     * @param valueDateType 起息类型
+     * @return
+     */
+    public Long ValueDateCalculate(Byte valueDateType) {
+        logger.info("============================================================================>" +
+                "起息类型"+valueDateType);
+        Long valueDateStart;                                               //起息类型
+        if (valueDateType == 10) {// T+0 当天开始计算利息
+            valueDateStart = System.currentTimeMillis();
+            return valueDateStart;
+        }
+       if (valueDateType== 20) { // T+1 开始计算利息
+            valueDateStart = System.currentTimeMillis() + TIME_DAY;
+            return valueDateStart;
+        }
+        // T+2 当天开始计算利息
+        valueDateStart = System.currentTimeMillis() + TIME_DAY * 2;
+        return valueDateStart;
+
+
     }
 }

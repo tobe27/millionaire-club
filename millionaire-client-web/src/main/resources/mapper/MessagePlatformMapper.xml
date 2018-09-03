@@ -72,16 +72,10 @@
        </where>
     </select>
 
-
-
-
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from message_platform
     where id = #{id,jdbcType=BIGINT}
   </delete>
-
-
-
 
   <insert id="insert" parameterType="com.millionaire.millionairemanagerservice.module.MessagePlatform" useGeneratedKeys="true" keyProperty="id">
     insert into message_platform (title, sending_crowd,

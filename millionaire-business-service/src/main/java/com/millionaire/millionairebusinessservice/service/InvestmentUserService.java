@@ -44,7 +44,7 @@ public interface InvestmentUserService {
     /**
      * 插入出借合同编号
      */
-    int updateLendingContractNumber(Long investmentUserId, String lendingContractNumber);
+    void updateLendingContractNumber(Long investmentUserId, String lendingContractNumber);
 
     InvestmentUser selectByPrimaryKey(Long id);
 
@@ -64,7 +64,7 @@ public interface InvestmentUserService {
     /**
      * 查询可续投产品列表
      */
-    PageInfo listRenewalInvestments(Long end, Long now,int pageSize,int pageNum);
+    PageInfo listRenewalInvestments(Long end, Long now,Long uid,int pageSize,int pageNum);
 
     /**
      * 查询投资合同信息
@@ -90,4 +90,13 @@ public interface InvestmentUserService {
     List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user);
 
     UserInvestmentDTO findById(Long id);
+
+    /**
+     * 判断用户是否有购买过新手计划产品
+     * @param uid
+     * @return
+     */
+    int selectExistNovicePlan(Long uid);
+
+
 }
