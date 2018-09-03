@@ -33,7 +33,6 @@ public class ClaimInfo {
 
     //    出借日期
     @NotNull
-
     private Long lendingDate;
 
     //    出借期限

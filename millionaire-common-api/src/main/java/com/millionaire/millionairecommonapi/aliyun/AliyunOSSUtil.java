@@ -24,7 +24,7 @@ public class AliyunOSSUtil {
     private ConstantConfig constantConfig;
 
     public String fileCheck(MultipartFile file) throws AliyunAPIException {
-
+        System.out.println("constantConfig = " + constantConfig);
         if (file==null) {
             logger.info("上传图片不存在");
             throw new AliyunAPIException("上传图片不存在");

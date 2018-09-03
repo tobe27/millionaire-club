@@ -18,6 +18,7 @@ import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import com.millionaire.millionaireuserservice.service.UserBankService;
 import com.millionaire.millionaireuserservice.transport.ReceptionUsersDTO;
+import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -181,7 +182,9 @@ public class ReceptionUsersController {
     }
 
     /**
-     * @Description 取消用户实名状态 删除用户真实姓名 用户身份证号及银行卡
+     * @Description 取消用户实名状态
+     * 删除用户真实姓名 用户身份证号及银行卡
+     * 用户身份证url设为""
      **/
     @PutMapping("/user-verification-cancel/{uid}")
     public ResultBean cancelUserVerification(@PathVariable("uid") Long id) {
@@ -195,6 +198,10 @@ public class ReceptionUsersController {
         users.setIdName("");
         users.setIdNumber("");
         users.setBankId(0L);
+        // 用户身份证正反面url设为空字符串''
+        users.setIdFront("");
+        users.setIdBack("");
+
         // 删除用户绑定的银行卡
         userBankService.deleteByUID(id);
         logger.info("删除用户银行卡绑定 用户id:{}", id);

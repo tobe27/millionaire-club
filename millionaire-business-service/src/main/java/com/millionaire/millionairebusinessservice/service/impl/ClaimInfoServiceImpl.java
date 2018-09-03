@@ -23,6 +23,8 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
     @Resource
   private   ClaimInfoMapper claimInfoMapper;
 
+
+
     /**
      * TODO 这个实现类需要修改
      *
@@ -42,7 +44,7 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
         claim.setGmtUpdate(time);
 
 //        过期时间计算（=lendingDate+lendingPeriod）转存
-        Long expirationDate = claim.getLendingDate() + claim.getLendingPeriod() * (24 * 60 * 60 * 1000);
+        Long expirationDate = claim.getLendingDate() + claim.getLendingPeriod() * (24 * 60 * 60 * 1000L);
         claim.setExpirationDate(expirationDate);
         claim.setUnMatchAmount(claim.getLendingAmount());
         claim.setMatchRate(0.0);
