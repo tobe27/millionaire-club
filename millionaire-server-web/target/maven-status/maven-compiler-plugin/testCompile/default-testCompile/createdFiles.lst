@@ -1,7 +1,9 @@
 com\millionaire\millionaireserverweb\controller\BankControllerTest.class
+com\millionaire\millionaireserverweb\controller\SunControllerTest.class
 com\millionaire\millionaireserverweb\controller\ReceptionUsersControllerTest.class
 com\millionaire\millionaireserverweb\controller\StatisticsControllerTest.class
 com\millionaire\millionaireserverweb\controller\ClaimInfoControllerTest.class
 com\millionaire\millionaireserverweb\controller\ParameterSettingControllerTest.class
 com\millionaire\millionaireserverweb\controller\InvestmentProductControllerTest.class
 com\millionaire\millionaireserverweb\controller\ClaimMatchControllerTest.class
+com\millionaire\millionaireserverweb\controller\MessagePlatformControllerTest.class

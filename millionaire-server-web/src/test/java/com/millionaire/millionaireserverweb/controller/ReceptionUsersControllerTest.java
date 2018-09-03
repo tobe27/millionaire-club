@@ -85,13 +85,14 @@ public class ReceptionUsersControllerTest {
 
     @Test
     public void listUserInvestment() {
-        InvestmentUserQuery query=new InvestmentUserQuery();
-        query.setUid(8L);
-        query.setProductName("mmm1");
+        InvestmentUserQuery query = new InvestmentUserQuery();
+        query.setUid(1L);
+//        query.setProductName("mmm1");
         List<InvestmentUserDTO> investmentUserDTOList = investmentUserService.listInvestmentUserByQuery(query);
-        System.out.println("investmentUserDTOList = " + investmentUserDTOList);
+        for (InvestmentUserDTO dto : investmentUserDTOList) {
+            System.err.println(dto);
+        }
     }
-
 
     @Test
     public void selectMatchedInvestmentUser() {

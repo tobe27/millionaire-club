@@ -1,4 +1,5 @@
 com\millionaire\millionaireserverweb\controller\ContentController.class
+com\millionaire\millionaireserverweb\controller\AliyunAPIController.class
 com\millionaire\millionaireserverweb\MillionaireServerWebApplication.class
 com\millionaire\millionaireserverweb\request\UserProposalQuery.class
 com\millionaire\millionaireserverweb\controller\ClaimMatchController.class

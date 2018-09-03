@@ -69,6 +69,7 @@
         investment_user.investment_amount as investmentAmount,
         investment_user.lending_contract_number as lendingContractNumber,
         investment_user.distributed_income as distributedIncome,
+        investment_user.expected_income - investment_user.distributed_income  as undistributedIncome,
         investment_user.investment_status as investmentStatus,
 
         reception_users.id_name as userName,
@@ -145,8 +146,6 @@
     <select id="selectTimeLimit" resultType="java.lang.Long">
         SELECT id FROM investment_user ORDER by gmt_create desc LIMIT 1
     </select>
-
-
 
     <select id="selectMatchedInvestmentUser"  parameterType="java.lang.Long" resultMap="InvestmentUser">
         select
@@ -405,6 +404,7 @@
         WHERE investment_user.investment_status = 10
         AND investment_user.value_date_end <![CDATA[ >= ]]> #{end,jdbcType=BIGINT}
         AND investment_user.value_date_end <![CDATA[ <= ]]> #{now,jdbcType=BIGINT}
+        AND investment_user.uid = #{uid,jdbcType=BIGINT}
     </select>
 
     <!--查询投资合同信息-->
