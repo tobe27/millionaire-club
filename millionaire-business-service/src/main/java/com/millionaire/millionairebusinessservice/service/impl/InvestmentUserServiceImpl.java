@@ -37,11 +37,12 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
      */
     @Override
     public Long insert(InvestmentUser record) {
-        long time = System.currentTimeMillis();
-        record.setGmtCreate(time);
-        record.setGmtUpdate(time);
+        record.setLendingContractNumber("0");
+        record.setGmtCreate(System.currentTimeMillis());
+        record.setGmtUpdate(System.currentTimeMillis());
         investmentUserMapper.insert(record);
-        logger.info("用户投资记录插入:"+record);
+        logger.info("用户投资记录插入:"+record+
+                "===================================================================>" );
         return record.getId();
     }
 
@@ -78,8 +79,10 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     }
 
     @Override
-    public int updateLendingContractNumber(Long investmentUserId, String lendingContractNumber) {
-        return investmentUserMapper.updateLendingContractNumber(investmentUserId,lendingContractNumber,System.currentTimeMillis());
+    public void updateLendingContractNumber(Long investmentUserId, String lendingContractNumber) {
+        investmentUserMapper.updateLendingContractNumber(investmentUserId,lendingContractNumber,System.currentTimeMillis());
+        logger.info("成功修改"+investmentUserId+"用户投资的债权协议编号"+lendingContractNumber+
+        "<===========================================================================");
     }
 
     @Override

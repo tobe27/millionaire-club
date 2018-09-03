@@ -34,6 +34,8 @@ public class H5PayServlet
 
 
 	public String sentPost(long userId,long amt,String idNo,Long orderId,String bankCard,String name) throws IOException, FuYouException {
+	    logger.info("调用支付接口"+
+	            "<===============================================================================");
 		String respMsg = "";
 		try
 		{
@@ -47,7 +49,8 @@ public class H5PayServlet
 
 			String sign= MD5.MD5Encode(signPlain);
 
-			logger.info("[签名明文:]"+signPlain);
+			logger.info("[签名明文:]"+signPlain+
+                    "<=======================================================================================");
 
 //			xml参数的生成
 			orderPlain.append("<ORDER>")
@@ -73,6 +76,7 @@ public class H5PayServlet
 			.append("</ORDER>");
 
 			logger.info("[订单信息:]"+orderPlain.toString());
+			logger.info("====================================================================================");
 
 			Map<String,String> param = new HashMap<String, String>();
 			param.put("VERSION", "2.0");
@@ -85,12 +89,13 @@ public class H5PayServlet
 			respMsg = HttpFormUtil.formForward(PAY_URL, param);
 
 			logger.info("[请求信息:]"+param);
+            logger.info("====================================================================================");
 		}
 		catch (Exception e)
 		{
 		    logger.info("支付系统异常");
+            logger.info("====================================================================================");
             throw new FuYouException("H5支付系统异常");
-
 		}
 		return respMsg;
 	}

@@ -36,6 +36,8 @@ public class InvestmentTaskInsert {
 
     public void insert(Long investmentUserId) {
 
+        logger.info(investmentUserId+"用户投资的写入定时任务----->");
+
         //        查询用户投资信息
         InvestmentUser investmentUser = investmentUserService.selectByPrimaryKey(investmentUserId);
 //        查询投资产品

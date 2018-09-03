@@ -323,6 +323,13 @@ public class UserInvestmentController {
         }
         return new ResultBean(1, "success");
     }
+
+    @GetMapping("redis/set")
+    public String testRedis(@RequestParam("num") int num) {
+        redisTemplate.opsForValue().set("investmentEnd", 5);
+        return "ok";
+    }
+
 }
 
 

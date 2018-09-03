@@ -44,7 +44,7 @@ public interface InvestmentUserService {
     /**
      * 插入出借合同编号
      */
-    int updateLendingContractNumber(Long investmentUserId, String lendingContractNumber);
+    void updateLendingContractNumber(Long investmentUserId, String lendingContractNumber);
 
     InvestmentUser selectByPrimaryKey(Long id);
 

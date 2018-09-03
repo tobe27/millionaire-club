@@ -2,7 +2,7 @@
 <configuration>
 
     <!-- 日志根目录-->
-    <springProperty scope="context" name="LOG_HOME" source="logging.path" defaultValue="~/usr/local/log/client-web"/>
+    <springProperty scope="context" name="LOG_HOME" source="logging.path" defaultValue="~/log/client-web"/>
 
     <!-- 日志级别 -->
     <springProperty scope="context" name="LOG_ROOT_LEVEL" source="logging.level.root" defaultValue="INFO"/>

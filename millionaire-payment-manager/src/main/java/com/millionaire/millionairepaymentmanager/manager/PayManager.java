@@ -53,8 +53,8 @@ public class PayManager {
 
     InvestmentProduct investmentProduct = new InvestmentProduct();
 
-    private static final Long TIME_DAY = 24 * 60 * 60 * 1000L;
 
+    private static final Long TIME_DAY = 24 * 60 * 60 * 1000L;
 
     /**
      * 交易流程管理：
@@ -68,124 +68,124 @@ public class PayManager {
 
 //        查询购买的产品信息
         InvestmentProduct investmentProduct = investmentProductService.selectByPrimaryKey(requestBean.getProductId());
+
         logger.info("产品信息：" + investmentProduct);
 
         if (isHavingNovicePlan == 1 && investmentProduct.getType() == 10) {
             logger.info("新手计划只能购买一次"+requestBean.getProductId());
+            logger.info("====================================================================================");
             return "新手计划只能购买一次";
         }
 
         if (requestBean.getAmount() < investmentProduct.getStartingAmount()) {
             logger.info("投资金额小于起投金额"+requestBean.getAmount());
+            logger.info("====================================================================================");
             return "投资金额小于起投金额";
         }
 
         /**
          * Todo bug
          */
+
 //        查询用户信息
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
-
         logger.info("用户信息：" + receptionUsers);
 
 //        查询用户银行信息
         UserBank userBank = userBankService.selectByPrimaryKey(requestBean.getUserBankId());
         logger.info("用户银行卡信息：" + userBank);
+//      用户银行信息
+        String bankName = userBank.getBankName();
+        String cardNumber = userBank.getCardNumber();
+        String cardType = userBank.getCardType();
+//      用户信息
+        String phone = String.valueOf(receptionUsers.getPhone());
+        String idName = receptionUsers.getIdName();
+        String idNumber = receptionUsers.getIdNumber();
+//      产品信息
+        Double annualizedIncome = investmentProduct.getAnnualizedIncome();
+        Integer deadLine = investmentProduct.getDeadline();
+        String productName = investmentProduct.getName();
+        Byte valueDate = investmentProduct.getValueDate();
+        String productCode = investmentProduct.getProductCode();
+
+
+
+
+//        调用工具类，计算用户收益（=本金*利率/360*期限）                    //本金 利率  期限  产品（表）
+        double income = calulateUntil.incomeCalulate(requestBean.getAmount(), annualizedIncome, deadLine);
+//        用户投资的到期时间计算
+        Long valueDateStart= calulateUntil.ValueDateCalculate(valueDate);
+        logger.info("投资起息时间"+valueDateStart+
+                "<============================================================================");
+        Long valueDateEnd = valueDateStart + deadLine * TIME_DAY;
+        logger.info("投资到息时间"+valueDateEnd+
+                "<============================================================================");
+
 
         InvestmentUser investmentUser = new InvestmentUser();
 //        插入交易银行信息
-        investmentUser.setBankCardNumber(userBank.getCardNumber());
-        investmentUser.setBankName(userBank.getBankName());
-
+        investmentUser.setBankCardNumber(cardNumber);
+        investmentUser.setBankName(bankName);             //银行名称
         investmentUser.setProductId(requestBean.getProductId());
         investmentUser.setUid(uid);
         investmentUser.setContractSign(requestBean.getContractSign());
         investmentUser.setInvestmentAmount(requestBean.getAmount());
         investmentUser.setInvestmentStatus((byte) 0);
-
-//        调用工具类，计算用户收益（=本金*利率/360*期限）
-        double income = calulateUntil.incomeCalulate(requestBean.getAmount(), investmentProduct.getAnnualizedIncome(), investmentProduct.getDeadline());
-
-        logger.info("计算用户收益:" + income);
         investmentUser.setExpectedIncome(income);
 //        未分配收益
         investmentUser.setDistributedIncome(income);
-////        当前用户投资id
-//        Long num = investmentUserService.selectTimeLimit() + 1;
-//        logger.info("当前用户id："+num);
-
-
-//        用户投资的到期时间计算
-        Long valueDateStart = 0L;
-        if (investmentProduct.getValueDate() == 10) { // T+0 当天开始计算利息
-            valueDateStart = System.currentTimeMillis();
-        } else if (investmentProduct.getValueDate() == 20) { // T+1 开始计算利息
-            valueDateStart = System.currentTimeMillis() + TIME_DAY;
-        } else if (investmentProduct.getValueDate() == 30) {// T+2 当天开始计算利息
-            valueDateStart = System.currentTimeMillis() + TIME_DAY * 2;
-        } else {
-            logger.info("用户投资信息插入错误" + investmentProduct.getValueDate());
-        }
-        logger.info("投资到期时间：" + valueDateStart);
-
-        Long valueDateEnd = valueDateStart + investmentProduct.getDeadline() * TIME_DAY;
         investmentUser.setValueDateStart(valueDateStart);
         investmentUser.setValueDateEnd(valueDateEnd);
 
-//      bug修改
-        investmentUser.setBankName(userBank.getBankName());
-        investmentUser.setBankCardNumber(userBank.getCardNumber());
-
 //        插入用户投资记录
-        Long investmentUserId = investmentUserService.insert(investmentUser);
+        Long newInvestmentUserId = investmentUserService.insert(investmentUser);
         //        出借合同编号
-        String num = FlowNumberGeneration.lendProtocol(investmentProduct.getProductCode(), investmentUserId);
+        String num = FlowNumberGeneration.lendProtocol(productCode,newInvestmentUserId);
 //        将出借合同编号更新至数据库中
-        investmentUserService.updateLendingContractNumber(investmentUserId, num);
+        investmentUserService.updateLendingContractNumber(newInvestmentUserId, num);
 
-        logger.info("操作成功用户投资记录id" + investmentUserId);
 
 
 //        交易流水生成
         TradingFlow tradingFlow = new TradingFlow();
-        tradingFlow.setInvestmentUserId(investmentUserId);
+        tradingFlow.setInvestmentUserId(newInvestmentUserId);
         tradingFlow.setUid(uid);
-        tradingFlow.setProductName(investmentProduct.getName());
-        tradingFlow.setPhone(receptionUsers.getPhone().toString());
-        tradingFlow.setName(receptionUsers.getIdName());
+        tradingFlow.setProductName(productName);            //产品名称
+        tradingFlow.setPhone(phone);         //用户的手机号
+        tradingFlow.setName(idName);                    //用户的姓名
         tradingFlow.setAmount(requestBean.getAmount());
         tradingFlow.setType((byte) -1);
-        tradingFlow.setBankCardId(userBank.getCardNumber());
-        tradingFlow.setPayType(userBank.getCardType());
+        tradingFlow.setBankCardId(cardNumber);                //银行卡号
+        tradingFlow.setPayType(cardType);                     //银行卡类型
 //        默认失败
         tradingFlow.setStatus((byte) 20);
         tradingFlowService.insert(tradingFlow);
-        logger.info("操作成功用户交易记录id" + tradingFlow.getId());
+
 
 
 //        用户消息的生成
         MessageUser messageUser = new MessageUser();
 //        默认投资失败
         messageUser.setCode((byte) 20);
-        messageUser.setInvestmentUserId(investmentUserId);
+        messageUser.setInvestmentUserId(newInvestmentUserId);                  //投资产品的id
         messageUser.setUid(uid);
 //        用户是否浏览过信息，默认没有看过
         messageUser.setIsLook((byte) 0);
         messageUserService.insert(messageUser);
-        logger.info("操作成功用户消息记录id" + messageUser.getId());
+
+
 
 //        调用支付接口
         H5PayServlet h5PayServlet = new H5PayServlet();
-
 //        付款金额,富友支付以分为单位计算
         int paymentAmount = requestBean.getAmount() * 100;
-
         /**
          * Todo bug
          */
 //        返回支付页面,传入用户投资表的id作为订单号
-        return h5PayServlet.sentPost(uid, paymentAmount, receptionUsers.getIdNumber(),
-                investmentUserId, userBank.getCardNumber(), receptionUsers.getIdName());
+        return h5PayServlet.sentPost(uid,paymentAmount,idNumber, newInvestmentUserId, cardNumber, idName);
+
     }
 
     /**
@@ -193,45 +193,49 @@ public class PayManager {
      * 产品续投交易
      */
     public int postRenewal(Long id, String contactSign) throws TimerTaskException {
+        logger.info("进入投资续投方法");
+        logger.info("====================================================================================");
+
 //        定义所需要查询的定时任务
         TimerTaskInvestment taskInvestment ;
 
         //        查询用户投资信息
         investmentUser = investmentUserService.selectByPrimaryKey(id);
+        logger.info("查询用户投资信息"+investmentUser);
+        logger.info("====================================================================================");
 //        查询产品信息
         investmentProduct = investmentProductService.selectByPrimaryKey(investmentUser.getProductId());
 //        查询用户信息
         ReceptionUsers users = receptionUsersService.selectByPrimaryKey(investmentUser.getUid());
 
+
 //        新手计划只允许买一次
         if (investmentProduct.getType() ==10 ){
             logger.info("新手计划产品重复购买"+id);
+            logger.info("====================================================================================");
             return 10001;
         }
 
 
 //        修改起息时间,到息时间即为起息时间
         investmentUser.setValueDateStart(investmentUser.getValueDateEnd());
-
         Long valueDateEnd = investmentUser.getValueDateStart() + investmentProduct.getDeadline() * TIME_DAY;
+        logger.info("到息时间"+valueDateEnd);
+        logger.info("====================================================================================");
         investmentUser.setValueDateEnd(valueDateEnd);
 //        匹配债权的id设为默认值null
-        investmentUser.setClaimId(null);
+        investmentUser.setClaimId(0L);
         investmentUser.setContractSign(contactSign);
 //        5续投任务
         investmentUser.setInvestmentStatus((byte) 5);
-        /**
-         * TODO 债权协议编号重复，bug修复
-         */
         investmentUser.setLendingContractNumber("0");
         //        插入用户投资记录
-        Long investmentUserId = investmentUserService.insert(investmentUser);
+        Long newInvestmentUserId = investmentUserService.insert(investmentUser);
         //        出借合同编号
-        String num = FlowNumberGeneration.lendProtocol(investmentProduct.getProductCode(), investmentUserId);
+        String num = FlowNumberGeneration.lendProtocol(investmentProduct.getProductCode(), newInvestmentUserId);
 //        将出借合同编号更新至数据库中
-        long newInvestmentUserId = investmentUserService.updateLendingContractNumber(investmentUserId, num);
+        investmentUserService.updateLendingContractNumber(newInvestmentUserId, num);
 
-        logger.info("操作成功续投用户投资id" + newInvestmentUserId);
 
 //        生成用户交易记录
         TradingFlow tradingFlow = new TradingFlow();
@@ -264,6 +268,7 @@ public class PayManager {
 //        修改定时任务执行类型,将关联的新的用户投资写入记录
         taskInvestmentService.updateTimerTaskForRenewal(newPaybackAmount, (byte) 40L, newInvestmentUserId,taskInvestment.getId());
         logger.info("用户投资定时表格数据已更新"+taskInvestment.getId());
+        logger.info("====================================================================================");
         return 1;
     }
 }
