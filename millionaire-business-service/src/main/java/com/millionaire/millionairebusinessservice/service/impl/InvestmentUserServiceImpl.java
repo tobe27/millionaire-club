@@ -6,10 +6,7 @@ import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
-import com.millionaire.millionairebusinessservice.transport.ContractResponse;
-import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
-import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
-import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -145,7 +142,7 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     }
 
     @Override
-    public List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user) {
+    public List<InvestmentUsersDTO> findByUidInvestmentStatus(InvestmentUser user) {
         return investmentUserMapper.findByUidInvestmentStatus(user);
     }
 

@@ -3,6 +3,7 @@ package com.millionaire.millionaireuserservice.service.impl;
 import com.millionaire.millionaireuserservice.dao.UserBankMapper;
 import com.millionaire.millionaireuserservice.module.UserBank;
 import com.millionaire.millionaireuserservice.service.UserBankService;
+import com.millionaire.millionaireuserservice.transport.UserBanksDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -80,7 +81,7 @@ public class UserBankServiceImpl implements UserBankService {
     }
 
     @Override
-    public List<UserBank> findById(Long id) {
+    public List<UserBanksDTO> findById(Long id) {
         return userBankMapper.findById(id);
     }
 }

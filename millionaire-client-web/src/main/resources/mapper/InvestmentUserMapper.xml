@@ -408,7 +408,7 @@
 
     <!--client-->
     <select id="findByUidInvestmentStatus" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser"
-            resultType="com.millionaire.millionaireclientweb.pojo.InvestmentUsersDTO">
+            resultType="com.millionaire.millionairebusinessservice.transport.InvestmentUsersDTO">
         SELECT
         investment_user.id as id,
         investment_product.name as name,
