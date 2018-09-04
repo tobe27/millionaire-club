@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Liu Kai
@@ -51,12 +52,20 @@ public class ContentController {
 
     /**
      * @Description 新增运营内容
+     * 0903bug 已上架的banner数量不超过6个
      **/
     @PostMapping("/content")
     public ResultBean insertContent(@RequestBody @Validated Content content) {
         //轮播图封面不允许为空
         if (content.getType() == 20 && content.getCover() == null) {
             return new ResultBean(-1, "error banner cover is null", content);
+        }
+        //0903bug 已上架的banner数量不超过6个
+        if(content.getType() ==10 && content.getState() == 10){
+            List<Content> contentList =contentService.listCoverShelf();
+            if(contentList.size() >= 6){
+                return new ResultBean(-1,"error to much effective banner");
+            }
         }
         contentService.insertSelective(content);
         Long id = content.getId();

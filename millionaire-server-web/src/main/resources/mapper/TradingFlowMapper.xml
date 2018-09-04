@@ -139,9 +139,8 @@
                 and product_name = #{productName,jdbcType=VARCHAR}
             </if>
         </where>
-
         group  by
-        FROM_UNIXTIME(gmt_create/1000, '%Y%m%d')
+        FROM_UNIXTIME(gmt_create/1000, '%Y-%m-%d')
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

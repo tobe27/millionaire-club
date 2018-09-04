@@ -1,12 +1,17 @@
 package com.millionaire.millionairebusinessservice.transport;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
 import lombok.Data;
+import lombok.Setter;
 
 /**
  * @author Liu Kai
  * @Description: TODO 用户交易记录参数包装类
+ * 重写未分配收益set方法
+ * undistributedIncome = expectedIncome -distributedIncome
  * @date 2018/8/24 10:07
  */
+
 @Data
 public class InvestmentUserDTO {
    private  Long id;
@@ -51,10 +56,12 @@ public class InvestmentUserDTO {
      */
     private Double distributedIncome;
 
+
     /**
      * 未分配收益
      */
     private Double undistributedIncome;
+
 
     /**
      * 投资状态
@@ -65,4 +72,5 @@ public class InvestmentUserDTO {
      * 债权协议编号
      */
     private String creditContractNumber;
+
 }
