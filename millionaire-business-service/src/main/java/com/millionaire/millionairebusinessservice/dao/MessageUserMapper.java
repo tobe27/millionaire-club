@@ -28,4 +28,7 @@ public interface MessageUserMapper {
                               @Param("code") Byte code,
                               @Param("gmtUpdate") Long gmtUpdate);
     List<UserMessageDTO> findByUid(Long id);
+
+    Integer findByLook();
+
 }

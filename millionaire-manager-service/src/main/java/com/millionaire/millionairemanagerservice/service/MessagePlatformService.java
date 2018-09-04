@@ -31,5 +31,7 @@ public interface MessagePlatformService {
 
     List<MessagePlatform> findBySendingCrowd(Byte sendingCrowd);
 
+    Integer findBySendingCrowdCount(Byte sendingCrowd);
+
 
 }

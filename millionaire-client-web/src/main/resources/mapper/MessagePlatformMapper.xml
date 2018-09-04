@@ -45,7 +45,12 @@
     FROM message_platform
     WHERE status=10 and sending_crowd=#{sendingCrowd}
   </select>
-
+  <select id="findBySendingCrowdCount" resultType="Integer">
+    SELECT
+    COUNT(*)
+    FROM message_platform
+    WHERE status=10 and sending_crowd=#{sendingCrowd}
+  </select>
     <select id="selectByQuery"  resultMap="MessagePlatform">
         select
         <include refid="Base_Column_List" />
