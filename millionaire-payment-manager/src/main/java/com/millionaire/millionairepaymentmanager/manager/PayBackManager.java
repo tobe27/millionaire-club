@@ -43,6 +43,11 @@ public class PayBackManager {
     @Autowired
     private InvestmentTaskInsert investmentTaskInsert;
 
+    /**
+     * 由于从后台传过来的参数只有用户投资id，所以我们只能根据用户投资id更新
+     * 这个按照产品逻辑来说这个时候，用户的消息记录和交易记录中只有一份数据，所以并不会出现重复更新
+     * @param investmentUserId
+     */
     public void backManage(Long investmentUserId) {
 //        查询用户投资信息
         InvestmentUser investmentUser = investmentUserService.selectByPrimaryKey(investmentUserId);

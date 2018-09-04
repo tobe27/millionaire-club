@@ -343,7 +343,7 @@ public class UserInvestmentController {
 
     @GetMapping("redis/set")
     public String testRedis(@RequestParam("num") int num) {
-        redisTemplate.opsForValue().set("investmentEnd", 5);
+        redisTemplate.opsForValue().set("investmentEnd", num);
         return "ok";
     }
 
