@@ -18,4 +18,12 @@ private InvestmentUserMapper investmentUserMapper;
     public void selectExistNovicePlan() {
         System.out.println(investmentUserMapper.selectExistNovicePlan(1L));
     }
+
+    @Test
+    public void selectRenewalInvestmentById() {
+
+
+        System.out.println(hashCode());
+
+    }
 }

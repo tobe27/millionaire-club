@@ -10,6 +10,10 @@ public class UserInvestmentRequestBean {
     private long productId;
 //    用户银行主键
     private long userBankId;
+
+    /**
+     * TODO bug
+     */
 //    投资金额
     @Pattern(regexp="^[0-9]*0{4,}$",message = "金额必须为10000的整数倍")
     private int amount;
