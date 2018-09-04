@@ -38,4 +38,14 @@ public class MessageUserImpl implements MessageUserService {
         return messageUserMapper.findByUid(id);
     }
 
+    @Override
+    public Integer findByLook() {
+        return messageUserMapper.findByLook();
+    }
+
+    @Override
+    public int updateByPrimaryKey(MessageUser record) {
+        return messageUserMapper.updateByPrimaryKey(record);
+    }
+
 }

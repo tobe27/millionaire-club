@@ -25,6 +25,8 @@ public interface MessagePlatformMapper {
     List<MessagePlatform> selectByQuery(MessagePlatformQuery query);
 
     List<MessagePlatform> findBySendingCrowd(Byte sendingCrowd);
+
+    Integer findBySendingCrowdCount(Byte sendingCrowd);
 /**
  * @Description  查询未发送的平台消息 status = 20
  **/

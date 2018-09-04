@@ -116,11 +116,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.millionaire.millionairebusinessservice.module.MessageUser">
     update message_user
-    set code = #{code,jdbcType=TINYINT},
-      investment_user_id = #{investmentUserId,jdbcType=BIGINT},
-      uid = #{uid,jdbcType=BIGINT},
+    set
       is_look = #{isLook,jdbcType=TINYINT},
-      gmt_create = #{gmtCreate,jdbcType=BIGINT},
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -132,4 +129,8 @@
         gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where  investment_user_id = #{investmentUserId,jdbcType=BIGINT}
     </update>
+
+  <select id="findByLook" resultType="Integer">
+    SELECT COUNT(*) FROM message_user WHERE  is_look=0
+  </select>
 </mapper>
