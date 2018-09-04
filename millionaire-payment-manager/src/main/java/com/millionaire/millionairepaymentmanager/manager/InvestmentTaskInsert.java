@@ -177,7 +177,10 @@ public class InvestmentTaskInsert {
                 }
                 //            最后一次本息一次回款，将到期日期作为触发时间写入数据库
 //            付款金额，以分为单位
-                int backAmount = (investmentUser.getInvestmentAmount() + expectIncome)*100;
+                /**
+                 * bug修复
+                 */
+                int backAmount = investmentUser.getInvestmentAmount()*100 + expectIncome;
                 timerTaskInvestment.setPaybackAmount(backAmount);
 //            表示本息一次付清
                 timerTaskInvestment.setExecuteType((byte) 30);

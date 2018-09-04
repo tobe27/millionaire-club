@@ -133,8 +133,9 @@ public class PayManager {
         investmentUser.setInvestmentAmount(requestBean.getAmount());
         investmentUser.setInvestmentStatus((byte) 0);
         investmentUser.setExpectedIncome(income);
+        investmentUser.setClaimId(0L);
 //        未分配收益
-        investmentUser.setDistributedIncome(income);
+        investmentUser.setDistributedIncome(0D);
         investmentUser.setValueDateStart(valueDateStart);
         investmentUser.setValueDateEnd(valueDateEnd);
 
@@ -265,10 +266,18 @@ public class PayManager {
         }
 //        查询到符合要求的最后一次还息回款的任务id，将回款金额减去本金，同时写入下一周期的还款任务
         int newPaybackAmount = taskInvestment.getPaybackAmount() - investmentUser.getInvestmentAmount() * 100;
+        logger.info("更新前的回款金额"+taskInvestment.getPaybackAmount()+"更新后的回款金额"+newPaybackAmount);
+        logger.info("====================================================================================");
+
 //        修改定时任务执行类型,将关联的新的用户投资写入记录
         taskInvestmentService.updateTimerTaskForRenewal(newPaybackAmount, (byte) 40L, newInvestmentUserId,taskInvestment.getId());
         logger.info("用户投资定时表格数据已更新"+taskInvestment.getId());
         logger.info("====================================================================================");
         return 1;
+    }
+
+    public static void main(String[] args) {
+        int a = 50000 * 360 * 100;
+        System.out.println(a);
     }
 }
