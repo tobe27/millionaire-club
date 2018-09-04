@@ -84,16 +84,16 @@ public class UserInvestmentController {
      * @throws FuYouException
      */
     @GetMapping("/u/user-investment")
-    public String userInvestment(@Validated @RequestBody UserInvestmentRequestBean requestBean,
+    public String userInvestment(@Validated  UserInvestmentRequestBean requestBean,
                                  @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
         Map map = verificationUntil.Verification(cookie);
         logger.info("入参信息"+map+requestBean);
 //        对cookie信息进行检验
-        if (!map.get("verificationStatus").equals(50)) {
-            return "用户验证未成功，请跳转页面";
-        }
+//        if (!map.get("verificationStatus").equals(50)) {
+//            return "用户验证未成功，请跳转页面";
+//        }
         int isHavingNovicePlan = (int) map.get("isHavingNovicePlan");
         logger.info("查询用户投资,用户" + id);
         return payManager.payment(requestBean, id,isHavingNovicePlan);
@@ -219,7 +219,6 @@ public class UserInvestmentController {
     @GetMapping("/u/list/renewal-products")
     public ResultBean listRenewalProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize, HttpServletRequest servletRequest) {
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
-
         Map map = verificationUntil.Verification(cookie);
 
         int verificationStatus = (int) map.get("verificationStatus");
@@ -329,6 +328,7 @@ public class UserInvestmentController {
         redisTemplate.opsForValue().set("investmentEnd", 5);
         return "ok";
     }
+
 
 }
 
