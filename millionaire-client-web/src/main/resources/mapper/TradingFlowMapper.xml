@@ -5,7 +5,7 @@
         <constructor>
             <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
-            <arg column="investmentUserId" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="investment_user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="product_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -17,6 +17,21 @@
             <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
         </constructor>
+    </resultMap>
+    <resultMap id="TradingFlow" type="com.millionaire.millionairebusinessservice.module.TradingFlow">
+        <id property="id" column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="investmentUserId" column="investment_user_id"/>
+        <result property="productName" column="product_name" />
+        <result property="phone" column="phone"/>
+        <result property="name" column="name"/>
+        <result property="amount" column="amount"/>
+        <result property="type" column="type"/>
+        <result property="bankCardId" column="bank_card_id" />
+        <result property="payType" column="pay_type"/>
+        <result property="status" column="status"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtUpdate" column="gmt_update"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -32,7 +47,7 @@
     </select>
 
     <!--client-->
-    <select id="findByUid" resultMap="BaseResultMap">
+    <select id="findByUid" resultMap="TradingFlow">
         SELECT
         <include refid="Base_Column_List"/>
         FROM trading_flow
@@ -139,7 +154,7 @@
         </where>
 
         group  by
-        FROM_UNIXTIME(gmt_create/1000, '%Y%m%d')
+        FROM_UNIXTIME(gmt_create/1000, '%Y-%m-%d')
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
