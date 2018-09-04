@@ -39,7 +39,7 @@
     gmt_update
   </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="TradingFlow">
         select
         <include refid="Base_Column_List"/>
         from trading_flow
@@ -52,6 +52,7 @@
         <include refid="Base_Column_List"/>
         FROM trading_flow
         WHERE uid=#{uid}
+        ORDER BY id DESC
     </select>
 
     <resultMap id="UserTradingFlowMap" type="com.millionaire.millionairebusinessservice.transport.UserTradingFlowDTO">
