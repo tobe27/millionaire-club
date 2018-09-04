@@ -10,6 +10,7 @@ import com.millionaire.millionairebusinessservice.module.TradingFlow;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.service.MessageUserService;
 import com.millionaire.millionairebusinessservice.service.TradingFlowService;
+import com.millionaire.millionairebusinessservice.transport.InvestmentUsersDTO;
 import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
 import com.millionaire.millionairebusinessservice.transport.UserMessageDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
@@ -31,6 +32,7 @@ import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import com.millionaire.millionaireuserservice.service.UserBankService;
+import com.millionaire.millionaireuserservice.transport.UserBanksDTO;
 import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
@@ -180,6 +182,8 @@ public class SunController {
         receptionUsers.setManagerNumber(managerNumber);
         receptionUsers.setAssets(0);
         receptionUsers.setProfit(0);
+        receptionUsers.setBankId(0L);
+        receptionUsers.setLogo("https://majorjoe.oss-cn-beijing.aliyuncs.com/%E4%B8%8B%E8%BD%BD.jpg");
         receptionUsers.setStatus((byte) 10);  //用户状态
         receptionUsers.setIdAuthentication((byte) 10); //实名状态
         receptionUsers.setGmtCreate(System.currentTimeMillis());
@@ -349,6 +353,17 @@ public class SunController {
         userBankService.insert(userBank);
         return new ResultBean(1, "添加成功");
     }
+//    @GetMapping("/u/bankPage")
+//    public ResultBean getBankPage(HttpServletRequest request){
+//        Cookie cookie = CookieUtil.getCookie("cookie", request);
+//        Long uid = Long.valueOf(cookie.getValue());
+//        ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
+//        Byte authentication = receptionUsers.getIdAuthentication();
+//        if(authentication!=20){
+//            return new ResultBean(-1,"请先进行实名认证");
+//        }
+//        return new ResultBean(1,"跳转表单页面");
+//    }
 
     /**
      * 用户拥有的银行卡
@@ -360,7 +375,7 @@ public class SunController {
     public ResultBean getBank(HttpServletRequest request) {
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long id = Long.valueOf(cookie.getValue());
-        List<UserBank> userBanks = userBankService.findById(id);
+        List<UserBanksDTO> userBanks = userBankService.findById(id);
         return new ResultBean(1, "返回用户的银行卡信息", userBanks);
     }
 
@@ -419,7 +434,7 @@ public class SunController {
         InvestmentUser investmentUser = new InvestmentUser();
         investmentUser.setUid(uid);
         investmentUser.setInvestmentStatus(investmentStatus);
-        List<InvestmentUser> investmentUsers = investmentUserService.findByUidInvestmentStatus(investmentUser);
+        List<InvestmentUsersDTO> investmentUsers = investmentUserService.findByUidInvestmentStatus(investmentUser);
         return new ResultBean(1, "通过用户传来的投资状态查询", investmentUsers);
     }
 
@@ -562,7 +577,7 @@ public class SunController {
         String idName = jsonObject.getString("idName");
         String idNumber = jsonObject.getString("idNumber");
         String idFront = jsonObject.getString("idFront");
-        String idBank = jsonObject.getString("idBank");
+        String idBack = jsonObject.getString("idBack");
         if (idName.length() == 0) {
             return new ResultBean(-1, "真实姓名不能为空");
         }
@@ -572,7 +587,7 @@ public class SunController {
         if (idFront.length() == 0) {
             return new ResultBean(-1, "身份证正面照片不能为空");
         }
-        if (idBank.length() == 0) {
+        if (idBack.length() == 0) {
             return new ResultBean(-1, "身份证反面照片不能为空");
         }
         Cookie cookie = CookieUtil.getCookie("cookie", request);
@@ -582,7 +597,7 @@ public class SunController {
             receptionUsers.setIdName(idName);
             receptionUsers.setIdNumber(idNumber);
             receptionUsers.setIdFront(idFront);
-            receptionUsers.setIdBack(idBank);
+            receptionUsers.setIdBack(idBack);
             receptionUsers.setIdAuthentication((byte) 40);
             receptionUsers.setApplicationTime(System.currentTimeMillis());
             receptionUsers.setGmtUpdate(System.currentTimeMillis());
@@ -593,7 +608,7 @@ public class SunController {
             receptionUsers.setIdName(idName);
             receptionUsers.setIdNumber(idNumber);
             receptionUsers.setIdFront(idFront);
-            receptionUsers.setIdBack(idBank);
+            receptionUsers.setIdBack(idBack);
             receptionUsers.setIdAuthentication((byte) 50);
             receptionUsers.setApplicationTime(System.currentTimeMillis());
             receptionUsers.setGmtUpdate(System.currentTimeMillis());
@@ -612,7 +627,7 @@ public class SunController {
      * @return
      */
     @PutMapping("/u/password")
-    public ResultBean updatePassword(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
+    public ResultBean updatePassword(@RequestBody JSONObject jsonObject,HttpServletResponse response,HttpServletRequest request) {
         String oldPassword = jsonObject.getString("oldPassword");
         String password = jsonObject.getString("password");
         String rePassword = jsonObject.getString("rePassword");
@@ -644,6 +659,7 @@ public class SunController {
         receptionUsers.setGmtUpdate(System.currentTimeMillis());
         receptionUsersService.updateByPrimaryKey(receptionUsers);
         logger.info("用户修改密码");
+        CookieUtil.deleteCookie("cookie","delete",response);
         return new ResultBean(1, "修改密码成功");
     }
 

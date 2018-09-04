@@ -9,7 +9,6 @@ import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
-import com.millionaire.millionaireclientweb.pojo.InvestmentUsersDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.VerificationUntil;

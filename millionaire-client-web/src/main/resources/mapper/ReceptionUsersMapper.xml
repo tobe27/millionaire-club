@@ -456,7 +456,7 @@
         user_bank.card_number as bankCardNumber,
         reception_users.email as email,
         reception_users.address as address
-        FROM reception_users INNER JOIN user_bank
+        FROM reception_users LEFT JOIN user_bank
         ON reception_users.bank_id=user_bank.id
         WHERE reception_users.id=#{id}
     </select>

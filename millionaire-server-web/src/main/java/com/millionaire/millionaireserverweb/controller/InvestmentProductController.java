@@ -35,6 +35,7 @@ public class InvestmentProductController {
      * @param investmentProduct 投资产品类
      * @return 成功1 失败-1
      * @Description 新增投资产品
+     *
      **/
     @PostMapping("/investment-product")
     public ResultBean insertInvestmentProduct( @RequestBody @Validated InvestmentProduct investmentProduct) {

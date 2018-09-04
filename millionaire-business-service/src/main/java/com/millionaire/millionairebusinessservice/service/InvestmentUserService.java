@@ -3,10 +3,7 @@ package com.millionaire.millionairebusinessservice.service;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
-import com.millionaire.millionairebusinessservice.transport.ContractResponse;
-import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
-import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
-import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.*;
 
 import java.util.List;
 
@@ -87,7 +84,7 @@ public interface InvestmentUserService {
      **/
     List<InvestmentUser> listEffectInvestmentUser();
 
-    List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user);
+    List<InvestmentUsersDTO> findByUidInvestmentStatus(InvestmentUser user);
 
     UserInvestmentDTO findById(Long id);
 
