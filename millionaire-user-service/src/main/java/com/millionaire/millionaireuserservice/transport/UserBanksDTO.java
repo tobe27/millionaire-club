@@ -1,4 +1,4 @@
-package com.millionaire.millionaireclientweb.pojo;
+package com.millionaire.millionaireuserservice.transport;
 
 public class UserBanksDTO {
     private Long id;

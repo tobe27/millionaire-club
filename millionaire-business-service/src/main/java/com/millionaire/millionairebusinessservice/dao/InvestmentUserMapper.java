@@ -2,10 +2,7 @@ package com.millionaire.millionairebusinessservice.dao;
 
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
-import com.millionaire.millionairebusinessservice.transport.ContractResponse;
-import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
-import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
-import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -70,7 +67,7 @@ public interface InvestmentUserMapper {
      * @param user
      * @return
      */
-    List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user);
+    List<InvestmentUsersDTO> findByUidInvestmentStatus(InvestmentUser user);
 
     /**
      * @Description 查询可用的用户投资，claimId = 0 或 claimId is null

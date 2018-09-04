@@ -178,7 +178,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
     <!--client-->
-    <select id="findById" resultType="com.millionaire.millionaireclientweb.pojo.UserBanksDTO">
+    <select id="findById" resultType="com.millionaire.millionaireuserservice.transport.UserBanksDTO">
         SELECT
         user_bank.id as id,
         user_bank.bank_name as bankName,
