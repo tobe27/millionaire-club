@@ -321,4 +321,12 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where investment_user_id = #{investmentUserId,jdbcType=BIGINT} and TYPE = -1
     </update>
+
+    <update id="updateTradingFlowStatusById">
+         update trading_flow
+    set
+      status = #{status,jdbcType=TINYINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

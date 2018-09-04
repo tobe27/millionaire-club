@@ -70,9 +70,6 @@ public class InvestmentUserJob implements Job {
         //Output : C
         listTaskForExecute.forEach(taskInvestment->{
             if(taskInvestment.getExecuteType() == 10){//        10代表本息一次回款
-
-//                生成交易流水记录
-                TradingFlow tradingFlow = new TradingFlow();
 //                查询用户投资信息
                 InvestmentUser investmentUser = investmentUserService.selectByPrimaryKey(taskInvestment.getInvestmentUserId());
 //                查询产品信息
@@ -80,14 +77,15 @@ public class InvestmentUserJob implements Job {
 //                查询用户手机号
                 ReceptionUsers users = receptionUsersService.selectByPrimaryKey(investmentUser.getUid());
 
+//                生成交易流水记录
+                TradingFlow tradingFlow = new TradingFlow();
                 tradingFlow.setInvestmentUserId(taskInvestment.getInvestmentUserId());
                 tradingFlow.setUid(investmentUser.getUid());
-                tradingFlow.setId(0L);
                 tradingFlow.setProductName(investmentProduct.getName());
                 tradingFlow.setPhone(String.valueOf(users.getPhone()));
                 tradingFlow.setName(users.getIdName());
                 tradingFlow.setAmount(taskInvestment.getPaybackAmount());
-                tradingFlow.setType((byte)0);
+                tradingFlow.setType((byte)1);
                 tradingFlow.setBankCardId(investmentUser.getBankCardNumber());
                 tradingFlow.setPayType(investmentUser.getBankName());
                 tradingFlow.setStatus((byte)0);
@@ -100,6 +98,10 @@ public class InvestmentUserJob implements Job {
                 //                修改定时任务状态  status = 10 执行成功
 
                 if (result){    //支付结果成功
+//                    更新交易流水的状态
+                    tradingFlowService.updateTradingFlowStatusById(tradingFlowId, (byte)10);
+//
+                    
 
 
                 }

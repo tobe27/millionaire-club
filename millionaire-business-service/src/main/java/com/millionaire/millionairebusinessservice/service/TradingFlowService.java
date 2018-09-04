@@ -53,6 +53,14 @@ public interface TradingFlowService {
      */
     int updateTradingFlowStatus(Long investmentUserId, Byte status);
 
+    /**
+     * 根据数据库的主键更新用户的交易记录状态
+     * @param id
+     * @param status
+     * @return
+     */
+    int updateTradingFlowStatusById(Long id, Byte status);
+
     List<TradingFlow> findByUid(Long uid);
 
     TradingFlow selectByPrimaryKey(Long id);
