@@ -45,7 +45,18 @@ public class TimerTaskInvestmentServiceImpl implements TimerTaskInvestmentServic
 
     @Override
     public int updateTimerTaskForRenewal(int paybackAmount, byte executeType, long associationInvestment, long id) {
-        return timerTaskInvestmentMapper.updateTimerTaskForRenewal(paybackAmount,executeType,associationInvestment,id);
+        int result = timerTaskInvestmentMapper.updateTimerTaskForRenewal(paybackAmount,executeType,associationInvestment, id,System.currentTimeMillis());
+        logger.info("产品续投是定时任务修改，用户投资id："+id+"修改金额"+paybackAmount);
+        logger.info("===============================================================================");
+        return result;
+    }
+
+    @Override
+    public int updateTaskStatus(Byte status, long id) {
+        int result = timerTaskInvestmentMapper.updateTaskStatus(status, id, System.currentTimeMillis());
+        logger.info(id+"task状态修改"+status);
+        logger.info("===============================================================================");
+        return result;
     }
 
 

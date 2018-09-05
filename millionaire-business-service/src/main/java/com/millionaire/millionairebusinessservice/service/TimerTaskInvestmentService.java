@@ -29,5 +29,12 @@ public interface TimerTaskInvestmentService {
                                   @Param("associationInvestment") long associationInvestment,
                                   @Param("id")long id);
 
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/4 22:08
+     *@decribe  调用支付接口后，更新定时任务状态
+     */
+    int updateTaskStatus(Byte status, long id);
+
 
 }

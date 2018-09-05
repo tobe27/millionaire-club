@@ -216,6 +216,10 @@ public class PayManager {
             logger.info("====================================================================================");
             return 10001;
         }
+//        原用户投资的id
+        Long investmentId = investmentUser.getId();
+//        修改原用户投资，状态转入续投
+        investmentUserService.updateInvestmentUserIdStatus(investmentId, (byte) 10);
 
 
 //        修改起息时间,到息时间即为起息时间
