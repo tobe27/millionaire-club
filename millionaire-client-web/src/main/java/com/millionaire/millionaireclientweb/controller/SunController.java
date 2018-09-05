@@ -2,10 +2,8 @@ package com.millionaire.millionaireclientweb.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.exceptions.ClientException;
-import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
-import com.millionaire.millionairebusinessservice.dao.MessageUserMapper;
-import com.millionaire.millionairebusinessservice.dao.TradingFlowMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
+import com.millionaire.millionairebusinessservice.module.MessageUser;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.service.MessageUserService;
@@ -17,17 +15,12 @@ import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.FlowNumberGeneration;
 import com.millionaire.millionairecommonapi.aliyun.MessageVerification;
-import com.millionaire.millionairemanagerservice.dao.ContentMapper;
-import com.millionaire.millionairemanagerservice.dao.MessagePlatformMapper;
-import com.millionaire.millionairemanagerservice.dao.ProposalMapper;
-import com.millionaire.millionairemanagerservice.module.Bank;
-import com.millionaire.millionairemanagerservice.module.Content;
-import com.millionaire.millionairemanagerservice.module.MessagePlatform;
-import com.millionaire.millionairemanagerservice.module.Proposal;
+import com.millionaire.millionairemanagerservice.module.*;
 import com.millionaire.millionairemanagerservice.service.BankService;
 import com.millionaire.millionairemanagerservice.service.ContentService;
 import com.millionaire.millionairemanagerservice.service.MessagePlatformService;
 import com.millionaire.millionairemanagerservice.service.ProposalService;
+import com.millionaire.millionairemanagerservice.service.MessageUserPlatformService;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
@@ -70,6 +63,8 @@ public class SunController {
     private ContentService contentService;
     @Resource
     private ProposalService proposalService;
+    @Resource
+    private MessageUserPlatformService messageUserPlatformService;
     Logger logger = LoggerFactory.getLogger(SunController.class);
 
     @GetMapping("loginPage")
@@ -484,10 +479,93 @@ public class SunController {
      * @return
      */
     @GetMapping("/u/message/{id}")
-    public ResultBean getMessagePlatform(@PathVariable Long id) {
+    public ResultBean getMessagePlatform(@PathVariable Long id,HttpServletRequest request) {
+        Cookie cookie = CookieUtil.getCookie("cookie", request);
+        Long uid = Long.valueOf(cookie.getValue());
+        MessageUserPlatform messageUserPlatform = new MessageUserPlatform();
+        messageUserPlatform.setUid(uid);
+        messageUserPlatform.setMessagePlatformId(id);
+        messageUserPlatform.setLook((byte) 10);
+        messageUserPlatform.setGmtCreate(System.currentTimeMillis());
+        messageUserPlatform.setGmtUpdate(System.currentTimeMillis());
+        messageUserPlatformService.insert(messageUserPlatform);
         return new ResultBean(1, "获取消息中心", messagePlatformService.selectByPrimaryKey(id));
     }
 
+    /**
+     * 用户删除平台消息
+     * @param id
+     * @param request
+     * @return
+     */
+    @DeleteMapping("/u/message/{id}")
+    public ResultBean deleteMessagePlatform(@PathVariable Long id,HttpServletRequest request){
+        Cookie cookie = CookieUtil.getCookie("cookie", request);
+        Long uid = Long.valueOf(cookie.getValue());
+        MessageUserPlatform messageUserPlatform = new MessageUserPlatform();
+        messageUserPlatform.setMessagePlatformId(id);
+        messageUserPlatform.setUid(uid);
+        MessageUserPlatform message= messageUserPlatformService.findByMessagePlatform(messageUserPlatform);
+        if(message==null){
+            messageUserPlatform.setUid(uid);
+            messageUserPlatform.setMessagePlatformId(id);
+            messageUserPlatform.setLook((byte) 20);
+            messageUserPlatform.setGmtCreate(System.currentTimeMillis());
+            messageUserPlatform.setGmtUpdate(System.currentTimeMillis());
+            messageUserPlatformService.insert(messageUserPlatform);
+            return new ResultBean(1,"删除成功");
+        }
+        messageUserPlatform.setUid(uid);
+        messageUserPlatform.setMessagePlatformId(id);
+        messageUserPlatform.setLook((byte) 20);
+        messageUserPlatform.setGmtCreate(System.currentTimeMillis());
+        messageUserPlatform.setGmtUpdate(System.currentTimeMillis());
+        messageUserPlatform.setId(message.getId());
+        messageUserPlatformService.updateById(messageUserPlatform);
+        return new ResultBean(1,"删除成功");
+    }
+
+    /**
+     * 红点条数
+     * @param request
+     * @return
+     */
+    @GetMapping("/u/redCount")
+    public ResultBean getRedNumber(HttpServletRequest request){
+        Cookie cookie = CookieUtil.getCookie("cookie", request);
+        Long uid = Long.valueOf(cookie.getValue());
+        ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
+        byte authentication = receptionUsers.getIdAuthentication();
+        Integer messageUser = messageUserService.findByLook();                   //用户消息没有看的条数
+        Integer messageUserPlatform = messageUserPlatformService.findByUidCount(uid); //用户平台消息处理了多少条
+        if(authentication==20){
+            Integer integerOne = messagePlatformService.findBySendingCrowdCount((byte) 20);
+            Integer integerTwo = messagePlatformService.findBySendingCrowdCount((byte) 10);
+            Integer count = integerOne+integerTwo;  //用户应该有多少条消息
+            Integer subtraction = count-messageUserPlatform;
+            Integer result =subtraction+messageUser;
+            return new ResultBean(1,"请求成功",result);
+        }
+        Integer integerOne = messagePlatformService.findBySendingCrowdCount((byte) 20); //用户应该有多少条消息
+        Integer subtraction = integerOne-messageUserPlatform;
+        Integer result = subtraction+messageUser;
+        return new ResultBean(1,"请求成功",result);
+    }
+
+    /**
+     * 查看用户消息详细信息时访问，更新新look状态
+     * @param id
+     * @return
+     */
+    @PutMapping("/u/messageUser/{id}")
+    public ResultBean updateMessageUser(@PathVariable Long id){
+        MessageUser messageUser = new MessageUser();
+        messageUser.setIsLook((byte) 10);
+        messageUser.setGmtUpdate(System.currentTimeMillis());
+        messageUser.setId(id);
+        messageUserService.updateByPrimaryKey(messageUser);
+        return new ResultBean(1,"请求成功");
+    }
     /**
      * 用户设置
      *

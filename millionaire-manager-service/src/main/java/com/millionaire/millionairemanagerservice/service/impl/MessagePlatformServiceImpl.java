@@ -73,4 +73,9 @@ public class MessagePlatformServiceImpl implements MessagePlatformService {
     public List<MessagePlatform> findBySendingCrowd(Byte sendingCrowd) {
         return messagePlatformMapper.findBySendingCrowd(sendingCrowd);
     }
+
+    @Override
+    public Integer findBySendingCrowdCount(Byte sendingCrowd) {
+        return messagePlatformMapper.findBySendingCrowdCount(sendingCrowd);
+    }
 }

@@ -5,7 +5,7 @@ public class UserMessageDTO {
     private Byte code;  //10 投资成功 20 投资失败 30 即将到期 40 正在回款 50 回款成功 60 回款失败
     private String name;  //产品名
     private Long gmtCreate;   //时间
-    private Boolean look;  //用户是否查看
+    private Byte look;  //用户是否查看
     private Long investmentUserId; //用户投资id
 
     @Override
@@ -52,11 +52,11 @@ public class UserMessageDTO {
         this.gmtCreate = gmtCreate;
     }
 
-    public Boolean getLook() {
+    public Byte getLook() {
         return look;
     }
 
-    public void setLook(Boolean look) {
+    public void setLook(Byte look) {
         this.look = look;
     }
 
