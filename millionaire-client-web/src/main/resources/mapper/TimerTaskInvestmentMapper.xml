@@ -54,7 +54,18 @@
         set
         payback_amount = #{paybackAmount,jdbcType=INTEGER},
         execute_type = #{executeType,jdbcType=TINYINT},
-        association_investment = #{associationInvestment,jdbcType=BIGINT}
+        association_investment = #{associationInvestment,jdbcType=BIGINT},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        WHERE
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--更新投资定时任务状态-->
+    <update id="updateTaskStatus">
+        UPDATE timed_task_investment
+        set
+        status = #{status,jdbcType=TINYINT},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
         WHERE
         id = #{id,jdbcType=BIGINT}
     </update>

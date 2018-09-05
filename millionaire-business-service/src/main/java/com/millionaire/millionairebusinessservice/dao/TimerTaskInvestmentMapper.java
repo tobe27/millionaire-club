@@ -31,6 +31,17 @@ public interface TimerTaskInvestmentMapper {
     int updateTimerTaskForRenewal(@Param("paybackAmount") int paybackAmount,
                                   @Param("executeType") byte executeType,
                                   @Param("associationInvestment") long associationInvestment,
-                                  @Param("id")long id);
+                                  @Param("id")long id,
+                                  @Param("gmtUpdate")long gmtUpdate);
+
+    /**
+     * @author qiaobao
+     * @datetime 2018/9/4 22:11
+     * @decribe
+     */
+    int updateTaskStatus(@Param("status") Byte status,
+                         @Param("id") long id,
+                         @Param("gmtUpdate") long gmtUpdate);
+
 
 }

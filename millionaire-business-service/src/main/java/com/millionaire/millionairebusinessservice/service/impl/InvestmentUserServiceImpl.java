@@ -71,8 +71,9 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
 
     @Override
     public int updateInvestmentUserIdStatus(Long investmentUserId,Byte status) {
-
-        return investmentUserMapper.updateInvestmentUserIdStatus(investmentUserId,status,System.currentTimeMillis());
+            int result = investmentUserMapper.updateInvestmentUserIdStatus(investmentUserId,status,System.currentTimeMillis());
+            logger.info("用户");
+        return result;
     }
 
     @Override

@@ -19,7 +19,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -64,6 +67,8 @@ public class InvestmentUserJob implements Job {
      */
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        logger.info("=======================================================================================>");
+        logger.info("用户投资回款任务执行=====当前时间"+ LocalDateTime.now());
 //        扫描获得所有当前需要执行的定时任务
         List<TimerTaskInvestment> listTaskForExecute = taskInvestmentService.listTimerTaskForExecute();
 
@@ -100,8 +105,26 @@ public class InvestmentUserJob implements Job {
                 if (result){    //支付结果成功
 //                    更新交易流水的状态
                     tradingFlowService.updateTradingFlowStatusById(tradingFlowId, (byte)10);
-//
-                    
+                    //                    修改定时任务状态执行成功
+                    taskInvestmentService.updateTaskStatus((byte) 10, taskInvestment.getId());
+//                    修改用户投资状态（已到期）,修改用户信息中的投资的总资产信息和总收益
+//                    修改用户的债权匹配信息，以及债权匹配的状态
+//                    生成用户消息，用户投资正在回款中
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 }
