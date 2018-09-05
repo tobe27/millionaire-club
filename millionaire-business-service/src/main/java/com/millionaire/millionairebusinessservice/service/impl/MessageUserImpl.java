@@ -48,4 +48,9 @@ public class MessageUserImpl implements MessageUserService {
         return messageUserMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public void deleteByPrimaryKey(Long id) {
+        messageUserMapper.deleteByPrimaryKey(id);
+    }
+
 }

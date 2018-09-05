@@ -2,6 +2,8 @@ package com.millionaire.millionaireclientweb.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.exceptions.ClientException;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.MessageUser;
 import com.millionaire.millionairebusinessservice.module.TradingFlow;
@@ -21,6 +23,7 @@ import com.millionaire.millionairemanagerservice.service.ContentService;
 import com.millionaire.millionairemanagerservice.service.MessagePlatformService;
 import com.millionaire.millionairemanagerservice.service.ProposalService;
 import com.millionaire.millionairemanagerservice.service.MessageUserPlatformService;
+import com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
@@ -389,11 +392,16 @@ public class SunController {
      * @return
      */
     @GetMapping("/u/transaction")
-    public ResultBean findAll(HttpServletRequest request) {
+    public ResultBean findAll(Integer pageNum,HttpServletRequest request) {
+        if(pageNum==null){
+            return new ResultBean(-1,"请输入pageNum");
+        }
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
+        PageHelper.startPage(pageNum, 5);
         List<TradingFlow> tradingFlows = tradingFlowService.findByUid(uid);
-        return new ResultBean(1, "用户交易的流水", tradingFlows);
+        PageInfo pageInfo = new PageInfo(tradingFlows);
+        return new ResultBean(1, "用户交易的流水", pageInfo);
     }
 
     /**
@@ -452,23 +460,52 @@ public class SunController {
     public ResultBean getMessage(HttpServletRequest request) {
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
-        Map map = new HashMap();
+        Map map = new TreeMap<Long,Object>((o1,o2)->o2.compareTo(o1));
         logger.info("查询个人消息!");
         List<UserMessageDTO> messageUsers = messageUserService.findByUid(uid);
-        map.put("messageUsers", messageUsers);
+        for (UserMessageDTO userMessageDTO:messageUsers) {
+            map.put(userMessageDTO.getGmtCreate(),userMessageDTO);
+        }
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
         byte authentication = receptionUsers.getIdAuthentication();
         if (authentication == 20) {
             logger.info("查询实名认证后的平台消息!");
-            List<MessagePlatform> messagePlatformOne = messagePlatformService.findBySendingCrowd((byte) 20);
-            List<MessagePlatform> messagePlatformTwo = messagePlatformService.findBySendingCrowd((byte) 10);
-            map.put("messagePlatformOne", messagePlatformOne);
-            map.put("messagePlatformTwo", messagePlatformTwo);
+            List<MessagePlatformDTO> messagePlatformOne = messagePlatformService.findBySendingCrowd((byte) 20);
+            for (MessagePlatformDTO messagePlatformDTO:messagePlatformOne) {
+                if(messagePlatformDTO.getLook()==null){
+                    map.put(messagePlatformDTO.getGmtCreate(),messagePlatformDTO);
+                }
+                if(messagePlatformDTO.getLook()!=null){
+                    if(messagePlatformDTO.getLook()==10){
+                        map.put(messagePlatformDTO.getGmtCreate(),messagePlatformDTO);
+                    }
+                }
+            }
+            List<MessagePlatformDTO> messagePlatformTwo = messagePlatformService.findBySendingCrowd((byte) 10);
+            for (MessagePlatformDTO messagePlatformDTO:messagePlatformTwo) {
+                if(messagePlatformDTO.getLook()==null){
+                    map.put(messagePlatformDTO.getGmtCreate(),messagePlatformDTO);
+                }
+                if(messagePlatformDTO.getLook()!=null){
+                    if(messagePlatformDTO.getLook()==10){
+                        map.put(messagePlatformDTO.getGmtCreate(),messagePlatformDTO);
+                    }
+                }
+            }
             return new ResultBean(1, "用户投资详情", map);
         }
         logger.info("查询未实名认证后的平台消息");
-        List<MessagePlatform> messagePlatform = messagePlatformService.findBySendingCrowd((byte) 20);
-        map.put("messagePlatforms", messagePlatform);
+        List<MessagePlatformDTO> messagePlatform = messagePlatformService.findBySendingCrowd((byte) 20);
+        for (MessagePlatformDTO messagePlatformDTO:messagePlatform) {
+            if(messagePlatformDTO.getLook()==null){
+                map.put(messagePlatformDTO.getGmtCreate(),messagePlatformDTO);
+            }
+            if(messagePlatformDTO.getLook()!=null){
+                if(messagePlatformDTO.getLook()==10){
+                    map.put(messagePlatformDTO.getGmtCreate(),messagePlatformDTO);
+                }
+            }
+        }
         return new ResultBean(1, "用户投资详情", map);
     }
 
@@ -566,6 +603,18 @@ public class SunController {
         messageUserService.updateByPrimaryKey(messageUser);
         return new ResultBean(1,"请求成功");
     }
+    /**
+     * 通过用户消息id
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/u/messageUser/{id}")
+    public ResultBean deleteMessageUser(@PathVariable Long id){
+        messageUserService.deleteByPrimaryKey(id);
+        return new ResultBean(1,"删除成功");
+    }
+
+
     /**
      * 用户设置
      *
