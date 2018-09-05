@@ -12,6 +12,7 @@ import com.millionaire.millionairemanagerservice.dao.MessageUserPlatformMapper;
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionairemanagerservice.module.MessageUserPlatform;
 import com.millionaire.millionairemanagerservice.service.MessagePlatformService;
+import com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 import org.junit.Test;
@@ -47,12 +48,13 @@ public class CookieUtilTest {
     }
 @Resource
 MessagePlatformService messagePlatformService;
-    //        Map map1 = new TreeMap<Long,Object>((o1,o2)->o2.compareTo(o1));
+
     @Test
     public void res() {
 createDefinitionSortTreeMap();
     }
     public  void createDefinitionSortTreeMap() {
+                Map map1 = new TreeMap<Long,Object>((o1,o2)->o2.compareTo(o1));
         TreeMap map = new TreeMap(new Comparator<Long>() {
             @Override
             public int compare(Long o1, Long o2) {
@@ -68,12 +70,12 @@ createDefinitionSortTreeMap();
     private MessageUserService messageUserService;
     public void init(Map map) {
         List<UserMessageDTO> messageUsers = messageUserService.findByUid(1L);
-        List<MessagePlatform> messagePlatformTwo = messagePlatformService.findBySendingCrowd((byte) 10);
+        List<MessagePlatformDTO> messagePlatformTwo = messagePlatformService.findBySendingCrowd((byte) 10);
 
         for (UserMessageDTO userMessageDTO:messageUsers) {
             map.put(userMessageDTO.getGmtCreate(),userMessageDTO);
         }
-        for (MessagePlatform messagePlatform:messagePlatformTwo) {
+        for (MessagePlatformDTO messagePlatform:messagePlatformTwo) {
             map.put(messagePlatform.getGmtCreate(),messagePlatform);
         }
     }

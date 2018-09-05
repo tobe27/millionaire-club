@@ -39,12 +39,20 @@
     from message_platform
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="findBySendingCrowd" resultMap="MessagePlatform">
+
+
+  <select id="findBySendingCrowd" resultType="com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO">
     SELECT
-    <include refid="Base_Column_List"/>
-    FROM message_platform
-    WHERE status=10 and sending_crowd=#{sendingCrowd}
+    message_platform.id as id,
+    message_platform.brief as brief,
+    message_platform.gmt_create as gmtCreate,
+    message_user_platform.status as look
+    FROM message_platform LEFT join message_user_platform
+    ON message_platform.id=message_user_platform.message_platform_id
+    WHERE message_platform.status=10 and message_platform.sending_crowd=#{sendingCrowd}
   </select>
+
+
   <select id="findBySendingCrowdCount" resultType="Integer">
     SELECT
     COUNT(*)

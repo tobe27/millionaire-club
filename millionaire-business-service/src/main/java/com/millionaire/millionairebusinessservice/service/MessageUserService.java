@@ -19,4 +19,6 @@ public interface MessageUserService {
     Integer findByLook();
 
     int updateByPrimaryKey(MessageUser record);
+
+    void deleteByPrimaryKey(Long id);
 }
