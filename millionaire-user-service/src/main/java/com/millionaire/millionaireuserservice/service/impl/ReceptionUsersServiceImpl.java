@@ -11,6 +11,8 @@ import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import com.millionaire.millionaireuserservice.transport.ReceptionUsersDTO;
 import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,6 +26,8 @@ import java.util.List;
 
 @Service
 public class ReceptionUsersServiceImpl implements ReceptionUsersService {
+
+    private Logger logger = LoggerFactory.getLogger(ReceptionUsersServiceImpl.class);
     @Resource
     private ReceptionUsersMapper usersMapper;
 
@@ -167,6 +171,8 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
             nowAssets=assets-amount;
         }
         usersMapper.updateUserAssets(uid, nowAssets, System.currentTimeMillis());
+        logger.info(uid+"用户总资产修改，更新前"+assets+"更新后"+nowAssets);
+        logger.info("================================================================================>");
         return nowAssets;
     }
 
@@ -175,6 +181,8 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
         int profit1 = usersMapper.selectUserProfit(uid);
         int nowProfit = profit1+profit;
         usersMapper.updateUserProfit(uid, nowProfit, System.currentTimeMillis());
+        logger.info(uid+"用户收益修改，更新前"+profit+"更新后"+profit1);
+        logger.info("================================================================================>");
         return nowProfit;
     }
 

@@ -218,16 +218,43 @@ public class PayManager {
         }
 //        原用户投资的id
         Long investmentId = investmentUser.getId();
+
+        Long valueDateEnd = investmentUser.getValueDateEnd();
+
+        long valueDateStart = investmentUser.getValueDateStart();
+
+        int deadline = investmentProduct.getDeadline();
+
+        String productCode = investmentProduct.getProductCode();
+
+        String productName = investmentProduct.getName();
+
+        long uid = investmentUser.getUid();
+
+        String phone = String.valueOf(users.getPhone());
+
+        String IDName = users.getIdName();
+
+        int amount = investmentUser.getInvestmentAmount();
+
+        String bankCardNumber = investmentUser.getBankCardNumber();
+
+        String bankName = investmentUser.getBankName();
+
+
+
+
+
+
+
 //        修改原用户投资，状态转入续投
         investmentUserService.updateInvestmentUserIdStatus(investmentId, (byte) 10);
-
-
 //        修改起息时间,到息时间即为起息时间
-        investmentUser.setValueDateStart(investmentUser.getValueDateEnd());
-        Long valueDateEnd = investmentUser.getValueDateStart() + investmentProduct.getDeadline() * TIME_DAY;
-        logger.info("到息时间"+valueDateEnd);
+        investmentUser.setValueDateStart(valueDateEnd);
+        Long newValueDateEnd = valueDateStart + deadline * TIME_DAY;
+        logger.info("到息时间"+newValueDateEnd);
         logger.info("====================================================================================");
-        investmentUser.setValueDateEnd(valueDateEnd);
+        investmentUser.setValueDateEnd(newValueDateEnd);
 //        匹配债权的id设为默认值null
         investmentUser.setClaimId(0L);
         investmentUser.setContractSign(contactSign);
@@ -237,7 +264,7 @@ public class PayManager {
         //        插入用户投资记录
         Long newInvestmentUserId = investmentUserService.insert(investmentUser);
         //        出借合同编号
-        String num = FlowNumberGeneration.lendProtocol(investmentProduct.getProductCode(), newInvestmentUserId);
+        String num = FlowNumberGeneration.lendProtocol(productCode, newInvestmentUserId);
 //        将出借合同编号更新至数据库中
         investmentUserService.updateLendingContractNumber(newInvestmentUserId, num);
 
@@ -245,17 +272,25 @@ public class PayManager {
 //        生成用户交易记录
         TradingFlow tradingFlow = new TradingFlow();
         tradingFlow.setInvestmentUserId(newInvestmentUserId);
-        tradingFlow.setUid(investmentUser.getUid());
-        tradingFlow.setProductName(investmentProduct.getName());
-        tradingFlow.setPhone(users.getPhone().toString());
-        tradingFlow.setName(users.getIdName());
-        tradingFlow.setAmount(investmentUser.getInvestmentAmount());
+        tradingFlow.setUid(uid);
+        tradingFlow.setProductName(productName);
+        tradingFlow.setPhone(phone);
+        tradingFlow.setName(IDName);
+        tradingFlow.setAmount(amount);
 //        表示产品续投
         tradingFlow.setType((byte)2);
-        tradingFlow.setBankCardId(investmentUser.getBankCardNumber());
-        tradingFlow.setPayType(investmentUser.getBankName());
+        tradingFlow.setBankCardId(bankCardNumber);
+        tradingFlow.setPayType(bankName);
         tradingFlow.setStatus((byte)10);
         logger.info("插入的交易流水信息"+tradingFlow);
+
+        MessageUser messageUser = new MessageUser();
+//        续投成功
+        messageUser.setCode((byte)70);
+        messageUser.setInvestmentUserId(investmentId);
+        messageUser.setUid(uid);
+        messageUser.setIsLook((byte)0);
+        messageUserService.insert(messageUser);
 
 //        关于用户投资定时任务的修改
 //        根据用户投资的id查询定时任务  execute_type= 10 and 30
@@ -280,8 +315,4 @@ public class PayManager {
         return 1;
     }
 
-    public static void main(String[] args) {
-        int a = 50000 * 360 * 100;
-        System.out.println(a);
-    }
 }

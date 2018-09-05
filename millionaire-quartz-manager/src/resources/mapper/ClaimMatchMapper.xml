@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.millionaire.millionairebusinessservice.dao.ClaimMatchMapper">
+    <resultMap id="BaseResultMap" type="com.millionaire.millionairebusinessservice.module.ClaimMatch">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="claim_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="investment_user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="credit_contract_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="ClaimMatchMap" type="com.millionaire.millionairebusinessservice.module.ClaimMatch">
+        <id property="id" column="id"/>
+        <result property="claimId" column="claim_id"/>
+        <result property="investmentUserId" column="investment_user_id"/>
+        <result property="creditContractNumber" column="credit_contract_number"/>
+        <result property="status" column="status"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtUpdate" column="gmt_update"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, claim_id, investment_user_id, credit_contract_number,status ，gmt_create, gmt_update
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ClaimMatchMap">
+        select
+        <include refid="Base_Column_List"/>
+        from claim_match
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="listClaimMatchByClaimID"
+            parameterType="com.millionaire.millionairebusinessservice.request.ClaimMatchQuery"
+            resultType="com.millionaire.millionairebusinessservice.transport.ClaimMatchDTO">
+        select
+        claim_match.credit_contract_number as creditContractNumber,
+
+        investment_user.lending_contract_number as lendingContractNumber,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+
+        investment_product.name as productName,
+
+        reception_users.id_name as userName
+
+        from claim_match
+        left join investment_user
+        on claim_match.claim_id = investment_user.claim_id
+        left join investment_product
+        on investment_user.product_id = investment_product.id
+        left join reception_users
+        on investment_user.uid = reception_users.id
+        <where>
+            <if test="claimID != null">
+                claim_match.claim_id = #{claimID}
+            </if>
+            <if test="status != null">
+                and claim_match.status = #{status}
+            </if>
+            <if test="productName != null">
+                and investment_product.name like "%"#{productName}"%"
+            </if>
+            <if test="lendingContractNumber != null">
+                and investment_user.lending_contract_number like "%"#{lendingContractNumber}"%"
+            </if>
+            <if test="userName != null">
+                and reception_users.id_name like "%"#{userName}"%"
+            </if>
+            <if test="valueStartlowerDate != null">
+                and investment_user.value_date_start <![CDATA[ >= ]]> #{valueStartlowerDate}
+            </if>
+            <if test="valueStartupperDate != null">
+                and investment_user.value_date_start <![CDATA[ <= ]]> #{valueStartupperDate}
+            </if>
+            <if test="valueEndlowerDate != null">
+                and investment_user.value_date_end <![CDATA[ >= ]]> #{valueEndlowerDate}
+            </if>
+            <if test="valueEndupperDate != null">
+                and investment_user.value_date_end <![CDATA[ <= ]]> #{valueEndupperDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="countClaimMatch" resultType="java.lang.Long">
+        select  count(*) from claim_match
+    </select>
+
+    <select id="selectEffectByInvestmentUID" resultMap="ClaimMatchMap">
+        select
+        <include refid="Base_Column_List"/>
+        from claim_match
+        where investment_user_id = #{investmentUserID}
+        and status = 1
+    </select>
+
+    <update id="updateStatus">
+        UPDATE claim_match
+        SET
+        status = #{status,jdbcType=TINYINT},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from claim_match
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.ClaimMatch"
+            useGeneratedKeys="true" keyProperty="id">
+    insert into claim_match (claim_id, investment_user_id,
+      credit_contract_number,status, gmt_create, gmt_update
+      )
+    values (#{claimId,jdbcType=BIGINT}, #{investmentUserId,jdbcType=BIGINT},
+      #{creditContractNumber,jdbcType=VARCHAR},#{status,jdbcType=TINYINT}, #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.ClaimMatch"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into claim_match
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="claimId != null">
+                claim_id,
+            </if>
+            <if test="investmentUserId != null">
+                investment_user_id,
+            </if>
+            <if test="creditContractNumber != null">
+                credit_contract_number,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="claimId != null">
+                #{claimId,jdbcType=BIGINT},
+            </if>
+            <if test="investmentUserId != null">
+                #{investmentUserId,jdbcType=BIGINT},
+            </if>
+            <if test="creditContractNumber != null">
+                #{creditContractNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="status ! = null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.millionaire.millionairebusinessservice.module.ClaimMatch">
+        update claim_match
+        <set>
+            <if test="claimId != null">
+                claim_id = #{claimId,jdbcType=BIGINT},
+            </if>
+            <if test="investmentUserId != null">
+                investment_user_id = #{investmentUserId,jdbcType=BIGINT},
+            </if>
+            <if test="creditContractNumber != null">
+                credit_contract_number = #{creditContractNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.millionaire.millionairebusinessservice.module.ClaimMatch">
+    update claim_match
+    set claim_id = #{claimId,jdbcType=BIGINT},
+      investment_user_id = #{investmentUserId,jdbcType=BIGINT},
+      credit_contract_number = #{creditContractNumber,jdbcType=VARCHAR},
+      status =  #{status,jdbcType=TINYINT},
+      gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

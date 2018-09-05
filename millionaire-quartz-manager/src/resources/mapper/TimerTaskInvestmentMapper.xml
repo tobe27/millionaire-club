@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper">
+    <resultMap id="BaseResultMap" type="com.millionaire.millionairebusinessservice.module.TimerTaskInvestment">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="investment_user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="payback_amount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="execute_type" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="times" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="status" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="execute_time" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="association_investment" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, investment_user_id, payback_amount, execute_type, times, status, execute_time,association_investment,gmt_create, gmt_update
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from timed_task_investment
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!--获取当前日期下的执行任务-->
+    <select id=" listTimerTaskForExecute" resultMap="BaseResultMap">
+        select * from timed_task_investment where FROM_UNIXTIME(execute_time/1000,'%Y-%m-%d') = DATE_FORMAT(now(),'%Y-%m-%d') AND status = 0
+    </select>
+
+    <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.TimerTaskInvestment"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into timed_task_investment (investment_user_id, payback_amount,
+        execute_type, times, status,
+        execute_time, association_investment,gmt_create, gmt_update)
+        values (#{investmentUserId,jdbcType=BIGINT}, #{paybackAmount,jdbcType=INTEGER},
+        #{executeType,jdbcType=TINYINT}, #{times,jdbcType=TINYINT}, #{status,jdbcType=TINYINT},
+        #{executeTime,jdbcType=BIGINT},#{associationInvestment,jdbcType=BIGINT} ,#{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT})
+    </insert>
+
+    <!--查询即将续投投资的任务-->
+    <select id="selectIdForRenewalInvestment" resultMap="BaseResultMap">
+        SELECT * FROM timed_task_investment
+        WHERE  investment_user_id = #{investmentUserId,jdbcType=BIGINT} AND execute_type IN (10,30)
+    </select>
+
+    <!--用户投资续投后的，定时任务更新-->
+    <update id="updateTimerTaskForRenewal">
+        UPDATE timed_task_investment
+        set
+        payback_amount = #{paybackAmount,jdbcType=INTEGER},
+        execute_type = #{executeType,jdbcType=TINYINT},
+        association_investment = #{associationInvestment,jdbcType=BIGINT},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        WHERE
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--更新投资定时任务状态-->
+    <update id="updateTaskStatus">
+        UPDATE timed_task_investment
+        set
+        status = #{status,jdbcType=TINYINT},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        WHERE
+        id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

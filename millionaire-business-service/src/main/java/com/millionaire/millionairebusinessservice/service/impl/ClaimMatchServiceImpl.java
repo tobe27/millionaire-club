@@ -176,6 +176,8 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
         // status =1 表示该债权匹配信息有效
         claimMatch.setStatus((byte) 1);
         claimMatchMapper.insert(claimMatch);
+        logger.info("生成在债权匹配"+claimMatch.getInvestmentUserId());
+        logger.info("=================================================================================>");
         return claimMatch.getId();
     }
 
@@ -221,5 +223,13 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
     @Override
     public ClaimMatch selectEffectByInvestmentUID(long investmentUserID) {
         return claimMatchMapper.selectEffectByInvestmentUID(investmentUserID);
+    }
+
+    @Override
+    public int updateStatus(Long id, Byte status) {
+        int result = claimMatchMapper.updateStatus(id, status, System.currentTimeMillis());
+        logger.info(id+"修改债权匹配信息"+status);
+        logger.info("=========================================================================");
+        return result;
     }
 }
