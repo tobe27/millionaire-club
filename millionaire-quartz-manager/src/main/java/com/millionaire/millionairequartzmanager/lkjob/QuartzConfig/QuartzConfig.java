@@ -138,7 +138,7 @@ public MethodInvokingJobDetailFactoryBean claimInfoUnmatchLineWarn(ClaimInfoChec
      * @Description 用户投资到期提醒任务
      **/
     @Bean("investmentUserExpireWarnJobDetail")
-    public MethodInvokingJobDetailFactoryBean claimInfoUnmatchLineWarn(InvestmentUserCheckJob investmentUserCheckJob){
+    public MethodInvokingJobDetailFactoryBean investmentUserExpireWarn(InvestmentUserCheckJob investmentUserCheckJob){
         MethodInvokingJobDetailFactoryBean claimInfoExpiredCheckJobDetail = new MethodInvokingJobDetailFactoryBean();
         // 不允许并发
         claimInfoExpiredCheckJobDetail.setConcurrent(false);
