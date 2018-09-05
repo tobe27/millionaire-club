@@ -97,7 +97,7 @@ public class PayManager {
 //      用户银行信息
         String bankName = userBank.getBankName();
         String cardNumber = userBank.getCardNumber();
-        String cardType = userBank.getCardType();
+        String cardType = userBank.getBankName();
 //      用户信息
         String phone = String.valueOf(receptionUsers.getPhone());
         String idName = receptionUsers.getIdName();
@@ -158,7 +158,7 @@ public class PayManager {
         tradingFlow.setAmount(requestBean.getAmount());
         tradingFlow.setType((byte) -1);
         tradingFlow.setBankCardId(cardNumber);                //银行卡号
-        tradingFlow.setPayType(cardType);                     //银行卡类型
+        tradingFlow.setPayType(cardType);                     //银行名称
 //        默认失败
         tradingFlow.setStatus((byte) 20);
         tradingFlowService.insert(tradingFlow);

@@ -16,8 +16,10 @@ import com.millionaire.millionairemanagerservice.service.ContentService;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.Constants;
 import com.millionaire.millionairepaymentmanager.fuyou.until.MD5;
+import com.millionaire.millionairepaymentmanager.manager.InstallmentRequest;
 import com.millionaire.millionairepaymentmanager.manager.PayBackManager;
 import com.millionaire.millionairepaymentmanager.manager.PayManager;
+import com.millionaire.millionairepaymentmanager.requst.InstallmentBean;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
@@ -70,6 +72,9 @@ public class UserInvestmentController {
     @Autowired
     private VerificationUntil verificationUntil;
 
+    @Autowired
+    private InstallmentRequest installmentRequest;
+
     ReceptionUsers receptionUsers = new ReceptionUsers();
 
     ContractResponse contractResponse = new ContractResponse();
@@ -83,7 +88,7 @@ public class UserInvestmentController {
      * @throws FuYouException
      */
     @GetMapping("/u/user-investment")
-    public String userInvestmentT(@Validated  UserInvestmentRequestBean requestBean,
+    public String userInvestmentT(  UserInvestmentRequestBean requestBean,
                                  @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
@@ -93,14 +98,14 @@ public class UserInvestmentController {
 //        if (!map.get("verificationStatus").equals(50)) {
 //            return "用户验证未成功，请跳转页面";
 //        }
-        int isHavingNovicePlan = (int) map.get("isHavingNovicePlan");
+        int isHavingNovicePlan = 0;
         logger.info("查询用户投资,用户" + id);
         return payManager.payment(requestBean, id,isHavingNovicePlan);
     }
 
 
     @PostMapping("/u/user-investment")
-    public String userInvestment(@Validated  UserInvestmentRequestBean requestBean,
+    public String userInvestment(@RequestBody  UserInvestmentRequestBean requestBean,
                                  @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
@@ -345,6 +350,20 @@ public class UserInvestmentController {
     public String testRedis(@RequestParam("num") int num) {
         redisTemplate.opsForValue().set("investmentEnd", num);
         return "ok";
+    }
+
+
+    /**
+     * @author qiaobao
+     * @datetime 2018/9/6 3:00
+     * @decribe 用户分期的投资计算
+     */
+    @GetMapping("u/installment-Calculator")
+    public ResultBean installment(@RequestParam("productId") Long id, @RequestParam("amount") int amount) {
+        logger.info(id+"产品利息计算"+amount);
+
+        InstallmentBean installmentBean = installmentRequest.request(id, amount);
+        return new ResultBean(1,"success",installmentBean);
     }
 
 
