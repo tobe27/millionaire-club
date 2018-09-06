@@ -27,7 +27,7 @@
     </select>
 
     <!--获取当前日期下的执行任务-->
-    <select id=" listTimerTaskForExecute" resultMap="BaseResultMap">
+    <select id="listTimerTaskForExecute" resultMap="BaseResultMap">
         select * from timed_task_investment where FROM_UNIXTIME(execute_time/1000,'%Y-%m-%d') = DATE_FORMAT(now(),'%Y-%m-%d') AND status = 0
     </select>
 

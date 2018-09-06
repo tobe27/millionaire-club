@@ -1,6 +1,7 @@
 package com.millionaire.millionairequartzmanager.lkjob.QuartzConfig;
 
 import com.millionaire.millionairequartzmanager.job.InvestmentUserJob;
+import com.millionaire.millionairequartzmanager.job.TestJob;
 import com.millionaire.millionairequartzmanager.lkjob.job.ClaimInfoCheckJob;
 import com.millionaire.millionairequartzmanager.lkjob.job.InvestmentUserCheckJob;
 import com.millionaire.millionairequartzmanager.lkjob.job.MessageSendJob;
@@ -188,11 +189,36 @@ public MethodInvokingJobDetailFactoryBean claimInfoUnmatchLineWarn(ClaimInfoChec
         // 添加任务
         investmentMaturityTrigger.setJobDetail(investmentMaturityJobDetail);
         // 添加表达式，每天 凌晨1:00 执行
-        investmentMaturityTrigger.setCronExpression("0 0 1 * * ? ");
+        investmentMaturityTrigger.setCronExpression("0/10 * * * * ?");
         return investmentMaturityTrigger;
     }
 
 
+
+    @Bean("testJobDetail")
+    public MethodInvokingJobDetailFactoryBean test(TestJob testJob){
+        MethodInvokingJobDetailFactoryBean investmentUserMaturityJobDetail = new MethodInvokingJobDetailFactoryBean();
+        // 不允许并发
+        investmentUserMaturityJobDetail.setConcurrent(false);
+        investmentUserMaturityJobDetail.setTargetObject(testJob);
+        investmentUserMaturityJobDetail.setTargetMethod("test");
+        return investmentUserMaturityJobDetail;
+    }
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/6 7:17
+     *@decribe  触发器
+     */
+
+    @Bean("testTrigger")
+    public CronTriggerFactoryBean testTrigger(JobDetail testJobDetail) {
+        CronTriggerFactoryBean testTrigger = new CronTriggerFactoryBean();
+        // 添加任务
+        testTrigger.setJobDetail(testJobDetail);
+        // 添加表达式，每天 凌晨1:00 执行
+        testTrigger.setCronExpression("0/1 * * * * ?");
+        return testTrigger;
+    }
 
 
 
@@ -205,12 +231,15 @@ public MethodInvokingJobDetailFactoryBean claimInfoUnmatchLineWarn(ClaimInfoChec
                                                      CronTrigger claimInfoWarningTrigger,
                                                      CronTrigger claimInfoUnmatchLineWarnTrigger,
                                                      CronTrigger investmentUserExpireWarnTrigger,
-                                                     CronTrigger investmentUserMaturityTrigger) {
+                                                     CronTrigger investmentUserMaturityTrigger,
+                                                     CronTrigger testTrigger) {
+
+
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
         //添加trigger
         scheduler.setTriggers(messageSendTrigger, claimInfoCheckTrigger,
                 claimInfoWarningTrigger,claimInfoUnmatchLineWarnTrigger,
-                investmentUserExpireWarnTrigger,investmentUserMaturityTrigger);
+                investmentUserExpireWarnTrigger,investmentUserMaturityTrigger,testTrigger);
         // 设置延迟启动
         scheduler.setStartupDelay(5);
         //自动启动

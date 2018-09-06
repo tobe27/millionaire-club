@@ -217,4 +217,11 @@
       gmt_update = #{gmtUpdate,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <select id="listUnsendMessage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from message_platform
+        where status = 20
+    </select>
 </mapper>

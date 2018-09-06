@@ -69,18 +69,22 @@ public class InvestmentUserJob  {
 
     /**
      * 扫描投资的定时任务表，筛选出符合条件的记录，执行任务
-     * @param jobExecutionContext
      * @throws JobExecutionException
      */
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    public void execute( ) {
         logger.info("=======================================================================================>");
         logger.info("用户投资回款任务执行=====当前时间"+ LocalDateTime.now());
 //        扫描获得所有当前需要执行的定时任务
         List<TimerTaskInvestment> listTaskForExecute = taskInvestmentService.listTimerTaskForExecute();
 
+        logger.info("待执行的定时任务" + listTaskForExecute);
+        logger.info("=======================================================================================>");
+
         //Output : C
         listTaskForExecute.forEach(taskInvestment->{
 
+            logger.info("当前执行任务" + taskInvestment);
+            logger.info("=======================================================================================>");
             //                用户投资记录的自增id
             long investmentUserId = taskInvestment.getInvestmentUserId();
 //                定时任务的自增id
