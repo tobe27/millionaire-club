@@ -425,7 +425,10 @@ public class SunController {
      * @return
      */
     @GetMapping("/u/investments")
-    public ResultBean getUserInvestments(Byte investmentStatus, HttpServletRequest request) {
+    public ResultBean getUserInvestments(Integer pageNum,Byte investmentStatus, HttpServletRequest request) {
+        if(pageNum==null){
+            return new ResultBean(-1,"pageNum没传");
+        }
         if (investmentStatus == null) {
             return new ResultBean(-1, "投资状态不能为空");
         }
@@ -434,8 +437,10 @@ public class SunController {
         InvestmentUser investmentUser = new InvestmentUser();
         investmentUser.setUid(uid);
         investmentUser.setInvestmentStatus(investmentStatus);
+        PageHelper.startPage(pageNum, 5);
         List<InvestmentUsersDTO> investmentUsers = investmentUserService.findByUidInvestmentStatus(investmentUser);
-        return new ResultBean(1, "通过用户传来的投资状态查询", investmentUsers);
+        PageInfo pageInfo = new PageInfo(investmentUsers);
+        return new ResultBean(1, "通过用户传来的投资状态查询", pageInfo);
     }
 
     /**
