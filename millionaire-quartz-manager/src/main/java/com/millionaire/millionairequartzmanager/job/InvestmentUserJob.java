@@ -123,8 +123,6 @@ public class InvestmentUserJob  {
 
             String bankName = investmentUser.getBankName();
 
-            long matchId = claimMatch.getId();
-
 
             //                生成交易流水记录
             TradingFlow tradingFlow = new TradingFlow();
@@ -178,6 +176,7 @@ public class InvestmentUserJob  {
                 investmentUserService.updateInvestmentUserForEnd(investmentUserId, (byte) 20,0L);
 //                    取消债权匹配
                 while (claimMatch !=  null) {
+                    long matchId = claimMatch.getId();
                     matchService.updateStatus(matchId, (byte) 0);
                 }
             }
@@ -223,12 +222,12 @@ public class InvestmentUserJob  {
                     messageUser.setCode((byte)80);
 //                    启用续投的用户投资
                 investmentUserService.updateInvestmentUserIdStatus(installInvestmentId, (byte) 10);
-                //                更新用户投资状态,和债权信息
-                investmentUserService.updateInvestmentUserForEnd(installInvestmentId, (byte) 20,0L);
+
 //                写入下一轮的定时任务
                 taskInsert.insert(installInvestmentId);
 //                    取消债权匹配
-                while (claimMatch != null) {
+                if (claimMatch != null) {
+                    long matchId = claimMatch.getId();
                     matchService.updateStatus(matchId, (byte) 0);
 //                    将原债权匹配转移
                     ClaimMatch newClaimMatch = new ClaimMatch();
@@ -237,10 +236,14 @@ public class InvestmentUserJob  {
                     Long count = matchService.countClaimMatch();
                     String creditContractNumber = FlowNumberGeneration.claimProtocol(count);
                     newClaimMatch.setCreditContractNumber(creditContractNumber);
-                    matchService.insertClaimMatch(newClaimMatch);
+                    long newMatchId = matchService.insertClaimMatch(newClaimMatch);
+                    //                更新用户投资状态,和债权信息
+                    investmentUserService.updateInvestmentUserForEnd(investmentUserId, (byte) 20,newMatchId);
+                }else {
+                    //                更新用户投资状态,和债权信息
+                    investmentUserService.updateInvestmentUserForEnd(investmentUserId, (byte) 20, 0L);
                 }
             }
-
             messageUser.setInvestmentUserId(investmentUserId);
             messageUser.setUid(uid);
             messageUser.setIsLook((byte)0);

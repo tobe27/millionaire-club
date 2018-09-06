@@ -476,7 +476,7 @@
     <update id="updateInvestmentUserForEnd" >
         update investment_user
         set
-        investment_status = #{investmentStatus,jdbcType=TINYINT},
+        investment_status = #{status,jdbcType=TINYINT},
         claim_id = #{claimId,jdbcType=BIGINT},
         gmt_update = #{gmtUpdate,jdbcType=BIGINT}
         where id = #{id,jdbcType=BIGINT}
