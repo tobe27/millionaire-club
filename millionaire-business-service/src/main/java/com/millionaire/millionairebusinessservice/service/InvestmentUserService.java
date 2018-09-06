@@ -103,4 +103,12 @@ public interface InvestmentUserService {
      */
     int selectExistNovicePlan(Long uid);
 
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/6 20:23
+     *@decribe 回款时更新用户已分配收益
+     */
+
+    int updateDistributedIncome(Long investmentId, Double distributedIncome);
+
 }

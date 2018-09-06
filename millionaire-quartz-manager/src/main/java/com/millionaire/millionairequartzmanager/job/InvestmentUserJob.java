@@ -102,7 +102,6 @@ public class InvestmentUserJob  {
 //                查询债权匹配消息
             ClaimMatch claimMatch = matchService.selectEffectByInvestmentUID(investmentUserId);
 
-
             long uid = investmentUser.getUid();
 
             byte executeType = taskInvestment.getExecuteType();
@@ -114,6 +113,11 @@ public class InvestmentUserJob  {
             String IDName = users.getIdName();
 
             int payBackAmount = taskInvestment.getPaybackAmount();
+
+//            更新用户投资的金额
+            double distributedIncome = payBackAmount/100;
+
+            int assets = investmentUser.getInvestmentAmount();
 
             String bankCardNumber = investmentUser.getBankCardNumber();
 
@@ -155,8 +159,10 @@ public class InvestmentUserJob  {
                     //                    修改定时任务状态执行成功
                     taskInvestmentService.updateTaskStatus((byte) 10, taskInvestmentId);
 //                   修改用户信息总资产和总收益
-                    receptionUsersService.updateUserAssets(uid, payBackAmount, -1);
-                    receptionUsersService.updateUserProfit(uid, payBackAmount);
+                    receptionUsersService.updateUserAssets(uid, assets, -1);
+                    receptionUsersService.updateUserProfit(uid,payBackAmount);
+//                    修改用户投资的已分配收益
+                    investmentUserService.updateDistributedIncome(investmentUserId, distributedIncome);
 //                    用户消息状态设置为40 正在汇款中
                     messageUser.setCode((byte)40);
 
@@ -190,6 +196,8 @@ public class InvestmentUserJob  {
                     taskInvestmentService.updateTaskStatus((byte) 10, taskInvestmentId);
 //                   修改用户信息中总收益
                     receptionUsersService.updateUserProfit(uid, payBackAmount);
+                    //                    修改用户投资的已分配收益
+                    investmentUserService.updateDistributedIncome(investmentUserId, distributedIncome);
 //                    用户消息状态设置为40 正在汇款中
                     messageUser.setCode((byte)40);
 
@@ -209,6 +217,8 @@ public class InvestmentUserJob  {
                     taskInvestmentService.updateTaskStatus((byte) 10, taskInvestmentId);
 //                   修改用户信息总收益
                     receptionUsersService.updateUserProfit(uid, payBackAmount);
+                //                    修改用户投资的已分配收益
+                investmentUserService.updateDistributedIncome(investmentUserId, distributedIncome);
 //                    用户消息状态设置为40 开始续投
                     messageUser.setCode((byte)80);
 //                    启用续投的用户投资
@@ -239,5 +249,6 @@ public class InvestmentUserJob  {
 
 
     }
+
 
 }

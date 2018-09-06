@@ -169,4 +169,14 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
             return 1;
         }
     }
+
+    @Override
+    public int updateDistributedIncome(Long investmentId, Double distributedIncome) {
+        double nowDistributedIncome = investmentUserMapper.getInvestmentDistributedIncome(investmentId);
+        double update = nowDistributedIncome + distributedIncome;
+        int result = investmentUserMapper.updateDistributedIncome(investmentId, update, System.currentTimeMillis());
+        logger.info(investmentId + "用户投资收益分配，原纪录收益" + nowDistributedIncome+"更新后收益"+update);
+        logger.info("============================================================================================>");
+        return result;
+    }
 }

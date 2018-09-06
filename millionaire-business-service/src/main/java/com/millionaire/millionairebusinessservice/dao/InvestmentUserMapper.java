@@ -136,6 +136,23 @@ public interface InvestmentUserMapper {
                                    @Param("claimId") Long claimId,
                                    @Param("gmtUpdate") Long gmtUpdate);
 
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/6 20:23
+     *@decribe 回款时更新用户已分配收益
+     */
+
+    int updateDistributedIncome(@Param("id")Long investmentId,
+                                @Param("distributedIncome") Double distributedIncome,
+                                @Param("gmtUpdate") Long gmtUpdate);
+
+    /**
+     * @author qiaobao
+     * @datetime 2018/9/6 20:24
+     * @decribe 获取用户投资的当前收益
+     */
+    double getInvestmentDistributedIncome(Long investmentID);
+
 
 
 }

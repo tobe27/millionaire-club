@@ -189,7 +189,7 @@ public class UserInvestmentController {
      */
     @GetMapping("/app/list/products")
     public ResultBean listProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        return new ResultBean(1, "success", productService.selectByPage(pageSize, pageNum));
+        return new ResultBean(1, "success", productService.listProductOnShelf(pageSize,pageNum));
     }
 
     /**

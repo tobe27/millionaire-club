@@ -483,4 +483,18 @@
     </update>
 
 
+    <!--用户投资到期后的修改信息-->
+    <update id="updateDistributedIncome" >
+        update investment_user
+        set
+        distributed_income = #{distributedIncome,jdbcType=DOUBLE},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--筛选用户投资-->
+    <select id="getInvestmentDistributedIncome" resultType="java.lang.Double" parameterType="java.lang.Long">
+        SELECT distributed_income FROM investment_user WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
 </mapper>
