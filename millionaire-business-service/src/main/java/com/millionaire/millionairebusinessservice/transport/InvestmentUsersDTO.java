@@ -8,6 +8,7 @@ public class InvestmentUsersDTO {
     private Byte investmentStatus;  //项目状态
     private Long valueDateStart;   //起息时间
     private Long valueDateEnd;  //到息时间
+    private Byte look; //是否观看
 
     @Override
     public String toString() {
@@ -19,6 +20,7 @@ public class InvestmentUsersDTO {
                 ", investmentStatus=" + investmentStatus +
                 ", valueDateStart=" + valueDateStart +
                 ", valueDateEnd=" + valueDateEnd +
+                ", look=" + look +
                 '}';
     }
 
@@ -76,5 +78,13 @@ public class InvestmentUsersDTO {
 
     public void setValueDateEnd(Long valueDateEnd) {
         this.valueDateEnd = valueDateEnd;
+    }
+
+    public Byte getLook() {
+        return look;
+    }
+
+    public void setLook(Byte look) {
+        this.look = look;
     }
 }

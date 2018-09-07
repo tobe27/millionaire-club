@@ -416,6 +416,7 @@
         investment_user.investment_amount as investmentAmount,
         investment_user.investment_status as investmentStatus,
         investment_user.value_date_start as valueDateStart,
+        investment_user.look as look,
         investment_user.value_date_end as valueDateEnd
         FROM investment_user INNER JOIN investment_product
         ON investment_user.product_id=investment_product.id
