@@ -19,6 +19,7 @@
             <arg column="distributed_income" javaType="java.lang.Double" jdbcType="DOUBLE"/>
             <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="look" javaType="java.lang.Byte" jdbcType="TINYINT"/>
         </constructor>
     </resultMap>
     <resultMap id="InvestmentUser" type="com.millionaire.millionairebusinessservice.module.InvestmentUser">
@@ -38,11 +39,12 @@
         <result property="gmtUpdate" column="gmt-update"/>
         <result property="bankCardNumber" column="bank_card_number"/>
         <result property="bankName" column="bank_name"/>
+        <result property="look" column="look"/>
     </resultMap>
     <sql id="Base_Column_List">
     id,product_id, uid,claim_id, value_date_start, value_date_end, lending_contract_number, bank_name, bank_card_number, contract_sign,
     investment_amount, investment_status, expected_income, distributed_income, gmt_create, 
-    gmt_update
+    gmt_update,look
   </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="InvestmentUser">

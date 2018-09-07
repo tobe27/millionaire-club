@@ -452,6 +452,16 @@ public class SunController {
     @GetMapping("/u/investment/{id}")
     public ResultBean getById(@PathVariable Long id) {
         UserInvestmentDTO userInvestmentDTO = investmentUserService.findById(id);
+        if(userInvestmentDTO==null){
+            return new ResultBean(-1,"用户投资不存在");
+        }
+        if(userInvestmentDTO.getLook()!=10){
+            InvestmentUser investmentUser = new InvestmentUser();
+            investmentUser.setLook((byte) 10);
+            investmentUser.setGmtUpdate(System.currentTimeMillis());
+            investmentUser.setId(id);
+            investmentUserService.updateById(investmentUser);
+        }
         return new ResultBean(1, "获取用户投资详情", userInvestmentDTO);
     }
 

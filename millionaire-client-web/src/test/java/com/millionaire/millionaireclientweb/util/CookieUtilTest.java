@@ -1,5 +1,6 @@
 package com.millionaire.millionaireclientweb.util;
 
+import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
 import com.millionaire.millionairebusinessservice.dao.MessageUserMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.module.MessageUser;
@@ -158,5 +159,16 @@ createDefinitionSortTreeMap();
         messageUser.setGmtUpdate(System.currentTimeMillis());
         messageUser.setId(1L);
         messageUserService.updateByPrimaryKey(messageUser);
+    }
+
+    @Resource
+    private InvestmentUserMapper investmentUserMapper;
+    @Test
+    public void user() {
+        InvestmentUser investmentUser = new InvestmentUser();
+        investmentUser.setLook((byte) 20);
+        investmentUser.setGmtUpdate(System.currentTimeMillis());
+        investmentUser.setId(1L);
+        investmentUserMapper.updateById(investmentUser);
     }
 }

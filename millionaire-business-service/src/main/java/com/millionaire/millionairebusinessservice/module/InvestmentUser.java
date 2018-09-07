@@ -44,10 +44,12 @@ public class InvestmentUser {
 
     private String bankName;
 
+    private Byte look;
+
     public InvestmentUser() {
     }
 
-    public InvestmentUser(Long id, Long productId, Long uid, Long claimId, Long valueDateStart, Long valueDateEnd, String lendingContractNumber, String contractSign, Integer investmentAmount, Byte investmentStatus, Double expectedIncome, Double distributedIncome, Long gmtCreate, Long gmtUpdate, String bankCardNumber, String bankName) {
+    public InvestmentUser(Long id, Long productId, Long uid, Long claimId, Long valueDateStart, Long valueDateEnd, String lendingContractNumber, String contractSign, Integer investmentAmount, Byte investmentStatus, Double expectedIncome, Double distributedIncome, Long gmtCreate, Long gmtUpdate, String bankCardNumber, String bankName, Byte look) {
         this.id = id;
         this.productId = productId;
         this.uid = uid;
@@ -64,6 +66,7 @@ public class InvestmentUser {
         this.gmtUpdate = gmtUpdate;
         this.bankCardNumber = bankCardNumber;
         this.bankName = bankName;
+        this.look = look;
     }
 
     @Override
@@ -77,14 +80,15 @@ public class InvestmentUser {
                 ", valueDateEnd=" + valueDateEnd +
                 ", lendingContractNumber='" + lendingContractNumber + '\'' +
                 ", contractSign='" + contractSign + '\'' +
-                ", bankName='" + bankName + '\'' +
-                ", bankCardNumber='" + bankCardNumber + '\'' +
                 ", investmentAmount=" + investmentAmount +
                 ", investmentStatus=" + investmentStatus +
                 ", expectedIncome=" + expectedIncome +
                 ", distributedIncome=" + distributedIncome +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtUpdate=" + gmtUpdate +
+                ", bankCardNumber='" + bankCardNumber + '\'' +
+                ", bankName='" + bankName + '\'' +
+                ", look=" + look +
                 '}';
     }
 
@@ -152,22 +156,6 @@ public class InvestmentUser {
         this.contractSign = contractSign;
     }
 
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public String getBankCardNumber() {
-        return bankCardNumber;
-    }
-
-    public void setBankCardNumber(String bankCardNumber) {
-        this.bankCardNumber = bankCardNumber;
-    }
-
     public Integer getInvestmentAmount() {
         return investmentAmount;
     }
@@ -214,5 +202,29 @@ public class InvestmentUser {
 
     public void setGmtUpdate(Long gmtUpdate) {
         this.gmtUpdate = gmtUpdate;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public Byte getLook() {
+        return look;
+    }
+
+    public void setLook(Byte look) {
+        this.look = look;
     }
 }

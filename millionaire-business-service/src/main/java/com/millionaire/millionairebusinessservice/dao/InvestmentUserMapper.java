@@ -22,6 +22,8 @@ public interface InvestmentUserMapper {
 
     int updateByPrimaryKey(InvestmentUser record);
 
+    int updateById(InvestmentUser investmentUser);
+
     /**
      * 支付成功修改用户投资状态
      *
