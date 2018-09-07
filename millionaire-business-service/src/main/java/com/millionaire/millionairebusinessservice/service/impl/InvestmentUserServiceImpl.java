@@ -95,6 +95,11 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
         return investmentUserMapper.updateByPrimaryKeySelective(record);
     }
 
+    @Override
+    public int updateById(InvestmentUser investmentUser) {
+        return investmentUserMapper.updateById(investmentUser);
+    }
+
     /**
      * @param lendingContractNumber
      * @Description 根据出借合同号查询用户投资

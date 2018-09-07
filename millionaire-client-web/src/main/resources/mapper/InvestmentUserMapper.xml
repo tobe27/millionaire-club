@@ -422,6 +422,14 @@
         ON investment_user.product_id=investment_product.id
         WHERE uid=#{uid} AND investment_status=#{investmentStatus}
     </select>
+    <update id="updateById" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
+        UPDATE
+        investment_user
+        SET
+        look=#{look},
+        gmt_update=#{gmtUpdate}
+        WHERE id=#{id}
+    </update>
 
     <!--client-->
     <select id="findById" resultType="com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO">
@@ -438,7 +446,8 @@
         investment_user.investment_status as investmentStatus,
         investment_user.distributed_income as distributedIncome,
         investment_user.bank_name as bankName,
-        investment_user.bank_card_number as bankCardNumber
+        investment_user.bank_card_number as bankCardNumber,
+        investment_user.look as look
         FROM investment_user INNER JOIN investment_product
         ON investment_user.product_id=investment_product.id
         WHERE investment_user.id=#{id}
