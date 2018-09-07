@@ -14,6 +14,7 @@ public class UserInvestmentDTO {
     private Double distributedIncome;  //已分配收益
     private String bankName; //银行卡名
     private String bankCardNumber;  //银行卡号
+    private Byte look;
 
     @Override
     public String toString() {
@@ -31,6 +32,7 @@ public class UserInvestmentDTO {
                 ", distributedIncome=" + distributedIncome +
                 ", bankName='" + bankName + '\'' +
                 ", bankCardNumber='" + bankCardNumber + '\'' +
+                ", look=" + look +
                 '}';
     }
 
@@ -136,5 +138,13 @@ public class UserInvestmentDTO {
 
     public void setBankCardNumber(String bankCardNumber) {
         this.bankCardNumber = bankCardNumber;
+    }
+
+    public Byte getLook() {
+        return look;
+    }
+
+    public void setLook(Byte look) {
+        this.look = look;
     }
 }

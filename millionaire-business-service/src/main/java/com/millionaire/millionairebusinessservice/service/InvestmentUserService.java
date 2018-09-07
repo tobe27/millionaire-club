@@ -55,6 +55,8 @@ public interface InvestmentUserService {
 
     int updateByPrimaryKeySelective(InvestmentUser record);
 
+    int updateById(InvestmentUser investmentUser);
+
 
     /**
      * @Description 根据出借合同号查询用户投资
