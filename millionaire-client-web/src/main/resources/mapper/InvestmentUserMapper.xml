@@ -421,6 +421,7 @@
         FROM investment_user INNER JOIN investment_product
         ON investment_user.product_id=investment_product.id
         WHERE uid=#{uid} AND investment_status=#{investmentStatus}
+        ORDER BY investment_user.look DESC
     </select>
     <update id="updateById" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
         UPDATE
