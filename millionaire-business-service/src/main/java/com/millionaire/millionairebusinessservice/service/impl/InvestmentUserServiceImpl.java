@@ -6,10 +6,7 @@ import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
-import com.millionaire.millionairebusinessservice.transport.ContractResponse;
-import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
-import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
-import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -74,8 +71,18 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
 
     @Override
     public int updateInvestmentUserIdStatus(Long investmentUserId,Byte status) {
+            int result = investmentUserMapper.updateInvestmentUserIdStatus(investmentUserId,status,System.currentTimeMillis());
+            logger.info(investmentUserId+"用户投资状态更新"+status);
+            logger.info("========================================================================================>");
+        return result;
+    }
 
-        return investmentUserMapper.updateInvestmentUserIdStatus(investmentUserId,status,System.currentTimeMillis());
+    @Override
+    public int updateInvestmentUserForEnd(Long investmentUserId, Byte status, Long claimId) {
+        int result = investmentUserMapper.updateInvestmentUserForEnd(investmentUserId, status, claimId, System.currentTimeMillis());
+        logger.info(investmentUserId+"用户投资状态到期更新"+status);
+        logger.info("========================================================================================>");
+        return 0;
     }
 
     @Override
@@ -95,6 +102,11 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     public int updateByPrimaryKeySelective(InvestmentUser record) {
         record.setGmtUpdate(System.currentTimeMillis());
         return investmentUserMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int updateById(InvestmentUser investmentUser) {
+        return investmentUserMapper.updateById(investmentUser);
     }
 
     /**
@@ -145,7 +157,7 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     }
 
     @Override
-    public List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user) {
+    public List<InvestmentUsersDTO> findByUidInvestmentStatus(InvestmentUser user) {
         return investmentUserMapper.findByUidInvestmentStatus(user);
     }
 
@@ -161,5 +173,15 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
         }else{
             return 1;
         }
+    }
+
+    @Override
+    public int updateDistributedIncome(Long investmentId, Double distributedIncome) {
+        double nowDistributedIncome = investmentUserMapper.getInvestmentDistributedIncome(investmentId);
+        double update = nowDistributedIncome + distributedIncome;
+        int result = investmentUserMapper.updateDistributedIncome(investmentId, update, System.currentTimeMillis());
+        logger.info(investmentId + "用户投资收益分配，原纪录收益" + nowDistributedIncome+"更新后收益"+update);
+        logger.info("============================================================================================>");
+        return result;
     }
 }

@@ -57,4 +57,15 @@ public interface ClaimMatchService {
      * status=1 该债权匹配信息有效
      * **/
     ClaimMatch selectEffectByInvestmentUID(long investmentUserID);
+
+
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/6 6:08
+     *@decribe 修改债权匹配信息
+     */
+
+    int updateStatus(Long id, Byte status);
+
+
 }

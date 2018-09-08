@@ -1,6 +1,7 @@
 package com.millionaire.millionaireuserservice.service;
 
 import com.millionaire.millionaireuserservice.module.UserBank;
+import com.millionaire.millionaireuserservice.transport.UserBanksDTO;
 
 import java.util.List;
 
@@ -24,5 +25,5 @@ public interface UserBankService {
      **/
     void deleteByUID(Long uid);
 
-    List<UserBank> findById(Long id);
+    List<UserBanksDTO> findById(Long id);
 }

@@ -9,7 +9,6 @@ import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
 import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
-import com.millionaire.millionaireclientweb.pojo.InvestmentUsersDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.VerificationUntil;
@@ -17,8 +16,10 @@ import com.millionaire.millionairemanagerservice.service.ContentService;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.Constants;
 import com.millionaire.millionairepaymentmanager.fuyou.until.MD5;
+import com.millionaire.millionairepaymentmanager.manager.InstallmentRequest;
 import com.millionaire.millionairepaymentmanager.manager.PayBackManager;
 import com.millionaire.millionairepaymentmanager.manager.PayManager;
+import com.millionaire.millionairepaymentmanager.requst.InstallmentBean;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
@@ -71,6 +72,9 @@ public class UserInvestmentController {
     @Autowired
     private VerificationUntil verificationUntil;
 
+    @Autowired
+    private InstallmentRequest installmentRequest;
+
     ReceptionUsers receptionUsers = new ReceptionUsers();
 
     ContractResponse contractResponse = new ContractResponse();
@@ -84,7 +88,24 @@ public class UserInvestmentController {
      * @throws FuYouException
      */
     @GetMapping("/u/user-investment")
-    public String userInvestment(@Validated @RequestBody UserInvestmentRequestBean requestBean,
+    public String userInvestmentT(  UserInvestmentRequestBean requestBean,
+                                 @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
+
+        Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
+        Map map = verificationUntil.Verification(cookie);
+        logger.info("入参信息"+map+requestBean);
+//        对cookie信息进行检验
+//        if (!map.get("verificationStatus").equals(50)) {
+//            return "用户验证未成功，请跳转页面";
+//        }
+        int isHavingNovicePlan = 0;
+        logger.info("查询用户投资,用户" + id);
+        return payManager.payment(requestBean, id,isHavingNovicePlan);
+    }
+
+
+    @PostMapping("/u/user-investment")
+    public String userInvestment(@RequestBody  UserInvestmentRequestBean requestBean,
                                  @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
@@ -98,6 +119,8 @@ public class UserInvestmentController {
         logger.info("查询用户投资,用户" + id);
         return payManager.payment(requestBean, id,isHavingNovicePlan);
     }
+
+
 
     /**
      * 支付成功回调接口
@@ -166,7 +189,7 @@ public class UserInvestmentController {
      */
     @GetMapping("/app/list/products")
     public ResultBean listProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        return new ResultBean(1, "success", productService.selectByPage(pageSize, pageNum));
+        return new ResultBean(1, "success", productService.listProductOnShelf(pageSize,pageNum));
     }
 
     /**
@@ -219,7 +242,6 @@ public class UserInvestmentController {
     @GetMapping("/u/list/renewal-products")
     public ResultBean listRenewalProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize, HttpServletRequest servletRequest) {
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
-
         Map map = verificationUntil.Verification(cookie);
 
         int verificationStatus = (int) map.get("verificationStatus");
@@ -326,9 +348,24 @@ public class UserInvestmentController {
 
     @GetMapping("redis/set")
     public String testRedis(@RequestParam("num") int num) {
-        redisTemplate.opsForValue().set("investmentEnd", 5);
+        redisTemplate.opsForValue().set("investmentEnd", num);
         return "ok";
     }
+
+
+    /**
+     * @author qiaobao
+     * @datetime 2018/9/6 3:00
+     * @decribe 用户分期的投资计算
+     */
+    @GetMapping("u/installment-Calculator")
+    public ResultBean installment(@RequestParam("productId") Long id, @RequestParam("amount") int amount) {
+        logger.info(id+"产品利息计算"+amount);
+
+        InstallmentBean installmentBean = installmentRequest.request(id, amount);
+        return new ResultBean(1,"success",installmentBean);
+    }
+
 
 }
 

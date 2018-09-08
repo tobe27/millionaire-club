@@ -1,9 +1,8 @@
 package com.millionaire.millionairemanagerservice.dao;
 
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
-import com.millionaire.millionairemanagerservice.module.Proposal;
 import com.millionaire.millionairemanagerservice.request.MessagePlatformQuery;
-import com.millionaire.millionairemanagerservice.request.ProposalQuery;
+import com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -24,10 +23,13 @@ public interface MessagePlatformMapper {
 
     List<MessagePlatform> selectByQuery(MessagePlatformQuery query);
 
-    List<MessagePlatform> findBySendingCrowd(Byte sendingCrowd);
-/**
- * @Description  查询未发送的平台消息 status = 20
- **/
-    List<MessagePlatform>  listUnsendMessage();
+    List<MessagePlatformDTO> findBySendingCrowd(Byte sendingCrowd);
+
+    Integer findBySendingCrowdCount(Byte sendingCrowd);
+
+    /**
+     * @Description 查询未发送的平台消息 status = 20
+     **/
+    List<MessagePlatform> listUnsendMessage();
 
 }

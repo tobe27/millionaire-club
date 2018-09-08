@@ -45,5 +45,14 @@ public interface TradingFlowMapper {
                                 @Param("status") Byte status,
                                 @Param("gmtUpdate") Long gmtUpdate);
 
+    /**
+     * 根据数据库的主键更新用户的交易记录状态
+     * @param id
+     * @param status
+     * @return
+     */
+    int updateTradingFlowStatusById(@Param("id") Long id,
+                                    @Param("status") Byte status,
+                                    @Param("gmtUpdate") Long gmtUpdate);
 
 }

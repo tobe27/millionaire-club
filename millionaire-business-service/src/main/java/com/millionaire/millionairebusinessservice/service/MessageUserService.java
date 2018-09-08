@@ -15,4 +15,10 @@ public interface MessageUserService {
     int updateMessageUserCode(Long investmentUserId, Byte code);
 
     List<UserMessageDTO> findByUid(Long id);
+
+    Integer findByLook();
+
+    int updateByPrimaryKey(MessageUser record);
+
+    void deleteByPrimaryKey(Long id);
 }

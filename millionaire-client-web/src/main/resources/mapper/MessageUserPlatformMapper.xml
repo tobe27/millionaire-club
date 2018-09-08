@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.millionaire.millionairemanagerservice.dao.MessageUserPlatformMapper">
+    <resultMap id="MessageUserPlatform" type="com.millionaire.millionairemanagerservice.module.MessageUserPlatform">
+        <id property="id" column="id"/>
+        <result property="messagePlatformId" column="message_platform_id"/>
+        <result property="uid" column="uid"/>
+        <result property="look" column="status"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtUpdate" column="gmt_update"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,message_platform_id,uid,status,gmt_create,gmt_update
+    </sql>
+    <select id="findAll" resultMap="MessageUserPlatform">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM message_user_platform
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.millionaire.millionairemanagerservice.module.MessageUserPlatform">
+        INSERT message_user_platform(message_platform_id,uid,status,gmt_create,gmt_update)
+        VALUES (#{messagePlatformId},#{uid},#{look},#{gmtCreate},#{gmtUpdate})
+    </insert>
+    <update id="updateById" useGeneratedKeys="true" keyProperty="id" parameterType="com.millionaire.millionairemanagerservice.module.MessageUserPlatform">
+        UPDATE
+        message_user_platform
+        SET
+        message_platform_id=#{messagePlatformId},uid=#{uid},status=#{look},gmt_create=#{gmtCreate},gmt_update=#{gmtUpdate}
+        WHERE id=#{id}
+</update>
+    <select id="findById" resultMap="MessageUserPlatform">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM message_user_platform
+        WHERE id=#{id}
+    </select>
+    <delete id="deleteById">
+        DELETE
+        FROM message_user_platform
+        WHERE id=#{id}
+    </delete>
+    <select id="findByUidCount" resultType="Integer">
+        SELECT COUNT(*)
+        FROM message_user_platform
+        WHERE uid=#{uid}
+    </select>
+    <select id="findByMessagePlatform" parameterType="com.millionaire.millionairemanagerservice.module.MessageUserPlatform" resultMap="MessageUserPlatform">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM message_user_platform
+        WHERE uid=#{uid} AND message_platform_id=#{messagePlatformId}
+    </select>
+</mapper>

@@ -97,7 +97,7 @@ public class PayManager {
 //      用户银行信息
         String bankName = userBank.getBankName();
         String cardNumber = userBank.getCardNumber();
-        String cardType = userBank.getCardType();
+        String cardType = userBank.getBankName();
 //      用户信息
         String phone = String.valueOf(receptionUsers.getPhone());
         String idName = receptionUsers.getIdName();
@@ -133,8 +133,9 @@ public class PayManager {
         investmentUser.setInvestmentAmount(requestBean.getAmount());
         investmentUser.setInvestmentStatus((byte) 0);
         investmentUser.setExpectedIncome(income);
+        investmentUser.setClaimId(0L);
 //        未分配收益
-        investmentUser.setDistributedIncome(income);
+        investmentUser.setDistributedIncome(0D);
         investmentUser.setValueDateStart(valueDateStart);
         investmentUser.setValueDateEnd(valueDateEnd);
 
@@ -157,7 +158,7 @@ public class PayManager {
         tradingFlow.setAmount(requestBean.getAmount());
         tradingFlow.setType((byte) -1);
         tradingFlow.setBankCardId(cardNumber);                //银行卡号
-        tradingFlow.setPayType(cardType);                     //银行卡类型
+        tradingFlow.setPayType(cardType);                     //银行名称
 //        默认失败
         tradingFlow.setStatus((byte) 20);
         tradingFlowService.insert(tradingFlow);
@@ -215,14 +216,45 @@ public class PayManager {
             logger.info("====================================================================================");
             return 10001;
         }
+//        原用户投资的id
+        Long investmentId = investmentUser.getId();
+
+        Long valueDateEnd = investmentUser.getValueDateEnd();
+
+        long valueDateStart = investmentUser.getValueDateStart();
+
+        int deadline = investmentProduct.getDeadline();
+
+        String productCode = investmentProduct.getProductCode();
+
+        String productName = investmentProduct.getName();
+
+        long uid = investmentUser.getUid();
+
+        String phone = String.valueOf(users.getPhone());
+
+        String IDName = users.getIdName();
+
+        int amount = investmentUser.getInvestmentAmount();
+
+        String bankCardNumber = investmentUser.getBankCardNumber();
+
+        String bankName = investmentUser.getBankName();
 
 
+
+
+
+
+
+//        修改原用户投资，状态转入续投
+        investmentUserService.updateInvestmentUserIdStatus(investmentId, (byte) 10);
 //        修改起息时间,到息时间即为起息时间
-        investmentUser.setValueDateStart(investmentUser.getValueDateEnd());
-        Long valueDateEnd = investmentUser.getValueDateStart() + investmentProduct.getDeadline() * TIME_DAY;
-        logger.info("到息时间"+valueDateEnd);
+        investmentUser.setValueDateStart(valueDateEnd);
+        Long newValueDateEnd = valueDateStart + deadline * TIME_DAY;
+        logger.info("到息时间"+newValueDateEnd);
         logger.info("====================================================================================");
-        investmentUser.setValueDateEnd(valueDateEnd);
+        investmentUser.setValueDateEnd(newValueDateEnd);
 //        匹配债权的id设为默认值null
         investmentUser.setClaimId(0L);
         investmentUser.setContractSign(contactSign);
@@ -232,7 +264,7 @@ public class PayManager {
         //        插入用户投资记录
         Long newInvestmentUserId = investmentUserService.insert(investmentUser);
         //        出借合同编号
-        String num = FlowNumberGeneration.lendProtocol(investmentProduct.getProductCode(), newInvestmentUserId);
+        String num = FlowNumberGeneration.lendProtocol(productCode, newInvestmentUserId);
 //        将出借合同编号更新至数据库中
         investmentUserService.updateLendingContractNumber(newInvestmentUserId, num);
 
@@ -240,17 +272,25 @@ public class PayManager {
 //        生成用户交易记录
         TradingFlow tradingFlow = new TradingFlow();
         tradingFlow.setInvestmentUserId(newInvestmentUserId);
-        tradingFlow.setUid(investmentUser.getUid());
-        tradingFlow.setProductName(investmentProduct.getName());
-        tradingFlow.setPhone(users.getPhone().toString());
-        tradingFlow.setName(users.getIdName());
-        tradingFlow.setAmount(investmentUser.getInvestmentAmount());
+        tradingFlow.setUid(uid);
+        tradingFlow.setProductName(productName);
+        tradingFlow.setPhone(phone);
+        tradingFlow.setName(IDName);
+        tradingFlow.setAmount(amount);
 //        表示产品续投
         tradingFlow.setType((byte)2);
-        tradingFlow.setBankCardId(investmentUser.getBankCardNumber());
-        tradingFlow.setPayType(investmentUser.getBankName());
+        tradingFlow.setBankCardId(bankCardNumber);
+        tradingFlow.setPayType(bankName);
         tradingFlow.setStatus((byte)10);
         logger.info("插入的交易流水信息"+tradingFlow);
+
+        MessageUser messageUser = new MessageUser();
+//        续投成功
+        messageUser.setCode((byte)70);
+        messageUser.setInvestmentUserId(investmentId);
+        messageUser.setUid(uid);
+        messageUser.setIsLook((byte)0);
+        messageUserService.insert(messageUser);
 
 //        关于用户投资定时任务的修改
 //        根据用户投资的id查询定时任务  execute_type= 10 and 30
@@ -265,10 +305,14 @@ public class PayManager {
         }
 //        查询到符合要求的最后一次还息回款的任务id，将回款金额减去本金，同时写入下一周期的还款任务
         int newPaybackAmount = taskInvestment.getPaybackAmount() - investmentUser.getInvestmentAmount() * 100;
+        logger.info("更新前的回款金额"+taskInvestment.getPaybackAmount()+"更新后的回款金额"+newPaybackAmount);
+        logger.info("====================================================================================");
+
 //        修改定时任务执行类型,将关联的新的用户投资写入记录
         taskInvestmentService.updateTimerTaskForRenewal(newPaybackAmount, (byte) 40L, newInvestmentUserId,taskInvestment.getId());
         logger.info("用户投资定时表格数据已更新"+taskInvestment.getId());
         logger.info("====================================================================================");
         return 1;
     }
+
 }

@@ -115,6 +115,11 @@ public class TradingFlowServiceImpl  implements TradingFlowService {
     }
 
     @Override
+    public int updateTradingFlowStatusById(Long id, Byte status) {
+        return flowMapper.updateTradingFlowStatusById(id,status,System.currentTimeMillis());
+    }
+
+    @Override
     public List<TradingFlow> findByUid(Long uid) {
         return flowMapper.findByUid(uid);
     }

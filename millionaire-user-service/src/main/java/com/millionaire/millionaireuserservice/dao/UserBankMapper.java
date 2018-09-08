@@ -1,6 +1,7 @@
 package com.millionaire.millionaireuserservice.dao;
 
 import com.millionaire.millionaireuserservice.module.UserBank;
+import com.millionaire.millionaireuserservice.transport.UserBanksDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public interface UserBankMapper {
 
     UserBank selectByCardNum(String cardNum);
 
-    List<UserBank> findById(Long id);
+    List<UserBanksDTO> findById(Long id);
 
 
 

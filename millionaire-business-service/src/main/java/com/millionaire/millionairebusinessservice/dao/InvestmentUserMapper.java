@@ -2,10 +2,7 @@ package com.millionaire.millionairebusinessservice.dao;
 
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.InvestmentUserQuery;
-import com.millionaire.millionairebusinessservice.transport.ContractResponse;
-import com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO;
-import com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO;
-import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
+import com.millionaire.millionairebusinessservice.transport.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,6 +21,8 @@ public interface InvestmentUserMapper {
     int updateByPrimaryKeySelective(InvestmentUser record);
 
     int updateByPrimaryKey(InvestmentUser record);
+
+    int updateById(InvestmentUser investmentUser);
 
     /**
      * 支付成功修改用户投资状态
@@ -70,7 +69,7 @@ public interface InvestmentUserMapper {
      * @param user
      * @return
      */
-    List<InvestmentUser> findByUidInvestmentStatus(InvestmentUser user);
+    List<InvestmentUsersDTO> findByUidInvestmentStatus(InvestmentUser user);
 
     /**
      * @Description 查询可用的用户投资，claimId = 0 或 claimId is null
@@ -127,6 +126,34 @@ public interface InvestmentUserMapper {
      * @return
      */
     List<RenewalInvestmentDTO> selectExistNovicePlan(Long uid);
+
+
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/6 5:47
+     *@decribe 用户投资到期后的修改信息
+     */
+    int updateInvestmentUserForEnd(@Param("id") Long investmentUserId,
+                                   @Param("status") Byte status,
+                                   @Param("claimId") Long claimId,
+                                   @Param("gmtUpdate") Long gmtUpdate);
+
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/6 20:23
+     *@decribe 回款时更新用户已分配收益
+     */
+
+    int updateDistributedIncome(@Param("id")Long investmentId,
+                                @Param("distributedIncome") Double distributedIncome,
+                                @Param("gmtUpdate") Long gmtUpdate);
+
+    /**
+     * @author qiaobao
+     * @datetime 2018/9/6 20:24
+     * @decribe 获取用户投资的当前收益
+     */
+    double getInvestmentDistributedIncome(Long investmentID);
 
 
 
