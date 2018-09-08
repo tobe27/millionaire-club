@@ -19,6 +19,7 @@
             <arg column="distributed_income" javaType="java.lang.Double" jdbcType="DOUBLE"/>
             <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="look" javaType="java.lang.Byte" jdbcType="TINYINT"/>
         </constructor>
     </resultMap>
     <resultMap id="InvestmentUser" type="com.millionaire.millionairebusinessservice.module.InvestmentUser">
@@ -38,11 +39,11 @@
         <result property="gmtUpdate" column="gmt-update"/>
         <result property="bankCardNumber" column="bank_card_number"/>
         <result property="bankName" column="bank_name"/>
+        <result property="look" column="look"/>
     </resultMap>
     <sql id="Base_Column_List">
     id,product_id, uid,claim_id, value_date_start, value_date_end, lending_contract_number, bank_name, bank_card_number, contract_sign,
-    investment_amount, investment_status, expected_income, distributed_income, gmt_create, 
-    gmt_update
+    investment_amount, investment_status, expected_income, distributed_income, gmt_create, gmt_update, look
   </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="InvestmentUser">
@@ -156,13 +157,11 @@
     insert into investment_user (product_id, uid,claim_id,
       value_date_start, value_date_end, lending_contract_number,bank_name, bank_card_number,
       contract_sign, investment_amount, investment_status, 
-      expected_income, distributed_income, gmt_create, 
-      gmt_update)
+      expected_income, distributed_income, gmt_create, gmt_update,look)
     values (#{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},#{claimId,jdbcType=BIGINT},
       #{valueDateStart,jdbcType=BIGINT}, #{valueDateEnd,jdbcType=BIGINT}, #{lendingContractNumber,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankCardNumber,jdbcType=VARCHAR},
       #{contractSign,jdbcType=VARCHAR}, #{investmentAmount,jdbcType=INTEGER}, #{investmentStatus,jdbcType=TINYINT}, 
-      #{expectedIncome,jdbcType=DOUBLE}, #{distributedIncome,jdbcType=DOUBLE}, #{gmtCreate,jdbcType=BIGINT}, 
-      #{gmtUpdate,jdbcType=BIGINT})
+      #{expectedIncome,jdbcType=DOUBLE}, #{distributedIncome,jdbcType=DOUBLE}, #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT}), #{look,jdbcType=TINYINT}
   </insert>
 
     <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
@@ -386,8 +385,7 @@
         LEFT join investment_product
         ON investment_user.product_id = investment_product.id
         WHERE investment_user.investment_status = 10
-        AND investment_user.value_date_end <![CDATA[ >= ]]> #{end,jdbcType=BIGINT}
-        AND investment_user.value_date_end <![CDATA[ <= ]]> #{now,jdbcType=BIGINT}
+        AND investment_user.value_date_end BETWEEN #{end,jdbcType=BIGINT} AND #{now,jdbcType=BIGINT}
         AND investment_user.uid = #{uid,jdbcType=BIGINT}
     </select>
 
@@ -421,6 +419,7 @@
         FROM investment_user INNER JOIN investment_product
         ON investment_user.product_id=investment_product.id
         WHERE uid=#{uid} AND investment_status=#{investmentStatus}
+        ORDER BY investment_user.look DESC
     </select>
     <update id="updateById" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
         UPDATE

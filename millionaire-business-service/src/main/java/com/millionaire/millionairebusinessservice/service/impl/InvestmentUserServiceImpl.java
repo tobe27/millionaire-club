@@ -35,6 +35,8 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
     @Override
     public Long insert(InvestmentUser record) {
         record.setLendingContractNumber("0");
+//        用户信息未查看
+        record.setLook((byte)20);
         record.setGmtCreate(System.currentTimeMillis());
         record.setGmtUpdate(System.currentTimeMillis());
         investmentUserMapper.insert(record);
