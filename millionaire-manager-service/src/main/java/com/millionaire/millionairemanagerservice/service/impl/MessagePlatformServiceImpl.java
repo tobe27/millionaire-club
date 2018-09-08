@@ -31,7 +31,6 @@ public class MessagePlatformServiceImpl implements MessagePlatformService {
 //    public int insert(MessagePlatform record) {
 //        return 0;
 //    }
-//
     @Override
     public Long insertSelective(MessagePlatform record) {
         long time= System.currentTimeMillis();

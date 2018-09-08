@@ -53,7 +53,10 @@ public class VerificationUntil {
             map.put("isHavingNovicePlan", isHavingNovicePlan);
             return map;
         }
-        if (receptionUsers.getBankId().equals(0)) {  //用户未绑定银行卡
+        /**
+         * Todo 因为用的是包装类，所以取得是空值，而不是0
+         */
+        if (receptionUsers.getBankId()==null) {  //用户未绑定银行卡
             map.put("verificationStatus", 40);
             map.put("isHavingNovicePlan", isHavingNovicePlan);
         }

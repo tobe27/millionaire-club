@@ -128,5 +128,33 @@ public interface InvestmentUserMapper {
     List<RenewalInvestmentDTO> selectExistNovicePlan(Long uid);
 
 
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/6 5:47
+     *@decribe 用户投资到期后的修改信息
+     */
+    int updateInvestmentUserForEnd(@Param("id") Long investmentUserId,
+                                   @Param("status") Byte status,
+                                   @Param("claimId") Long claimId,
+                                   @Param("gmtUpdate") Long gmtUpdate);
+
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/6 20:23
+     *@decribe 回款时更新用户已分配收益
+     */
+
+    int updateDistributedIncome(@Param("id")Long investmentId,
+                                @Param("distributedIncome") Double distributedIncome,
+                                @Param("gmtUpdate") Long gmtUpdate);
+
+    /**
+     * @author qiaobao
+     * @datetime 2018/9/6 20:24
+     * @decribe 获取用户投资的当前收益
+     */
+    double getInvestmentDistributedIncome(Long investmentID);
+
+
 
 }

@@ -25,7 +25,6 @@ public interface TimerTaskInvestmentMapper {
 
     /**
      * 用户投资续投后的，定时任务更新
-     *
      * @return
      */
     int updateTimerTaskForRenewal(@Param("paybackAmount") int paybackAmount,

@@ -51,7 +51,7 @@ public class ClaimMatchController {
     public ResultBean listClaimMatch(@PathVariable("claimid") long claimid,
                                      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                      @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                      ClaimMatchQuery query) {
+                                     ClaimMatchQuery query) {
         ClaimInfo claimInfo = claimInfoService.selectByPrimaryKey(claimid);
         if (claimInfo == null) {
             return new ResultBean(-1, "error no such id", claimid);
@@ -75,7 +75,7 @@ public class ClaimMatchController {
     public ResultBean listRecommendedMatch(@PathVariable("claimId") long claimId) {
         ClaimInfo claimInfo = claimInfoService.selectByPrimaryKey(claimId);
         if (claimInfo == null) {
-            logger.error("错误债权id:{}",claimId);
+            logger.error("错误债权id:{}", claimId);
             return new ResultBean(-1, "error no such claimID", claimId);
         }
         logger.info("根据债权id开始推荐匹配债权信息:{}", claimId);
@@ -86,42 +86,45 @@ public class ClaimMatchController {
 
     /**
      * @Description 更新接口，修改用户投资匹配情况
-     *
      * @RequestParam("claimId") long claimId,
-     *  @RequestParam("lending_contract_number") String lendingContractNumber
-     *
+     * @RequestParam("lending_contract_number") String lendingContractNumber
      **/
     @PutMapping("/investment-credit")
     public ResultBean updateInvestmentCredit(@RequestBody JSONObject jsonObject) {
-       long claimId = jsonObject.getLong("claimId");
-       String lendingContractNumber = jsonObject.getString("lendingContractNumber");
-
+        Long claimId = jsonObject.getLong("claimId");
+        if (claimId == null) {
+            return new ResultBean(-1, "error claimID", claimId);
+        }
+        String lendingContractNumber = jsonObject.getString("lendingContractNumber");
+        if (lendingContractNumber == null) {
+            return new ResultBean(-1, "error lendingContractNumber", lendingContractNumber);
+        }
         ClaimInfo claimInfo = claimInfoService.selectByPrimaryKey(claimId);
         if (claimInfo == null) {
-            logger.error("传入错误债权id:{}",claimId);
+            logger.error("传入错误债权id:{}", claimId);
             return new ResultBean(-1, "error claimID", claimId);
         }
         InvestmentUser investmentUser = investmentUserService.selectByLendingContractNumber(lendingContractNumber);
         if (investmentUser == null) {
-            logger.error("传入错误出借合同编号:{}",lendingContractNumber);
+            logger.error("传入错误出借合同编号:{}", lendingContractNumber);
             return new ResultBean(-1, "error lendingContractNumber", lendingContractNumber);
         }
 
         //整体业务逻辑校验
         // 如果该用户投资还在匹配中 返回业务逻辑错误信息
-        if(investmentUser.getClaimId() != 0 || investmentUser.getClaimId() != null){
-            logger.error("债权匹配规则漏洞，用户投资正在使用 用户投资：{}",investmentUser);
+        if (investmentUser.getClaimId() != 0 || investmentUser.getClaimId() != null) {
+            logger.error("债权匹配规则漏洞，用户投资正在使用 用户投资：{}", investmentUser);
             return new ResultBean(-1, "error investmentUser is in using", investmentUser);
         }
         // 如果该用户投资状态不为可使用  返回业务逻辑错误信息
         // status = 10 表示可用投资
-        if(investmentUser.getInvestmentStatus() != 10){
-            logger.error("债权匹配规则漏洞，用户投资不可使用 用户投资：{}",investmentUser);
+        if (investmentUser.getInvestmentStatus() != 10) {
+            logger.error("债权匹配规则漏洞，用户投资不可使用 用户投资：{}", investmentUser);
             return new ResultBean(-1, "error investmentUser can not use", investmentUser);
         }
         // 如果用户投资大于债权未匹配金额 返回业务逻辑错误信息
-        if(investmentUser.getInvestmentAmount() > claimInfo.getUnMatchAmount()){
-            logger.error("债权匹配规则漏洞，用户投资大于未匹配金额 用户投资：{}",investmentUser);
+        if (investmentUser.getInvestmentAmount() > claimInfo.getUnMatchAmount()) {
+            logger.error("债权匹配规则漏洞，用户投资大于未匹配金额 用户投资：{}", investmentUser);
             return new ResultBean(-1, "error investmentUser amount > claim unMatchAmount", investmentUser);
         }
 
@@ -154,7 +157,7 @@ public class ClaimMatchController {
         int unMatchAmount = claimInfo.getUnMatchAmount() - investmentUser.getInvestmentAmount();
         claimInfo.setUnMatchAmount(unMatchAmount);
         claimInfoService.updateByPrimaryKeySelective(claimInfo);
-        logger.info("更新债权信息表id:{}",claimInfo.getId());
+        logger.info("更新债权信息表id:{}", claimInfo.getId());
         return new ResultBean(1, "success");
     }
 

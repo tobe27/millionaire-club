@@ -109,12 +109,15 @@ public class ContentController {
     public ResultBean updateStatus(@PathVariable("contentId") Long id,
                                    @RequestBody JSONObject jsonObject) {
 
-        byte status = jsonObject.getByte("status");
+        Byte status = jsonObject.getByte("status");
         Content content = contentService.selectByPrimaryKey(id);
         if (content == null) {
             return new ResultBean(-1, "error id", id);
         }
-        if (status != 10 && status != 20) {
+        if(status == null){
+            return new ResultBean(-1, "error statusNum", status);
+        }
+        if ( status != 10 && status != 20) {
             return new ResultBean(-1, "error statusNum", status);
         }
         content.setState(status);

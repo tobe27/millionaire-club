@@ -38,6 +38,14 @@ public interface InvestmentUserService {
      */
     int updateInvestmentUserIdStatus(Long investmentUserId,Byte status);
 
+
+  /**
+   *@author qiaobao
+   *@datetime  2018/9/6 5:47
+   *@decribe 用户投资到期后的修改信息
+   */
+    int updateInvestmentUserForEnd(Long investmentUserId,Byte status,Long claimId);
+
     /**
      * 插入出借合同编号
      */
@@ -97,5 +105,12 @@ public interface InvestmentUserService {
      */
     int selectExistNovicePlan(Long uid);
 
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/6 20:23
+     *@decribe 回款时更新用户已分配收益
+     */
+
+    int updateDistributedIncome(Long investmentId, Double distributedIncome);
 
 }

@@ -1,6 +1,7 @@
 package com.millionaire.millionaireclientweb.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.exception.TimerTaskException;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
@@ -16,8 +17,10 @@ import com.millionaire.millionairemanagerservice.service.ContentService;
 import com.millionaire.millionairepaymentmanager.exception.FuYouException;
 import com.millionaire.millionairepaymentmanager.fuyou.Constants;
 import com.millionaire.millionairepaymentmanager.fuyou.until.MD5;
+import com.millionaire.millionairepaymentmanager.manager.InstallmentRequest;
 import com.millionaire.millionairepaymentmanager.manager.PayBackManager;
 import com.millionaire.millionairepaymentmanager.manager.PayManager;
+import com.millionaire.millionairepaymentmanager.requst.InstallmentBean;
 import com.millionaire.millionairepaymentmanager.requst.UserInvestmentRequestBean;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
@@ -70,6 +73,9 @@ public class UserInvestmentController {
     @Autowired
     private VerificationUntil verificationUntil;
 
+    @Autowired
+    private InstallmentRequest installmentRequest;
+
     ReceptionUsers receptionUsers = new ReceptionUsers();
 
     ContractResponse contractResponse = new ContractResponse();
@@ -83,7 +89,7 @@ public class UserInvestmentController {
      * @throws FuYouException
      */
     @GetMapping("/u/user-investment")
-    public String userInvestmentT(@Validated  UserInvestmentRequestBean requestBean,
+    public String userInvestmentT(  UserInvestmentRequestBean requestBean,
                                  @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
@@ -93,14 +99,14 @@ public class UserInvestmentController {
 //        if (!map.get("verificationStatus").equals(50)) {
 //            return "用户验证未成功，请跳转页面";
 //        }
-        int isHavingNovicePlan = (int) map.get("isHavingNovicePlan");
+        int isHavingNovicePlan = 0;
         logger.info("查询用户投资,用户" + id);
         return payManager.payment(requestBean, id,isHavingNovicePlan);
     }
 
 
     @PostMapping("/u/user-investment")
-    public String userInvestment(@Validated  UserInvestmentRequestBean requestBean,
+    public String userInvestment(@RequestBody  UserInvestmentRequestBean requestBean,
                                  @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
@@ -184,7 +190,7 @@ public class UserInvestmentController {
      */
     @GetMapping("/app/list/products")
     public ResultBean listProducts(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        return new ResultBean(1, "success", productService.selectByPage(pageSize, pageNum));
+        return new ResultBean(1, "success", productService.listProductOnShelf(pageSize,pageNum));
     }
 
     /**
@@ -250,17 +256,25 @@ public class UserInvestmentController {
          */
 //        从redis中获取到续投参数
         int investmentEnd = (int) redisTemplate.opsForValue().get("investmentEnd");
+
+        logger.info("可续投期限"+investmentEnd);
 //        查询到期日期小于续投参数的用户投资，当天的不包括在内
         LocalDate now = LocalDate.now();
+        logger.info("当前时间"+now);
 //        续投产品的戒指日期
         LocalDate end = now.minusDays(investmentEnd);
+        logger.info("查询的下标日期"+end);
 //        转成时间戳
         long nowTime = now.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        logger.info("当前时间戳"+nowTime);
         long endTime = end.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        logger.info("查询的下标日期时间戳"+endTime);
         Long uid = Long.valueOf(cookie.getValue());
         logger.info("查询用户可续投资,用户" + uid);
 
-        return new ResultBean(1, "success", investmentUserService.listRenewalInvestments(endTime, nowTime, uid, pageSize, pageNum));
+        PageInfo pageInfo = investmentUserService.listRenewalInvestments(endTime, nowTime, uid, pageSize, pageNum);
+
+        return new ResultBean(1, "success", pageInfo);
     }
 
     /**
@@ -345,6 +359,20 @@ public class UserInvestmentController {
     public String testRedis(@RequestParam("num") int num) {
         redisTemplate.opsForValue().set("investmentEnd", num);
         return "ok";
+    }
+
+
+    /**
+     * @author qiaobao
+     * @datetime 2018/9/6 3:00
+     * @decribe 用户分期的投资计算
+     */
+    @GetMapping("u/installment-Calculator")
+    public ResultBean installment(@RequestParam("productId") Long id, @RequestParam("amount") int amount) {
+        logger.info(id+"产品利息计算"+amount);
+
+        InstallmentBean installmentBean = installmentRequest.request(id, amount);
+        return new ResultBean(1,"success",installmentBean);
     }
 
 
