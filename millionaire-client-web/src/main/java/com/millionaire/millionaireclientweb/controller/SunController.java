@@ -654,6 +654,9 @@ public class SunController {
     @PutMapping("/u/reBank")
     public ResultBean updateReBank(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
         Long id = jsonObject.getLong("id");
+        if(id==null){
+            return new ResultBean(-1,"默认银行id不能为空");
+        }
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
@@ -674,6 +677,12 @@ public class SunController {
     @PutMapping("/u/email")
     public ResultBean updateEmail(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
         String email = jsonObject.getString("email");
+        if(email==null){
+            return new ResultBean(-1,"邮箱没有传");
+        }
+        if(email.length()==0){
+            return new ResultBean(-1,"邮件不能为空");
+        }
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
@@ -694,6 +703,12 @@ public class SunController {
     @PutMapping("/u/address")
     public ResultBean updateAddress(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
         String address = jsonObject.getString("address");
+        if(address==null){
+            return new ResultBean(-1,"地址没有传");
+        }
+        if(address.length()==0){
+            return new ResultBean(-1,"地址不能为空");
+        }
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
