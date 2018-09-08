@@ -18,11 +18,11 @@ import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.FlowNumberGeneration;
 import com.millionaire.millionairecommonapi.aliyun.MessageVerification;
 import com.millionaire.millionairemanagerservice.module.*;
+import com.millionaire.millionairemanagerservice.request.MessageQuery;
 import com.millionaire.millionairemanagerservice.service.BankService;
 import com.millionaire.millionairemanagerservice.service.ContentService;
 import com.millionaire.millionairemanagerservice.service.MessagePlatformService;
 import com.millionaire.millionairemanagerservice.service.ProposalService;
-import com.millionaire.millionairemanagerservice.service.MessageUserPlatformService;
 import com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
@@ -66,8 +66,6 @@ public class SunController {
     private ContentService contentService;
     @Resource
     private ProposalService proposalService;
-    @Resource
-    private MessageUserPlatformService messageUserPlatformService;
     Logger logger = LoggerFactory.getLogger(SunController.class);
 
     @GetMapping("loginPage")
@@ -482,10 +480,13 @@ public class SunController {
             map.put(userMessageDTO.getGmtCreate(),userMessageDTO);
         }
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
+        MessageQuery messageQuery = new MessageQuery();
+        messageQuery.setId(uid);
         byte authentication = receptionUsers.getIdAuthentication();
         if (authentication == 20) {
             logger.info("查询实名认证后的平台消息!");
-            List<MessagePlatformDTO> messagePlatformOne = messagePlatformService.findBySendingCrowd((byte) 20);
+            messageQuery.setSendingCrowd((byte)20);
+            List<MessagePlatformDTO> messagePlatformOne = messagePlatformService.findBySendingCrowd(messageQuery);
             for (MessagePlatformDTO messagePlatformDTO:messagePlatformOne) {
                 if(messagePlatformDTO.getLook()==null){
                     map.put(messagePlatformDTO.getGmtCreate(),messagePlatformDTO);
@@ -496,7 +497,8 @@ public class SunController {
                     }
                 }
             }
-            List<MessagePlatformDTO> messagePlatformTwo = messagePlatformService.findBySendingCrowd((byte) 10);
+            messageQuery.setSendingCrowd((byte) 10);
+            List<MessagePlatformDTO> messagePlatformTwo = messagePlatformService.findBySendingCrowd(messageQuery);
             for (MessagePlatformDTO messagePlatformDTO:messagePlatformTwo) {
                 if(messagePlatformDTO.getLook()==null){
                     map.put(messagePlatformDTO.getGmtCreate(),messagePlatformDTO);
@@ -510,7 +512,8 @@ public class SunController {
             return new ResultBean(1, "用户投资详情", map);
         }
         logger.info("查询未实名认证后的平台消息");
-        List<MessagePlatformDTO> messagePlatform = messagePlatformService.findBySendingCrowd((byte) 20);
+        messageQuery.setSendingCrowd((byte) 20);
+        List<MessagePlatformDTO> messagePlatform = messagePlatformService.findBySendingCrowd(messageQuery);
         for (MessagePlatformDTO messagePlatformDTO:messagePlatform) {
             if(messagePlatformDTO.getLook()==null){
                 map.put(messagePlatformDTO.getGmtCreate(),messagePlatformDTO);
@@ -534,13 +537,21 @@ public class SunController {
     public ResultBean getMessagePlatform(@PathVariable Long id,HttpServletRequest request) {
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
-        MessageUserPlatform messageUserPlatform = new MessageUserPlatform();
-        messageUserPlatform.setUid(uid);
-        messageUserPlatform.setMessagePlatformId(id);
-        messageUserPlatform.setLook((byte) 10);
-        messageUserPlatform.setGmtCreate(System.currentTimeMillis());
-        messageUserPlatform.setGmtUpdate(System.currentTimeMillis());
-        messageUserPlatformService.insert(messageUserPlatform);
+        MessageUser messageUser = new MessageUser();
+        messageUser.setUid(uid);
+        messageUser.setMessagePlatformId(id);
+        MessageUser messageUserOne = messageUserService.findByUserMessage(messageUser);
+        if(messageUserOne==null){
+            MessageUser messageUserTwo = new MessageUser();
+            messageUserTwo.setIsLook((byte) 10);
+            messageUserTwo.setCode((byte) 0);
+            messageUserTwo.setUid(uid);
+            messageUserTwo.setInvestmentUserId((long) 0);
+            messageUserTwo.setMessagePlatformId(id);
+            messageUserTwo.setGmtCreate(System.currentTimeMillis());
+            messageUserTwo.setGmtUpdate(System.currentTimeMillis());
+            messageUserService.insetByUserMessage(messageUserTwo);
+        }
         return new ResultBean(1, "获取消息中心", messagePlatformService.selectByPrimaryKey(id));
     }
 
@@ -550,84 +561,76 @@ public class SunController {
      * @param request
      * @return
      */
-    @DeleteMapping("/u/message/{id}")
-    public ResultBean deleteMessagePlatform(@PathVariable Long id,HttpServletRequest request){
+    @DeleteMapping("/u/messagePlatform/{id}")
+    public ResultBean deleteMessage(@PathVariable Long id,HttpServletRequest request){
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
-        MessageUserPlatform messageUserPlatform = new MessageUserPlatform();
-        messageUserPlatform.setMessagePlatformId(id);
-        messageUserPlatform.setUid(uid);
-        MessageUserPlatform message= messageUserPlatformService.findByMessagePlatform(messageUserPlatform);
-        if(message==null){
-            messageUserPlatform.setUid(uid);
-            messageUserPlatform.setMessagePlatformId(id);
-            messageUserPlatform.setLook((byte) 20);
-            messageUserPlatform.setGmtCreate(System.currentTimeMillis());
-            messageUserPlatform.setGmtUpdate(System.currentTimeMillis());
-            messageUserPlatformService.insert(messageUserPlatform);
-            return new ResultBean(1,"删除成功");
+        MessageUser messageUser = new MessageUser();
+        messageUser.setUid(uid);
+        messageUser.setMessagePlatformId(id);
+        MessageUser messageUserOne = messageUserService.findByUserMessage(messageUser);
+        if(messageUserOne==null){
+            MessageUser messageUserTwo = new MessageUser();
+            messageUserTwo.setIsLook((byte) 20);
+            messageUserTwo.setCode((byte) 0);
+            messageUserTwo.setUid(uid);
+            messageUserTwo.setInvestmentUserId((long) 0);
+            messageUserTwo.setMessagePlatformId(id);
+            messageUserTwo.setGmtCreate(System.currentTimeMillis());
+            messageUserTwo.setGmtUpdate(System.currentTimeMillis());
+            messageUserService.insetByUserMessage(messageUserTwo);
         }
-        messageUserPlatform.setUid(uid);
-        messageUserPlatform.setMessagePlatformId(id);
-        messageUserPlatform.setLook((byte) 20);
-        messageUserPlatform.setGmtCreate(System.currentTimeMillis());
-        messageUserPlatform.setGmtUpdate(System.currentTimeMillis());
-        messageUserPlatform.setId(message.getId());
-        messageUserPlatformService.updateById(messageUserPlatform);
+        MessageUser message = new MessageUser();
+        message.setIsLook((byte) 20);
+        message.setGmtUpdate(System.currentTimeMillis());
+        message.setId(messageUserOne.getId());
+        messageUserService.updateByUserMessage(message);
         return new ResultBean(1,"删除成功");
     }
-
-    /**
-     * 红点条数
-     * @param request
-     * @return
-     */
-    @GetMapping("/u/redCount")
-    public ResultBean getRedNumber(HttpServletRequest request){
-        Cookie cookie = CookieUtil.getCookie("cookie", request);
-        Long uid = Long.valueOf(cookie.getValue());
-        ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
-        byte authentication = receptionUsers.getIdAuthentication();
-        Integer messageUser = messageUserService.findByLook();                   //用户消息没有看的条数
-        Integer messageUserPlatform = messageUserPlatformService.findByUidCount(uid); //用户平台消息处理了多少条
-        if(authentication==20){
-            Integer integerOne = messagePlatformService.findBySendingCrowdCount((byte) 20);
-            Integer integerTwo = messagePlatformService.findBySendingCrowdCount((byte) 10);
-            Integer count = integerOne+integerTwo;  //用户应该有多少条消息
-            Integer subtraction = count-messageUserPlatform;
-            Integer result =subtraction+messageUser;
-            return new ResultBean(1,"请求成功",result);
-        }
-        Integer integerOne = messagePlatformService.findBySendingCrowdCount((byte) 20); //用户应该有多少条消息
-        Integer subtraction = integerOne-messageUserPlatform;
-        Integer result = subtraction+messageUser;
-        return new ResultBean(1,"请求成功",result);
-    }
-
     /**
      * 查看用户消息详细信息时访问，更新新look状态
      * @param id
      * @return
      */
-    @PutMapping("/u/messageUser/{id}")
-    public ResultBean updateMessageUser(@PathVariable Long id){
+    @PutMapping("/u/message/{id}")
+    public ResultBean updateMessage(@RequestBody JSONObject jsonObject,@PathVariable Long id){
+        Byte look = jsonObject.getByte("look");
+        if(look==null){
+            return new ResultBean(-1,"查看状态没传");
+        }
         MessageUser messageUser = new MessageUser();
-        messageUser.setIsLook((byte) 10);
-        messageUser.setGmtUpdate(System.currentTimeMillis());
         messageUser.setId(id);
-        messageUserService.updateByPrimaryKey(messageUser);
+        messageUser.setIsLook(look);
+        messageUser.setGmtUpdate(System.currentTimeMillis());
+        messageUserService.updateByUserMessage(messageUser);
         return new ResultBean(1,"请求成功");
     }
+
+
     /**
-     * 通过用户消息id
-     * @param id
+     * 用户获得红点数
+     * @param request
      * @return
      */
-    @DeleteMapping("/u/messageUser/{id}")
-    public ResultBean deleteMessageUser(@PathVariable Long id){
-        messageUserService.deleteByPrimaryKey(id);
-        return new ResultBean(1,"删除成功");
+    @GetMapping("/u/redCount")
+    public ResultBean getRedCount(HttpServletRequest request){
+        Cookie cookie = CookieUtil.getCookie("cookie", request);
+        Long uid = Long.valueOf(cookie.getValue());
+        Integer userRed = messageUserService.findByLook(uid);  //用户红点数
+        Integer c  = messageUserService.findByMessagePlatformId(uid); //用户处理红点数
+        ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
+        if(receptionUsers.getIdAuthentication()==20){
+            logger.info("查询实名认证后的平台消息条数!");
+            Integer a = messagePlatformService.findBySendingCrowdCount((byte) 10);  //实名
+            Integer b = messagePlatformService.findBySendingCrowdCount((byte) 20);  //未实名
+            Integer result = a+b+userRed-c;
+            return new ResultBean(1,"请求成功",result);
+        }
+        Integer b = messagePlatformService.findBySendingCrowdCount((byte) 20);
+        Integer result = b+userRed-c;
+        return new ResultBean(1,"请求成功",result);
     }
+
 
 
     /**
