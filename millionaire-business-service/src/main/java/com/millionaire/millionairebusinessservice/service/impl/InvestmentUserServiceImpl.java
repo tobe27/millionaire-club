@@ -84,7 +84,7 @@ public class InvestmentUserServiceImpl implements InvestmentUserService {
         int result = investmentUserMapper.updateInvestmentUserForEnd(investmentUserId, status, claimId, System.currentTimeMillis());
         logger.info(investmentUserId+"用户投资状态到期更新"+status);
         logger.info("========================================================================================>");
-        return 0;
+        return result;
     }
 
     @Override
