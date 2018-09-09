@@ -3,6 +3,7 @@ package com.millionaire.millionairemanagerservice.service;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionairemanagerservice.request.MessagePlatformQuery;
+import com.millionaire.millionairemanagerservice.request.MessageQuery;
 import com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface MessagePlatformService {
 
     List<MessagePlatform> listUnsendMessage();
 
-    List<MessagePlatformDTO> findBySendingCrowd(Byte sendingCrowd);
+    List<MessagePlatformDTO> findBySendingCrowd(MessageQuery messageQuery);
 
     Integer findBySendingCrowdCount(Byte sendingCrowd);
 

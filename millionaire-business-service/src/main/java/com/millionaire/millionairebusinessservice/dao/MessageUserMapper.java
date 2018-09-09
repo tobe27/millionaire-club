@@ -29,6 +29,13 @@ public interface MessageUserMapper {
                               @Param("gmtUpdate") Long gmtUpdate);
     List<UserMessageDTO> findByUid(Long id);
 
-    Integer findByLook();
+    Integer findByLook(Long id);
+    Integer findByMessagePlatformId(Long id);
+
+    MessageUser findByUserMessage(MessageUser messageUser);
+
+    int insetByUserMessage(MessageUser messageUser);
+
+    int updateByUserMessage(MessageUser messageUser);
 
 }

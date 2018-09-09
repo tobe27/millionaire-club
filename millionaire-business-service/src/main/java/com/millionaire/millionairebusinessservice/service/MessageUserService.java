@@ -16,9 +16,17 @@ public interface MessageUserService {
 
     List<UserMessageDTO> findByUid(Long id);
 
-    Integer findByLook();
+    Integer findByLook(Long id);
 
     int updateByPrimaryKey(MessageUser record);
 
     void deleteByPrimaryKey(Long id);
+
+    Integer findByMessagePlatformId(Long id);
+
+    MessageUser findByUserMessage(MessageUser messageUser);
+
+    int insetByUserMessage(MessageUser messageUser);
+
+    int updateByUserMessage(MessageUser messageUser);
 }

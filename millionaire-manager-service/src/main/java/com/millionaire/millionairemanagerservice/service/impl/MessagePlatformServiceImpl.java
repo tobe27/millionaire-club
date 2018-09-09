@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairemanagerservice.dao.MessagePlatformMapper;
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionairemanagerservice.request.MessagePlatformQuery;
+import com.millionaire.millionairemanagerservice.request.MessageQuery;
 import com.millionaire.millionairemanagerservice.service.MessagePlatformService;
 import com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO;
 import org.springframework.stereotype.Service;
@@ -70,8 +71,8 @@ public class MessagePlatformServiceImpl implements MessagePlatformService {
     }
 
     @Override
-    public List<MessagePlatformDTO> findBySendingCrowd(Byte sendingCrowd) {
-        return messagePlatformMapper.findBySendingCrowd(sendingCrowd);
+    public List<MessagePlatformDTO> findBySendingCrowd(MessageQuery messageQuery) {
+        return messagePlatformMapper.findBySendingCrowd(messageQuery);
     }
 
     @Override
