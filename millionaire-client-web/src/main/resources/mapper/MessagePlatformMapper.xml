@@ -41,15 +41,17 @@
   </select>
 
 
-  <select id="findBySendingCrowd" resultType="com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO">
+  <select id="findBySendingCrowd" parameterType="com.millionaire.millionairemanagerservice.request.MessageQuery" resultType="com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO">
     SELECT
     message_platform.id as id,
     message_platform.brief as brief,
     message_platform.gmt_create as gmtCreate,
-    message_user_platform.status as look
-    FROM message_platform LEFT join message_user_platform
-    ON message_platform.id=message_user_platform.message_platform_id
+    message_user.is_look as look,
+    message_user.id as messageUserId
+    FROM message_platform LEFT join message_user
+    ON message_platform.id=message_user.message_platform_id
     WHERE message_platform.status=10 and message_platform.sending_crowd=#{sendingCrowd}
+    and (message_user.is_look is null or message_user.is_look!=20) and (message_user.uid=#{id} or message_user.uid is null)
   </select>
 
 

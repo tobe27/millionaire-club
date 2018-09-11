@@ -7,6 +7,8 @@ public class UserMessageDTO {
     private Long gmtCreate;   //时间
     private Byte look;  //用户是否查看
     private Long investmentUserId; //用户投资id
+    private Long messagePlatformId;
+
 
     @Override
     public String toString() {
@@ -17,6 +19,7 @@ public class UserMessageDTO {
                 ", gmtCreate=" + gmtCreate +
                 ", look=" + look +
                 ", investmentUserId=" + investmentUserId +
+                ", messagePlatformId=" + messagePlatformId +
                 '}';
     }
 
@@ -67,4 +70,13 @@ public class UserMessageDTO {
     public void setInvestmentUserId(Long investmentUserId) {
         this.investmentUserId = investmentUserId;
     }
+
+    public Long getMessagePlatformId() {
+        return messagePlatformId;
+    }
+
+    public void setMessagePlatformId(Long messagePlatformId) {
+        this.messagePlatformId = messagePlatformId;
+    }
+
 }

@@ -5,6 +5,18 @@ public class MessagePlatformDTO {
     private String brief;
     private Byte look;
     private Long gmtCreate;
+    private Long messageUserId;
+
+    @Override
+    public String toString() {
+        return "MessagePlatformDTO{" +
+                "id=" + id +
+                ", brief='" + brief + '\'' +
+                ", look=" + look +
+                ", gmtCreate=" + gmtCreate +
+                ", messageUserId=" + messageUserId +
+                '}';
+    }
 
     public Long getId() {
         return id;
@@ -38,13 +50,11 @@ public class MessagePlatformDTO {
         this.gmtCreate = gmtCreate;
     }
 
-    @Override
-    public String toString() {
-        return "MessagePlatformDTO{" +
-                "id=" + id +
-                ", brief='" + brief + '\'' +
-                ", look=" + look +
-                ", gmtCreate=" + gmtCreate +
-                '}';
+    public Long getMessageUserId() {
+        return messageUserId;
+    }
+
+    public void setMessageUserId(Long messageUserId) {
+        this.messageUserId = messageUserId;
     }
 }
