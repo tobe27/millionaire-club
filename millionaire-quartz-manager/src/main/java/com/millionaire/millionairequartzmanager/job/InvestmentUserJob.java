@@ -218,7 +218,7 @@ public class InvestmentUserJob  {
                     receptionUsersService.updateUserProfit(uid, payBackAmount);
                 //                    修改用户投资的已分配收益
                 investmentUserService.updateDistributedIncome(investmentUserId, distributedIncome);
-//                    用户消息状态设置为40 开始续投
+//                    用户消息状态设置为40 开始投资
                     messageUser.setCode((byte)80);
 //                    启用续投的用户投资
                 investmentUserService.updateInvestmentUserIdStatus(installInvestmentId, (byte) 10);

@@ -148,6 +148,8 @@ public class InstallmentRequest {
                         logger.info("用户投资，分期回款，分期次数为" + taskTimes + "第" + i + "次回息");
                         list.add(installTaskBean);
                     }
+
+
                 }
                 //            最后一次本息一次回款，将到期日期作为触发时间写入数据库
 //            付款金额，以分为单位
@@ -156,6 +158,7 @@ public class InstallmentRequest {
                  */
                 InstallTaskBean installTaskBean = new InstallTaskBean();
                 installTaskBean.setPaybackAmount(expectedIncome);
+                logger.info("最后一次的回息金额"+expectedIncome);
                 installTaskBean.setTimes((byte) taskTimes);
 //            定时任务执行时间
                 installTaskBean.setExecuteTime(valueDateEnd);

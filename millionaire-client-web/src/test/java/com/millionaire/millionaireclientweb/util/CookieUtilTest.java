@@ -9,9 +9,7 @@ import com.millionaire.millionairebusinessservice.service.MessageUserService;
 import com.millionaire.millionairebusinessservice.transport.InvestmentUsersDTO;
 import com.millionaire.millionairebusinessservice.transport.UserMessageDTO;
 import com.millionaire.millionairemanagerservice.dao.MessagePlatformMapper;
-import com.millionaire.millionairemanagerservice.dao.MessageUserPlatformMapper;
-import com.millionaire.millionairemanagerservice.module.MessagePlatform;
-import com.millionaire.millionairemanagerservice.module.MessageUserPlatform;
+import com.millionaire.millionairemanagerservice.request.MessageQuery;
 import com.millionaire.millionairemanagerservice.service.MessagePlatformService;
 import com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
@@ -22,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import javax.swing.plaf.SpinnerUI;
 
 import java.util.*;
 
@@ -50,68 +49,50 @@ public class CookieUtilTest {
 @Resource
 MessagePlatformService messagePlatformService;
 
-    @Test
-    public void res() {
-createDefinitionSortTreeMap();
-    }
-    public  void createDefinitionSortTreeMap() {
-                Map map1 = new TreeMap<Long,Object>((o1,o2)->o2.compareTo(o1));
-        TreeMap map = new TreeMap(new Comparator<Long>() {
-            @Override
-            public int compare(Long o1, Long o2) {
-                return o2.compareTo(o1);
-            }
-
-        });
-        init(map);
-        print(map);
-    }
+//    @Test
+//    public void res() {
+//createDefinitionSortTreeMap();
+//    }
+//    public  void createDefinitionSortTreeMap() {
+//                Map map1 = new TreeMap<Long,Object>((o1,o2)->o2.compareTo(o1));
+//        TreeMap map = new TreeMap(new Comparator<Long>() {
+//            @Override
+//            public int compare(Long o1, Long o2) {
+//                return o2.compareTo(o1);
+//            }
+//
+//        });
+//        init(map);
+//        print(map);
+//    }
 
     @Resource
     private MessageUserService messageUserService;
-    public void init(Map map) {
-        List<UserMessageDTO> messageUsers = messageUserService.findByUid(1L);
-        List<MessagePlatformDTO> messagePlatformTwo = messagePlatformService.findBySendingCrowd((byte) 10);
+//    public void init(Map map) {
+//        List<UserMessageDTO> messageUsers = messageUserService.findByUid(1L);
+////        List<MessagePlatformDTO> messagePlatformTwo = messagePlatformService.findBySendingCrowd(messageUsers);
+//
+//        for (UserMessageDTO userMessageDTO:messageUsers) {
+//            map.put(userMessageDTO.getGmtCreate(),userMessageDTO);
+//        }
+//        for (MessagePlatformDTO messagePlatform:messagePlatformTwo) {
+//            map.put(messagePlatform.getGmtCreate(),messagePlatform);
+//        }
+//    }
+//    public static void print(Map map) {
+//        Iterator<Map.Entry> it = map.entrySet().iterator();
+//        while(it.hasNext()) {
+//            Map.Entry entry = it.next();
+//            System.out.println(entry.getKey() + " : " + entry.getValue());
+//        }
+//    }
 
-        for (UserMessageDTO userMessageDTO:messageUsers) {
-            map.put(userMessageDTO.getGmtCreate(),userMessageDTO);
-        }
-        for (MessagePlatformDTO messagePlatform:messagePlatformTwo) {
-            map.put(messagePlatform.getGmtCreate(),messagePlatform);
-        }
-    }
-    public static void print(Map map) {
-        Iterator<Map.Entry> it = map.entrySet().iterator();
-        while(it.hasNext()) {
-            Map.Entry entry = it.next();
-            System.out.println(entry.getKey() + " : " + entry.getValue());
-        }
-    }
-    @Resource
-    private MessageUserPlatformMapper messageUserPlatformMapper;
-
-    @Test
-    public void testMessageUser() {
-        messageUserPlatformMapper.findAll();
-    }
-
-    @Test
-    public void testMessage() {
-        MessageUserPlatform messageUserPlatform = new MessageUserPlatform();
-        messageUserPlatform.setUid(1L);
-        messageUserPlatform.setMessagePlatformId(1L);
-        messageUserPlatform.setLook((byte) 10);
-        messageUserPlatform.setGmtCreate(System.currentTimeMillis());
-        messageUserPlatform.setGmtUpdate(System.currentTimeMillis());
-        messageUserPlatformMapper.insert(messageUserPlatform);
-        System.out.println(messageUserPlatform.getId());
-    }
     @Resource
     private MessageUserMapper messageUserMapper;
 
     @Test
     public void testUserMapper() {
-        System.out.println(messageUserMapper.findByLook());
+        System.out.println(messageUserMapper.findByLook(1L));
     }
 
     @Resource
@@ -122,34 +103,6 @@ createDefinitionSortTreeMap();
         System.out.println(integer);
         Integer integer1 = messagePlatformMapper.findBySendingCrowdCount((byte) 10);
         System.out.println(integer1);
-    }
-
-    @Test
-    public void testUpdate() {
-        MessageUserPlatform messageUserPlatform = new MessageUserPlatform();
-        messageUserPlatform.setUid(1L);
-        messageUserPlatform.setMessagePlatformId(1L);
-        messageUserPlatform.setLook((byte) 20);
-        messageUserPlatform.setGmtCreate(System.currentTimeMillis());
-        messageUserPlatform.setGmtUpdate(System.currentTimeMillis());
-        messageUserPlatform.setId(1L);
-        messageUserPlatformMapper.updateById(messageUserPlatform);
-        System.out.println(messageUserPlatform.getId());
-    }
-
-    @Test
-    public void testSelect() {
-        System.out.println(messageUserPlatformMapper.findById(1L));
-    }
-
-    @Test
-    public void deleteByid() {
-        messageUserPlatformMapper.deleteById(2L);
-    }
-
-    @Test
-    public void testCount() {
-        System.out.println(messageUserPlatformMapper.findByUidCount(1L));
     }
 
     @Test
@@ -165,10 +118,42 @@ createDefinitionSortTreeMap();
     private InvestmentUserMapper investmentUserMapper;
     @Test
     public void user() {
-        InvestmentUser investmentUser = new InvestmentUser();
-        investmentUser.setLook((byte) 20);
-        investmentUser.setGmtUpdate(System.currentTimeMillis());
-        investmentUser.setId(1L);
-        investmentUserMapper.updateById(investmentUser);
+        List<UserMessageDTO> messageUsers = messageUserService.findByUid((long) 10);
+        messageUsers.forEach((message)-> System.out.println(message));
+    }
+    @Test
+    public void sdfsdf() {
+        MessageQuery messageQuery = new MessageQuery();
+        messageQuery.setSendingCrowd((byte) 10);
+        messageQuery.setId(1L);
+        List<MessagePlatformDTO> messagePlatformOne = messagePlatformService.findBySendingCrowd(messageQuery);
+        messagePlatformOne.forEach((a)-> System.out.println(a));
+    }
+
+    @Test
+    public void pr() {
+        Integer integer = messagePlatformService.findBySendingCrowdCount((byte) 10);
+        Integer integer1 = messagePlatformService.findBySendingCrowdCount((byte) 20);
+        Integer result = integer+integer1;
+        System.out.println(result);
+    }
+
+    @Test
+    public void pr1() {
+        Integer integer = messageUserService.findByMessagePlatformId(1L);
+        System.out.println(integer);
+    }
+
+    @Test
+    public void sdfsdgf() {
+        MessageUser messageUserTwo = new MessageUser();
+        messageUserTwo.setIsLook((byte) 10);
+        messageUserTwo.setCode((byte) 0);
+        messageUserTwo.setUid(1L);
+        messageUserTwo.setInvestmentUserId((long) 0);
+        messageUserTwo.setMessagePlatformId(1L);
+        messageUserTwo.setGmtCreate(System.currentTimeMillis());
+        messageUserTwo.setGmtUpdate(System.currentTimeMillis());
+        messageUserService.insetByUserMessage(messageUserTwo);
     }
 }

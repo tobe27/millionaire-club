@@ -39,8 +39,8 @@ public class MessageUserImpl implements MessageUserService {
     }
 
     @Override
-    public Integer findByLook() {
-        return messageUserMapper.findByLook();
+    public Integer findByLook(Long id) {
+        return messageUserMapper.findByLook(id);
     }
 
     @Override
@@ -51,6 +51,26 @@ public class MessageUserImpl implements MessageUserService {
     @Override
     public void deleteByPrimaryKey(Long id) {
         messageUserMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Integer findByMessagePlatformId(Long id) {
+        return messageUserMapper.findByMessagePlatformId(id);
+    }
+
+    @Override
+    public MessageUser findByUserMessage(MessageUser messageUser) {
+        return messageUserMapper.findByUserMessage(messageUser);
+    }
+
+    @Override
+    public int insetByUserMessage(MessageUser messageUser) {
+        return messageUserMapper.insetByUserMessage(messageUser);
+    }
+
+    @Override
+    public int updateByUserMessage(MessageUser messageUser) {
+        return messageUserMapper.updateByUserMessage(messageUser);
     }
 
 }

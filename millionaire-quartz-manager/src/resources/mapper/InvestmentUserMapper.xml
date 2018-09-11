@@ -19,6 +19,7 @@
             <arg column="distributed_income" javaType="java.lang.Double" jdbcType="DOUBLE"/>
             <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="look" javaType="java.lang.Byte" jdbcType="TINYINT"/>
         </constructor>
     </resultMap>
     <resultMap id="InvestmentUser" type="com.millionaire.millionairebusinessservice.module.InvestmentUser">
@@ -38,12 +39,12 @@
         <result property="gmtUpdate" column="gmt-update"/>
         <result property="bankCardNumber" column="bank_card_number"/>
         <result property="bankName" column="bank_name"/>
+        <result property="look" column="look"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id,product_id, uid,claim_id, value_date_start, value_date_end, lending_contract_number, bank_name, bank_card_number, contract_sign,
-    investment_amount, investment_status, expected_income, distributed_income, gmt_create, 
-    gmt_update
-  </sql>
+        id,product_id, uid,claim_id, value_date_start, value_date_end, lending_contract_number, bank_name, bank_card_number, contract_sign,
+        investment_amount, investment_status, expected_income, distributed_income, gmt_create, gmt_update, look
+    </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="InvestmentUser">
         select
@@ -147,23 +148,22 @@
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from investment_user
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
+        delete from investment_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
 
     <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser"
             useGeneratedKeys="true" keyProperty="id">
-    insert into investment_user (product_id, uid,claim_id,
-      value_date_start, value_date_end, lending_contract_number,bank_name, bank_card_number,
-      contract_sign, investment_amount, investment_status, 
-      expected_income, distributed_income, gmt_create, 
-      gmt_update)
-    values (#{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},#{claimId,jdbcType=BIGINT},
-      #{valueDateStart,jdbcType=BIGINT}, #{valueDateEnd,jdbcType=BIGINT}, #{lendingContractNumber,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankCardNumber,jdbcType=VARCHAR},
-      #{contractSign,jdbcType=VARCHAR}, #{investmentAmount,jdbcType=INTEGER}, #{investmentStatus,jdbcType=TINYINT}, 
-      #{expectedIncome,jdbcType=DOUBLE}, #{distributedIncome,jdbcType=DOUBLE}, #{gmtCreate,jdbcType=BIGINT}, 
-      #{gmtUpdate,jdbcType=BIGINT})
-  </insert>
+        insert into investment_user (product_id, uid,claim_id,
+        value_date_start, value_date_end, lending_contract_number,bank_name, bank_card_number,
+        contract_sign, investment_amount, investment_status,
+        expected_income, distributed_income, gmt_create, gmt_update,look)
+        values (#{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},#{claimId,jdbcType=BIGINT},
+        #{valueDateStart,jdbcType=BIGINT}, #{valueDateEnd,jdbcType=BIGINT}, #{lendingContractNumber,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankCardNumber,jdbcType=VARCHAR},
+        #{contractSign,jdbcType=VARCHAR}, #{investmentAmount,jdbcType=INTEGER}, #{investmentStatus,jdbcType=TINYINT},
+        #{expectedIncome,jdbcType=DOUBLE}, #{distributedIncome,jdbcType=DOUBLE}, #{gmtCreate,jdbcType=BIGINT}, #{look,jdbcType=TINYINT}
+        #{gmtUpdate,jdbcType=BIGINT})
+    </insert>
 
     <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
         insert into investment_user
@@ -299,39 +299,39 @@
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
-    update investment_user
-    set product_id = #{productId,jdbcType=BIGINT},
-      uid = #{uid,jdbcType=BIGINT},
-       claim_id = #{claimId,jdbcType=BIGINT},
-      value_date_start = #{valueDateStart,jdbcType=BIGINT},
-      value_date_end = #{valueDateEnd,jdbcType=BIGINT},
-      lending_contract_number = #{lendingContractNumber,jdbcType=VARCHAR},
-      contract_sign = #{contractSign,jdbcType=VARCHAR},
-      investment_amount = #{investmentAmount,jdbcType=INTEGER},
-      investment_status = #{investmentStatus,jdbcType=TINYINT},
-      expected_income = #{expectedIncome,jdbcType=DOUBLE},
-      distributed_income = #{distributedIncome,jdbcType=DOUBLE},
-      gmt_create = #{gmtCreate,jdbcType=BIGINT},
-      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+        update investment_user
+        set product_id = #{productId,jdbcType=BIGINT},
+        uid = #{uid,jdbcType=BIGINT},
+        claim_id = #{claimId,jdbcType=BIGINT},
+        value_date_start = #{valueDateStart,jdbcType=BIGINT},
+        value_date_end = #{valueDateEnd,jdbcType=BIGINT},
+        lending_contract_number = #{lendingContractNumber,jdbcType=VARCHAR},
+        contract_sign = #{contractSign,jdbcType=VARCHAR},
+        investment_amount = #{investmentAmount,jdbcType=INTEGER},
+        investment_status = #{investmentStatus,jdbcType=TINYINT},
+        expected_income = #{expectedIncome,jdbcType=DOUBLE},
+        distributed_income = #{distributedIncome,jdbcType=DOUBLE},
+        gmt_create = #{gmtCreate,jdbcType=BIGINT},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 
     <!--根据主键修改用户投资状态-->
     <update id="updateInvestmentUserIdStatus" >
-    update investment_user
-    set
-      investment_status = #{investmentStatus,jdbcType=TINYINT},
-      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
+        update investment_user
+        set
+        investment_status = #{investmentStatus,jdbcType=TINYINT},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
     <!--合同编号的插入-->
     <update id="updateLendingContractNumber" >
-    update investment_user
-    set
+        update investment_user
+        set
         lending_contract_number = #{lendingContractNumber,jdbcType=VARCHAR},
         gmt_update = #{gmtUpdate,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
     <!--查询可续投用户投资信息，详情-->
@@ -400,7 +400,7 @@
         reception_users.id_name as idName,
         reception_users.id_number as idNumber
         FROM
-         investment_user
+        investment_user
         left join reception_users
         on investment_user.uid = reception_users.id
         WHERE investment_user.id = #{id,jdbcType=BIGINT}
@@ -416,11 +416,20 @@
         investment_user.investment_amount as investmentAmount,
         investment_user.investment_status as investmentStatus,
         investment_user.value_date_start as valueDateStart,
+        investment_user.look as look,
         investment_user.value_date_end as valueDateEnd
         FROM investment_user INNER JOIN investment_product
         ON investment_user.product_id=investment_product.id
         WHERE uid=#{uid} AND investment_status=#{investmentStatus}
     </select>
+    <update id="updateById" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
+        UPDATE
+        investment_user
+        SET
+        look=#{look},
+        gmt_update=#{gmtUpdate}
+        WHERE id=#{id}
+    </update>
 
     <!--client-->
     <select id="findById" resultType="com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO">
@@ -437,7 +446,8 @@
         investment_user.investment_status as investmentStatus,
         investment_user.distributed_income as distributedIncome,
         investment_user.bank_name as bankName,
-        investment_user.bank_card_number as bankCardNumber
+        investment_user.bank_card_number as bankCardNumber,
+        investment_user.look as look
         FROM investment_user INNER JOIN investment_product
         ON investment_user.product_id=investment_product.id
         WHERE investment_user.id=#{id}
@@ -472,29 +482,6 @@
         AND investment_product.type = 10
     </select>
 
-    <!--用户投资到期后的修改信息-->
-    <update id="updateInvestmentUserForEnd" >
-        update investment_user
-        set
-        investment_status = #{status,jdbcType=TINYINT},
-        claim_id = #{claimId,jdbcType=BIGINT},
-        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
-        where id = #{id,jdbcType=BIGINT}
-    </update>
 
-
-    <!--用户投资到期后的修改信息-->
-    <update id="updateDistributedIncome" >
-        update investment_user
-        set
-        distributed_income = #{distributedIncome,jdbcType=DOUBLE},
-        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-
-    <!--筛选用户投资-->
-    <select id="getInvestmentDistributedIncome" resultType="java.lang.Double" parameterType="java.lang.Long">
-        SELECT distributed_income FROM investment_user WHERE id = #{id,jdbcType=BIGINT}
-    </select>
 
 </mapper>

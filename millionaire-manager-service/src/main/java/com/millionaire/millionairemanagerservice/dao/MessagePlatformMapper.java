@@ -2,6 +2,7 @@ package com.millionaire.millionairemanagerservice.dao;
 
 import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionairemanagerservice.request.MessagePlatformQuery;
+import com.millionaire.millionairemanagerservice.request.MessageQuery;
 import com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -23,7 +24,7 @@ public interface MessagePlatformMapper {
 
     List<MessagePlatform> selectByQuery(MessagePlatformQuery query);
 
-    List<MessagePlatformDTO> findBySendingCrowd(Byte sendingCrowd);
+    List<MessagePlatformDTO> findBySendingCrowd(MessageQuery messageQuery);
 
     Integer findBySendingCrowdCount(Byte sendingCrowd);
 

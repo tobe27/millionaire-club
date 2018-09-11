@@ -287,7 +287,7 @@ public class PayManager {
         MessageUser messageUser = new MessageUser();
 //        续投成功
         messageUser.setCode((byte)70);
-        messageUser.setInvestmentUserId(investmentId);
+        messageUser.setInvestmentUserId(newInvestmentUserId);
         messageUser.setUid(uid);
         messageUser.setIsLook((byte)0);
         messageUserService.insert(messageUser);

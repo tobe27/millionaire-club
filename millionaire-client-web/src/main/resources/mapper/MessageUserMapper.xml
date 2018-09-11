@@ -10,6 +10,7 @@
       <arg column="is_look" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="message_platform_id" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
   <select id="findByUid" resultType="com.millionaire.millionairebusinessservice.transport.UserMessageDTO">
@@ -19,15 +20,17 @@
     investment_product.name as name,
     message_user.gmt_create as gmtCreate,
     message_user.is_look as look,
+    message_user.message_platform_id as messagePlatformId,
     message_user.investment_user_id as investmentUserId
      from  message_user
      left join investment_user
      on message_user.investment_user_id = investment_user.id
      left join investment_product
      on investment_product.id = investment_user.product_id
+     WHERE message_user.message_platform_id is null and (message_user.is_look is null or message_user.is_look!=20)
   </select>
   <sql id="Base_Column_List">
-    id, code, investment_user_id, uid, is_look, gmt_create, gmt_update
+    id, code, investment_user_id, uid, is_look, gmt_create, gmt_update,message_platform_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -41,7 +44,7 @@
   </delete>
   <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.MessageUser" useGeneratedKeys="true" keyProperty="id">
     insert into message_user (code, investment_user_id,
-      uid, is_look, gmt_create, 
+      uid, is_look, gmt_create,
       gmt_update)
     values (#{code,jdbcType=TINYINT}, #{investmentUserId,jdbcType=BIGINT},
       #{uid,jdbcType=BIGINT}, #{isLook,jdbcType=TINYINT}, #{gmtCreate,jdbcType=BIGINT}, 
@@ -130,7 +133,30 @@
     where  investment_user_id = #{investmentUserId,jdbcType=BIGINT}
     </update>
 
-  <select id="findByLook" resultType="Integer">
-    SELECT COUNT(*) FROM message_user WHERE  is_look=0
+  <select id="findByLook" resultType="Integer" parameterType="Long">
+    SELECT COUNT(*) FROM message_user WHERE  uid=#{id} and is_look is null
   </select>
+
+    <select id="findByMessagePlatformId" parameterType="Long" resultType="Integer">
+        SELECT COUNT(*) FROM message_user WHERE uid=#{id} and message_platform_id is not  null
+    </select>
+
+  <select id="findByUserMessage" parameterType="com.millionaire.millionairebusinessservice.module.MessageUser" resultType="com.millionaire.millionairebusinessservice.module.MessageUser">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM message_user
+    WHERE uid=#{uid} and message_platform_id=#{messagePlatformId}
+  </select>
+
+  <insert id="insetByUserMessage" parameterType="com.millionaire.millionairebusinessservice.module.MessageUser">
+    INSERT INTO message_user(code,message_platform_id,investment_user_id,uid,is_look,gmt_create,gmt_update)
+    VALUES (#{code},#{messagePlatformId},#{investmentUserId},#{uid},#{isLook},#{gmtCreate},#{gmtUpdate})
+  </insert>
+  <update id="updateByUserMessage" parameterType="com.millionaire.millionairebusinessservice.module.MessageUser">
+    UPDATE message_user
+    SET
+    is_look = #{isLook},
+    gmt_update = #{gmtUpdate}
+    where  message_user.id = #{id}
+  </update>
 </mapper>

@@ -1,6 +1,7 @@
 package com.millionaire.millionaireclientweb.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.exception.TimerTaskException;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
@@ -105,7 +106,7 @@ public class UserInvestmentController {
 
 
     @PostMapping("/u/user-investment")
-    public String userInvestment(@RequestBody  UserInvestmentRequestBean requestBean,
+    public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean,
                                  @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
@@ -255,17 +256,25 @@ public class UserInvestmentController {
          */
 //        从redis中获取到续投参数
         int investmentEnd = (int) redisTemplate.opsForValue().get("investmentEnd");
+
+        logger.info("可续投期限"+investmentEnd);
 //        查询到期日期小于续投参数的用户投资，当天的不包括在内
         LocalDate now = LocalDate.now();
+        logger.info("当前时间"+now);
 //        续投产品的戒指日期
         LocalDate end = now.minusDays(investmentEnd);
+        logger.info("查询的下标日期"+end);
 //        转成时间戳
         long nowTime = now.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        logger.info("当前时间戳"+nowTime);
         long endTime = end.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        logger.info("查询的下标日期时间戳"+endTime);
         Long uid = Long.valueOf(cookie.getValue());
         logger.info("查询用户可续投资,用户" + uid);
 
-        return new ResultBean(1, "success", investmentUserService.listRenewalInvestments(endTime, nowTime, uid, pageSize, pageNum));
+        PageInfo pageInfo = investmentUserService.listRenewalInvestments(endTime, nowTime, uid, pageSize, pageNum);
+
+        return new ResultBean(1, "success", pageInfo);
     }
 
     /**
