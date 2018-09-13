@@ -43,14 +43,15 @@ public class VerificationUntil {
 //        是否购买过新手计划  0没有 1有
         int isHavingNovicePlan = investmentUserService.selectExistNovicePlan(uid);
 
+        map.put("isHavingNovicePlan", isHavingNovicePlan);
+        map.put("uid", uid);
+
         if (idAuthentication == 10 || idAuthentication == 30 || idAuthentication == 60) {//未认证
             map.put("verificationStatus", 20);
-            map.put("isHavingNovicePlan", isHavingNovicePlan);
             return map;
         }
         if (idAuthentication == 40 || idAuthentication == 50) {//已申请未审核
             map.put("verificationStatus", 30);
-            map.put("isHavingNovicePlan", isHavingNovicePlan);
             return map;
         }
         /**
@@ -58,11 +59,10 @@ public class VerificationUntil {
          */
         if (receptionUsers.getBankId()==null) {  //用户未绑定银行卡
             map.put("verificationStatus", 40);
-            map.put("isHavingNovicePlan", isHavingNovicePlan);
+            return map;
         }
         //验证绑卡成功
         map.put("verificationStatus", 50);
-        map.put("isHavingNovicePlan", isHavingNovicePlan);
         return map;
     }
 
