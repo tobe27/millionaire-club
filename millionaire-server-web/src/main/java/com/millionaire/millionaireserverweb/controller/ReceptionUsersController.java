@@ -223,10 +223,8 @@ public class ReceptionUsersController {
     public ResultBean updateAuthentication(@PathVariable("uid") Long uid,
                                            @RequestBody JSONObject jsonObject) {
 
-        byte code = jsonObject.getByte("code");
+        Byte code = jsonObject.getByte("code");
         String refusal = jsonObject.getString("refusal");
-
-
         ReceptionUsers users = usersService.selectByPrimaryKey(uid);
         if (users == null) {
             return new ResultBean(-1, "error no such id", uid);
@@ -305,8 +303,10 @@ public class ReceptionUsersController {
                                          @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                           InvestmentUserQuery query) {
+        logger.info("查询参数1:{}",query);
+        logger.info("productname",query.getProductName());
         query.setUid(uid);
-        logger.info("查询参数:{}",query);
+        logger.info("查询参数2:{}",query);
         PageHelper.startPage(pageNum, pageSize);
         List<InvestmentUserDTO> investmentUserDTOList = investmentUserService.listInvestmentUserByQuery(query);
         PageInfo<InvestmentUserDTO> pageInfo = new PageInfo<>(investmentUserDTOList);

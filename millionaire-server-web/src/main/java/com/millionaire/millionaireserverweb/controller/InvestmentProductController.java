@@ -38,7 +38,8 @@ public class InvestmentProductController {
      *
      **/
     @PostMapping("/investment-product")
-    public ResultBean insertInvestmentProduct( @RequestBody @Validated InvestmentProduct investmentProduct) {
+    public ResultBean insertInvestmentProduct(@RequestBody @Validated InvestmentProduct investmentProduct) {
+        logger.info("新增投资产品:{]",investmentProduct);
         //产品名检验
         String name = investmentProduct.getName();
         InvestmentProduct product1 = investmentProductService.selectByProductName(name);
@@ -139,6 +140,7 @@ public class InvestmentProductController {
             product.setIsRecommend(isRecommend);
             product.setIsPurchaseLimit(isPurchaseLimit);
             product.setType(type);
+            logger.info("更新投资产品:{}",product);
             investmentProductService.updateProductByPrimaryKeySelective(product);
             logger.info("更新产品角标限购推荐状态 id:{}，type:{}，isLimit:{}，isRecommend:{}",
                     productId,type,isPurchaseLimit,isRecommend);
