@@ -63,7 +63,7 @@ public class ReceptionUsersController {
             PageInfo<ReceptionUsers> pageInfo =
                     usersService.selectReceptionUserByPage(usersQuery, pageSize, pageNum);
             logger.info("查询投资用户参数：{}", usersQuery);
-            return new ResultBean(0, "success", pageInfo);
+            return new ResultBean(1, "success", pageInfo);
     }
 
     /**
@@ -77,7 +77,7 @@ public class ReceptionUsersController {
             PageInfo<ReceptionUsers> pageInfo =
                     usersService.selectUserVerificationByPage(pageSize, pageNum, usersVerificationQuery);
             logger.info("查询投资用户参数：{}", usersVerificationQuery);
-            return new ResultBean(0, "success", pageInfo);
+            return new ResultBean(1, "success", pageInfo);
 
     }
 
@@ -95,7 +95,7 @@ public class ReceptionUsersController {
             return new ResultBean(-1, "error no such uid", uid);
         } else {
             logger.info("查看投资用户id:{}", uid);
-            return new ResultBean(0, "success", users);
+            return new ResultBean(1, "success", users);
         }
     }
 
@@ -112,7 +112,7 @@ public class ReceptionUsersController {
             return new ResultBean(-1, "error no such uid", uid);
         } else {
             logger.info("查看投资用户id:{}", uid);
-            return new ResultBean(0, "success", users);
+            return new ResultBean(1, "success", users);
         }
     }
 
@@ -137,7 +137,7 @@ public class ReceptionUsersController {
             users.setStatus(status);
             usersService.updateByPrimaryKeySelective(users);
             logger.info("更新用户id{},账户冻结状态:{}", uid, status);
-            return new ResultBean(0, "success change status",status);
+            return new ResultBean(1, "success change status",status);
         }
     }
 
@@ -154,7 +154,7 @@ public class ReceptionUsersController {
                                               @RequestBody JSONObject jsonObject) {
 
         String phone = jsonObject.getString("phone");
-        String managerNum = jsonObject.getString("managerNum");
+        String managerNum = jsonObject.getString("managerNumber");
 
 
         ReceptionUsers users = usersService.selectByPrimaryKey(uid);
@@ -162,22 +162,23 @@ public class ReceptionUsersController {
             return new ResultBean(-1, "error no such uid", uid);
         }
         if(phone == null && managerNum == null){
-            return new ResultBean(0,"success no change");
+            return new ResultBean(-1,"success no change");
         }
         if (managerNum != null) {
             users.setManagerNumber(managerNum);
         }
         //手机号正则式判断
         String pattern = "1[0-9]{10}";
-        System.out.println("pattern = " + pattern);
-        if (phone.matches(pattern)) {
-            users.setPhone(Long.valueOf(phone));
-        } else {
-            return new ResultBean(-1, "error phonenum", phone);
+        if(phone != null){
+            if (phone.matches(pattern)) {
+                users.setPhone(Long.valueOf(phone));
+            } else {
+                return new ResultBean(-1, "error phonenum", phone);
+            }
         }
         usersService.updateByPrimaryKeySelective(users);
         logger.info("修改用户信息 用户id:{},手机号:{},经理工号:{}", uid, phone, managerNum);
-        return new ResultBean(0, "success", users.getId());
+        return new ResultBean(1, "success", users.getId());
 
     }
 
@@ -207,7 +208,7 @@ public class ReceptionUsersController {
         logger.info("删除用户银行卡绑定 用户id:{}", id);
         usersService.updateByPrimaryKeySelective(users);
         logger.info("取消用户实名状态 用户id:{}", id);
-        return new ResultBean(0, "success", users.getIdAuthentication());
+        return new ResultBean(1, "success", users.getIdAuthentication());
     }
 
 
@@ -237,7 +238,7 @@ public class ReceptionUsersController {
             users.setRefusal(refusal);
             usersService.updateByPrimaryKeySelective(users);
             logger.info("拒绝用户实名申请 用户id：{} 实名状态:{}", uid,users.getIdAuthentication());
-            return new ResultBean(0, "success ", users.getIdAuthentication());
+            return new ResultBean(1, "success ", users.getIdAuthentication());
         }
         //code =1 审核通过
         if (code == 1) {
@@ -245,7 +246,7 @@ public class ReceptionUsersController {
             users.setIdAuthentication((byte) 20);
             usersService.updateByPrimaryKeySelective(users);
             logger.info("通过用户实名认证 id：{}", uid);
-            return new ResultBean(0, "success", users.getIdAuthentication());
+            return new ResultBean(1, "success", users.getIdAuthentication());
         } else {
             return new ResultBean(-1, "error code should be 0 or 1", code);
         }
@@ -274,7 +275,7 @@ public class ReceptionUsersController {
             if (cardNumber.equals(cardNumCheck)) {
                 usersService.deleteByCardNum(cardNumber);
                 logger.info("id:{} 删除绑定银行卡:{} ", uid, cardNumber);
-                return new ResultBean(0, "success", uid);
+                return new ResultBean(1, "success", uid);
             }
         }
         logger.info("删除绑定银行卡错误id:{},cardNum:{}",uid,cardNumber);
