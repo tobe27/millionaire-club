@@ -107,7 +107,7 @@ public class UserInvestmentController {
 
     @PostMapping("/u/user-investment")
     public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean,
-                                 @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
+                                 HttpServletRequest servletRequest) throws IOException, FuYouException {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);
         Map map = verificationUntil.Verification(cookie);
@@ -117,8 +117,10 @@ public class UserInvestmentController {
             return "用户验证未成功，请跳转页面";
         }
         int isHavingNovicePlan = (int) map.get("isHavingNovicePlan");
-        logger.info("查询用户投资,用户" + id);
-        return payManager.payment(requestBean, id,isHavingNovicePlan);
+
+        long uid = (long) map.get("uid");
+        logger.info("查询用户投资,用户" + uid);
+        return payManager.payment(requestBean, uid,isHavingNovicePlan);
     }
 
 
