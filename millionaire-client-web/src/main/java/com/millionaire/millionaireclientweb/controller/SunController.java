@@ -14,6 +14,7 @@ import com.millionaire.millionairebusinessservice.transport.InvestmentUsersDTO;
 import com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO;
 import com.millionaire.millionairebusinessservice.transport.UserMessageDTO;
 import com.millionaire.millionaireclientweb.result.ResultBean;
+import com.millionaire.millionaireclientweb.util.BankUtil;
 import com.millionaire.millionaireclientweb.util.CookieUtil;
 import com.millionaire.millionaireclientweb.util.FlowNumberGeneration;
 import com.millionaire.millionairecommonapi.aliyun.MessageVerification;
@@ -328,6 +329,12 @@ public class SunController {
         }
         if (cardNumber.length() == 0) {
             return new ResultBean(-1, "银行卡号不能为空");
+        }
+        String a = BankUtil.getNameOfBank(cardNumber);
+        int size = a.indexOf("·");
+        String name = a.substring(0,size);
+        if(!name.equals(bankName)){
+            return new ResultBean(-1,"银行卡号与开户行不匹配");
         }
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
@@ -740,6 +747,18 @@ public class SunController {
         String idNumber = jsonObject.getString("idNumber");
         String idFront = jsonObject.getString("idFront");
         String idBack = jsonObject.getString("idBack");
+        if(idName==null){
+            return new ResultBean(-1,"真实姓名没传");
+        }
+        if(idNumber==null){
+            return new ResultBean(-1,"身份证信息没传");
+        }
+        if(idFront==null){
+            return new ResultBean(-1,"身份证正面url没传");
+        }
+        if(idBack==null){
+            return new ResultBean(-1,"身份证反面url没传");
+        }
         if (idName.length() == 0) {
             return new ResultBean(-1, "真实姓名不能为空");
         }
@@ -793,6 +812,15 @@ public class SunController {
         String oldPassword = jsonObject.getString("oldPassword");
         String password = jsonObject.getString("password");
         String rePassword = jsonObject.getString("rePassword");
+        if(oldPassword==null){
+            return new ResultBean(-1,"旧密码没传");
+        }
+        if(password==null){
+            return new ResultBean(-1,"密码没传");
+        }
+        if(rePassword==null){
+            return new ResultBean(-1,"重复密码没传");
+        }
         if (oldPassword.length() == 0) {
             return new ResultBean(-1, "旧密码不能为空");
         }
@@ -895,5 +923,16 @@ public class SunController {
         img.add("https://majorjoe.oss-cn-beijing.aliyuncs.com/QQ%E5%9B%BE%E7%89%8720180828210837.png");
         img.add("https://majorjoe.oss-cn-beijing.aliyuncs.com/QQ%E5%9B%BE%E7%89%8720180828210849.png");
         return new ResultBean(1,"请求成功",img);
+    }
+    /**
+     *
+     */
+    @GetMapping("/checkLogin")
+    public ResultBean checkLogin(HttpServletRequest request){
+        Cookie cookie = CookieUtil.getCookie("cookie", request);
+        if(cookie==null){
+            return new ResultBean(-1,"没有登陆");
+        }
+        return new ResultBean(1,"登陆了");
     }
 }
