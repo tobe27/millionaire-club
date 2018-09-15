@@ -2,46 +2,65 @@ package com.millionaire.millionaireuserservice.transport;
 
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.module.UserBank;
+import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Liu Kai
- * @Description: TODO
+ * @Description: TODO 用户信息详细查询参数传递
  * @date 2018/8/20 21:46
  */
-
+@Data
 public class ReceptionUsersDTO {
-    private ReceptionUsers users;
-    private List<UserBank> listUserBank;
+    private Long id;
+
+    private String userNumber;
+
+    private Long phone;
+
+    private String password;
+
+    private String salt;
+
+    private String managerNumber;
+
+    private String email;
+
+    private String idName;
+
+    private String idNumber;
+
+    private String idFront;
+
+    private String idBack;
+
+    private String address;
 
 
-    public ReceptionUsersDTO() {
-    }
+    private Long applicationTime;
 
-    @Override
-    public String toString() {
-        return "ReceptionUsersDTO{" +
-                "users=" + users +
-                ", listUserBank=" + listUserBank +
-                '}';
-    }
+    private String refusal;
 
-    public ReceptionUsers getUsers() {
-        return users;
-    }
+    private Integer assets;
 
-    public ReceptionUsersDTO setUsers(ReceptionUsers users) {
-        this.users = users;
-        return this;
-    }
+    private Integer profit;
 
-    public List<UserBank> getListUserBank() {
-        return listUserBank;
-    }
+    private String logo;
 
-    public ReceptionUsersDTO setListUserBank(List<UserBank> listUserBank) {
-        this.listUserBank = listUserBank;
-        return this;
-    }
+    private Byte status;
+
+    private Byte idAuthentication;
+
+    private Long gmtCreate;
+
+    private Long gmtUpdate;
+
+    private Long loginTime;
+
+    List bankId = new ArrayList();
+
+
+
 }

@@ -1,7 +1,9 @@
 package com.millionaire.millionairebusinessservice.module;
 
-import javax.validation.constraints.*;
+import lombok.Data;
 
+import javax.validation.constraints.*;
+@Data
 public class InvestmentProduct {
 
     @Null
@@ -41,7 +43,7 @@ public class InvestmentProduct {
     private Integer deadline;
 
     //    备注
-    private String describe;
+    private String remark;
 
     //    产品详情
     @NotBlank
@@ -68,7 +70,7 @@ public class InvestmentProduct {
     @Null
     private Long gmtUpdate;
 
-    public InvestmentProduct(Long id, String productCode, String name, Double annualizedIncome, Byte repaymentMode, Integer startingAmount, Byte valueDate, Integer deadline, String describe, String moreDetails, Byte type, Byte isRecommend, Byte isPurchaseLimit, Byte isShelf, Long gmtCreate, Long gmtUpdate) {
+    public InvestmentProduct(@Null Long id, @NotBlank @Pattern(regexp = "^\\S*\\S$") String productCode, @NotBlank @Pattern(regexp = "^\\S*\\S$") String name, @NotNull @Min(0) Double annualizedIncome, @NotNull Byte repaymentMode, @NotNull @Min(0) Integer startingAmount, @NotNull Byte valueDate, @NotNull @Min(0) Integer deadline, String remark, @NotBlank @Pattern(regexp = "^\\S*\\S$") String moreDetails, @NotNull Byte type, @NotNull Byte isRecommend, @NotNull Byte isPurchaseLimit, @NotNull Byte isShelf, @Null Long gmtCreate, @Null Long gmtUpdate) {
         this.id = id;
         this.productCode = productCode;
         this.name = name;
@@ -77,7 +79,7 @@ public class InvestmentProduct {
         this.startingAmount = startingAmount;
         this.valueDate = valueDate;
         this.deadline = deadline;
-        this.describe = describe;
+        this.remark = remark;
         this.moreDetails = moreDetails;
         this.type = type;
         this.isRecommend = isRecommend;
@@ -85,158 +87,152 @@ public class InvestmentProduct {
         this.isShelf = isShelf;
         this.gmtCreate = gmtCreate;
         this.gmtUpdate = gmtUpdate;
-    }
-
-    @Override
-    public String toString() {
-        return "InvestmentProduct{" +
-                "id=" + id +
-                ", productCode='" + productCode + '\'' +
-                ", name='" + name + '\'' +
-                ", annualizedIncome=" + annualizedIncome +
-                ", repaymentMode=" + repaymentMode +
-                ", startingAmount=" + startingAmount +
-                ", valueDate=" + valueDate +
-                ", deadline=" + deadline +
-                ", describe='" + describe + '\'' +
-                ", moreDetails='" + moreDetails + '\'' +
-                ", type=" + type +
-                ", isRecommend=" + isRecommend +
-                ", isPurchaseLimit=" + isPurchaseLimit +
-                ", isShelf=" + isShelf +
-                ", gmtCreate=" + gmtCreate +
-                ", gmtUpdate=" + gmtUpdate +
-                '}';
     }
 
     public InvestmentProduct() {
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAnnualizedIncome(Double annualizedIncome) {
-        this.annualizedIncome = annualizedIncome;
-    }
-
-    public void setRepaymentMode(Byte repaymentMode) {
-        this.repaymentMode = repaymentMode;
-    }
-
-    public void setStartingAmount(Integer startingAmount) {
-        this.startingAmount = startingAmount;
-    }
-
-    public void setValueDate(Byte valueDate) {
-        this.valueDate = valueDate;
-    }
-
-    public void setDeadline(Integer deadline) {
-        this.deadline = deadline;
-    }
-
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
-
-    public void setMoreDetails(String moreDetails) {
-        this.moreDetails = moreDetails;
-    }
-
-    public void setType(Byte type) {
-        this.type = type;
-    }
-
-    public void setIsRecommend(Byte isRecommend) {
-        this.isRecommend = isRecommend;
-    }
-
-    public void setIsPurchaseLimit(Byte isPurchaseLimit) {
-        this.isPurchaseLimit = isPurchaseLimit;
-    }
-
-    public void setIsShelf(Byte isShelf) {
-        this.isShelf = isShelf;
-    }
-
-    public void setGmtCreate(Long gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public void setGmtUpdate(Long gmtUpdate) {
-        this.gmtUpdate = gmtUpdate;
     }
 
     public Long getId() {
         return id;
     }
 
+    public InvestmentProduct setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public String getProductCode() {
         return productCode;
+    }
+
+    public InvestmentProduct setProductCode(String productCode) {
+        this.productCode = productCode;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
+    public InvestmentProduct setName(String name) {
+        this.name = name;
+        return this;
+    }
+
     public Double getAnnualizedIncome() {
         return annualizedIncome;
+    }
+
+    public InvestmentProduct setAnnualizedIncome(Double annualizedIncome) {
+        this.annualizedIncome = annualizedIncome;
+        return this;
     }
 
     public Byte getRepaymentMode() {
         return repaymentMode;
     }
 
+    public InvestmentProduct setRepaymentMode(Byte repaymentMode) {
+        this.repaymentMode = repaymentMode;
+        return this;
+    }
+
     public Integer getStartingAmount() {
         return startingAmount;
+    }
+
+    public InvestmentProduct setStartingAmount(Integer startingAmount) {
+        this.startingAmount = startingAmount;
+        return this;
     }
 
     public Byte getValueDate() {
         return valueDate;
     }
 
+    public InvestmentProduct setValueDate(Byte valueDate) {
+        this.valueDate = valueDate;
+        return this;
+    }
+
     public Integer getDeadline() {
         return deadline;
     }
 
-    public String getDescribe() {
-        return describe;
+    public InvestmentProduct setDeadline(Integer deadline) {
+        this.deadline = deadline;
+        return this;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public InvestmentProduct setRemark(String remark) {
+        this.remark = remark;
+        return this;
     }
 
     public String getMoreDetails() {
         return moreDetails;
     }
 
+    public InvestmentProduct setMoreDetails(String moreDetails) {
+        this.moreDetails = moreDetails;
+        return this;
+    }
+
     public Byte getType() {
         return type;
+    }
+
+    public InvestmentProduct setType(Byte type) {
+        this.type = type;
+        return this;
     }
 
     public Byte getIsRecommend() {
         return isRecommend;
     }
 
+    public InvestmentProduct setIsRecommend(Byte isRecommend) {
+        this.isRecommend = isRecommend;
+        return this;
+    }
+
     public Byte getIsPurchaseLimit() {
         return isPurchaseLimit;
+    }
+
+    public InvestmentProduct setIsPurchaseLimit(Byte isPurchaseLimit) {
+        this.isPurchaseLimit = isPurchaseLimit;
+        return this;
     }
 
     public Byte getIsShelf() {
         return isShelf;
     }
 
+    public InvestmentProduct setIsShelf(Byte isShelf) {
+        this.isShelf = isShelf;
+        return this;
+    }
+
     public Long getGmtCreate() {
         return gmtCreate;
     }
 
+    public InvestmentProduct setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+        return this;
+    }
+
     public Long getGmtUpdate() {
         return gmtUpdate;
+    }
+
+    public InvestmentProduct setGmtUpdate(Long gmtUpdate) {
+        this.gmtUpdate = gmtUpdate;
+        return this;
     }
 }
