@@ -62,7 +62,7 @@
                 uid = #{uid,jdbcType=BIGINT}
             </if>
             <if test="productName != null">
-                and product_name = #{productName,jdbcType=VARCHAR}
+                and product_name like "%"#{productName,jdbcType=VARCHAR}"%"
             </if>
             <if test="type != null">
                 and type = #{type,jdbcType=TINYINT}
@@ -102,10 +102,10 @@
                 and trading_flow.status = #{status,jdbcType=TINYINT}
             </if>
             <if test="pruductName != null">
-                and trading_flow.product_name = #{pruductName,jdbcType=VARCHAR}
+                and trading_flow.product_name like "%"#{pruductName,jdbcType=VARCHAR}"%"
             </if>
             <if test="poductCode != null">
-                and investment_product.product_code = #{poductCode,jdbcType=VARCHAR}
+                and investment_product.product_code like "%"#{poductCode,jdbcType=VARCHAR}"%"
             </if>
         </where>
         group by
@@ -136,7 +136,7 @@
                 and status = #{status,jdbcType=TINYINT}
             </if>
             <if test="productName != null">
-                and product_name = #{productName,jdbcType=VARCHAR}
+                and product_name like "%"#{productName,jdbcType=VARCHAR}"%"
             </if>
         </where>
         group  by

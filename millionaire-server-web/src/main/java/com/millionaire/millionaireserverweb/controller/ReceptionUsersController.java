@@ -88,13 +88,12 @@ public class ReceptionUsersController {
      **/
     @GetMapping("/user/{uid}")
     public ResultBean selectUsers(@PathVariable("uid") Long uid) {
-
-
-        ReceptionUsers users = usersService.selectByPrimaryKey(uid);
+        ReceptionUsersDTO users = usersService.selectByID(uid);
+//        List<UserBank> bankId=usersService.
         if (users == null) {
             return new ResultBean(-1, "error no such uid", uid);
         } else {
-            logger.info("查看投资用户id:{}", uid);
+            logger.info("查询用户详细信息id:{}", uid);
             return new ResultBean(1, "success", users);
         }
     }
@@ -106,12 +105,11 @@ public class ReceptionUsersController {
      **/
     @GetMapping("/user-verification/{uid}")
     public ResultBean selectUsersVerification(@PathVariable("uid") Long uid) {
-        ReceptionUsersDTO users = usersService.selectByID(uid);
-//        List<UserBank> bankId=usersService.
+        ReceptionUsers users = usersService.selectByPrimaryKey(uid);
         if (users == null) {
             return new ResultBean(-1, "error no such uid", uid);
         } else {
-            logger.info("查看投资用户id:{}", uid);
+            logger.info("查询用户实名信息 id:{}", uid);
             return new ResultBean(1, "success", users);
         }
     }
@@ -304,7 +302,6 @@ public class ReceptionUsersController {
                                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                           InvestmentUserQuery query) {
         logger.info("查询参数1:{}",query);
-        logger.info("productname",query.getProductName());
         query.setUid(uid);
         logger.info("查询参数2:{}",query);
         PageHelper.startPage(pageNum, pageSize);

@@ -181,7 +181,7 @@
     FROM backstage_users INNER JOIN roles
     ON backstage_users.role_id=roles.id
     <where>
-      <if test="name != null ">
+      <if test="name != null and name.length != 0">
         name LIKE '%${name}%'
       </if>
       <if test="roleId != null">

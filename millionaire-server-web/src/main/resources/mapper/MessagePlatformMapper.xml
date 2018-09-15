@@ -34,7 +34,7 @@
         from message_platform
        <where>
            <if test="title != null">
-               title = #{title,jdbcType=VARCHAR}
+               title like  "%"#{title,jdbcType=VARCHAR}"%"
            </if>
            <if test="sendingCrowd != null">
              and  sending_crowd = #{sendingCrowd,jdbcType=TINYINT}
@@ -42,8 +42,8 @@
            <if test="status != null">
               and status = #{status,jdbcType=TINYINT}
            </if>
-           <if test="editors != null">
-             and  editors = #{editors,jdbcType=VARCHAR}
+           <if test="editors != null ">
+             and  editors like  "%"#{editors,jdbcType=VARCHAR}"%"
            </if>
            <if test="lowerDate != null">
              and  gmt_update  <![CDATA[ >= ]]>  #{lowerDate,jdbcType=BIGINT}

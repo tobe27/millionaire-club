@@ -44,17 +44,17 @@
         <include refid="Base_Column_List"/>
         from claim_info
         <where>
-            <if test="claimCode != null">
-                claim_code = #{claimCode,jdbcType=VARCHAR}
+            <if test="claimCode != null ">
+                claim_code like  "%"#{claimCode,jdbcType=VARCHAR}"%"
             </if>
             <if test="creditorName != null">
-                and creditor_name = #{creditorName,jdbcType=VARCHAR}
+                and creditor_name like "%"{creditorName,jdbcType=VARCHAR}"%"
             </if>
-            <if test="creditorPhone != null">
-                and creditor_phone = #{creditorPhone,jdbcType=VARCHAR}
+            <if test="creditorPhone != null ">
+                and creditor_phone like  "%"#{creditorPhone,jdbcType=VARCHAR}"%"
             </if>
-            <if test="creditorIdNumber != null">
-                and creditor_id_number = #{creditorIdNumber,jdbcType=VARCHAR}
+            <if test="creditorIdNumber != null ">
+                and creditor_id_number like "%"#{creditorIdNumber,jdbcType=VARCHAR}"%"
             </if>
             <if test="status != null and status != 4">
                 and status = #{status,jdbcType=INTEGER}

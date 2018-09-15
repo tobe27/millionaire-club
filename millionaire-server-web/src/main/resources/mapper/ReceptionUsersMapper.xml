@@ -66,6 +66,8 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
+
+
     <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -82,7 +84,7 @@
                 id_name like "%"#{idName,jdbcType=VARCHAR}"%"
             </if>
             <if test="phone != null">
-                and phone like "%"#{phone,jdbcType=BIGINT}"%"
+                and phone = #{phone,jdbcType=BIGINT}
             </if>
             <if test="managerNumber != null">
                 and manager_number like "%" #{managerNumber,jdbcType=VARCHAR}"%"
@@ -429,7 +431,7 @@
                 id_name like "%"#{idName,jdbcType=VARCHAR}"%"
             </if>
             <if test="phone != null">
-                and phone like "%"#{phone,jdbcType=BIGINT}"%"
+                and phone = #{phone,jdbcType=BIGINT}
             </if>
             <if test="userNumber != null">
                 and  user_number = #{userNumber,jdbcType=VARCHAR}
@@ -463,5 +465,39 @@
 
 
 
+
+
+    <resultMap id="ReceptionUsersDTO" type="com.millionaire.millionaireuserservice.transport.ReceptionUsersDTO">
+        <id property="id" column="id"/>
+        <result property="userNumber" column="user_number"/>
+        <result property="phone" column="phone"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="managerNumber" column="manager_number"/>
+        <result property="email" column="email"/>
+        <result property="idName" column="id_name"/>
+        <result property="idNumber" column="id_number"/>
+        <result property="idFront" column="id_front"/>
+        <result property="idBack" column="id_back"/>
+        <result property="address" column="address"/>
+        <result property="applicationTime" column="application_time"/>
+        <result property="refusal" column="refusal"/>
+        <result property="assets" column="assets"/>
+        <result property="profit" column="profit"/>
+        <result property="logo" column="logo"/>
+        <result property="status" column="status"/>
+        <result property="idAuthentication" column="id_authentication"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtUpdate" column="gmt_update"/>
+        <result property="loginTime" column="login_time"/>
+    </resultMap>
+    <select id="selectDTOById"  parameterType="java.lang.Long" resultMap="ReceptionUsersDTO">
+        select
+        id, user_number, phone, password, salt, manager_number, email, id_name, id_number,
+    id_front, id_back, address, application_time, refusal, assets, profit, logo,
+    status, id_authentication, gmt_create, gmt_update, login_time
+        from reception_users
+        where id = #{id,jdbcType=BIGINT}
+    </select>
 
 </mapper>

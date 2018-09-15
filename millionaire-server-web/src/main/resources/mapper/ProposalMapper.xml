@@ -57,7 +57,7 @@
               and  reception_users.id_name like "%"#{name,jdbcType=VARCHAR}"%"
             </if>
             <if test="phone != null">
-                and reception_users.phone like "%"#{phone,jdbcType=BIGINT}"%"
+                and reception_users.phone = #{phone,jdbcType=BIGINT}
             </if>
             <if test="email != null">
                 and reception_users.email like "%"#{email,jdbcType=VARCHAR}"%"

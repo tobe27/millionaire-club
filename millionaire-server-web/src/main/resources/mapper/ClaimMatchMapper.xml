@@ -63,7 +63,7 @@
             <if test="productName != null">
                 and investment_product.name like "%"#{productName}"%"
             </if>
-            <if test="lendingContractNumber != null">
+            <if test="lendingContractNumber != null and lendingContractNumber.length != 0">
                 and investment_user.lending_contract_number like "%"#{lendingContractNumber}"%"
             </if>
             <if test="userName != null">
