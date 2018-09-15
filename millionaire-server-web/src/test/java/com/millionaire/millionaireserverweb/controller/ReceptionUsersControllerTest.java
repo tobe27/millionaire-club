@@ -41,7 +41,7 @@ public class ReceptionUsersControllerTest {
 
     @Resource
     private UserBankMapper userBankMapper;
-    
+
     @Test
     public void insert() {
         ReceptionUsersDTO receptionUsersDTO = receptionUsersMapper.selectDTOById(1L);
@@ -65,23 +65,23 @@ public class ReceptionUsersControllerTest {
         receptionUsersService.updateByPrimaryKeySelective(receptionUsers);
     }
 
-/**
- * TODO 用户申请添加银行卡
- * by Liu Kai 2018/9/15 14:12
- **/
+    /**
+     * TODO 用户申请添加银行卡
+     * by Liu Kai 2018/9/15 14:12
+     **/
     @Test
     public void insertUserBank() {
-for(int i =0;i<6;i++) {
-    UserBank userBank = new UserBank();
-    userBank.setCity("上海");
-    userBank.setBankName("工商银行");
-    userBank.setCardNumber("6222081208006091828");
-    userBank.setCardType("储蓄卡");
-    userBank.setBankPhone("13705795506");
-    userBank.setUid(1L);
-    userBank.setGmtCreate(System.currentTimeMillis());
-    userBank.setGmtUpdate(System.currentTimeMillis());
-    userBankMapper.insertSelective(userBank);
-}
+        for (long i = 0; i < 3; i++) {
+            UserBank userBank = new UserBank();
+            userBank.setCity("上海");
+            userBank.setBankName("工商银行");
+            userBank.setCardNumber("6222081208006091828");
+            userBank.setCardType("储蓄卡");
+            userBank.setBankPhone("13705795506");
+            userBank.setUid(i);
+            userBank.setGmtCreate(System.currentTimeMillis());
+            userBank.setGmtUpdate(System.currentTimeMillis());
+            userBankMapper.insertSelective(userBank);
+        }
     }
 }
