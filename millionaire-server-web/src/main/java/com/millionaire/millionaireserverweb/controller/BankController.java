@@ -47,6 +47,7 @@ public class BankController {
             logger.info("传入创建人非当前登陆人员:{},{}",userName,bank);
             return new ResultBean(-1, "error no such founder",bank);
         }
+//        Bank bank1 = bankService.
         Long id = bankService.insert(bank);
         logger.info("新增银行id：{}",id);
         logger.info("新增银行信息:{}",bank);
