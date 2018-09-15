@@ -1,5 +1,6 @@
 package com.millionaire.millionaireclientweb.util;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper;
 import com.millionaire.millionairebusinessservice.dao.MessageUserMapper;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
@@ -18,10 +19,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sun.security.krb5.internal.crypto.Des;
 
 import javax.annotation.Resource;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.plaf.SpinnerUI;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.*;
 
 @SpringBootTest
@@ -156,4 +166,24 @@ MessagePlatformService messagePlatformService;
         messageUserTwo.setGmtUpdate(System.currentTimeMillis());
         messageUserService.insetByUserMessage(messageUserTwo);
     }
+//
+//    @Test
+//    public void tokenTest() throws UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidKeySpecException {
+//        TokenUtil tokenUtil = new TokenUtil();
+//        String token = tokenUtil.createToken(1L,System.currentTimeMillis());
+//        System.out.println(token);
+//        String result = String.valueOf(DESUtil.createDES(token));
+//        System.out.println(result);
+//    }
+//
+//    @Test
+//    public void getToken() throws UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidKeySpecException {
+//
+//        String token = String.valueOf(DESUtil.getDES("dsfsg"));
+//        System.out.println(token);
+//        TokenUtil tokenUtil = new TokenUtil();
+//        DecodedJWT jwt = tokenUtil.getToken(token);
+//        System.out.println(jwt.getClaim("id").asLong());
+//        System.out.println(jwt.getClaim("loginTime").asLong());
+//    }
 }
