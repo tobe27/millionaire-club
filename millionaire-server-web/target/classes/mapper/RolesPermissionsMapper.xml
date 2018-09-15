@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.millionaire.millionaireadminservice.dao.RolesPermissionsMapper">
+  <resultMap id="BaseResultMap" type="com.millionaire.millionaireadminservice.module.RolesPermissions">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="permission_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT" />
+    </constructor>
+  </resultMap>
+  <resultMap id="RolesPermissions" type="com.millionaire.millionaireadminservice.module.RolesPermissions">
+    <id property="id" column="id"/>
+    <result property="roleId" column="role_id"/>
+    <result property="permissionId" column="permission_id"/>
+    <result property="gmtCreate" column="gmt_create"/>
+    <result property="gmtUpdate" column="gmt_update"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, permission_id, role_id, gmt_create, gmt_update
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from roles_permissions
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from roles_permissions
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.millionaire.millionaireadminservice.module.RolesPermissions" useGeneratedKeys="true" keyProperty="id">
+    insert into roles_permissions (permission_id, role_id,
+      gmt_create, gmt_update)
+    values (#{permissionId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT},
+      #{gmtCreate,jdbcType=BIGINT}, #{gmtUpdate,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.millionaire.millionaireadminservice.module.RolesPermissions">
+    insert into roles_permissions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        permission_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        #{permissionId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtUpdate != null">
+        #{gmtUpdate,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionaireadminservice.module.RolesPermissions">
+    update roles_permissions
+    <set>
+      <if test="permissionId != null">
+        permission_id = #{permissionId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtUpdate != null">
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.millionaire.millionaireadminservice.module.RolesPermissions">
+    update roles_permissions
+    set permission_id = #{permissionId,jdbcType=BIGINT},
+      role_id = #{roleId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByRoleId" resultMap="RolesPermissions">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM roles_permissions
+    WHERE role_id=#{roleId}
+  </select>
+</mapper>
