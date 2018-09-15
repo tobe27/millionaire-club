@@ -19210,3 +19210,1421 @@ com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in 
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
+- | [] | [20180915 16:46:03.738] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:03.739] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:10.003] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:10.006] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:20.005] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:20.010] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:30.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:30.006] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:40.008] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:40.013] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:50.009] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:46:50.015] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:00.013] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:00.020] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-10] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:10.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:10.005] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:20.003] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:20.005] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:30.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:30.006] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:40.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:40.005] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:50.003] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:47:50.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:00.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:00.005] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-6] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:10.002] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:10.003] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:20.001] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:20.002] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:30.003] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:30.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:40.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:40.006] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:50.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:48:50.007] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:00.005] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:00.006] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-4] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:10.002] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:10.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:20.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:20.005] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:30.003] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:30.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:40.005] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:40.006] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:50.003] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:49:50.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:50:00.013] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:50:00.016] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:50:10.002] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-9] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:50:10.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-9] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:50:20.002] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-9] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:50:20.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-9] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$cb8b28e7] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.GeneratedMethodAccessor98.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:52:37.225] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-2] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$ee6cea4d] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:52:37.226] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-2] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$ee6cea4d] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:52:40.004] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-5] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$ee6cea4d] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:52:40.007] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-5] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$ee6cea4d] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:52:50.010] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-5] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$ee6cea4d] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 16:52:50.013] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-5] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$ee6cea4d] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 17:01:42.860] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$4706a83e] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 17:01:42.862] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$4706a83e] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 17:03:10.778] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.JobRunShell] | --> Job DEFAULT.investmentMaturityJobDetail threw an unhandled Exception: |
+org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$46aeaefc] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
+- | [] | [20180915 17:03:10.779] | [ERROR] | [DESKTOP-RR6N2CI] | [schedulerFactoryBean_Worker-1] | [org.quartz.core.ErrorLogger] | --> Job (DEFAULT.investmentMaturityJobDetail threw an exception.|
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+Caused by: org.springframework.scheduling.quartz.JobMethodInvocationFailedException: Invocation of method 'execute' on target class [class com.millionaire.millionairequartzmanager.job.InvestmentUserJob$$EnhancerBySpringCGLIB$$46aeaefc] failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:276)
+	at org.springframework.scheduling.quartz.QuartzJobBean.execute(QuartzJobBean.java:75)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	... 1 common frames omitted
+Caused by: org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.millionaire.millionairebusinessservice.dao.TimerTaskInvestmentMapper.listTimerTaskForExecute
+	at org.apache.ibatis.binding.MapperMethod$SqlCommand.<init>(MapperMethod.java:227)
+	at org.apache.ibatis.binding.MapperMethod.<init>(MapperMethod.java:49)
+	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)
+	at com.sun.proxy.$Proxy98.listTimerTaskForExecute(Unknown Source)
+	at com.millionaire.millionairebusinessservice.service.impl.TimerTaskInvestmentServiceImpl.listTimerTaskForExecute(TimerTaskInvestmentServiceImpl.java:31)
+	at com.millionaire.millionairequartzmanager.job.InvestmentUserJob.execute(InvestmentUserJob.java:78)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.MethodInvoker.invoke(MethodInvoker.java:280)
+	at org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean$MethodInvokingJob.executeInternal(MethodInvokingJobDetailFactoryBean.java:267)
+	... 3 common frames omitted
