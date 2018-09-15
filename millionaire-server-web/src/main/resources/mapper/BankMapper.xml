@@ -39,7 +39,7 @@
         <include refid="Base_Column_List"/>
         from  bank
         <where>
-            <if test="bankName != null">
+            <if test="bankName != null ">
                 bank_name like "%"#{bankName,jdbcType=VARCHAR}"%"
             </if>
             <if test="upperSingleLimit != null">
