@@ -92,7 +92,7 @@
             <if test="uid != null">
                 investment_user.uid = #{uid,jdbcType=BIGINT}
             </if>
-            <if test="productName != null">
+            <if test="productName != null ">
                 and investment_product.name = #{productName,jdbcType=VARCHAR}
             </if>
             <if test="lendingContractNumber != null">
