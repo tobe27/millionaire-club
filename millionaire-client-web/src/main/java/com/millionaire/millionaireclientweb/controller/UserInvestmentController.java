@@ -106,7 +106,7 @@ public class UserInvestmentController {
 
 
     @PostMapping("/u/user-investment")
-    public String userInvestment(@RequestBody  UserInvestmentRequestBean requestBean,
+    public String userInvestment(@RequestBody UserInvestmentRequestBean requestBean,
                                  @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
 
         Cookie cookie = CookieUtil.getCookie("cookie", servletRequest);

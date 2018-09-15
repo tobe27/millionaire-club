@@ -64,6 +64,7 @@
 //        credentialsMatcher.setHashIterations(2);
 //        return credentialsMatcher;
 //    }
+//
 //    //加入注解的使用，不加入这个注解不生效
 //    @Bean
 //    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
