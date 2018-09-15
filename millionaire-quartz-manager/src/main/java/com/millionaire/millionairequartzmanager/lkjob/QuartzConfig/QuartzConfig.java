@@ -189,7 +189,7 @@ public MethodInvokingJobDetailFactoryBean claimInfoUnmatchLineWarn(ClaimInfoChec
         // 添加任务
         investmentMaturityTrigger.setJobDetail(investmentMaturityJobDetail);
         // 添加表达式，每天 凌晨1:00 执行
-        investmentMaturityTrigger.setCronExpression("0/10 * * * * ?");
+        investmentMaturityTrigger.setCronExpression("0 0 1 * * ?");
         return investmentMaturityTrigger;
     }
 
