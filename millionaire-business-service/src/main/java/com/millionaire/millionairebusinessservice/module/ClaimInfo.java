@@ -17,7 +17,7 @@ public class ClaimInfo {
 
     //    债权人姓名
     @NotBlank
-    @Size(max = 6,min = 2)
+    @Size(max = 10,min = 2)
     @Pattern(regexp = "^\\S*\\S$")
     private String creditorName;
 

@@ -16,7 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Liu Kai
@@ -129,11 +132,16 @@ public class ReceptionUsersServiceImpl implements ReceptionUsersService {
      **/
     @Override
     public ReceptionUsersDTO selectByID(Long id) {
-        ReceptionUsersDTO usersDTO = new ReceptionUsersDTO();
-        ReceptionUsers users = usersMapper.selectByPrimaryKey(id);
+        ReceptionUsersDTO usersDTO = usersMapper.selectDTOById(id);
         List<UserBank> listUserBank = userBankMapper.selectByUID(id);
-        usersDTO.setUsers(users);
-        usersDTO.setListUserBank(listUserBank);
+        List bankId = new ArrayList();
+       for(UserBank userBank:listUserBank){
+           Map map = new HashMap();
+           map.put("bankName",userBank.getBankName());
+           map.put("cardNumber",userBank.getCardNumber());
+           bankId.add(map);
+       }
+       usersDTO.setBankId(bankId);
         return usersDTO;
     }
 
