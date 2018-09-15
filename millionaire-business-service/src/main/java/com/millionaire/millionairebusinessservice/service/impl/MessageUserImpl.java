@@ -22,6 +22,7 @@ public class MessageUserImpl implements MessageUserService {
     public Long insert(MessageUser record) {
         record.setGmtCreate(System.currentTimeMillis());
         record.setGmtUpdate(System.currentTimeMillis());
+        record.setIsLook(null);
         messageUserMapper.insert(record);
         logger.info("用户消息记录插入："+record+
                 "<==========================================================================");

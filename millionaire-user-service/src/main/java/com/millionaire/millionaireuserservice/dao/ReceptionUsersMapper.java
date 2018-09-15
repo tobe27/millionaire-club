@@ -3,6 +3,7 @@ package com.millionaire.millionaireuserservice.dao;
 import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.request.ReceptionUsersQuery;
 import com.millionaire.millionaireuserservice.request.UsersVerificationQuery;
+import com.millionaire.millionaireuserservice.transport.ReceptionUsersDTO;
 import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -73,4 +74,10 @@ public interface ReceptionUsersMapper {
      */
     int selectUserProfit(Long id);
 
+
+    /**
+     * TODO 用户详细信息查询
+     * by Liu Kai 2018/9/15 13:06
+     **/
+    ReceptionUsersDTO selectDTOById(Long id);
 }
