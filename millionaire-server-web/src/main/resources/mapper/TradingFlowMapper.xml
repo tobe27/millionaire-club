@@ -101,11 +101,11 @@
             <if test="status != null">
                 and trading_flow.status = #{status,jdbcType=TINYINT}
             </if>
-            <if test="pruductName != null">
-                and trading_flow.product_name like "%"#{pruductName,jdbcType=VARCHAR}"%"
+            <if test="productName != null">
+                and trading_flow.product_name like "%"#{productName,jdbcType=VARCHAR}"%"
             </if>
-            <if test="poductCode != null">
-                and investment_product.product_code like "%"#{poductCode,jdbcType=VARCHAR}"%"
+            <if test="productCode != null">
+                and investment_product.product_code like "%"#{productCode,jdbcType=VARCHAR}"%"
             </if>
         </where>
         group by

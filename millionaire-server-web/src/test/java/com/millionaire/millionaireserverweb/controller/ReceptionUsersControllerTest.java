@@ -51,37 +51,49 @@ public class ReceptionUsersControllerTest {
 
 
     /**
-     * TODO  用户实名认证申请
+     * TODO  用户实名认证
      * by Liu Kai 2018/9/15 13:55
      **/
     @Test
     public void updateAuth() {
-        ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(3L);
-        receptionUsers.setIdName("大黑");
-        receptionUsers.setIdNumber("123456789098765432");
-        receptionUsers.setIdFront("http://majorjoe.oss-cn-beijing.aliyuncs.com/0e02a0a6-e67f-4746-8395-91e79cffe13d.jpg");
-        receptionUsers.setIdBack("http://majorjoe.oss-cn-beijing.aliyuncs.com/0e02a0a6-e67f-4746-8395-91e79cffe13d.jpg");
-        receptionUsers.setIdAuthentication((byte) 20);
-        receptionUsersService.updateByPrimaryKeySelective(receptionUsers);
+        for (long h = 1; h < 8; h++) {
+            ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(h);
+            receptionUsers.setIdName("大黑"+h);
+            receptionUsers.setIdNumber("123456789098765432");
+            receptionUsers.setIdFront("http://majorjoe.oss-cn-beijing.aliyuncs.com/0e02a0a6-e67f-4746-8395-91e79cffe13d.jpg");
+            receptionUsers.setIdBack("http://majorjoe.oss-cn-beijing.aliyuncs.com/0e02a0a6-e67f-4746-8395-91e79cffe13d.jpg");
+            receptionUsers.setIdAuthentication((byte) 20);
+            receptionUsersService.updateByPrimaryKeySelective(receptionUsers);
+        }
     }
-
     /**
      * TODO 用户申请添加银行卡
      * by Liu Kai 2018/9/15 14:12
      **/
     @Test
     public void insertUserBank() {
-        for (long i = 0; i < 3; i++) {
-            UserBank userBank = new UserBank();
-            userBank.setCity("上海");
-            userBank.setBankName("工商银行");
-            userBank.setCardNumber("6222081208006091828");
-            userBank.setCardType("储蓄卡");
-            userBank.setBankPhone("13705795506");
-            userBank.setUid(i);
-            userBank.setGmtCreate(System.currentTimeMillis());
-            userBank.setGmtUpdate(System.currentTimeMillis());
-            userBankMapper.insertSelective(userBank);
+        for (long h = 1; h < 8; h++) {
+            ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(h);
+            receptionUsers.setIdName("大绿"+h);
+            receptionUsers.setIdNumber("123456789098765432");
+            receptionUsers.setIdFront("http://majorjoe.oss-cn-beijing.aliyuncs.com/0e02a0a6-e67f-4746-8395-91e79cffe13d.jpg");
+            receptionUsers.setIdBack("http://majorjoe.oss-cn-beijing.aliyuncs.com/0e02a0a6-e67f-4746-8395-91e79cffe13d.jpg");
+            receptionUsers.setIdAuthentication((byte) 20);
+            receptionUsersService.updateByPrimaryKeySelective(receptionUsers);
+        }
+
+            for (long i = 1; i < 8; i++) {
+                UserBank userBank = new UserBank();
+                userBank.setCity("上海");
+                userBank.setBankName("工商银行");
+                userBank.setCardNumber("622208120800609182"+i);
+                userBank.setCardType("储蓄卡");
+                userBank.setBankPhone("13705795506");
+                userBank.setUid(i);
+                userBank.setGmtCreate(System.currentTimeMillis());
+                userBank.setGmtUpdate(System.currentTimeMillis());
+                userBankMapper.insertSelective(userBank);
+
         }
     }
 }

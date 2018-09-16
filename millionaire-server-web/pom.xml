@@ -74,11 +74,11 @@
         </dependency>
 
         <!--对quartz-service模块依赖-->
-        <dependency>
-            <groupId>com.millionaire</groupId>
-            <artifactId>millionaire-quartz-manager</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.millionaire</groupId>-->
+            <!--<artifactId>millionaire-quartz-manager</artifactId>-->
+            <!--<version>${project.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.millionaire</groupId>
             <artifactId>millionaire-admin-service</artifactId>

@@ -48,7 +48,7 @@
                 claim_code like  "%"#{claimCode,jdbcType=VARCHAR}"%"
             </if>
             <if test="creditorName != null">
-                and creditor_name like "%"{creditorName,jdbcType=VARCHAR}"%"
+                and creditor_name like "%"#{creditorName,jdbcType=VARCHAR}"%"
             </if>
             <if test="creditorPhone != null ">
                 and creditor_phone like  "%"#{creditorPhone,jdbcType=VARCHAR}"%"

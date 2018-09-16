@@ -88,7 +88,7 @@ public class UserInvestmentController {
      * @throws IOException
      * @throws FuYouException
      */
-    @GetMapping("/u/user-investment")
+    @GetMapping("/test/user-investment")
     public String userInvestmentT(  UserInvestmentRequestBean requestBean,
                                  @RequestParam("id") Long id,HttpServletRequest servletRequest) throws IOException, FuYouException {
 
@@ -327,7 +327,7 @@ public class UserInvestmentController {
 
         String companySeal = (String) redisTemplate.opsForValue().get("seal");
         contractResponse.setCompanySeal(companySeal);
-        return new ResultBean(1, "success", companySeal);
+        return new ResultBean(1, "success", contractResponse);
     }
 
     /**
