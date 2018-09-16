@@ -33,7 +33,7 @@ public class SunController {
     private RolesPermissionsService rolesPermissionsService;
     private Logger logger = LoggerFactory.getLogger(SunController.class);
 
-    @GetMapping("backstageLoginPage")
+    @GetMapping("/login")
     public String backstageLogin() {
         return "登陆页";
     }
@@ -62,6 +62,7 @@ public class SunController {
             return new ResultBean(-1,"请输入密码");
         }
         BackstageUsers backstageUsers = backstageUsersService.findByName(name);
+        BackstageUserDTO backUser = backstageUsersService.findById(backstageUsers.getId());
         if(backstageUsers==null){
             return new ResultBean(-1,"用户名不存在");
         }
@@ -123,7 +124,10 @@ public class SunController {
             modular4.setPermissionsList(list4);
             modulars.add(modular4);
         }
-        return new ResultBean(1,"登陆成功",modulars);
+        Map map = new HashMap();
+        map.put("backUser",backUser);
+        map.put("modulars",modulars);
+        return new ResultBean(1,"登陆成功",map);
     }
 
     /**
