@@ -6,6 +6,7 @@ import com.millionaire.millionairemanagerservice.module.Content;
 import com.millionaire.millionairemanagerservice.request.ContentQuery;
 import com.millionaire.millionairemanagerservice.service.ContentService;
 import com.millionaire.millionaireserverweb.result.ResultBean;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
@@ -67,6 +68,9 @@ public class ContentController {
                 return new ResultBean(-1,"error to much effective banner");
             }
         }
+        //添加编辑者信息
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        content.setEditors(userName);
         contentService.insertSelective(content);
         Long id = content.getId();
         logger.info("新增内容id:{}", id);
@@ -78,7 +82,7 @@ public class ContentController {
      **/
     @PutMapping("/content/{contentId}")
     public ResultBean updateContent(@PathVariable("contentId") Long id,
-                                   @RequestBody @Validated Content content) {
+                                   @RequestBody  Content content) {
         Content contentCheck = contentService.selectByPrimaryKey(id);
         if (contentCheck == null) {
             return new ResultBean(-1, "error no such id", id);
@@ -95,7 +99,13 @@ public class ContentController {
          if (content.getState() != 10 && content.getState() != 20){
              return new ResultBean(-1, "error state", content);
          }
+         //封装内容id
         content.setId(id);
+        //封装内容创建时间
+        content.setGmtCreate(contentCheck.getGmtCreate());
+        //添加编辑者信息
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        content.setEditors(userName);
         contentService.updateByPrimaryKeySelective(content);
         logger.info("编辑内容id:{}", id);
         return new ResultBean(1, "success", id);
