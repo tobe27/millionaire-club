@@ -35,8 +35,13 @@ public class ClaimInfoControllerTest {
             claimInfoService.insertSelective(claimInfo);
         }
 
+    }
 
-
+    @Test
+    public void update() {
+        ClaimInfo claimInfo = claimInfoService.selectByPrimaryKey(29L);
+        claimInfo.setMatchRate(0.6);
+        claimInfoService.updateByPrimaryKeySelective(claimInfo);
 
     }
 }

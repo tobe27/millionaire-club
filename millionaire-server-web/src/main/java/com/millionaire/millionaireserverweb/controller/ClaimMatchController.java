@@ -216,8 +216,8 @@ public class ClaimMatchController {
         claimInfo.setUnMatchAmount(unMatchAmount);
         //更新债权已匹配比率
 
-        double matchRate = 1.00-((double)unMatchAmount/(double)claimInfo.getLendingAmount());
-        System.out.println("matchRate = " + matchRate);
+        Double matchRate = 1.00-((double)unMatchAmount/(double)claimInfo.getLendingAmount());
+       logger.info("matchRate：{}",matchRate);
         claimInfo.setMatchRate(matchRate);
         claimInfoService.updateByPrimaryKeySelective(claimInfo);
         logger.info("更新债权信息表id:{}", claimInfo.getId());
