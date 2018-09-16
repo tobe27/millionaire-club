@@ -522,18 +522,18 @@ public class SunController {
      * @return
      */
     @GetMapping("/a/rolePermission/{id}")
-    public Map selectRolePermission(@PathVariable Long id) {
+    public ResultBean selectRolePermission(@PathVariable Long id) {
         Map map = new HashMap();
         String roleName = rolesService.selectByPrimaryKey(id).getRoleName();
-        map.put("name", roleName);
+        map.put("roleName", roleName);
         List<Long> permissionsId = new ArrayList<>();
         List<RolesPermissions> rolesPermissions = rolesPermissionsService.findByRoleId(id);
         for (RolesPermissions rolesPermission : rolesPermissions) {
             Long permissionId = rolesPermission.getPermissionId();
             permissionsId.add(permissionId);
         }
-        map.put("permissions", permissionsId);
-        return map;
+        map.put("permissionsId", permissionsId);
+        return new ResultBean(1,"请求成功",map);
     }
 
     /**

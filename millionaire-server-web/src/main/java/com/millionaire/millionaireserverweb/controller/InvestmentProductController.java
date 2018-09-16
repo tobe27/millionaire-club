@@ -6,10 +6,13 @@ import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.request.ProductQuery;
 import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
+import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
+import com.millionaire.millionairebusinessservice.transport.ContractResponse;
 import com.millionaire.millionaireserverweb.result.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +32,15 @@ public class InvestmentProductController {
     public InvestmentProductController(InvestmentProductService investmentProductService) {
         this.investmentProductService = investmentProductService;
     }
+
+    ContractResponse contractResponse = new ContractResponse();
+
+    @Autowired
+    private InvestmentUserService investmentUserService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
 
 
     /**
@@ -185,5 +197,18 @@ public class InvestmentProductController {
         }
     }
 
+    /**
+     *@author qiaobao
+     *@datetime  2018/9/15 19:47
+     *@decribe 用户投资合同获取
+     */
+
+    @GetMapping("/investment-contract/{id}")
+    public ResultBean getContractUser(@PathVariable("id") Long id) {
+        contractResponse = investmentUserService.selectContractResponse(id);
+        String companySeal = (String) redisTemplate.opsForValue().get("seal");
+        contractResponse.setCompanySeal(companySeal);
+        return new ResultBean(1, "success", contractResponse);
+    }
 
 }
