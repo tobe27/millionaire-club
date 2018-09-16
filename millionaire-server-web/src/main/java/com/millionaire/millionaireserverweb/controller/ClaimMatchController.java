@@ -44,6 +44,7 @@ public class ClaimMatchController {
     @Resource
     private InvestmentUserService investmentUserService;
 
+
     /**
      * @Description 债券与用户投资的匹配情况（成功交易未匹配的信息）
      **/
@@ -85,13 +86,20 @@ public class ClaimMatchController {
     }
 
     /**
-     * @Description 更新接口，修改用户投资匹配情况
+     * TODO 更新接口，修改用户投资匹配情况
      * @RequestParam("claimId") long claimId,
      * @RequestParam("lending_contract_number") String lendingContractNumber
      *整理逻辑整理
-     * 1.
-     *
-     *
+     * 1.参数校验
+     *      claimId 有效
+     *      lendingContractNumber 有效
+     *      lendingContractNumber 对应的 用户投资investmentUser 处于未匹配状态且金额不大于债权未匹配金额
+     *      该债权未匹配过该用户的其他投资
+     * 2.用户投资为可用投资，进行匹配更新
+     *       添加债权匹配记录 包括债权合同编号，用户投资id 债权id
+     *       用户投资表中添加匹配的债权id
+     *       债权信息表更新未匹配金额 unMatchAmount = claimInfo.getUnMatchAmount() - investmentUser.getInvestmentAmount();
+     *       更新债权已匹配的比率
      **/
     @PutMapping("/investment-credit")
     public ResultBean updateInvestmentCredit(@RequestBody JSONObject jsonObject) {
@@ -132,9 +140,14 @@ public class ClaimMatchController {
             logger.error("债权匹配规则漏洞，用户投资大于未匹配金额 用户投资：{}", investmentUser);
             return new ResultBean(-1, "error investmentUser amount > claim unMatchAmount", investmentUser);
         }
-        // 如果该债权已经匹配过此用户其他的用户投资
-
-
+        // 如果该债权已经匹配过此用户其他的用户投资 返回业务逻辑错误信息
+        //根据债权id查询用户投资列表
+        List<InvestmentUser> investmentUserList = investmentUserService.selectMatchedInvestmentUser(claimId);
+        for(InvestmentUser user:investmentUserList){
+            if(user.getUid().equals(investmentUser.getUid())){
+             return  new ResultBean(-1,"该债权已经匹配过该用户其他的用户投资",investmentUser);
+            }
+        }
 
 
 
@@ -165,6 +178,9 @@ public class ClaimMatchController {
         //剩余未匹配金额 = 债权信息未匹配金额 - 用户投资投资金额
         int unMatchAmount = claimInfo.getUnMatchAmount() - investmentUser.getInvestmentAmount();
         claimInfo.setUnMatchAmount(unMatchAmount);
+        //更新债权已匹配比率
+        double matchRate = 1-unMatchAmount/claimInfo.getLendingAmount();
+        claimInfo.setMatchRate(matchRate);
         claimInfoService.updateByPrimaryKeySelective(claimInfo);
         logger.info("更新债权信息表id:{}", claimInfo.getId());
         return new ResultBean(1, "success");

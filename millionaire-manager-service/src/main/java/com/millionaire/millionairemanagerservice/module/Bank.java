@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 public class Bank {
-    @Null
     private Long id;
     @NotBlank
     private String bankName;
@@ -19,13 +18,9 @@ public class Bank {
     private String presentNumber;
     @NotNull
     private String bankLogo;
-    @Null
     private Long gmtCreate;
-    @Null
     private Long gmtUpdate;
-    @NotBlank
     private String founder;
-    @Null
     private String modifier;
 
     public Bank(Long id, String bankName, Double singleLimit, Double dailyLimit, String paymentNumber, String presentNumber, String bankLogo, Long gmtCreate, Long gmtUpdate, String founder, String modifier) {

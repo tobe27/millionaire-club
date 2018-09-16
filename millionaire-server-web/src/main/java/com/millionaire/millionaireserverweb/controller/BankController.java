@@ -39,15 +39,12 @@ public class BankController {
      **/
     @PostMapping("/bank")
     public ResultBean insertBank(@RequestBody @Validated Bank bank) {
-        // founder 可以不用前台传递 初期开发的时候shiro未完成，由前端传递
-        // 从shiro取出当前用户名和传入参数对比
+
         logger.info("新增银行入参信息:{}",bank);
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
-        if(!userName.equals(bank.getFounder())){
-            logger.info("传入创建人非当前登陆人员:{},{}",userName,bank);
-            return new ResultBean(-1, "error no such founder",bank);
-        }
-//        Bank bank1 = bankService.
+        //更新创建人和更新人
+      bank.setModifier(userName);
+      bank.setFounder(userName);
         Long id = bankService.insert(bank);
         logger.info("新增银行id：{}",id);
         logger.info("新增银行信息:{}",bank);
@@ -64,17 +61,11 @@ public class BankController {
     @PutMapping("bank/{bankId}")
     public ResultBean updateBank(@PathVariable("bankId") Long id,
                                  @RequestBody JSONObject jsonObject) {
-        String modifier =  jsonObject.getString("modifier");
+
         Double singleLimit = jsonObject.getDouble("singleLimit");
         Double dailyLimit = jsonObject.getDouble("dailyLimit");
-        // modifier 可以不用前台传递 初期开发的时候shiro未完成，由前端传递
-        // 从shiro取出当前用户名和传入参数对比
-        String userName = (String) SecurityUtils.getSubject().getPrincipal();
-        logger.info("当前登陆用户名：{}",userName);
-        logger.info("前台传递用户名:{}",modifier);
-       if(!userName.equals(modifier)){
-           return new ResultBean(-1, "error no such modifier",modifier);
-       }
+
+
         Bank bank = bankService.selectByPrimaryKey(id);
         if (bank == null) {
             return new ResultBean(-1, "error no such id", id);
@@ -86,6 +77,9 @@ public class BankController {
         if (dailyLimit != null && dailyLimit < 0){
             return new  ResultBean(-1, "error 限额为负数", dailyLimit);
         }
+        //更新人
+      String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        bank.setModifier(userName);
         //单笔限额不为空且大于0
         if(singleLimit != null){
             //更新单笔限额
@@ -94,19 +88,17 @@ public class BankController {
              if(dailyLimit != null){
                  //更新每日限额
                  bank.setDailyLimit(dailyLimit);
-                 bank.setModifier(modifier);
                  bankService.updateByPrimaryKey(bank);
                  logger.info("修改银行信息id:{},单笔限额：{}，每日限额:{}",id,singleLimit,dailyLimit);
                  logger.info("银行信息:{}",bank);
                  return new ResultBean(1, "success",bank);
              }
-            bank.setModifier(modifier);
             bankService.updateByPrimaryKey(bank);
             logger.info("修改银行信息 id:{},单笔限额：{}",id,singleLimit);
             logger.info("银行信息:{}",bank);
             return new ResultBean(1, "success",bank);
         }
-        bank.setModifier(modifier);
+
         bankService.updateByPrimaryKey(bank);
         logger.info("修改银行信息 id:{}",id);
         logger.info("银行信息:{}",bank);

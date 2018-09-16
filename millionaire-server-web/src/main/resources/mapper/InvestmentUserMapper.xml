@@ -139,6 +139,7 @@
         select uid
         from investment_user
         where claim_id = #{claimID}
+        and investment_status =10
     </select>
 
     <select id="selectByLendingContractNumber" parameterType="java.lang.String" resultMap="InvestmentUser">
