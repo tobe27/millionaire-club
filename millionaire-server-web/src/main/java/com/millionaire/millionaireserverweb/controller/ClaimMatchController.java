@@ -5,14 +5,19 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.millionaire.millionairebusinessservice.module.ClaimInfo;
 import com.millionaire.millionairebusinessservice.module.ClaimMatch;
+import com.millionaire.millionairebusinessservice.module.InvestmentProduct;
 import com.millionaire.millionairebusinessservice.module.InvestmentUser;
 import com.millionaire.millionairebusinessservice.request.ClaimMatchQuery;
 import com.millionaire.millionairebusinessservice.service.ClaimInfoService;
 import com.millionaire.millionairebusinessservice.service.ClaimMatchService;
+import com.millionaire.millionairebusinessservice.service.InvestmentProductService;
 import com.millionaire.millionairebusinessservice.service.InvestmentUserService;
 import com.millionaire.millionairebusinessservice.transport.ClaimMatchDTO;
 import com.millionaire.millionairepaymentmanager.until.FlowNumberGeneration;
+import com.millionaire.millionaireserverweb.result.ClaimMatchInvestmentUserDTO;
 import com.millionaire.millionaireserverweb.result.ResultBean;
+import com.millionaire.millionaireuserservice.module.ReceptionUsers;
+import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
@@ -20,10 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author Liu Kai
@@ -43,6 +45,12 @@ public class ClaimMatchController {
 
     @Resource
     private InvestmentUserService investmentUserService;
+
+    @Resource
+    private ReceptionUsersService receptionUsersService;
+
+    @Resource
+    private InvestmentProductService investmentProductService;
 
 
     /**
@@ -81,8 +89,29 @@ public class ClaimMatchController {
         }
         logger.info("根据债权id开始推荐匹配债权信息:{}", claimId);
         List<InvestmentUser> investmentUserList = claimMatchService.listRecommendInvestmentUser(claimId);
-        logger.info("推荐匹配的用户投资列表", investmentUserList);
-        return new ResultBean(1, "success", investmentUserList);
+
+        //将推荐用户投资参数加入包装类
+        List<ClaimMatchInvestmentUserDTO> claimMatchInvestmentUserDTOList = new ArrayList<>();
+        for(InvestmentUser user:investmentUserList){
+            //参数包装类
+            ClaimMatchInvestmentUserDTO claimMatchInvestmentUserDTO = new ClaimMatchInvestmentUserDTO();
+
+            //查询匹配用户
+            ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(user.getUid());
+            InvestmentProduct product = investmentProductService.selectByPrimaryKey(user.getProductId());
+           // 参数封装
+            claimMatchInvestmentUserDTO.setId(user.getId());
+            claimMatchInvestmentUserDTO.setValueDateEnd(user.getValueDateEnd());
+            claimMatchInvestmentUserDTO.setUserName(receptionUsers.getIdName());
+            claimMatchInvestmentUserDTO.setProductName(product.getName());
+            claimMatchInvestmentUserDTO.setLendingContractNumber(user.getLendingContractNumber());
+            claimMatchInvestmentUserDTO.setInvestmentAmount(user.getInvestmentAmount());
+            claimMatchInvestmentUserDTOList.add(claimMatchInvestmentUserDTO);
+        }
+
+
+        logger.info("推荐匹配的用户投资列表", claimMatchInvestmentUserDTOList);
+        return new ResultBean(1, "success", claimMatchInvestmentUserDTOList);
     }
 
     /**
