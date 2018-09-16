@@ -228,7 +228,7 @@ public class SunController {
         Integer random = new Random().nextInt(899999) + 100000;
         System.out.println(random);
         MessageVerification.setSendSmsResponse(phone.toString(), random);
-        redisTemplate.opsForValue().set(phone.toString(), "123456", 1000 * 60 * 5, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(phone.toString(), random, 1000 * 60 * 5, TimeUnit.MILLISECONDS);
         return new ResultBean(1, "发送成功");
     }
 
@@ -245,7 +245,6 @@ public class SunController {
 
     /**
      * 忘记密码通过手机找回
-     *
      * @param jsonObject
      * @return
      */

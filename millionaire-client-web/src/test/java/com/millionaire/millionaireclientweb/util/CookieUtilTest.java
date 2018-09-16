@@ -13,6 +13,7 @@ import com.millionaire.millionairemanagerservice.dao.MessagePlatformMapper;
 import com.millionaire.millionairemanagerservice.request.MessageQuery;
 import com.millionaire.millionairemanagerservice.service.MessagePlatformService;
 import com.millionaire.millionairemanagerservice.transport.MessagePlatformDTO;
+import com.millionaire.millionaireuserservice.module.ReceptionUsers;
 import com.millionaire.millionaireuserservice.service.ReceptionUsersService;
 import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 import org.junit.Test;
@@ -186,4 +187,10 @@ MessagePlatformService messagePlatformService;
 //        System.out.println(jwt.getClaim("id").asLong());
 //        System.out.println(jwt.getClaim("loginTime").asLong());
 //    }
+
+    @Test
+    public void name() {
+        ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(1L);
+        System.out.println(receptionUsers.getStatus());
+    }
 }
