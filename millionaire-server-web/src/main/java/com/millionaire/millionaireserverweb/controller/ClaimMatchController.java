@@ -62,10 +62,10 @@ public class ClaimMatchController {
         logger.info("查询参数:{}", query);
         PageHelper.startPage(pageNum, pageSize);
         PageInfo<ClaimMatchDTO> pageInfo = new PageInfo<>(claimMatchDTOList);
-        Map map = new HashMap();
-        map.put("claimInfo", claimInfo);
-        map.put("pageInfo", pageInfo);
-        return new ResultBean(1, "success", map);
+//        Map map = new HashMap();
+//        map.put("claimInfo", claimInfo);
+//        map.put("pageInfo", pageInfo);
+        return new ResultBean(1, "success", pageInfo);
     }
 
     /**

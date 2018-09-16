@@ -199,10 +199,7 @@
     SELECT
     backstage_users.id as id,
     backstage_users.name as name,
-    backstage_users.founder as founder,
-    backstage_users.modifier as modifier,
-    backstage_users.gmt_create as gmtCreate,
-    backstage_users.gmt_update as gmtUpdate,
+    backstage_users.phone as phone,
     roles.role_name as roleName
     FROM backstage_users INNER JOIN roles
     ON backstage_users.role_id=roles.id

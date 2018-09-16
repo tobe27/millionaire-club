@@ -61,7 +61,9 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
         }
         //查询出可以使用的用户投资表
         List<InvestmentUser> usableInvestmentUserList = investmentUserMapper.selectUsableInvestment();
+        System.out.println("初始可用用户投资表总数"+usableInvestmentUserList.size());
         logger.info("-------初始可用用户投资表-----------");
+
         for (InvestmentUser investmentUser : usableInvestmentUserList) {
             logger.info("初始可用用户投资表:{}",investmentUser);
         }
@@ -84,16 +86,26 @@ public class ClaimMatchServiceImpl implements ClaimMatchService {
                     logger.info("---------剔除重复id用户投资---------");
                     investmentUserIterator.remove();
                 }
-                //循环剔除用户投资大于未匹配投资金额的用户投资
-                if (investmentUser.getInvestmentAmount() > claimInfo.getUnMatchAmount()) {
-                    logger.info("---------剔除过大用户投资---------");
-                    logger.info("investmentUser.getInvestmentAmount() = " + investmentUser.getInvestmentAmount());
-                    logger.info("claimInfo.getUnMatchAmount() = " + claimInfo.getUnMatchAmount());
-                    logger.info("---------剔除过大用户投资---------");
-                    investmentUserIterator.remove();
-                }
             }
         }
+        System.out.println("剔除重复id后可用用户投资数"+usableInvestmentUserList.size());
+        System.out.println("剔除重复id后可用用户投资usableInvestmentUserList = " + usableInvestmentUserList);
+         Iterator<InvestmentUser> investmentUserIterator2 = usableInvestmentUserList.iterator();
+        while (investmentUserIterator2.hasNext()){
+            InvestmentUser investmentUser = investmentUserIterator2.next();
+            //循环剔除用户投资大于未匹配投资金额的用户投资
+            if (investmentUser.getInvestmentAmount() > claimInfo.getUnMatchAmount()) {
+                logger.info("---------剔除过大用户投资---------");
+                logger.info("investmentUser.getInvestmentAmount() = " + investmentUser.getInvestmentAmount());
+                logger.info("claimInfo.getUnMatchAmount() = " + claimInfo.getUnMatchAmount());
+                logger.info("---------剔除过大用户投资---------");
+                investmentUserIterator2.remove();
+            }
+        }
+        System.out.println("剔除过大用户投资后可用用户投资数"+usableInvestmentUserList.size());
+        System.out.println("剔除过大用户投资可用用户投资usableInvestmentUserList = " + usableInvestmentUserList);
+
+
         logger.info("-------剔除后可用用户投资表-----------");
         for (InvestmentUser investmentUser : usableInvestmentUserList) {
             logger.info("剔除后可用用户投资表:{}",investmentUser);

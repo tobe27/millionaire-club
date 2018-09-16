@@ -18,11 +18,11 @@ public class Content {
     private String content;
     @NotNull
     private Byte state;
-    @NotBlank
+
     private String editors;
-    @Null
+
     private Long gmtCreate;
-    @Null
+
     private Long gmtUpdate;
 
     public Content(Long id, String title, Byte type, String cover, String content, Byte state, String editors, Long gmtCreate, Long gmtUpdate) {
