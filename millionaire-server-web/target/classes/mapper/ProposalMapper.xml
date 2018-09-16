@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.millionaire.millionairemanagerservice.dao.ProposalMapper">
+    <resultMap id="BaseResultMap" type="com.millionaire.millionairemanagerservice.module.Proposal">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="proposal" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id,uid, proposal, gmt_create, gmt_update
+  </sql>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from proposal
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+<select id="selectUserProposalById" resultType="com.millionaire.millionairemanagerservice.transport.UserProposalDTO">
+    select
+        proposal.id as id,
+        proposal.proposal as proposal,
+        proposal.gmt_create as gmtCreate,
+        reception_users.id_name as name,
+        reception_users.phone as phone,
+        reception_users.email as email
+        from proposal
+        left join
+        reception_users
+        on proposal.uid=reception_users.id
+        where
+         proposal.id = #{id,jdbcType=BIGINT}
+</select>
+
+
+
+    <select id="selectByQuery" resultType="com.millionaire.millionairemanagerservice.transport.UserProposalDTO">
+        select
+        proposal.id as id,
+        proposal.proposal as proposal,
+        proposal.gmt_create as gmtCreate,
+        reception_users.id_name as name,
+        reception_users.phone as phone,
+        reception_users.email as email
+        from proposal
+        left join
+        reception_users
+        on proposal.uid=reception_users.id
+        <where>
+            <if test="name != null">
+              and  reception_users.id_name like "%"#{name,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="phone != null">
+                and reception_users.phone = #{phone,jdbcType=BIGINT}
+            </if>
+            <if test="email != null">
+                and reception_users.email like "%"#{email,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="lowerGmtCreate != null">
+                and proposal.gmt_create <![CDATA[ >= ]]> #{lowerGmtCreate,jdbcType=BIGINT}
+            </if>
+            <if test="upperGmtCreate != null">
+                and proposal.gmt_create  <![CDATA[ <= ]]> #{upperGmtCreate,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from proposal
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.millionaire.millionairemanagerservice.module.Proposal"
+            useGeneratedKeys="true" keyProperty="id">
+    insert into proposal (uid, proposal, gmt_create,
+      gmt_update)
+    values (#{uid,jdbcType=BIGINT},#{proposal,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT},
+      #{gmtUpdate,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.millionaire.millionairemanagerservice.module.Proposal"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into proposal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="proposal != null">
+                proposal,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="proposal != null">
+                #{proposal,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.millionaire.millionairemanagerservice.module.Proposal">
+        update proposal
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="proposal != null">
+                proposal = #{proposal,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.millionaire.millionairemanagerservice.module.Proposal">
+    update proposal
+    set uid = #{uid,jdbcType=BIGINT},
+      proposal = #{proposal,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -89,7 +89,7 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
         claim.setGmtUpdate(time);
 
 //        过期时间计算（=lendingDate+lendingPeriod）转存
-        Long expirationDate = claim.getLendingDate() + claim.getLendingPeriod() * (24 * 60 * 60 * 1000);
+        Long expirationDate = claim.getLendingDate() + claim.getLendingPeriod() * (24 * 60 * 60 * 1000L);
        //封装过期时间
         claim.setExpirationDate(expirationDate);
         //封装未匹配金额
