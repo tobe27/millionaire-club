@@ -436,19 +436,22 @@ public class SunController {
         if (pageNum == null) {
             return new ResultBean(-1, "pageNum没传");
         }
-        if (investmentStatus == null) {
-            return new ResultBean(-1, "投资状态不能为空");
+
+            if (investmentStatus == null) {
+                return new ResultBean(-1, "投资状态不能为空");
+            }
+            Cookie cookie = CookieUtil.getCookie("cookie", request);
+            Long uid = Long.valueOf(cookie.getValue());
+            InvestmentUser investmentUser = new InvestmentUser();
+            investmentUser.setUid(uid);
+            investmentUser.setInvestmentStatus(investmentStatus);
+            PageHelper.startPage(pageNum, 5);
+            List<InvestmentUsersDTO> investmentUsers = investmentUserService.findByUidInvestmentStatus(investmentUser);
+            PageInfo pageInfo = new PageInfo(investmentUsers);
+            return new ResultBean(1, "通过用户传来的投资状态查询", pageInfo);
         }
-        Cookie cookie = CookieUtil.getCookie("cookie", request);
-        Long uid = Long.valueOf(cookie.getValue());
-        InvestmentUser investmentUser = new InvestmentUser();
-        investmentUser.setUid(uid);
-        investmentUser.setInvestmentStatus(investmentStatus);
-        PageHelper.startPage(pageNum, 5);
-        List<InvestmentUsersDTO> investmentUsers = investmentUserService.findByUidInvestmentStatus(investmentUser);
-        PageInfo pageInfo = new PageInfo(investmentUsers);
-        return new ResultBean(1, "通过用户传来的投资状态查询", pageInfo);
-    }
+
+
 
     /**
      * 投资详情
