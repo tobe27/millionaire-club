@@ -46,7 +46,7 @@ public class ClaimMatchController {
 
 
     /**
-     * @Description 债券与用户投资的匹配情况（成功交易未匹配的信息）
+     * @Description 债券与用户投资的匹配情况
      **/
     @GetMapping("/list/claim-match/{claimid}")
     public ResultBean listClaimMatch(@PathVariable("claimid") long claimid,

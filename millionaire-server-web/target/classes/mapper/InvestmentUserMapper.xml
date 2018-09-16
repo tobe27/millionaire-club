@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.millionaire.millionairebusinessservice.dao.InvestmentUserMapper">
+    <resultMap id="BaseResultMap" type="com.millionaire.millionairebusinessservice.module.InvestmentUser">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="product_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="claim_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="value_date_start" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="value_date_end" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="lending_contract_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="bank_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="bank_card_number" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="contract_sign" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="investment_amount" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="investment_status" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="expected_income" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="distributed_income" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+            <arg column="gmt_create" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="gmt_update" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="look" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="InvestmentUser" type="com.millionaire.millionairebusinessservice.module.InvestmentUser">
+        <id property="id" column="id"/>
+        <result property="productId" column="product_id"/>
+        <result property="uid" column="uid"/>
+        <result property="claimId" column="claim_id"/>
+        <result property="valueDateStart" column="value_date_start"/>
+        <result property="valueDateEnd" column="value_date_end"/>
+        <result property="lendingContractNumber" column="lending_contract_number"/>
+        <result property="contractSign" column="contract_sign"/>
+        <result property="investmentAmount" column="investment_amount"/>
+        <result property="investmentStatus" column="investment_status"/>
+        <result property="expectedIncome" column="expected_income"/>
+        <result property="distributedIncome" column="distributed_income"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtUpdate" column="gmt-update"/>
+        <result property="bankCardNumber" column="bank_card_number"/>
+        <result property="bankName" column="bank_name"/>
+        <result property="look" column="look"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id,product_id, uid,claim_id, value_date_start, value_date_end, lending_contract_number, bank_name, bank_card_number, contract_sign,
+    investment_amount, investment_status, expected_income, distributed_income, gmt_create, 
+    gmt_update,look
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="InvestmentUser">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="listInvestmentUserByUID" parameterType="java.lang.Long" resultMap="InvestmentUser">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where uid = #{uid,jdbcType=BIGINT}
+    </select>
+
+    <select id="listInvestmentUserByQuery"
+            parameterType="com.millionaire.millionairebusinessservice.request.InvestmentUserQuery"
+            resultType="com.millionaire.millionairebusinessservice.transport.InvestmentUserDTO">
+        select
+        investment_user.id as id,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.lending_contract_number as lendingContractNumber,
+        investment_user.distributed_income as distributedIncome,
+        investment_user.expected_income - investment_user.distributed_income  as undistributedIncome,
+        investment_user.investment_status as investmentStatus,
+
+        reception_users.id_name as userName,
+        reception_users.phone as phone,
+
+        investment_product.name as productName,
+
+        claim_match.credit_contract_number as creditContractNumber
+        from
+        investment_user
+        left join reception_users
+        on investment_user.uid = reception_users.id
+        left join investment_product
+        ON investment_user.product_id = investment_product.id
+        left join claim_match
+        on investment_user.id = claim_match.investment_user_id
+        <where>
+            <if test="uid != null">
+                investment_user.uid = #{uid,jdbcType=BIGINT}
+            </if>
+            <if test="productName != null ">
+                and investment_product.name like  "%"#{productName,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="lendingContractNumber != null and lendingContractNumber.length != 0">
+                and investment_user.lending_contract_number like "%"#{lendingContractNumber,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="creditContractNumber != null and creditContractNumber.length != 0">
+                and claim_match.credit_contract_number like "%"#{creditContractNumber,jdbcType=VARCHAR}"%"
+            </if>
+            <if test="investmentStatus != null">
+                and  investment_user.investment_status =  #{investmentStatus,jdbcType=TINYINT}
+            </if>
+            <if test="investmentStatus == null">
+                and  investment_user.investment_status != 0
+            </if>
+            <if test="valueStartlowerDate != null">
+                and  investment_user.value_date_start <![CDATA[ >= ]]> #{valueStartlowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="valueStartupperDate != null">
+                and investment_user.value_date_start <![CDATA[ <= ]]> #{valueStartupperDate,jdbcType=BIGINT}
+            </if>
+            <if test="valueEndlowerDate != null">
+                and investment_user.value_date_end <![CDATA[ >= ]]> #{valueEndlowerDate,jdbcType=BIGINT}
+            </if>
+            <if test="valueEndupperDate != null">
+                and investment_user.value_date_end <![CDATA[ <= ]]> #{valueEndupperDate,jdbcType=BIGINT}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="selectUsableInvestment" resultMap="InvestmentUser">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where
+        investment_status =10
+        and  claim_id = 0
+        or
+        claim_id is null
+
+    </select>
+
+    <select id="selectMatchedUID" resultType="java.lang.Long">
+        select uid
+        from investment_user
+        where claim_id = #{claimID}
+        and investment_status =10
+    </select>
+
+    <select id="selectByLendingContractNumber" parameterType="java.lang.String" resultMap="InvestmentUser">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where lending_contract_number = #{lendingContractNumber}
+    </select>
+
+    <!--查询最新记录id-->
+    <select id="selectTimeLimit" resultType="java.lang.Long">
+        SELECT id FROM investment_user ORDER by gmt_create desc LIMIT 1
+    </select>
+
+    <select id="selectMatchedInvestmentUser"  parameterType="java.lang.Long" resultMap="InvestmentUser">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where claim_id = #{claimID}
+        and investment_status =10
+    </select>
+
+    <select id="listEffectInvestmentUser" resultMap="InvestmentUser">
+        select
+        <include refid="Base_Column_List"/>
+        from investment_user
+        where investment_status =10
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from investment_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insert" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser"
+            useGeneratedKeys="true" keyProperty="id">
+    insert into investment_user (product_id, uid,claim_id,
+      value_date_start, value_date_end, lending_contract_number,bank_name, bank_card_number,
+      contract_sign, investment_amount, investment_status, 
+      expected_income, distributed_income, gmt_create, 
+      gmt_update,look)
+    values (#{productId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},#{claimId,jdbcType=BIGINT},
+      #{valueDateStart,jdbcType=BIGINT}, #{valueDateEnd,jdbcType=BIGINT}, #{lendingContractNumber,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankCardNumber,jdbcType=VARCHAR},
+      #{contractSign,jdbcType=VARCHAR}, #{investmentAmount,jdbcType=INTEGER}, #{investmentStatus,jdbcType=TINYINT}, 
+      #{expectedIncome,jdbcType=DOUBLE}, #{distributedIncome,jdbcType=DOUBLE}, #{gmtCreate,jdbcType=BIGINT}, 
+      #{gmtUpdate,jdbcType=BIGINT},#{look,jdbcType=TINYINT})
+  </insert>
+
+    <insert id="insertSelective" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
+        insert into investment_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="claimId != null">
+                claim_id,
+            </if>
+            <if test="valueDateStart != null">
+                value_date_start,
+            </if>
+            <if test="valueDateEnd != null">
+                value_date_end,
+            </if>
+            <if test="lendingContractNumber != null">
+                lending_contract_number,
+            </if>
+            <if test="contractSign != null">
+                contract_sign,
+            </if>
+            <if test="investmentAmount != null">
+                investment_amount,
+            </if>
+            <if test="investmentStatus != null">
+                investment_status,
+            </if>
+            <if test="expectedIncome != null">
+                expected_income,
+            </if>
+            <if test="distributedIncome != null">
+                distributed_income,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="claimId != null">
+                #{claimId,jdbcType=BIGINT},
+            </if>
+            <if test="valueDateStart != null">
+                #{valueDateStart,jdbcType=BIGINT},
+            </if>
+            <if test="valueDateEnd != null">
+                #{valueDateEnd,jdbcType=BIGINT},
+            </if>
+            <if test="lendingContractNumber != null">
+                #{lendingContractNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="contractSign != null">
+                #{contractSign,jdbcType=VARCHAR},
+            </if>
+            <if test="investmentAmount != null">
+                #{investmentAmount,jdbcType=INTEGER},
+            </if>
+            <if test="investmentStatus != null">
+                #{investmentStatus,jdbcType=TINYINT},
+            </if>
+            <if test="expectedIncome != null">
+                #{expectedIncome,jdbcType=DOUBLE},
+            </if>
+            <if test="distributedIncome != null">
+                #{distributedIncome,jdbcType=DOUBLE},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
+        update investment_user
+        <set>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="claimId != null">
+                claim_id = #{claimId,jdbcType=BIGINT},
+            </if>
+            <if test="valueDateStart != null">
+                value_date_start = #{valueDateStart,jdbcType=BIGINT},
+            </if>
+            <if test="valueDateEnd != null">
+                value_date_end = #{valueDateEnd,jdbcType=BIGINT},
+            </if>
+            <if test="lendingContractNumber != null">
+                lending_contract_number = #{lendingContractNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="contractSign != null">
+                contract_sign = #{contractSign,jdbcType=VARCHAR},
+            </if>
+            <if test="investmentAmount != null">
+                investment_amount = #{investmentAmount,jdbcType=INTEGER},
+            </if>
+            <if test="investmentStatus != null">
+                investment_status = #{investmentStatus,jdbcType=TINYINT},
+            </if>
+            <if test="expectedIncome != null">
+                expected_income = #{expectedIncome,jdbcType=DOUBLE},
+            </if>
+            <if test="distributedIncome != null">
+                distributed_income = #{distributedIncome,jdbcType=DOUBLE},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update = #{gmtUpdate,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.millionaire.millionairebusinessservice.module.InvestmentUser">
+    update investment_user
+    set product_id = #{productId,jdbcType=BIGINT},
+      uid = #{uid,jdbcType=BIGINT},
+       claim_id = #{claimId,jdbcType=BIGINT},
+      value_date_start = #{valueDateStart,jdbcType=BIGINT},
+      value_date_end = #{valueDateEnd,jdbcType=BIGINT},
+      lending_contract_number = #{lendingContractNumber,jdbcType=VARCHAR},
+      contract_sign = #{contractSign,jdbcType=VARCHAR},
+      investment_amount = #{investmentAmount,jdbcType=INTEGER},
+      investment_status = #{investmentStatus,jdbcType=TINYINT},
+      expected_income = #{expectedIncome,jdbcType=DOUBLE},
+      distributed_income = #{distributedIncome,jdbcType=DOUBLE},
+      gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!--根据主键修改用户投资状态-->
+    <update id="updateInvestmentUserIdStatus" >
+    update investment_user
+    set
+      investment_status = #{investmentStatus,jdbcType=TINYINT},
+      gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--合同编号的插入-->
+    <update id="updateLendingContractNumber" >
+    update investment_user
+    set
+        lending_contract_number = #{lendingContractNumber,jdbcType=VARCHAR},
+        gmt_update = #{gmtUpdate,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--查询可续投用户投资信息，详情-->
+
+    <select id="selectRenewalInvestmentById" parameterType="java.lang.Long"
+            resultType="com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO">
+        select
+        investment_user.id as id,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.distributed_income as distributedIncome,
+        investment_user.expected_income as expectedIncome,
+        investment_user.investment_status as investmentStatus,
+        investment_user.bank_name as bankName,
+        investment_user.bank_card_number as bankCardNumber,
+
+        investment_product.name as name,
+        investment_product.annualized_income as annualizedIncome,
+        investment_product.deadline as deadline,
+        investment_product.type as type,
+        investment_product.starting_amount as startingAmount
+        from
+        investment_user
+        LEFT join investment_product
+        ON investment_user.product_id = investment_product.id
+        WHERE investment_user.id = #{id,jdbcType=BIGINT}
+
+    </select>
+
+    <!--查询可续投产品列表-->
+    <select id="listRenewalInvestments" resultType="com.millionaire.millionairebusinessservice.transport.RenewalInvestmentDTO">
+        select
+        investment_user.id as id,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.distributed_income as distributedIncome,
+        investment_user.expected_income as expectedIncome,
+        investment_user.investment_status as investmentStatus,
+        investment_user.bank_name as bankName,
+        investment_user.bank_card_number as bankCardNumber,
+        investment_user.investment_status as investmentStatus,
+
+        investment_product.name as name,
+        investment_product.annualized_income as annualizedIncome,
+        investment_product.deadline as deadline,
+        investment_product.type as type,
+        investment_product.starting_amount as startingAmount
+        from
+        investment_user
+        LEFT join investment_product
+        ON investment_user.product_id = investment_product.id
+        WHERE investment_user.investment_status = 10
+        AND investment_user.value_date_end <![CDATA[ >= ]]> #{end,jdbcType=BIGINT}
+        AND investment_user.value_date_end <![CDATA[ <= ]]> #{now,jdbcType=BIGINT}
+        AND investment_user.uid = #{uid,jdbcType=BIGINT}
+    </select>
+
+    <!--查询投资合同信息-->
+    <select id="selectContractResponse" resultType="com.millionaire.millionairebusinessservice.transport.ContractResponse">
+        SELECT
+        investment_user.contract_sign as contractSign,
+        investment_user.gmt_create as gmtCreate,
+
+        reception_users.id_name as idName,
+        reception_users.id_number as idNumber
+        FROM
+         investment_user
+        left join reception_users
+        on investment_user.uid = reception_users.id
+        WHERE investment_user.id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+
+    <!--&lt;!&ndash;client&ndash;&gt;-->
+    <select id="findById" resultType="com.millionaire.millionairebusinessservice.transport.UserInvestmentDTO">
+        SELECT
+        investment_user.id as id,
+        investment_product.name as name,
+        investment_product.annualized_income as annualizedIncome,
+        investment_user.expected_income as expectedIncome,
+        investment_user.investment_amount as investmentAmount,
+        investment_user.value_date_start as valueDateStart,
+        investment_user.value_date_end as valueDateEnd,
+        investment_product.repayment_mode as repaymentMode,
+        investment_product.starting_amount as startingAmount,
+        investment_user.investment_status as investmentStatus,
+        investment_user.distributed_income as distributedIncome,
+        investment_user.bank_name as bankName,
+        investment_user.bank_card_number as bankCardNumber
+        FROM investment_user INNER JOIN investment_product
+        ON investment_user.product_id=investment_product.id
+        WHERE investment_user.id=#{id}
+    </select>
+
+
+
+</mapper>
