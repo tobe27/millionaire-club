@@ -61,6 +61,13 @@ public class SunController {
         if(password.length()==0){
             return new ResultBean(-1,"请输入密码");
         }
+        String  regex = "^[a-zA-Z0-9_]{4,20}";
+        if(!name.matches(regex)){
+            return new ResultBean(-1,"用户名格式不正确");
+        }
+        if(!password.matches(regex)){
+            return new ResultBean(-1,"密码格式不正确");
+        }
         BackstageUsers backstageUsers = backstageUsersService.findByName(name);
         BackstageUserDTO backUser = backstageUsersService.findById(backstageUsers.getId());
         if(backstageUsers==null){
@@ -230,9 +237,25 @@ public class SunController {
         if (!password.equals(rePassword)) {
             return new ResultBean(-1, "两次密码不相同");
         }
-        String regex = "\\S*";
-
+        String  regex = "^[a-zA-Z0-9_]{4,20}";
+        if(!name.matches(regex)){
+            return new ResultBean(-1,"用户名格式不正确");
+        }
+        if(!password.matches(regex)){
+            return new ResultBean(-1,"密码格式不正确");
+        }
+        String  regexOne = "^[0-9]{11}";
+        if(!phone.matches(regexOne)){
+            return new ResultBean(-1,"手机号格式不正确");
+        }
+        BackstageUsers backstageUser = backstageUsersService.findByName(name);
+        if(backstageUser!=null){
+            return new ResultBean(-1,"用户名已存在");
+        }
         Roles roles = rolesService.findByName(roleName);
+        if (roles == null) {
+            return new ResultBean(-1, "角色不存在");
+        }
         BackstageUsers backstageUsers = new BackstageUsers();
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
         String salt = String.valueOf(new Random().nextInt(899999) + 100000);
@@ -303,9 +326,17 @@ public class SunController {
         if (!password.equals(rePassword)) {
             return new ResultBean(-1, "两次密码不相同");
         }
+        String  regex = "^[a-zA-Z0-9_]{4,20}";
+        if(!password.matches(regex)){
+            return new ResultBean(-1,"密码格式不正确");
+        }
+        String  regexOne = "^[0-9]{11}";
+        if(!phone.matches(regexOne)){
+            return new ResultBean(-1,"手机号格式不正确");
+        }
         Roles roles = rolesService.findByName(roleName);
         if (roles == null) {
-            return new ResultBean(-1, "角色为空");
+            return new ResultBean(-1, "角色不存在");
         }
         BackstageUsers backstageUsers = new BackstageUsers();
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
@@ -353,6 +384,13 @@ public class SunController {
         }
         if (!password.equals(rePassword)) {
             return new ResultBean(-1, "两次密码输入不一致");
+        }
+        String  regex = "^[a-zA-Z0-9_]{4,20}";
+        if(!oldPassword.matches(regex)){
+            return new ResultBean(-1,"旧密码格式不正确");
+        }
+        if(!password.matches(regex)){
+            return new ResultBean(-1,"密码格式不正确");
         }
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
         BackstageUsers backstageUsers = backstageUsersService.findByName(userName);
@@ -432,6 +470,10 @@ public class SunController {
         if (roleName.length() == 0) {
             return new ResultBean(-1, "角色不能为空");
         }
+        String regex = "^[\\u4E00-\\u9FA5A-Za-z]{2,20}";
+        if(!roleName.matches(regex)){
+            return new ResultBean(-1,"角色名格式错误");
+        }
         Roles role = rolesService.findByName(roleName);
         if (role != null) {
             return new ResultBean(-1, "角色名已经存在");
@@ -483,6 +525,10 @@ public class SunController {
         }
         if (roleName.length() == 0) {
             return new ResultBean(-1, "角色名不能为空");
+        }
+        String regex = "^[\\u4E00-\\u9FA5A-Za-z]{2,20}";
+        if(!roleName.matches(regex)){
+            return new ResultBean(-1,"角色名格式错误");
         }
         Roles role = rolesService.findByName(roleName);
         if (role != null && role.getId() != id) {
