@@ -6,6 +6,7 @@ import com.millionaire.millionairemanagerservice.module.MessagePlatform;
 import com.millionaire.millionairemanagerservice.request.MessagePlatformQuery;
 import com.millionaire.millionairemanagerservice.service.MessagePlatformService;
 import com.millionaire.millionaireserverweb.result.ResultBean;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
@@ -44,12 +45,18 @@ public class MessagePlatformController {
             Date date = new Date();
             if (date.before(new Date(message.getTimingTime()))) {
                 message.setStatus((byte) 20);
+                //添加编辑者信息
+                String userName = (String) SecurityUtils.getSubject().getPrincipal();
+                message.setEditors(userName);
                 long id = messagePlatformService.insertSelective(message);
                 logger.info("新增定时消息id:{},定时时间：{}", id, new Date(message.getTimingTime()));
                 return new ResultBean(1, "success", id);
             }
             return new ResultBean(-1, "error 上线消息定时发送时间为过去时间", message);
         }
+        //添加编辑者信息
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        message.setEditors(userName);
         long id = messagePlatformService.insertSelective(message);
         logger.info("新增消息id:{}", id);
         return new ResultBean(1, "success", id);
@@ -86,7 +93,7 @@ public class MessagePlatformController {
                                           @RequestBody JSONObject jsonObject) {
 
 
-        byte status = jsonObject.getByte("status");
+        Byte status = jsonObject.getByte("status");
         MessagePlatform messagePlatform = messagePlatformService.selectByPrimaryKey(id);
         if (messagePlatform == null) {
             return new ResultBean(-1, "error no such id", id);
@@ -108,11 +115,17 @@ public class MessagePlatformController {
            if( date.after(new Date(messagePlatform.getTimingTime()))){
                return new ResultBean(-1, "error 定时任务时间已经过期，请重新设置定时任务时间再上线", messagePlatform);
            }
+            //添加编辑者信息
+            String userName = (String) SecurityUtils.getSubject().getPrincipal();
+           messagePlatform.setEditors(userName);
             messagePlatform.setStatus(status);
             messagePlatformService.updateByPrimaryKeySelective(messagePlatform);
             logger.info("修改平台定时消息状态id:{},status:{}", id, status);
             return new ResultBean(1, "success", messagePlatform);
         }
+        //添加编辑者信息
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        messagePlatform.setEditors(userName);
         messagePlatform.setStatus(status);
         messagePlatformService.updateByPrimaryKeySelective(messagePlatform);
         logger.info("修改平台消息状态id:{},status:{}", id, status);

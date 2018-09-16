@@ -84,7 +84,7 @@
             parameterType="com.millionaire.millionairebusinessservice.request.TradingFlowStatisticQuery">
         select
         trading_flow.product_name as productName,
-        count(trading_flow.uid) as purchaseNumber,
+        count(distinct trading_flow.uid) as purchaseNumber,
         count(trading_flow.id) as purchase,
         sum(trading_flow.amount) as totalPurchases,
 
@@ -117,9 +117,10 @@
             resultType="com.millionaire.millionairebusinessservice.transport.TradingFlowDetailDTO">
         select
         FROM_UNIXTIME(gmt_create/1000, '%Y-%m-%d') as purchaseDate,
-        count(uid) as purchaseNumber,
+        count(distinct uid) as purchaseNumber,
         count(id) as purchase,
-        sum(amount) as totalPurchases
+        sum(amount) as purchaseCount,
+        product_name as productName
         from
         trading_flow
         <where>
@@ -136,7 +137,7 @@
                 and status = #{status,jdbcType=TINYINT}
             </if>
             <if test="productName != null">
-                and product_name like "%"#{productName,jdbcType=VARCHAR}"%"
+                and product_name = #{productName,jdbcType=VARCHAR}
             </if>
         </where>
         group  by

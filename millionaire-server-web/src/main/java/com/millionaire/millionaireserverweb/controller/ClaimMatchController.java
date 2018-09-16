@@ -88,6 +88,9 @@ public class ClaimMatchController {
      * @Description 更新接口，修改用户投资匹配情况
      * @RequestParam("claimId") long claimId,
      * @RequestParam("lending_contract_number") String lendingContractNumber
+     *
+     *
+     *
      **/
     @PutMapping("/investment-credit")
     public ResultBean updateInvestmentCredit(@RequestBody JSONObject jsonObject) {
@@ -112,7 +115,8 @@ public class ClaimMatchController {
 
         //整体业务逻辑校验
         // 如果该用户投资还在匹配中 返回业务逻辑错误信息
-        if (investmentUser.getClaimId() != 0 || investmentUser.getClaimId() != null) {
+        if (investmentUser.getClaimId() != 0 && investmentUser.getClaimId() != null) {
+            System.out.println("用户投资绑定的债权id"+investmentUser.getClaimId());
             logger.error("债权匹配规则漏洞，用户投资正在使用 用户投资：{}", investmentUser);
             return new ResultBean(-1, "error investmentUser is in using", investmentUser);
         }
