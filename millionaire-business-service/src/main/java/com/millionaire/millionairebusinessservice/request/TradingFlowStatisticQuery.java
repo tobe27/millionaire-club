@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class TradingFlowStatisticQuery {
 
-    private String pruductName;
-    private String poductCode;
+    private String productName;
+    private String productCode;
     /** 交易类型=-1 表示付款 */
     private  static  Byte type = -1;
     /**  交易状态=10 表示交易成功*/
