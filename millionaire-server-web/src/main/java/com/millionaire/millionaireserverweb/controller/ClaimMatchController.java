@@ -132,6 +132,7 @@ public class ClaimMatchController {
      **/
     @PutMapping("/investment-credit")
     public ResultBean updateInvestmentCredit(@RequestBody JSONObject jsonObject) {
+           logger.info("运行步骤1");
         Long claimId = jsonObject.getLong("claimId");
         if (claimId == null) {
             return new ResultBean(-1, "error claimID", claimId);
@@ -145,25 +146,28 @@ public class ClaimMatchController {
             logger.error("传入错误债权id:{}", claimId);
             return new ResultBean(-1, "error claimID", claimId);
         }
+        logger.info("运行步骤2");
         InvestmentUser investmentUser = investmentUserService.selectByLendingContractNumber(lendingContractNumber);
         if (investmentUser == null) {
             logger.error("传入错误出借合同编号:{}", lendingContractNumber);
             return new ResultBean(-1, "error lendingContractNumber", lendingContractNumber);
         }
-
+        logger.info("运行步骤3");
         //整体业务逻辑校验
         // 如果该用户投资还在匹配中 返回业务逻辑错误信息
-        if (investmentUser.getClaimId() != 0 && investmentUser.getClaimId() != null) {
+        if (investmentUser.getClaimId() != null && investmentUser.getClaimId() != 0 ) {
             System.out.println("用户投资绑定的债权id"+investmentUser.getClaimId());
             logger.error("债权匹配规则漏洞，用户投资正在使用 用户投资：{}", investmentUser);
             return new ResultBean(-1, "error investmentUser is in using", investmentUser);
         }
+        logger.info("运行步骤3.1");
         // 如果该用户投资状态不为可使用  返回业务逻辑错误信息
         // status = 10 表示可用投资
         if (investmentUser.getInvestmentStatus() != 10) {
             logger.error("债权匹配规则漏洞，用户投资不可使用 用户投资：{}", investmentUser);
             return new ResultBean(-1, "error investmentUser can not use", investmentUser);
         }
+        logger.info("运行步骤3.2");
         // 如果用户投资大于债权未匹配金额 返回业务逻辑错误信息
         if (investmentUser.getInvestmentAmount() > claimInfo.getUnMatchAmount()) {
             logger.error("债权匹配规则漏洞，用户投资大于未匹配金额 用户投资：{}", investmentUser);
@@ -171,14 +175,17 @@ public class ClaimMatchController {
         }
         // 如果该债权已经匹配过此用户其他的用户投资 返回业务逻辑错误信息
         //根据债权id查询用户投资列表
+        logger.info("运行步骤4");
         List<InvestmentUser> investmentUserList = investmentUserService.selectMatchedInvestmentUser(claimId);
-        for(InvestmentUser user:investmentUserList){
-            if(user.getUid().equals(investmentUser.getUid())){
-             return  new ResultBean(-1,"该债权已经匹配过该用户其他的用户投资",investmentUser);
+        logger.info("investmentUserList:{}",investmentUserList.size());
+        if(investmentUserList.size()!=0) {
+            for (InvestmentUser user : investmentUserList) {
+                if (user.getUid().equals(investmentUser.getUid())) {
+                    return new ResultBean(-1, "该债权已经匹配过该用户其他的用户投资", investmentUser);
+                }
             }
         }
-
-
+      logger.info("匹配更新开始");
 
         //添加债权匹配记录
         ClaimMatch claimMatch = new ClaimMatch();
@@ -208,7 +215,9 @@ public class ClaimMatchController {
         int unMatchAmount = claimInfo.getUnMatchAmount() - investmentUser.getInvestmentAmount();
         claimInfo.setUnMatchAmount(unMatchAmount);
         //更新债权已匹配比率
-        double matchRate = 1-unMatchAmount/claimInfo.getLendingAmount();
+
+        double matchRate = 1.00-((double)unMatchAmount/(double)claimInfo.getLendingAmount());
+        System.out.println("matchRate = " + matchRate);
         claimInfo.setMatchRate(matchRate);
         claimInfoService.updateByPrimaryKeySelective(claimInfo);
         logger.info("更新债权信息表id:{}", claimInfo.getId());
