@@ -4,6 +4,10 @@ public class BackstageUserDTO {
     private Long id;
     private String name;
     private String roleName;
+    private String founder;
+    private String modifier;
+    private Long gmtCreate;
+    private Long gmtUpdate;
     private String phone;
 
     public Long getId() {
@@ -30,6 +34,38 @@ public class BackstageUserDTO {
         this.roleName = roleName;
     }
 
+    public String getFounder() {
+        return founder;
+    }
+
+    public void setFounder(String founder) {
+        this.founder = founder;
+    }
+
+    public String getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public Long getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Long getGmtUpdate() {
+        return gmtUpdate;
+    }
+
+    public void setGmtUpdate(Long gmtUpdate) {
+        this.gmtUpdate = gmtUpdate;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -44,6 +80,10 @@ public class BackstageUserDTO {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", roleName='" + roleName + '\'' +
+                ", founder='" + founder + '\'' +
+                ", modifier='" + modifier + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtUpdate=" + gmtUpdate +
                 ", phone='" + phone + '\'' +
                 '}';
     }
