@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 public class Content {
-    @Null
+
     private Long id;
 
     @NotBlank

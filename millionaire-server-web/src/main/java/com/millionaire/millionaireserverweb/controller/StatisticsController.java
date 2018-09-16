@@ -70,10 +70,10 @@ public class StatisticsController {
                 tradingFlowService.statisticProductDetailByQuery(query);
         PageHelper.startPage(pageNum, pageSize);
         PageInfo<TradingFlowDetailDTO> pageInfo = new PageInfo<>(tradingFlowDetailDTOS);
-        Map map = new HashMap();
-        map.put("productName", product.getName());
-        map.put("pageInfo", pageInfo);
+//        Map map = new HashMap();
+//        map.put("productName", product.getName());
+//        map.put("pageInfo", pageInfo);
         logger.info("查询产品销量统计明细 产品名称:{}", query.getProductName());
-        return new ResultBean(1, "success", map);
+        return new ResultBean(1, "success", pageInfo);
     }
 }

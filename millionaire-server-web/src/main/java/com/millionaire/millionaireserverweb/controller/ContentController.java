@@ -82,7 +82,7 @@ public class ContentController {
      **/
     @PutMapping("/content/{contentId}")
     public ResultBean updateContent(@PathVariable("contentId") Long id,
-                                   @RequestBody  Content content) {
+                                   @RequestBody @Validated Content content) {
         Content contentCheck = contentService.selectByPrimaryKey(id);
         if (contentCheck == null) {
             return new ResultBean(-1, "error no such id", id);
@@ -131,6 +131,9 @@ public class ContentController {
             return new ResultBean(-1, "error statusNum", status);
         }
         content.setState(status);
+        //添加编辑者信息
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        content.setEditors(userName);
         contentService.updateByPrimaryKeySelective(content);
         logger.info("更新运营内容状态id：{},status:{}", id, status);
         return new ResultBean(1, "success", content);

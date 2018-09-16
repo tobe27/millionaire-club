@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 public class MessagePlatform {
-    @Null
+
     private Long id;
     @NotBlank
     private String title;
@@ -21,7 +21,7 @@ public class MessagePlatform {
     private Long timingTime;
     @NotNull
     private Byte status;
-    @NotNull
+
     private String editors;
     @Null
     private Long gmtCreate;

@@ -128,10 +128,10 @@
         <include refid="Base_Column_List"/>
         from investment_user
         where
-        claim_id = 0
+        investment_status =10
+        and  claim_id = 0
         or
         claim_id is null
-        and investment_status =10
 
     </select>
 
