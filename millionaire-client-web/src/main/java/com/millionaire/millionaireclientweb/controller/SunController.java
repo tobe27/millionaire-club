@@ -95,6 +95,14 @@ public class SunController {
         if (password.length() == 0) {
             return new ResultBean(-1, "请输入密码");
         }
+        String  regex = "^[0-9]{11}";
+        if(!phone.toString().matches(regex)){
+            return new ResultBean(-1,"手机号格式不正确");
+        }
+        String  regexOne = "^[a-zA-Z0-9_]{4,20}";
+        if(!password.matches(regexOne)){
+            return new ResultBean(-1,"密码格式不正确");
+        }
         ReceptionUsers receptionUsers = receptionUsersService.findByPhone(phone);
         if (receptionUsers == null) {
             return new ResultBean(-1, "账号错误");
@@ -157,6 +165,14 @@ public class SunController {
         if (!password.equals(rePassword)) {
             return new ResultBean(-1, "两次密码输入不一致");
         }
+        String  regex = "^[0-9]{11}";
+        if(!phone.toString().matches(regex)){
+            return new ResultBean(-1,"手机号格式不正确");
+        }
+        String  regexOne = "^[a-zA-Z0-9_]{4,20}";
+        if(!password.matches(regexOne)){
+            return new ResultBean(-1,"密码格式不正确");
+        }
         ReceptionUsers receptionUser = receptionUsersService.findByPhone(phone);
         if (receptionUser != null) {
             return new ResultBean(-1, "用户名已存在");
@@ -204,6 +220,10 @@ public class SunController {
         Long phone = jsonObject.getLong("phone");
         if (phone == null) {
             return new ResultBean(-1, "请输入手机号");
+        }
+        String  regex = "^[0-9]{11}";
+        if(!phone.toString().matches(regex)){
+            return new ResultBean(-1,"手机号格式不正确");
         }
         Integer random = new Random().nextInt(899999) + 100000;
         System.out.println(random);
@@ -265,6 +285,14 @@ public class SunController {
         }
         if (!password.equals(rePassword)) {
             return new ResultBean(-1, "两次密码输入不一致");
+        }
+        String  regex = "^[0-9]{11}";
+        if(!phone.toString().matches(regex)){
+            return new ResultBean(-1,"手机号格式不正确");
+        }
+        String  regexOne = "^[a-zA-Z0-9_]{4,20}";
+        if(!password.matches(regexOne)){
+            return new ResultBean(-1,"密码格式不正确");
         }
         ReceptionUsers receptionUsers = receptionUsersService.findByPhone(phone);
         if (receptionUsers == null) {
@@ -329,6 +357,10 @@ public class SunController {
         }
         if (cardNumber.length() == 0) {
             return new ResultBean(-1, "银行卡号不能为空");
+        }
+        String  regex = "^[0-9]{11}";
+        if(!bankPhone.matches(regex)){
+            return new ResultBean(-1,"手机号格式不正确");
         }
         String a = BankUtil.getNameOfBank(cardNumber);
         int size = a.indexOf("·");
@@ -771,6 +803,14 @@ public class SunController {
         if (idBack.length() == 0) {
             return new ResultBean(-1, "身份证反面照片不能为空");
         }
+        String regex = "[\\u4e00-\\u9fa5]";
+        if(!idName.matches(regex)){
+            return new ResultBean(-1,"请输入中文");
+        }
+        String regexOne = "^((\\d{18})|([0-9x]{18})|([0-9X]{18}))";
+        if(!idNumber.matches(regexOne)){
+            return new ResultBean(-1,"身份证格式不正确");
+        }
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
         ReceptionUsers receptionUsers = receptionUsersService.selectByPrimaryKey(uid);
@@ -832,6 +872,14 @@ public class SunController {
         }
         if (!password.equals(rePassword)) {
             return new ResultBean(-1, "两次密码输入不一致");
+        }
+
+        String  regex = "^[a-zA-Z0-9_]{4,20}";
+        if(!oldPassword.matches(regex)){
+            return new ResultBean(-1,"旧密码格式不正确");
+        }
+        if(!password.matches(regex)){
+            return new ResultBean(-1,"密码格式不正确");
         }
         Cookie cookie = CookieUtil.getCookie("cookie", request);
         Long uid = Long.valueOf(cookie.getValue());
