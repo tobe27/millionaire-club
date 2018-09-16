@@ -48,7 +48,7 @@
 
         from claim_match
         left join investment_user
-        on claim_match.claim_id = investment_user.claim_id
+        on  claim_match.investment_user_id =  investment_user.id
         left join investment_product
         on investment_user.product_id = investment_product.id
         left join reception_users

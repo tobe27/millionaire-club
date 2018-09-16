@@ -88,7 +88,8 @@ public class ClaimMatchController {
      * @Description 更新接口，修改用户投资匹配情况
      * @RequestParam("claimId") long claimId,
      * @RequestParam("lending_contract_number") String lendingContractNumber
-     *
+     *整理逻辑整理
+     * 1.
      *
      *
      **/
@@ -131,6 +132,10 @@ public class ClaimMatchController {
             logger.error("债权匹配规则漏洞，用户投资大于未匹配金额 用户投资：{}", investmentUser);
             return new ResultBean(-1, "error investmentUser amount > claim unMatchAmount", investmentUser);
         }
+        // 如果该债权已经匹配过此用户其他的用户投资
+
+
+
 
 
         //添加债权匹配记录
