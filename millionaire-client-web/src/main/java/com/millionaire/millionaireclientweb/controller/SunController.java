@@ -177,11 +177,11 @@ public class SunController {
         if (receptionUser != null) {
             return new ResultBean(-1, "用户名已存在");
         }
-        String redisCode = (String) redisTemplate.opsForValue().get(phone.toString());
+        Integer redisCode = (Integer) redisTemplate.opsForValue().get(phone.toString());
         if (redisCode == null) {
             return new ResultBean(-1, "请获得验证码");
         }
-        if (!code.equals(redisCode)) {
+        if (!code.equals(redisCode.toString())) {
             return new ResultBean(-1, "验证码错误");
         }
         String salt = String.valueOf(new Random().nextInt(899999) + 100000);
