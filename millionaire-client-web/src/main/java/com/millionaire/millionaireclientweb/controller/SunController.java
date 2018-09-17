@@ -279,11 +279,13 @@ public class SunController {
         if (rePassword.length() == 0) {
             return new ResultBean(-1, "请再次确认密码）");
         }
-        String salt = (String) redisTemplate.opsForValue().get(phone.toString());
+
+        Integer salt = (Integer) redisTemplate.opsForValue().get(phone.toString());
+
         if (salt == null) {
             return new ResultBean(-1, "请获得验证码");
         }
-        if (!salt.equals(code)) {
+        if (!code.equals(salt.toString())) {
             return new ResultBean(-1, "验证码错误");
         }
         if (!password.equals(rePassword)) {
@@ -303,7 +305,7 @@ public class SunController {
         }
         String Md5HashPassword = new Md5Hash(password, salt, 2).toString();
         receptionUsers.setPassword(Md5HashPassword);
-        receptionUsers.setSalt(salt);
+        receptionUsers.setSalt(salt.toString());
         receptionUsers.setGmtUpdate(System.currentTimeMillis());
         receptionUsers.setId(receptionUsers.getId());
         receptionUsersService.updateByPrimaryKey(receptionUsers);
