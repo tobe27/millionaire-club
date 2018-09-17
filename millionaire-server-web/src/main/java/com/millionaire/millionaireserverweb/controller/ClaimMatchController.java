@@ -180,8 +180,10 @@ public class ClaimMatchController {
         logger.info("investmentUserList:{}",investmentUserList.size());
         if(investmentUserList.size()!=0) {
             for (InvestmentUser user : investmentUserList) {
-                if (user.getUid().equals(investmentUser.getUid())) {
-                    return new ResultBean(-1, "该债权已经匹配过该用户其他的用户投资", investmentUser);
+                if (user.getUid() != null && user.getUid() != 0) {
+                    if (user.getUid().equals(investmentUser.getUid())) {
+                        return new ResultBean(-1, "该债权已经匹配过该用户其他的用户投资", investmentUser);
+                    }
                 }
             }
         }
