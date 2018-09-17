@@ -20,9 +20,9 @@ public class ClaimInfoControllerTest {
     @Test
     public void insertClaimInfo() {
 
-        for(int i =0;i<5;i++){
+        for(int i =0;i<3;i++){
             ClaimInfo claimInfo = new ClaimInfo();
-            claimInfo.setClaimCode("过期债权"+i);
+            claimInfo.setClaimCode("债权"+i);
             claimInfo.setCreditorName("债权人"+i);
             claimInfo.setCreditorPhone("13705678890");
             claimInfo.setCreditorIdNumber("123456789009876544");
@@ -35,8 +35,13 @@ public class ClaimInfoControllerTest {
             claimInfoService.insertSelective(claimInfo);
         }
 
+    }
 
-
+    @Test
+    public void update() {
+        ClaimInfo claimInfo = claimInfoService.selectByPrimaryKey(29L);
+        claimInfo.setMatchRate(0.6);
+        claimInfoService.updateByPrimaryKeySelective(claimInfo);
 
     }
 }
