@@ -87,6 +87,7 @@
                 and expiration_date <![CDATA[ <= ]]> #{upperExpirationDate,jdbcType=BIGINT}
             </if>
         </where>
+            order by  gmt_create desc
     </select>
 
     <select id="selectClaimExpireCheck" resultMap="BaseResultMap">

@@ -119,8 +119,8 @@
             <if test="valueEndupperDate != null">
                 and investment_user.value_date_end <![CDATA[ <= ]]> #{valueEndupperDate,jdbcType=BIGINT}
             </if>
-
         </where>
+        order by  investment_user.value_date_start desc
     </select>
 
     <select id="selectUsableInvestment" resultMap="InvestmentUser">
