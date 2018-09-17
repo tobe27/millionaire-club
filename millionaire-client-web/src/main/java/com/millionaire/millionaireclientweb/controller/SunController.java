@@ -36,6 +36,7 @@ import com.millionaire.millionaireuserservice.transport.UserReceptionDTO;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,6 +70,10 @@ public class SunController {
     private ContentService contentService;
     @Resource
     private ProposalService proposalService;
+
+    @Autowired
+    private MessageVerification messageVerification;
+
     Logger logger = LoggerFactory.getLogger(SunController.class);
 
     @GetMapping("loginPage")
@@ -227,8 +232,8 @@ public class SunController {
         }
         Integer random = new Random().nextInt(899999) + 100000;
         System.out.println(random);
-        MessageVerification.setSendSmsResponse(phone.toString(), random);
-        redisTemplate.opsForValue().set(phone.toString(), "123456", 1000 * 60 * 5, TimeUnit.MILLISECONDS);
+        messageVerification.setSendSmsResponse(phone.toString(), random);
+        redisTemplate.opsForValue().set(phone.toString(), random, 1000 * 60 * 5, TimeUnit.MILLISECONDS);
         return new ResultBean(1, "发送成功");
     }
 
@@ -323,7 +328,6 @@ public class SunController {
 
     /**
      * 用户添加银行
-     *
      * @param jsonObject
      * @param request
      * @return
