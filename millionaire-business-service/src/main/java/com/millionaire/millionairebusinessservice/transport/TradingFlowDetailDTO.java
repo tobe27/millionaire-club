@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class TradingFlowDetailDTO {
     
-
+     //日期
     private  String purchaseDate;
 
 
@@ -22,5 +22,7 @@ public class TradingFlowDetailDTO {
      */
     private Integer purchase;
     /**  购买总金额 */
-    private Integer totalPurchases;
+    private Integer purchaseCount;
+    //产品名称
+    private String productName;
 }
