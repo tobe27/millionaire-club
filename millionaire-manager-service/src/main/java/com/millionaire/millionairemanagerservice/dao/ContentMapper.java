@@ -22,7 +22,7 @@ public interface ContentMapper {
 
     List<Content> listContentByQuery(ContentQuery query);
 
-    Content findByType(Byte type);
+    List<Content> findByType(Byte type);
 
     /**
      * 展示banner图轮播
