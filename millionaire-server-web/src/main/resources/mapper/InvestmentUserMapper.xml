@@ -132,7 +132,8 @@
         and  claim_id = 0
         or
         claim_id is null
-
+        and
+        investment_status =10
     </select>
 
     <select id="selectMatchedUID" resultType="java.lang.Long">
