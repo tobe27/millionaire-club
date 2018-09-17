@@ -809,7 +809,7 @@ public class SunController {
         if (idBack.length() == 0) {
             return new ResultBean(-1, "身份证反面照片不能为空");
         }
-        String regex = "[\\u4e00-\\u9fa5]";
+        String regex = "[\\u4e00-\\u9fa5]{0,10}";
         if(!idName.matches(regex)){
             return new ResultBean(-1,"请输入中文");
         }

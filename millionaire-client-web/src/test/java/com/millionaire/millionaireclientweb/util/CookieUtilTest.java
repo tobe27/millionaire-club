@@ -135,8 +135,8 @@ MessagePlatformService messagePlatformService;
     @Test
     public void sdfsdf() {
         MessageQuery messageQuery = new MessageQuery();
-        messageQuery.setSendingCrowd((byte) 10);
-        messageQuery.setId(1L);
+        messageQuery.setSendingCrowd((byte) 20);
+        messageQuery.setId(9L);
         List<MessagePlatformDTO> messagePlatformOne = messagePlatformService.findBySendingCrowd(messageQuery);
         messagePlatformOne.forEach((a)-> System.out.println(a));
     }
