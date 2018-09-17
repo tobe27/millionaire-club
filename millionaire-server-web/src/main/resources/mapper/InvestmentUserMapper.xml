@@ -119,8 +119,8 @@
             <if test="valueEndupperDate != null">
                 and investment_user.value_date_end <![CDATA[ <= ]]> #{valueEndupperDate,jdbcType=BIGINT}
             </if>
-
         </where>
+        order by  investment_user.value_date_start desc
     </select>
 
     <select id="selectUsableInvestment" resultMap="InvestmentUser">
@@ -132,13 +132,15 @@
         and  claim_id = 0
         or
         claim_id is null
-
+        and
+        investment_status =10
     </select>
 
     <select id="selectMatchedUID" resultType="java.lang.Long">
         select uid
         from investment_user
         where claim_id = #{claimID}
+        and investment_status =10
     </select>
 
     <select id="selectByLendingContractNumber" parameterType="java.lang.String" resultMap="InvestmentUser">

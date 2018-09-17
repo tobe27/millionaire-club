@@ -94,7 +94,7 @@ public class ClaimInfoServiceImpl implements ClaimInfoService {
         claim.setExpirationDate(expirationDate);
         //封装未匹配金额
         claim.setUnMatchAmount(claim.getLendingAmount());
-        //封装匹配利率
+        //封装匹配比率
         claim.setMatchRate(0.0);
         //封装匹配状态
         claim.setStatus(0);
