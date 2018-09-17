@@ -24,7 +24,7 @@ public class StatisticsControllerTest {
     @Test
     public void detailInvestmentProduct() {
         TradingFlowDetailQuery query = new TradingFlowDetailQuery();
-        query.setProductName("大富翁");
+        query.setProductName("新人王");
         List<TradingFlowDetailDTO> tradingFlowDetailDTOS =
                 tradingFlowService.statisticProductDetailByQuery(query);
         System.out.println("tradingFlowDetailDTOS = " + tradingFlowDetailDTOS);
