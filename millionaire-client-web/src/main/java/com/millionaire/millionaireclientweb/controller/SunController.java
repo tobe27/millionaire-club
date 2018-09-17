@@ -132,7 +132,6 @@ public class SunController {
 
     /**
      * 注册用户
-     *
      * @param jsonObject
      * @return
      */
