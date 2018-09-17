@@ -51,7 +51,7 @@
     FROM message_platform LEFT join message_user
     ON message_platform.id=message_user.message_platform_id
     WHERE message_platform.status=10 and message_platform.sending_crowd=#{sendingCrowd}
-    and (message_user.is_look is null or message_user.is_look!=20) and (message_user.uid=#{id} or message_user.uid is null)
+    and (message_user.is_look is null or message_user.is_look!=20) and message_user.uid=#{id} or message_user.uid is null
   </select>
 
 
