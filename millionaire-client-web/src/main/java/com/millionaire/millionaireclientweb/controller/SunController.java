@@ -279,9 +279,7 @@ public class SunController {
         if (rePassword.length() == 0) {
             return new ResultBean(-1, "请再次确认密码）");
         }
-
         Integer salt = (Integer) redisTemplate.opsForValue().get(phone.toString());
-
         if (salt == null) {
             return new ResultBean(-1, "请获得验证码");
         }
@@ -303,13 +301,13 @@ public class SunController {
         if (receptionUsers == null) {
             return new ResultBean(-1, "用户名不存在");
         }
-        String Md5HashPassword = new Md5Hash(password, salt, 2).toString();
+        String Md5HashPassword = new Md5Hash(password, salt.toString(), 2).toString();
         receptionUsers.setPassword(Md5HashPassword);
         receptionUsers.setSalt(salt.toString());
         receptionUsers.setGmtUpdate(System.currentTimeMillis());
         receptionUsers.setId(receptionUsers.getId());
         receptionUsersService.updateByPrimaryKey(receptionUsers);
-        return new ResultBean(1, "更新成功");
+        return new ResultBean(1, "修改成功");
     }
 
     /**
@@ -913,7 +911,7 @@ public class SunController {
      */
     @GetMapping("/u/help")
     public ResultBean getHelp() {
-        Content content = contentService.findByType((byte) 20);
+        List<Content> content = contentService.findByType((byte) 20);
         return new ResultBean(1, "请求成功", content);
     }
 
@@ -924,7 +922,7 @@ public class SunController {
      */
     @GetMapping("/u/company")
     public ResultBean getCompany() {
-        Content content = contentService.findByType((byte) 30);
+        List<Content> content = contentService.findByType((byte) 30);
         return new ResultBean(1, "内容中的关于我们", content);
     }
 

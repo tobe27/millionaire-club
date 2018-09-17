@@ -69,7 +69,7 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public Content findByType(Byte type) {
+    public List<Content> findByType(Byte type) {
         return contentMapper.findByType(type);
     }
 
